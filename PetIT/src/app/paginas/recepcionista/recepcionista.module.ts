@@ -9,6 +9,11 @@ import { RecepcionistaComponent } from './recepcionista.component';
 
 import { InicioComponent } from './inicio/inicio.component';
 
+// Módulos Compartidos
+import { BuscadorComponent } from './horas/buscador/buscador.component';
+import { ListaEncontradosComponent } from './horas/lista-encontrados/lista-encontrados.component';
+import { CabeceraComponent } from './../cabecera/cabecera.component';
+
 //Horas
 import { BuscarComponent } from './horas/buscar/buscar.component';
 import { AgendarComponent } from './horas/agendar/agendar.component';
@@ -33,6 +38,7 @@ import { CompartidoModule } from './../../compartido.module';
 	providers: [],
 	declarations: [
 		RecepcionistaComponent, 
+		BuscadorComponent,ListaEncontradosComponent,CabeceraComponent,
 		MenuComponent,InicioComponent, 
 		BuscarComponent, AgendarComponent, ConsultarComponent, FinalizarComponent, 
 		EnviarComponent
