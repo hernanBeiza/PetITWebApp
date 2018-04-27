@@ -1,0 +1,59 @@
+<div class="container">
+	<div class="row">
+
+		<div class="col s12 card-panel">
+				<h2 class="center-align">
+	            	<img src="assets/img/petitlogo.png" width="100px" alt="Logo de Pet-IT" class="circle responsive-img valign profile-image-login">
+				</h2>
+	        	<h3 class="center-align">
+	            	Pet-IT 
+				</h3>
+	            <div class="row">
+	                <form class="col s12" 
+	                [formGroup]="loginForm" 
+	                (ngSubmit)="onSubmit(loginForm.value)">
+	                        <div class="input-field col s12">
+	                            <input id="user" type="text" class="validate" 
+								[formControl]="rut" 
+								[(ngModel)]="usuarioModel.user"
+								validateRut
+								formatRut
+	                            required>
+								<div class="alert alert-danger" 
+								*ngIf="formErrors.rut" 
+								[innerHTML]="formErrors.rut"></div>
+	                            <label for="user">Rut</label>
+	                        </div>
+	                        <div class="input-field col s12">
+	                            <input id="pass" type="password" class="validate" 
+								[formControl]="contrasena" 
+								[(ngModel)]="usuarioModel.pass"
+	                            required>
+								<div class="alert alert-danger"
+								*ngIf="formErrors.contrasena"  
+								[innerHTML]="formErrors.contrasena"></div>
+	                            <label for="pass">Contraseña</label>
+	                        </div>
+	                        <!--
+	                        <div class="col s12">
+	                            <p>
+	                                <input type="checkbox" id="remember">
+	                                <label for="remember">Recuerdame</label>
+	                            </p>
+	                        </div>
+		                    -->
+	                    <div class="divider"></div>
+	                        <div class="col m12">
+	                            <p class="right-align">
+	                                <button class="btn btn-large waves-effect waves-light" 
+	                                type="submit" 
+	                                [disabled]="!loginForm.valid || enviandoFlag"
+	                                name="action">Inicio</button>
+	                            </p>
+	                        </div>
+	                </form>
+	            </div>
+
+	    </div>
+	</div>
+</div>

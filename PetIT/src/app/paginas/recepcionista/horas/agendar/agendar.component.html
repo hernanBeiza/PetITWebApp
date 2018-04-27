@@ -1,0 +1,92 @@
+	<div class="row">
+	    <div class="col s12 m12">
+			<mz-card [hoverable]="true">
+				<mz-card-title>
+
+				</mz-card-title>
+
+				<mz-card-content>
+					<mz-select-container>
+						<select mz-select
+						id="options-select"
+						[label]="'Especialidad'"
+						[placeholder]="'2. Seleccionar especialidad'"
+						>
+						<option class="left circle">Option 1</option>
+						<option class="left circle">Option 2</option>
+						</select>
+					</mz-select-container>
+
+					<mz-select-container>
+						<select mz-select
+						id="options-select"
+						[label]="'Especialidad'"
+						[placeholder]="'3. Seleccionar Especialista'"
+						>
+						<option class="left circle">Option 1</option>
+						<option class="left circle">Option 2</option>
+						</select>
+					</mz-select-container>
+
+					<mz-select-container>
+						<select mz-select
+						id="options-select"
+						[label]="'Fecha'"
+						[placeholder]="'4. Fecha Preferencia'"
+						>
+						<option class="left circle">Option 1</option>
+						<option class="left circle">Option 2</option>
+						</select>
+					</mz-select-container>
+
+					<mz-select-container>
+						<select mz-select
+						id="options-select"
+						[label]="'Hora'"
+						[placeholder]="'5. Horas Disponibles'"
+						>
+						<option class="left circle">Option 1</option>
+						<option class="left circle">Option 2</option>
+						</select>
+					</mz-select-container>
+
+					ó
+
+					<table class="striped">
+				        <thead>
+				          <tr>
+				              <th>Nombre Veterinario</th>
+				              <th>Hora</th>
+				              <th>Reserva</th>
+				          </tr>
+				        </thead>
+				        <tbody>
+				          <tr>
+				            <td>Andrés Osorio</td>
+				            <td>12:00</td>
+				            <td><button mz-button (click)="reservar();">Reservar</button></td>
+				          </tr>
+				        </tbody>
+					</table>
+					
+					<button mz-button (click)="volver();">Volver</button>
+
+				</mz-card-content>
+			</mz-card>
+		</div>
+	</div>
+
+	<!-- Ventana modal -->
+<mz-modal #bottomSheetModal [options]="modalOptions">
+	<mz-modal-header>
+		<h4>¿Desea tomar esta hora?</h4>
+	</mz-modal-header>
+	<mz-modal-content>
+		<p>Nombre Doctor:</p>
+		<p>Paciente:</p>
+	</mz-modal-content>
+	<mz-modal-footer>
+		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
+		<button mz-button [flat]="true" (click)="agendarHora();">Agendar Hora</button>
+	</mz-modal-footer>
+</mz-modal>

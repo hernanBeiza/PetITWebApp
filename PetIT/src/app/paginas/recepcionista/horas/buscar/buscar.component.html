@@ -1,0 +1,74 @@
+	<div class="row">
+	    <div class="col s12 m12">
+			<mz-card [hoverable]="true">
+				<mz-card-title>
+					1. Agendar Hora: 
+				</mz-card-title>
+				<mz-card-content>
+					Buscar por: 
+					<mz-radio-button-container>
+					  <input mz-radio-button
+					    [label]="'Rut'"
+					    [withGap]="true"
+					    id="rut"
+					    name="radio-group"
+					    type="radio">
+					  <input mz-radio-button
+					    [label]="'Nombre'"
+					    [withGap]="true"
+					    id="nombre"
+					    name="radio-group"
+					    type="radio">
+					</mz-radio-button-container>
+
+					<mz-input-container>
+						<i mz-icon-mdi mz-input-prefix
+					    	[icon]="'magnify'">
+						</i>
+						<input mz-input
+						id="buscar-input"
+						placeholder="Ingrese nombre o rut"
+						length="150"
+						type="text">
+					</mz-input-container>
+
+				</mz-card-content>
+			</mz-card>
+		</div>
+	</div>
+	<div class="row">
+	    <div class="col s12 m12">
+			<mz-card [hoverable]="true">
+				<!--
+				<mz-card-title>
+					Últimas mascotas atendidas
+				</mz-card-title>
+				-->
+
+				<mz-card-content>
+					<table class="striped">
+				        <thead>
+				          <tr>
+				              <th>Rut</th>
+				              <th>Nombre</th>
+				              <th>Dirección</th>
+				              <th>ID Mascota</th>
+				              <th>Nombre Mascota</th>
+				              <th>Acciones</th>
+				          </tr>
+				        </thead>
+				        <tbody>
+				          <tr>
+				            <td>11111111-1</td>
+				            <td>Andrés Osorio</td>
+				            <td>Calle #1234</td>
+				            <td>1</td>
+				            <td>Fideo</td>
+				            <td><button mz-button (click)="irAgendar();">Agendar</button></td>
+				          </tr>
+				        </tbody>
+					</table>
+				</mz-card-content>
+			</mz-card>
+		</div>
+	</div>
