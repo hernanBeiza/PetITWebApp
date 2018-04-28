@@ -5,7 +5,39 @@
 					1. Agendar Hora: 
 				</mz-card-title>
 				<mz-card-content>
+					<!--
 					<app-buscador></app-buscador>
+					-->
+					Buscar dueño por: 
+					<mz-radio-button-container>
+					  <input mz-radio-button
+						[(ngModel)]="filtroField"
+					    [label]="'Rut'"
+						value="rut"
+					    id="rut"
+					    name="radio-group"
+					    type="radio">
+					  <input mz-radio-button
+						[(ngModel)]="filtroField"
+					    [label]="'Nombre'"
+						value="nombre" 
+					    id="nombre"
+					    name="radio-group"
+					    type="radio">
+					</mz-radio-button-container>
+
+					<mz-input-container>
+						<i mz-icon-mdi mz-input-prefix
+					    	[icon]="'magnify'">
+						</i>
+						<input mz-input
+						[(ngModel)]="filtroString"
+						id="buscar-input"
+						placeholder="Ingrese nombre o rut"
+						length="20"
+						type="text">
+					</mz-input-container>
+
 				</mz-card-content>
 			</mz-card>
 		</div>
@@ -17,7 +49,29 @@
 					2. Dueños Encontrados:
 				</mz-card-title>
 				<mz-card-content>
-					<app-lista-encontrados></app-lista-encontrados>
+					<!--
+					<app-lista-encontrados [duenos]="duenos"></app-lista-encontrados>
+					-->
+					<table class="striped">
+					    <thead>
+					      <tr>
+					          <th>Rut</th>
+					          <th>Nombre</th>
+					          <th>Nombre Mascota</th>
+					          <th>Dirección</th>
+					          <th>Acciones</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+				    	    <tr *ngFor="let item of duenos | filter : filtroField : 	filtroString">
+					        <td>{{item.rut}}</td>
+					        <td>{{item.nombre}}</td>
+					        <td>{{item.mascota.nombre}}</td>
+					        <td>{{item.direccion}}</td>
+					        <td><button mz-button (click)="irAgendar(item);">Agendar</button></td>
+					      </tr>
+					    </tbody>
+					</table>
 				</mz-card-content>
 			</mz-card>
 		</div>

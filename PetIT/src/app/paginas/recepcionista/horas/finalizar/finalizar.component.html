@@ -5,27 +5,46 @@
 					Datos de la Reserva 
 				</mz-card-title>
 				<mz-card-content>
-				    <div class="col m4">
-						<i mz-icon-mdi mz-input-prefix
-					    	[icon]="'calendar'">
-					    	Día: Hora:
-						</i>
+					<div class="row">
+					    <div class="col m6">
+							<i mz-icon-mdi mz-input-prefix
+						    	[icon]="'calendar'">
+						    	Día: {{cita.fecha.fecha}} Hora: {{cita.hora.hora}}
+							</i>
+					    </div>
+					    <div class="col m6">
+							<i mz-icon-mdi mz-input-prefix
+						    	[icon]="'medical-bag'">
+						    	Especialista: {{cita.especialista.nombre}}
+							</i>
+					    </div>
 				    </div>
-				    <div class="col m4">
-						<i mz-icon-mdi mz-input-prefix
-					    	[icon]="'medical-bag'">
-					    	Especialista:
-						</i>
+			    	<div class="row">
+					    <div class="col m6">
+							<i mz-icon-mdi mz-input-prefix
+						    	[icon]="'account'">
+						    	Dueño: {{cita.dueno.nombre}}
+							</i>
+					    </div>
+					    <div class="col m6">
+							<i mz-icon-mdi mz-input-prefix
+						    	[icon]="'paw'">
+						    	Mascota: {{cita.mascota.nombre}}
+							</i>
+					    </div>
 				    </div>
-				    <div class="col m4">
-						<i mz-icon-mdi mz-input-prefix
-					    	[icon]="'account'">
-					    	Dueño:
-						</i>
-				    </div>
-
-					<h2>Indicaciones</h2>
-					<p>Recuerde llegar 15 minutos antes de la consulta
+				</mz-card-content>
+			</mz-card>
+		</div>
+	</div>
+	<div class="row">
+	    <div class="col s12 m12">
+			<mz-card [hoverable]="true">
+				<mz-card-title>
+					Indicaciones 
+				</mz-card-title>
+				<mz-card-content>
+					<p>Recuerde llegar 15 minutos antes de la consulta<p>
 				</mz-card-content>
 			</mz-card>
 		</div>

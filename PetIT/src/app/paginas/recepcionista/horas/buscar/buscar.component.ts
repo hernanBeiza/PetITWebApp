@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { DuenoModel} from './../../../../models/DuenoModel';
+import { DuenoLocalDBService} from './../../../../services/DuenoLocalDB.service';
+
 @Component({
   selector: 'app-buscar',
   templateUrl: './buscar.component.html',
@@ -8,14 +11,29 @@ import { Router } from '@angular/router';
 })
 export class BuscarComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  public duenos:Array<DuenoModel> = new Array<DuenoModel>();
 
-  ngOnInit() {
-  	console.log("BuscarComponent");
+  public filtroString: string = ""
+  public filtroField: string = "nombre";
+
+  constructor(private router:Router, private DuenoLocalDBService:DuenoLocalDBService) { 
+    console.log("BuscarComponent");
   }
 
-  public irAgendar():void {
+  ngOnInit() {
+    this.cargar();
+  }
+
+  public cargar():void {
+    this.duenos = this.DuenoLocalDBService.obtenerVarios();
+    console.log(this.duenos);
+  }
+
+  public irAgendar(dueno:DuenoModel):void {
   	console.log("irSeleccionar");
+    console.log(dueno);
+    this.DuenoLocalDBService.guardarSeleccionado(dueno);
+    
     this.router.navigate(['/recepcionista/horas/agendar']);
   }
 

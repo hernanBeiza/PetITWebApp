@@ -1,26 +1,29 @@
-Buscar dueño por: 
-<mz-radio-button-container>
-  <input mz-radio-button
-    [label]="'Rut'"
-    [withGap]="true"
-    id="rut"
-    name="radio-group"
-    type="radio">
-  <input mz-radio-button
-    [label]="'Nombre'"
-    [withGap]="true"
-    id="nombre"
-    name="radio-group"
-    type="radio">
-</mz-radio-button-container>
+    Buscar dueño por: 
+    <mz-radio-button-container>
+      <input mz-radio-button
+        [(ngModel)]="filtroField"
+        [label]="'Rut'"
+        value="rut"
+        id="rut"
+        name="radio-group"
+        type="radio">
+      <input mz-radio-button
+        [(ngModel)]="filtroField"
+        [label]="'Nombre'"
+        value="nombre" 
+        id="nombre"
+        name="radio-group"
+        type="radio">
+    </mz-radio-button-container>
 
-<mz-input-container>
-	<i mz-icon-mdi mz-input-prefix
-    	[icon]="'magnify'">
-	</i>
-	<input mz-input
-	id="buscar-input"
-	placeholder="Ingrese nombre o rut"
-	length="150"
-	type="text">
-</mz-input-container>
+    <mz-input-container>
+        <i mz-icon-mdi mz-input-prefix
+            [icon]="'magnify'">
+        </i>
+        <input mz-input
+        [(ngModel)]="filtroString"
+        id="buscar-input"
+        placeholder="Ingrese nombre o rut"
+        length="20"
+        type="text">
+    </mz-input-container>

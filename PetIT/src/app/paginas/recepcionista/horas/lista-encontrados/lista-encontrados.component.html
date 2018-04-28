@@ -8,11 +8,13 @@
       </tr>
     </thead>
     <tbody>
+      <tr *ngFor="let item of duenos">
       <tr>
-        <td>11111111-1</td>
-        <td>Andrés Osorio</td>
-        <td>Calle #1234</td>
-        <td><button mz-button (click)="irAgendar();">Agendar</button></td>
+        <td>{{item?.rut}}</td>
+        <td>{{item?.nombre}}</td>
+        <td>{{item?.direccion}}</td>
+        <td><button mz-button (click)="irAgendar(item);">Agendar</button></td>
       </tr>
     </tbody>
 </table>
+

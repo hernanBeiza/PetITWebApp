@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 
-
 import { UsuarioModel } from './../models/UsuarioModel';
-
-import { environment } from './../../environments/environment';
 
 @Injectable()
 export class LocalDBService {
 
-  public constUsuario:string = "BCUSUARIO";
+  public constUsuario:string = "DBLOCAL";
 
   constructor() { }
  
@@ -31,5 +28,6 @@ export class LocalDBService {
     localStorage.clear();
     return true;
   }
+
 
 }

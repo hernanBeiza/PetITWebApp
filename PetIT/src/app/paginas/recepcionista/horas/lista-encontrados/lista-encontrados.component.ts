@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { DuenoModel } from './../../../../models/DuenoModel';
 
 @Component({
   selector: 'app-lista-encontrados',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListaEncontradosComponent implements OnInit {
 
-  constructor() { }
+	@Input() duenos: Array<DuenoModel>;
 
-  ngOnInit() {
-  }
+	constructor() { }
+
+	ngOnInit() { }
 
 }

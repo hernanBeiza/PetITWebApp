@@ -11,20 +11,26 @@
 						id="options-select"
 						[label]="'Especialidad'"
 						[placeholder]="'2. Seleccionar especialidad'"
+    					[(ngModel)]="especialidadModel"
 						>
-						<option class="left circle">Option 1</option>
-						<option class="left circle">Option 2</option>
+						<option class="left circle"	*ngFor="let item of especialidades"
+						[ngValue]="item">
+							{{item.nombre}}
+						</option>
 						</select>
 					</mz-select-container>
 
 					<mz-select-container>
 						<select mz-select
 						id="options-select"
-						[label]="'Especialidad'"
+						[label]="'Especialista'"
 						[placeholder]="'3. Seleccionar Especialista'"
+    					[(ngModel)]="especialistaModel"
 						>
-						<option class="left circle">Option 1</option>
-						<option class="left circle">Option 2</option>
+						<option class="left circle"	*ngFor="let item of especialidadModel.especialistas"
+						[ngValue]="item">
+							{{item.nombre}}
+						</option>
 						</select>
 					</mz-select-container>
 
@@ -33,9 +39,12 @@
 						id="options-select"
 						[label]="'Fecha'"
 						[placeholder]="'4. Fecha Preferencia'"
+    					[(ngModel)]="fechaModel"
 						>
-						<option class="left circle">Option 1</option>
-						<option class="left circle">Option 2</option>
+						<option class="left circle"	*ngFor="let item of especialistaModel.fechas"
+						[ngValue]="item">
+							{{item.fecha}}
+						</option>
 						</select>
 					</mz-select-container>
 
@@ -44,32 +53,17 @@
 						id="options-select"
 						[label]="'Hora'"
 						[placeholder]="'5. Horas Disponibles'"
+    					[(ngModel)]="horaModel"
 						>
-						<option class="left circle">Option 1</option>
-						<option class="left circle">Option 2</option>
+						<option class="left circle"	*ngFor="let item of fechaModel.horas"
+						[ngValue]="item">
+							{{item.hora}}
+						</option>
 						</select>
 					</mz-select-container>
 
-					ó
-
-					<table class="striped">
-				        <thead>
-				          <tr>
-				              <th>Nombre Veterinario</th>
-				              <th>Hora</th>
-				              <th>Reserva</th>
-				          </tr>
-				        </thead>
-				        <tbody>
-				          <tr>
-				            <td>Andrés Osorio</td>
-				            <td>12:00</td>
-				            <td><button mz-button (click)="reservar();">Reservar</button></td>
-				          </tr>
-				        </tbody>
-					</table>
-					
 					<button mz-button (click)="volver();">Volver</button>
+					<button mz-button (click)="reservar();">Reservar</button>
 
 				</mz-card-content>
 			</mz-card>
@@ -82,11 +76,24 @@
 		<h4>¿Desea tomar esta hora?</h4>
 	</mz-modal-header>
 	<mz-modal-content>
-		<p>Nombre Doctor:</p>
-		<p>Paciente:</p>
+		<p>Nombre Doctor: {{citaModel.especialista?.nombre}}</p>
+		<p>Dueño: {{citaModel.dueno?.nombre}}</p>
+		<p>Paciente: {{citaModel.mascota?.nombre}}</p>
 	</mz-modal-content>
 	<mz-modal-footer>
 		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
 		<button mz-button [flat]="true" (click)="agendarHora();">Agendar Hora</button>
+	</mz-modal-footer>
+</mz-modal>
+<!-- Ventana modal error -->
+<mz-modal #errorSheetModal [options]="modalOptions">
+	<mz-modal-header>
+		<h4>Atención</h4>
+	</mz-modal-header>
+	<mz-modal-content>
+		<div [innerHTML]="errores"></div>
+	</mz-modal-content>
+	<mz-modal-footer>
+		<button mz-button [flat]="true" mz-modal-close>Ok</button>
 	</mz-modal-footer>
 </mz-modal>
