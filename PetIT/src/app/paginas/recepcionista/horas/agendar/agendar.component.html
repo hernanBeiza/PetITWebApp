@@ -6,64 +6,79 @@
 				</mz-card-title>
 
 				<mz-card-content>
-					<mz-select-container>
-						<select mz-select
-						id="options-select"
-						[label]="'Especialidad'"
-						[placeholder]="'2. Seleccionar especialidad'"
-    					[(ngModel)]="especialidadModel"
-						>
-						<option class="left circle"	*ngFor="let item of especialidades"
-						[ngValue]="item">
-							{{item.nombre}}
-						</option>
-						</select>
-					</mz-select-container>
+	                <form
+	                [formGroup]="agendarForm" 
+	                (ngSubmit)="onSubmit(agendarForm.value)">		
+		                <!--
+						<mz-select-container>
+							<select mz-select
+							id="especialidad"
+							formControlName="especialidad"
+							[label]="'Especialidad'"
+							[placeholder]="'2. Seleccionar especialidad'"
+	    					[(ngModel)]="especialidadModel"
+							mz-validation required
+					        [errorMessageResource]="formErrors.especialidad">
+							<option class="left circle"	*ngFor="let item of especialidades"
+							[ngValue]="item">
+								{{item?.nombre}}
+							</option>
+							</select>
+						</mz-select-container>
+						<mz-select-container>
+							<select mz-select
+							id="especialista"
+							formControlName="especialista"
+							[label]="'Especialista'"
+							[placeholder]="'3. Seleccionar Especialista'"
+	    					[(ngModel)]="especialistaModel"
+							mz-validation required
+					        [errorMessageResource]="formErrors.especialista">
+							<option class="left circle"	*ngFor="let item of especialidadModel?.especialistas"
+							[ngValue]="item">
+								{{item?.nombre}}
+							</option>
+							</select>
+						</mz-select-container>
 
-					<mz-select-container>
-						<select mz-select
-						id="options-select"
-						[label]="'Especialista'"
-						[placeholder]="'3. Seleccionar Especialista'"
-    					[(ngModel)]="especialistaModel"
-						>
-						<option class="left circle"	*ngFor="let item of especialidadModel.especialistas"
-						[ngValue]="item">
-							{{item.nombre}}
-						</option>
-						</select>
-					</mz-select-container>
+						<mz-select-container>
+							<select mz-select
+							id="fecha"
+							formControlName="fecha"
+							[label]="'Fecha'"
+							[placeholder]="'4. Fecha Preferencia'"
+	    					[(ngModel)]="fechaModel"
+							mz-validation required
+					        [errorMessageResource]="formErrors.fecha">
+							<option class="left circle"	*ngFor="let item of especialistaModel?.fechas"
+							[ngValue]="item">
+								{{item?.fecha}}
+							</option>
+							</select>
+						</mz-select-container>
 
-					<mz-select-container>
-						<select mz-select
-						id="options-select"
-						[label]="'Fecha'"
-						[placeholder]="'4. Fecha Preferencia'"
-    					[(ngModel)]="fechaModel"
-						>
-						<option class="left circle"	*ngFor="let item of especialistaModel.fechas"
-						[ngValue]="item">
-							{{item.fecha}}
-						</option>
-						</select>
-					</mz-select-container>
-
-					<mz-select-container>
-						<select mz-select
-						id="options-select"
-						[label]="'Hora'"
-						[placeholder]="'5. Horas Disponibles'"
-    					[(ngModel)]="horaModel"
-						>
-						<option class="left circle"	*ngFor="let item of fechaModel.horas"
-						[ngValue]="item">
-							{{item.hora}}
-						</option>
-						</select>
-					</mz-select-container>
-
-					<button mz-button (click)="volver();">Volver</button>
-					<button mz-button (click)="reservar();">Reservar</button>
+						<mz-select-container>
+							<select mz-select
+							id="hora"
+							formControlName="hora"
+							[label]="'Hora'"
+							[placeholder]="'5. Horas Disponibles'"
+	    					[(ngModel)]="horaModel"
+							mz-validation required
+					        [errorMessageResource]="formErrors.hora">
+							<option class="left circle"	*ngFor="let item of fechaModel?.horas"
+							[ngValue]="item">
+								{{item?.hora}}
+							</option>
+							</select>
+						</mz-select-container>
+						-->
+						<button mz-button (click)="volver();">Volver</button>
+						<!--<button mz-button (click)="reservar();">Reservar</button>-->
+	                    <button mz-button type="submit" 
+	                    [disabled]="!agendarForm.valid || enviandoFlag"
+	                    name="action">Reservar</button>
+					</form>
 
 				</mz-card-content>
 			</mz-card>

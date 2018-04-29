@@ -10,30 +10,28 @@
 	        [formGroup]="generarForm" 
 	        (ngSubmit)="onSubmit(generarForm.value)">
 				<div class="row">
-					<div class="input-field col s12 m6">
-						<input id="inicio" type="text" class="validate"
+					<mz-datepicker-container class="col s12 m12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
+				        <input mz-datepicker mz-validation required 
+						id="inicio"
+						type="text"
 		                [formControl]="inicio" 
-		                [(ngModel)]="informeModel.fechaInicio"
-						mz-datepicker [options]="options"
-		                required>
-	                    <div class="alert alert-danger" 
-	                    *ngIf="formErrors.inicio" 
-	                    [innerHTML]="formErrors.inicio"></div>
-
-						<label for="inicio">Fecha Inicio</label>
-					</div>
-					<div class="input-field col s12 m6">
-						<input id="termino" type="text" class="validate"
+						[(ngModel)]="informeModel.fechaInicio"
+						[errorMessageResource]="formErrors.inicio"
+						[options]="opcionesCalendario"
+						[label]="'Fecha Inicio'" />
+					</mz-datepicker-container>
+					<mz-datepicker-container class="col s12 m12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
+				        <input mz-datepicker mz-validation required 
+						id="termino"
+						type="text"
 		                [formControl]="termino" 
-		                [(ngModel)]="informeModel.fechaTermino"
-						mz-datepicker [options]="options"
-		                required>
-	                    <div class="alert alert-danger" 
-	                    *ngIf="formErrors.termino" 
-	                    [innerHTML]="formErrors.termino"></div>
-
-						<label for="termino">Fecha Término</label>
-					</div>
+						[(ngModel)]="informeModel.fechaTermino"
+						[errorMessageResource]="formErrors.termino"
+						[options]="opcionesCalendario"
+						[label]="'Fecha Término'" />
+					</mz-datepicker-container>
 				</div>
 				<button class="btn" type="submit" name="action"
 	            [disabled]="!generarForm.valid || enviandoFlag"
@@ -48,7 +46,7 @@
 				-->
 				</button>
 			</form>
-			</mz-card-content>
+		</mz-card-content>
 			<!--
 			<mz-card-action>        
 			<a  class="btn-flat" (click)="generarInforme();">Generar Informe</a>

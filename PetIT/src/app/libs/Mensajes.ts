@@ -4,7 +4,7 @@ export class Mensajes {
 	    'rut': {
 			'required':			'El rut es obligatorio.',
 			'minlength':		'El rut debe ser de al menos de 9 carácter de largo.',
-			'invalidRut':		'El rut es inválido'
+			'invalidRut':		'El rut es inválido.'
 	    },
 	    'contrasena': {
 			'required':      'La Contraseña es obligatoria.',
@@ -18,6 +18,15 @@ export class Mensajes {
 		},
 		'termino': {
 			'required':      'La fecha de término es obligatoria.'
+		}
+	}
+
+	public static validacionesAgendar = {
+		'especialidad': {
+			'required':      'La especialidad es obligatoria.'
+		},
+		'especialista': {
+			'required':      'El especialista es obligatoria.'
 		}
 	}
 

@@ -9,8 +9,6 @@ import { InformeRoutingModule } from './informe.routing';
 import { InformeGenerarComponent } from './informe-generar/informe-generar.component';
 import { InformeComponent } from './informe.component';
 
-import { MzDatepickerModule} from 'ng2-materialize';
-
 import { CompartidoModule} from './../../../compartido.module';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -21,7 +19,6 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 	    FormsModule,
 	    ReactiveFormsModule,
 	    CompartidoModule,
-	    MzDatepickerModule,
 	    ChartsModule,
 	    InformeRoutingModule
 	],

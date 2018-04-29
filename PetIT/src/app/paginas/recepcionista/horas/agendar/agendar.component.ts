@@ -1,4 +1,7 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+
+import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+
 import { Router } from '@angular/router';
 
 import { MzModalComponent,MzToastService } from 'ng2-materialize';
@@ -14,6 +17,10 @@ import {HoraModel} from './../../../../models/HoraModel';
 
 import {CitaModel} from './../../../../models/CitaModel';
 
+
+import { Mensajes } from './../../../../libs/Mensajes';
+import { Validaciones } from './../../../../libs/Validaciones';
+
 @Component({
   selector: 'app-agendar',
   templateUrl: './agendar.component.html',
@@ -21,8 +28,25 @@ import {CitaModel} from './../../../../models/CitaModel';
 })
 export class AgendarComponent implements OnInit {
 
+  public agendarForm:FormGroup;
+  public especialidadControl:AbstractControl;
+  public especialistaControl:AbstractControl;
+  public fechaControl:AbstractControl;
+  public horaControl:AbstractControl;
+
+  public enviandoFlag:boolean = false;
+
   @ViewChild('bottomSheetModal') bottomSheetModal: MzModalComponent;
   @ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
+
+  // Errores
+  /*
+  public formErrors = {
+    'rut': '',
+    'contrasena': ''
+  };
+  */
+  public formErrors = Mensajes.validacionesAgendar;
 
   public modalOptions: Materialize.ModalOptions = {
     dismissible: false, // Modal can be dismissed by clicking outside of the modal
@@ -32,11 +56,11 @@ export class AgendarComponent implements OnInit {
     startingTop: '100%', // Starting top style attribute
     endingTop: '10%', // Ending top style attribute
     ready: (modal, trigger) => { // Callback for Modal open. Modal and trigger parameters available.
-      console.log('Ready');
-      console.log(modal, trigger);
+      //console.log('Ready');
+      //console.log(modal, trigger);
     },
     complete: () => { 
-      console.log('Closed'); 
+      //console.log('Closed'); 
     } // Callback for Modal close
   };
 
@@ -44,20 +68,33 @@ export class AgendarComponent implements OnInit {
   //Arreglo de especialidades
   public especialidades:Array<EspecialidadModel> = new Array<EspecialidadModel>();
   //Modelos para guardar datos seleccionados por el usuario
-  public especialidadModel:EspecialidadModel = new EspecialidadModel();
-  public especialistaModel:EspecialistaModel = new EspecialistaModel();
-  public fechaModel:FechaModel = new FechaModel();
-  public horaModel:HoraModel = new HoraModel();
+  public especialidadModel:EspecialidadModel;//= new EspecialidadModel();
+  public especialistaModel:EspecialistaModel;// = new EspecialistaModel();
+  public fechaModel:FechaModel;// = new FechaModel();
+  public horaModel:HoraModel;// = new HoraModel();
   //Cita
   public citaModel:CitaModel = new CitaModel();
-  constructor(private router:Router, 
+
+  constructor(private router:Router, private fb:FormBuilder,
     private MzToastService:MzToastService,
     private DuenoLocalDBService:DuenoLocalDBService,
     private EspecialidadLocalDBService:EspecialidadLocalDBService,
     private CitaLocalDBService:CitaLocalDBService) { }
 
-  ngOnInit() {
-  	console.log("AgendarComponent");
+  ngOnInit(): void { 
+    console.log("AgendarComponent");
+    this.agendarForm = this.fb.group({
+      'especialidad': [this.citaModel.especialidad, Validators.compose([Validators.required])],
+      'especialista': [this.citaModel.especialista, Validators.compose([Validators.required])],
+      'fecha': [this.citaModel.fecha, Validators.compose([Validators.required])],
+      'hora': [this.citaModel.hora, Validators.compose([Validators.required])],
+    });
+
+    this.especialidadControl = this.agendarForm.controls['especialidad'];
+    this.especialistaControl = this.agendarForm.controls['especialista'];
+    this.fechaControl = this.agendarForm.controls['fecha'];
+    this.horaControl = this.agendarForm.controls['hora'];
+
     this.cargar();
   }
 
@@ -72,6 +109,14 @@ export class AgendarComponent implements OnInit {
   public volver():void {
     console.log("volver");
     this.router.navigate(['/recepcionista/horas/buscar']);
+  }
+
+  public onSubmit(values:Object):void {
+    if (this.agendarForm.valid) {
+      this.reservar();
+    } else {
+      this.MzToastService.show("Revisa los datos de tu agendamiento",5000);
+    }
   }
 
   public reservar():void {
@@ -95,6 +140,8 @@ export class AgendarComponent implements OnInit {
       enviar = false;
       this.errores+="<br>Hora";
     }
+
+    console.log(this.especialidadModel,this.especialistaModel,this.fechaModel,this.horaModel);
 
     if(enviar){
       console.log(this.especialidadModel,this.especialistaModel,this.fechaModel,this.horaModel);

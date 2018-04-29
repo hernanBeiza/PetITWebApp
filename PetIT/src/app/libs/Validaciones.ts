@@ -37,15 +37,15 @@ export class Validaciones {
 		if (!myForm) { return; }
 		const form = myForm;
 		for (const field in formErrors) {
-			// clear previous error message (if any)
+			// Borrar errores previos si es que existe alguno
 			formErrors[field] = '';
 			const control = form.get(field);
 			if (control && control.dirty && !control.valid) {
 				const messages2 = messages[field];
 				for (const key in control.errors) {
-					formErrors[field] += messages2[key] + '<br>';
+					//formErrors[field] += messages2[key] + '<br>';
+					formErrors[field] += messages2[key] + ' ';
 				}
-				//console.log(formErrors);
 			}
 		}
 		return formErrors;

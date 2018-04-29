@@ -24,16 +24,19 @@ export class InformeGenerarComponent implements OnInit {
 	public enviandoFlag:boolean = false;
 	public mostrar:boolean = false;
 
-	public options: Pickadate.DateOptions = {
+	public opcionesCalendario: Pickadate.DateOptions = {
 		format: 'dd-mm-yyyy',
 		formatSubmit: 'dd-mm-yyyy',
 	};
 
 	// Errores
+	/*
 	public formErrors = {
 		'inicio': '',
 		'termino': ''
 	};
+	*/
+	public formErrors = Mensajes.validacionesGenerarInforme;
 
 	//Gráfico de Barra
 	public barChartOptions:any = {
@@ -60,14 +63,14 @@ export class InformeGenerarComponent implements OnInit {
 
 	    this.generarForm = this.fb.group({
 	      'inicio': [this.informeModel.fechaInicio, Validators.compose([Validators.required])],
-	      'termino': [this.informeModel.fechaTermino, Validators.compose([Validators.required])],
+	      'termino': [this.informeModel.fechaTermino, Validators.compose([Validators.required])]
 	    });
 
 	    this.inicio = this.generarForm.controls['inicio'];
 	    this.termino = this.generarForm.controls['termino'];
 
-	    this.generarForm.valueChanges.subscribe(data => this.onValueChanged(data));
-	    this.onValueChanged(); // (re)set validation messages now
+	    //this.generarForm.valueChanges.subscribe(data => this.onValueChanged(data));
+	    //this.onValueChanged(); // (re)set validation messages now
 	}
 
 	public onSubmit(values:Object):void {
@@ -85,8 +88,10 @@ export class InformeGenerarComponent implements OnInit {
 	}
 
 	private onValueChanged(data?: any) {
-    	this.formErrors = Validaciones.onValueChanged(data,this.generarForm,this.formErrors,Mensajes.validacionesGenerarInforme);    
+		console.log(this.formErrors);
+    	this.formErrors = Validaciones.onValueChanged(data,this.generarForm,this.formErrors,Mensajes.validacionesGenerarInforme);  
 	}
+
 	
 	// Eventos del Gráfico
 	public chartClicked(e:any):void {

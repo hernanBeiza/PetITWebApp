@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CabeceraComponent } from './cabecera/cabecera.component';
+import { LoginComponent } from './login/login.component';
 
 import { AdminModule } from './admin/admin.module';
 import { RecepcionistaModule } from './recepcionista/recepcionista.module';
-
-import { LoginComponent } from './login/login.component';
 
 import { LocalDBService } from './../services/LocalDB.service';
 import { UsuarioService } from './../services/Usuario.service';
@@ -19,14 +18,17 @@ import { CompartidoModule } from './../compartido.module';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
     Ng2Rut,
     CompartidoModule,
     AdminModule,RecepcionistaModule
   ],
   declarations: [
-    LoginComponent
+    LoginComponent,
+    CabeceraComponent
+  ],
+  exports: [ 
+    CabeceraComponent,
+    CompartidoModule
   ],
   providers: [
     RutValidator,

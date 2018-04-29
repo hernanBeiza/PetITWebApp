@@ -32,10 +32,13 @@ export class LoginComponent implements OnInit {
   public usuarioModel:UsuarioModel = new UsuarioModel();
 
   // Errores
+  /*
   public formErrors = {
     'rut': '',
     'contrasena': ''
   };
+  */
+  public formErrors = Mensajes.validacionesLogin;
 
   constructor(private router: Router, 
     private LocalDBService:LocalDBService, private UsuarioService: UsuarioService,
@@ -44,17 +47,18 @@ export class LoginComponent implements OnInit {
     private MzToastService: MzToastService) { }
 
   ngOnInit(): void { 
+    const db: Database = window.openDatabase('foo', '1.0', 'foo', 2 * 1024 * 1024);
 
     this.loginForm = this.fb.group({
-      'rut': [this.usuarioModel.user, Validators.compose([Validators.required, Validators.minLength(8)])],
+      'rut': [this.usuarioModel.user, Validators.compose([Validators.required])],
       'contrasena': [this.usuarioModel.pass, Validators.compose([Validators.required, Validators.minLength(8)])],
     });
 
     this.rut = this.loginForm.controls['rut'];
     this.contrasena = this.loginForm.controls['contrasena'];
 
-    this.loginForm.valueChanges.subscribe(data => this.onValueChanged(data));
-    this.onValueChanged(); // (re)set validation messages now
+    //this.loginForm.valueChanges.subscribe(data => this.onValueChanged(data));
+    //this.onValueChanged(); // (re)set validation messages now
 
     if(this.LocalDBService.obtenerUsuario()){
       console.log(this.LocalDBService.obtenerUsuario());

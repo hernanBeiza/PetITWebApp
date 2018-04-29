@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
-//import { BrowserModule  } from '@angular/platform-browser';
 
 import { Routes, RouterModule } from '@angular/router';
 

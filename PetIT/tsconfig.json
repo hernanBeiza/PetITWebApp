@@ -12,6 +12,7 @@
       "node_modules/@types"
     ],
     "types": [
+      "websql",
       "jquery",
       "materialize-css"
     ],

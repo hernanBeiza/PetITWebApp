@@ -12,45 +12,38 @@
 	                <form class="col s12" 
 	                [formGroup]="loginForm" 
 	                (ngSubmit)="onSubmit(loginForm.value)">
-	                        <div class="input-field col s12">
-	                            <input id="user" type="text" class="validate" 
-								[formControl]="rut" 
-								[(ngModel)]="usuarioModel.user"
-								validateRut
-								formatRut
-	                            required>
-								<div class="alert alert-danger" 
-								*ngIf="formErrors.rut" 
-								[innerHTML]="formErrors.rut"></div>
-	                            <label for="user">Rut</label>
-	                        </div>
-	                        <div class="input-field col s12">
-	                            <input id="pass" type="password" class="validate" 
-								[formControl]="contrasena" 
-								[(ngModel)]="usuarioModel.pass"
-	                            required>
-								<div class="alert alert-danger"
-								*ngIf="formErrors.contrasena"  
-								[innerHTML]="formErrors.contrasena"></div>
-	                            <label for="pass">Contraseña</label>
-	                        </div>
-	                        <!--
-	                        <div class="col s12">
-	                            <p>
-	                                <input type="checkbox" id="remember">
-	                                <label for="remember">Recuerdame</label>
-	                            </p>
-	                        </div>
-		                    -->
-	                    <div class="divider"></div>
-	                        <div class="col m12">
-	                            <p class="right-align">
-	                                <button class="btn btn-large waves-effect waves-light" 
-	                                type="submit" 
-	                                [disabled]="!loginForm.valid || enviandoFlag"
-	                                name="action">Inicio</button>
-	                            </p>
-	                        </div>
+						<mz-input-container class="input-field col s12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+                            <input mz-input id="user" type="text"
+                            placeholder="Rut" 
+							[formControl]="rut" 
+							[(ngModel)]="usuarioModel.user"
+							mz-validation
+					        [errorMessageResource]="formErrors.rut"
+							validateRut
+							formatRut
+							required>
+						</mz-input-container>
+						<mz-input-container class="input-field col s12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'key'"></i>
+                            <input mz-input id="pass" type="password"
+                            placeholder="Contraseña" 
+							[formControl]="contrasena" 
+							[(ngModel)]="usuarioModel.pass"
+							mz-validation
+					        [errorMessageResource]="formErrors.contrasena"
+					        required
+                            >
+						</mz-input-container>
+                    	<div class="divider"></div>
+                    	<div class="col m12">
+                        	<p class="right-align">
+                                <button class="btn btn-large waves-effect waves-light" 
+                                type="submit" 
+                                [disabled]="!loginForm.valid || enviandoFlag"
+                                name="action">Inicio</button>
+                            </p>
+	                    </div>
 	                </form>
 	            </div>
 
