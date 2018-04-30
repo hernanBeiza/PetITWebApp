@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -14,15 +15,15 @@ import { CompartidoModule } from './../../compartido.module';
 
 @NgModule({
 	imports: [
-    CommonModule,
-    CompartidoModule,
-    AdminRoutingModule,
-    InformeModule
+	    CommonModule,
+	    CompartidoModule,
+	    AdminRoutingModule,
+	    InformeModule
 	],
 	exports: [
-	RouterModule
+		RouterModule
 	],
 	providers: [],
-	declarations: [AdminComponent, InicioComponent, MenuComponent]
+	declarations: [MenuComponent, AdminComponent, InicioComponent]
 })
 export class AdminModule { }

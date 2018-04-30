@@ -11,12 +11,13 @@ import { UsuarioService } from './../../../services/Usuario.service';
 })
 export class MenuComponent implements OnInit {
 
-	constructor(private router:Router,private LocalDBService:LocalDBService, private UsuarioService:UsuarioService) { }
+	constructor(private router:Router, 
+		private LocalDBService:LocalDBService, 
+		private UsuarioService:UsuarioService) { }
 
 	ngOnInit() { }
 
 	public irRuta(ruta:String):void {
-		console.log("irRuta");
 	    this.router.navigate([ruta]);
 	}
 

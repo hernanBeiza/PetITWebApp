@@ -8,7 +8,7 @@ export class Mensajes {
 	    },
 	    'contrasena': {
 			'required':      'La Contraseña es obligatoria.',
-			'minlength':     'La Contraseña debe ser de al menos de 8 carácter de largo.'
+			'minlength':     'La Contraseña debe ser de al menos de 7 carácter de largo.'
 	    }
 	};
 
@@ -26,7 +26,13 @@ export class Mensajes {
 			'required':      'La especialidad es obligatoria.'
 		},
 		'especialista': {
-			'required':      'El especialista es obligatoria.'
+			'required':      'El especialista es obligatorio.'
+		},
+		'fecha': {
+			'required':      'La fecha es obligatoria.'
+		},
+		'hora': {
+			'required':      'La hora es obligatoria.'
 		}
 	}
 

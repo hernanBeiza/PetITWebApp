@@ -14,9 +14,6 @@ import { MenuComponent } from './menu/menu.component';
 import { RecepcionistaComponent } from './recepcionista.component';
 import { InicioComponent } from './inicio/inicio.component';
 
-
-
-
 // Services
 import { DuenoLocalDBService } from './../../services/DuenoLocalDB.service';
 import { CitaLocalDBService } from './../../services/CitaLocalDB.service';
@@ -24,10 +21,6 @@ import { EspecialidadLocalDBService } from './../../services/EspecialidadLocalDB
 import { EspecialistaLocalDBService } from './../../services/EspecialistaLocalDB.service';
 import { FechaLocalDBService } from './../../services/FechaLocalDB.service';
 import { HoraLocalDBService } from './../../services/HoraLocalDB.service';
-
-
-
-
 
 
 @NgModule({

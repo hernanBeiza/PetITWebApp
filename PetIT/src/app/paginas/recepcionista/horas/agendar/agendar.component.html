@@ -1,4 +1,4 @@
-	<div class="row">
+<div class="row">
 	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
 				<mz-card-title>
@@ -9,14 +9,15 @@
 	                <form
 	                [formGroup]="agendarForm" 
 	                (ngSubmit)="onSubmit(agendarForm.value)">		
-		                <!--
-						<mz-select-container>
+						<mz-select-container class="col s12 m12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'pill'"></i>
 							<select mz-select
+							(change)="seleccionarEspecialidad($event);"
 							id="especialidad"
 							formControlName="especialidad"
 							[label]="'Especialidad'"
 							[placeholder]="'2. Seleccionar especialidad'"
-	    					[(ngModel)]="especialidadModel"
+	    					[(ngModel)]="citaModel.especialidad"
 							mz-validation required
 					        [errorMessageResource]="formErrors.especialidad">
 							<option class="left circle"	*ngFor="let item of especialidades"
@@ -25,22 +26,50 @@
 							</option>
 							</select>
 						</mz-select-container>
-						<mz-select-container>
+						<mz-select-container class="col s12 m12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'medical-bag'"></i>
 							<select mz-select
 							id="especialista"
 							formControlName="especialista"
 							[label]="'Especialista'"
 							[placeholder]="'3. Seleccionar Especialista'"
-	    					[(ngModel)]="especialistaModel"
+	    					[(ngModel)]="citaModel.especialista"
 							mz-validation required
 					        [errorMessageResource]="formErrors.especialista">
-							<option class="left circle"	*ngFor="let item of especialidadModel?.especialistas"
+							<option class="left circle"	*ngFor="let item of especialistas"
 							[ngValue]="item">
 								{{item?.nombre}}
 							</option>
 							</select>
 						</mz-select-container>
+						<mz-datepicker-container class="col s12 m12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
+					        <input mz-datepicker mz-validation required 
+							id="fecha"
+							formControlName="fecha"
+							[label]="'Fecha'"
+							[placeholder]="'3. Fecha Preferencia'"
+	    					[(ngModel)]="citaModel.fecha"
+							mz-validation required
+							[errorMessageResource]="formErrors.fecha"
+							[options]="opcionesCalendario">
+						</mz-datepicker-container>
 
+						<mz-timepicker-container class="col s12">
+						  <i mz-icon-mdi mz-input-prefix
+						    [icon]="'clock'">
+						  </i>
+						  <input mz-timepicker mz-validation required
+  							id="hora"
+							formControlName="hora"
+							[label]="'Hora'"
+							[placeholder]="'4. Hora de preferencia'"
+	    					[(ngModel)]="hora"
+						    [options]="opcionesReloj"
+							[errorMessageResource]="formErrors.hora"
+						    type="text">
+						</mz-timepicker-container>
+						<!--
 						<mz-select-container>
 							<select mz-select
 							id="fecha"
@@ -56,7 +85,6 @@
 							</option>
 							</select>
 						</mz-select-container>
-
 						<mz-select-container>
 							<select mz-select
 							id="hora"

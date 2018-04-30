@@ -1,23 +1,19 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
-//import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
 import { InformeComponent } from './informe.component';
 import { InformeGenerarComponent } from './informe-generar/informe-generar.component';
 
 const routes: Routes =[
-  { path: '',  component: InformeComponent,
-      children: [
-      { path: 'generar',         component: InformeGenerarComponent },
-    ]
-  }
+  { path: 'informe',  component: InformeComponent },
+  { path: 'generar', component: InformeGenerarComponent},
 ];
 
+/*
 @NgModule({
   imports: [
     CommonModule,
-    //BrowserModule,
     RouterModule.forChild(routes)
   ],
   providers: [
@@ -28,7 +24,6 @@ const routes: Routes =[
   ],
 })
 export class InformeRoutingModule { }
+*/
 
-
-
-export const routing = RouterModule.forChild(routes);
+export const InformeRoutingModule: ModuleWithProviders = RouterModule.forChild(routes);

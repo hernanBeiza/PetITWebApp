@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import {CitaLocalDBService} from './../../../../services/CitaLocalDB.service';
+import { CitaLocalDBService } from './../../../../services/CitaLocalDB.service';
+import { MzToastService } from 'ng2-materialize';
 
 import {DuenoModel} from './../../../../models/DuenoModel';
 import {EspecialidadModel} from './../../../../models/EspecialidadModel';
@@ -19,12 +21,27 @@ export class FinalizarComponent implements OnInit {
 
 public cita:CitaModel = new CitaModel();
 
-  constructor(private CitaLocalDBService:CitaLocalDBService) { }
+  constructor(private CitaLocalDBService:CitaLocalDBService, private ActivatedRoute:ActivatedRoute, 
+  	private MzToastService:MzToastService) { }
 
-  ngOnInit(){
-  	let citas:Array<CitaModel> =this.CitaLocalDBService.obtenerVarios();
-  	this.cita = citas[citas.length-1];
-  	console.log(this.cita);
-  }
+	ngOnInit(){
+	    this.ActivatedRoute.params.subscribe((param: any) => {
+			let idcita = param['idcita'];
+			if(idcita != undefined || idcita == "undefined"){
+				this.CitaLocalDBService.obtenerConID(idcita).then((data:any)=>{
+					console.log(data);
+					if(data.result){
+						this.cita = data.cita;
+					} else {
+						this.MzToastService.show(data.errores,5000,"red");
+					}
+				},(dataError:any)=>{
+					this.MzToastService.show(dataError.errores,5000,"red");
+				});
+			} else {
+				this.MzToastService.show("No hay id de dueno.",5000,"red");
+			}
+		});
+	}
 
 }

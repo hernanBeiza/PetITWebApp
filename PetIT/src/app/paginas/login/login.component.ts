@@ -47,11 +47,9 @@ export class LoginComponent implements OnInit {
     private MzToastService: MzToastService) { }
 
   ngOnInit(): void { 
-    const db: Database = window.openDatabase('foo', '1.0', 'foo', 2 * 1024 * 1024);
-
     this.loginForm = this.fb.group({
       'rut': [this.usuarioModel.user, Validators.compose([Validators.required])],
-      'contrasena': [this.usuarioModel.pass, Validators.compose([Validators.required, Validators.minLength(8)])],
+      'contrasena': [this.usuarioModel.pass, Validators.compose([Validators.required, Validators.minLength(7)])],
     });
 
     this.rut = this.loginForm.controls['rut'];
@@ -59,10 +57,6 @@ export class LoginComponent implements OnInit {
 
     //this.loginForm.valueChanges.subscribe(data => this.onValueChanged(data));
     //this.onValueChanged(); // (re)set validation messages now
-
-    if(this.LocalDBService.obtenerUsuario()){
-      console.log(this.LocalDBService.obtenerUsuario());
-    }
 
   }
 
@@ -78,6 +72,37 @@ export class LoginComponent implements OnInit {
   }
 
   private iniciarSesion(): void {
+    this.UsuarioService.iniciarSesion(this.usuarioModel.user,this.usuarioModel.pass)
+    .then((data:any) => {
+      console.log(data);
+      this.MzToastService.show(data.mensajes,3000,'green');
+      var model:UsuarioModel = data.usuario as UsuarioModel;
+      var ruta = "";
+      switch (model.idusuariorol) {
+        case 1:
+          console.log("admin");
+          ruta = 'admin/inicio';
+          this.router.navigate([ruta]);                      
+          break;
+        case 2:
+          console.log("recepcionista")
+          ruta = 'recepcionista/inicio';
+          this.router.navigate([ruta]);                      
+          break;        
+        default:
+          console.log("propietario")
+          ruta = 'propietario/inicio';
+          this.router.navigate([ruta]);                      
+          break;
+      } 
+      console.log(ruta);
+    },(dataError)=>{
+      console.warn(dataError);
+      console.log(this);
+      this.MzToastService.show(dataError.errores,3000,'red');
+    });
+
+    /*
     this.MzToastService.show("Bienvenido",3000);
     var ruta = "";
     switch (this.usuarioModel.user) {
@@ -98,9 +123,9 @@ export class LoginComponent implements OnInit {
         break;
     } 
     console.log(ruta);
-
     this.LocalDBService.guardarUsuario(this.usuarioModel);
-
+    */
+   
     // TODO
     // Conectar con backend
   	/*

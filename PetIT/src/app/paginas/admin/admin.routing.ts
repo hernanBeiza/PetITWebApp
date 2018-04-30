@@ -1,28 +1,22 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
-
 import { AdminComponent } from './admin.component';
 import { InicioComponent } from './inicio/inicio.component';
-import { InformeGenerarComponent } from './informe/informe-generar/informe-generar.component';
+import { InformeModule } from './informe/informe.module';
 
-const routes: Routes =[
+
+const routes: Routes = [
   { path: 'admin',  component: AdminComponent,
-      children: [
+    children: [
       { path: 'inicio',                 component: InicioComponent },
-      { path: 'informe/generar',         component: InformeGenerarComponent },
-    ]
+      { path: 'informe',                loadChildren: () => InformeModule },
+    ],
   }
 ];
 
 /*
-const routes: Routes =[
-  { path: '',  component: AdminComponent },
-  { path: 'inicio',component: InicioComponent },
-];
-*/
-
 @NgModule({
   imports: [
     CommonModule,
@@ -36,4 +30,6 @@ const routes: Routes =[
   ],
 })
 export class AdminRoutingModule { }
+*/
 
+export const AdminRoutingModule: ModuleWithProviders = RouterModule.forChild(routes);

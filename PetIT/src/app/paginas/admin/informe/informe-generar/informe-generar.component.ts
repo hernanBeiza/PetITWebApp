@@ -57,9 +57,12 @@ export class InformeGenerarComponent implements OnInit {
 	public pieChartType:string = 'pie';
  
 	constructor(private fb:FormBuilder,
-		private MzToastService: MzToastService) { }
+		private MzToastService: MzToastService) { 
+		console.log("InformeGenerarComponent");
+	}
 
 	ngOnInit() {
+		console.log("InformeGenerarComponent: ngOnInit();");
 
 	    this.generarForm = this.fb.group({
 	      'inicio': [this.informeModel.fechaInicio, Validators.compose([Validators.required])],

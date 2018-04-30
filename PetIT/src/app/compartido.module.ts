@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { MzNavbarModule, MzSidenavModule, MzModalModule, MzSpinnerModule, MzCardModule, 
   MzCollapsibleModule, MzIconMdiModule, MzRadioButtonModule, MzInputModule, MzButtonModule, 
-  MzSelectModule, MzValidationModule, MzDatepickerModule } from 'ng2-materialize';
+  MzSelectModule, MzValidationModule, MzDatepickerModule, MzTimepickerModule } from 'ng2-materialize';
 import { MzModalService, MzToastService } from 'ng2-materialize'
 
 // Pipes, filtro
@@ -18,13 +18,13 @@ import { FiltroPipe } from './pipes/filtro.pipe';
     FormsModule, ReactiveFormsModule, RouterModule,
     MzNavbarModule, MzSidenavModule, MzModalModule,MzSpinnerModule,MzCardModule,MzCollapsibleModule,
     MzIconMdiModule, MzRadioButtonModule, MzInputModule, MzButtonModule, MzSelectModule, MzValidationModule, 
-    MzDatepickerModule
+    MzDatepickerModule, MzTimepickerModule
   ],
   exports: [
     FormsModule, ReactiveFormsModule, RouterModule, 
     MzNavbarModule, MzSidenavModule, MzModalModule,MzSpinnerModule,MzCardModule,MzCollapsibleModule,
     MzIconMdiModule, MzRadioButtonModule, MzInputModule, MzButtonModule, MzSelectModule, MzValidationModule, 
-    MzDatepickerModule,
+    MzDatepickerModule, MzTimepickerModule, 
     FiltroPipe
   ],
   providers: [

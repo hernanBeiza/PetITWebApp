@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InformeComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+  	console.log("InformeComponent");
+  }
 
   ngOnInit() {
+  	console.log("InformeComponent: ngOnInit();");
   }
 
 }

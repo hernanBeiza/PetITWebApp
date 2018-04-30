@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
 	constructor(private router:Router,private LocalDBService:LocalDBService, private UsuarioService:UsuarioService) { }
 
 	ngOnInit() { 
-		console.log("MenuComponent");
+		//console.log("MenuComponent");
 	}
 
 	public irRuta(ruta:String):void {

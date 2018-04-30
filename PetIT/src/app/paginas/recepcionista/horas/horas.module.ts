@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { CompartidoModule } from './../../../compartido.module';
+
+import { HorasRoutingComponent } from './horas.routing';
 
 import { HorasComponent } from './horas.component';
 
@@ -15,10 +18,14 @@ import { FinalizarComponent } from './finalizar/finalizar.component';
 @NgModule({
 	imports: [
 		CommonModule,
-		CompartidoModule
+	    RouterModule,
+		RouterModule,
+		CompartidoModule,
+		HorasRoutingComponent
 	],
 	exports: [
-		CompartidoModule
+		CompartidoModule,
+		RouterModule
 	],
 	declarations: [
 		HorasComponent, 

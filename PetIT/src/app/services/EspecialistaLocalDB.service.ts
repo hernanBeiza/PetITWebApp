@@ -1,39 +1,112 @@
 import { Injectable } from '@angular/core';
 
+import 'rxjs/add/operator/map'
+import { Observable } from 'rxjs/Rx';
+
+import { LocalDBService } from './LocalDB.service';
+
 import { EspecialistaModel } from './../models/EspecialistaModel';
 import { EspecialidadModel } from './../models/EspecialidadModel';
 
 @Injectable()
 export class EspecialistaLocalDBService {
 
-  public constEspecialidad:string = "DBESPECIALISTAS";
-
-  constructor() { 
-    if(this.obtener.length==0){
-      let item = new EspecialistaModel(1,"Hans Poffald");
-      let item2 = new EspecialistaModel(1,"Graciela Baldrich");
-      this.guardarVarios([item,item2]);
-    }
-  }
+  constructor(private LocalDBService:LocalDBService) { }
  
-  public guardarVarios(duenos:Array<EspecialistaModel>):void{
-    localStorage.setItem(this.constEspecialidad,JSON.stringify(duenos));
+
+  public obtener(): Promise<Object> {
+    var db = this.LocalDBService.obtenerDB();
+    var promesa = new Promise((resolve, reject) => {
+      db.transaction(function (tx){
+        var sql = "SELECT * FROM especialista";
+        console.info(sql);
+        tx.executeSql(sql,[],function(tx,results){
+          console.log(tx,results,results.rows.length);
+          if(results.rows.length>0){
+            var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
+            var especialidades:Array<EspecialistaModel> = new Array<EspecialistaModel>();
+            for (var i = 0; i < results.rows.length; i++){
+              var item:any = results.rows[i] as any;
+              let especialidad:EspecialistaModel = new EspecialistaModel(item.idespecialidad,item.nombre);
+              especialidades.push(especialidad);
+            }
+            var result = {result:true,mensajes:"Especialistas encontrados",especialidades:especialidades};
+            resolve(result);
+          } else {
+            var resultNoEncontrado = {result:false,errores:"No se han encontrado especialistas"};
+            reject(resultNoEncontrado);                        
+          }
+        },function(tx,results){
+          console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          reject(result);            
+          return false;
+        });
+      });
+    });
+    return promesa;    
   }
 
-  public guardar(dueno:EspecialistaModel):void {
-    localStorage.setItem(this.constEspecialidad,JSON.stringify(dueno));
+  public obtenerConID(idespecialista:number): Promise<Object> {
+    var db = this.LocalDBService.obtenerDB();
+    var promesa = new Promise((resolve, reject) => {
+      db.transaction(function (tx){
+        var sql = "SELECT * FROM especialista WHERE idespecialista="+idespecialista.toString();
+        console.info(sql);
+        tx.executeSql(sql,[],function(tx,results){
+          console.log(tx,results,results.rows.length);
+          if(results.rows.length>0){
+            var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
+            var item:any = results.rows[0] as any;
+            let especialista:EspecialistaModel = new EspecialistaModel(item.idespecialista,item.nombre);
+            var result = {result:true,mensajes:"Especialista encontrado",especialista:especialista};
+            resolve(result);
+          } else {
+            var resultNoEncontrado = {result:false,errores:"No se han encontrado especialista"};
+            reject(resultNoEncontrado);                        
+          }
+        },function(tx,results){
+          console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          reject(result);            
+          return false;
+        });
+      });
+    });
+    return promesa;    
   }
 
-  public obtener():Array<EspecialistaModel> {
-    var duenos:Array<EspecialistaModel> = new Array<EspecialistaModel>();
-    let itemsArray = JSON.parse(localStorage.getItem(this.constEspecialidad));
-    for (var i = 0;i<itemsArray.length; i++) {
-      let item = itemsArray[i] as any;
-      console.log(item);
-
-      //var model:EspecialistaModel = new EspecialistaModel(item.iddueno,item.nombre,item.rut,item.direccion,item.valid);
-      //duenos.push(model);
-    }
-    return duenos;
+  public obtenerConEspecialidad(especialidad:EspecialidadModel): Promise<Object> {
+    var db = this.LocalDBService.obtenerDB();
+    var promesa = new Promise((resolve, reject) => {
+      db.transaction(function (tx){
+        var sql = "SELECT * FROM especialista WHERE idespecialidad="+especialidad.idespecialidad.toString();
+        console.info(sql);
+        tx.executeSql(sql,[],function(tx,results){
+          console.log(tx,results,results.rows.length);
+          if(results.rows.length>0){
+            var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
+            var especialistas:Array<EspecialistaModel> = new Array<EspecialistaModel>();
+            for (var i = 0; i < results.rows.length; i++){
+              var item:any = results.rows[i] as any;
+              let especialista:EspecialistaModel = new EspecialistaModel(item.idespecialista,item.nombre);
+              especialistas.push(especialista);
+            }
+            var result = {result:true,mensajes:"Especialistas encontrados",especialistas:especialistas};
+            resolve(result);
+          } else {
+            var resultNoEncontrado = {result:false,errores:"No se han encontrado especialistas"};
+            reject(resultNoEncontrado);                        
+          }
+        },function(tx,results){
+          console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          reject(result);            
+          return false;
+        });
+      });
+    });
+    return promesa;    
   }
+
 }

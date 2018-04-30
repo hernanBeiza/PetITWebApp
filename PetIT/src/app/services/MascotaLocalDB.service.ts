@@ -13,15 +13,10 @@ export class MascotaLocalDBService {
     localStorage.setItem(this.constMascota,JSON.stringify(mascota));
   }
 
-  public obtener():MascotaModel {
+  public obtenerConID(id:string):MascotaModel {
     let mascota:MascotaModel;
-    mascota = JSON.parse(localStorage.getItem(this.constMascota));
     return mascota;
   }
 
-  public borrarUsuario():boolean {
-    localStorage.removeItem(this.constMascota);
-    return true;
-  }
 
 }
