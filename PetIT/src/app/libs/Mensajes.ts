@@ -36,18 +36,38 @@ export class Mensajes {
 		}
 	}
 
-	public static validacionesProducto = {
+	public static validacionesAgregarDueno = {
 		'nombre': {
-			'required':      'El nombre del producto es obligatorio.'
+			'required':			'El nombre del dueño es obligatorio.'
+		},		
+		'apellido': {
+			'required':			'El apellido del dueño es obligatorio.'
+		},		
+		'email': {
+			'required':			'El email del dueño es obligatorio.',
+			'email':			'El email del dueño es inválido.'
 		},
-		'codigo': {
-			'required':      'El código es obligatorio.',
-			'minlength':     'El código debe ser de al menos de 8 carácter de largo',
-			'maxlength':     'El código debe ser de a lo más 8 caracteres de largo'
+	    'rut': {
+			'required':			'El rut es obligatorio.',
+			'minlength':		'El rut debe ser de al menos de 9 carácter de largo.',
+			'invalidRut':		'El rut es inválido.'
+	    },
+		'telefono': {
+			'required':			'El teléfono es obligatorio.',
 		},
-		'descripcion': {
-			'required':      'La descripción es obligatoria.',
-		}
+	}	
+	public static validacionesAgregarMascota = {
+		'rutDueno': {
+			'required':			'El rut del dueño es obligatorio.',
+			'minlength':		'El rut debe ser de al menos de 9 carácter de largo.',
+			'invalidRut':		'El rut es inválido.'
+		},		
+		'nombreDueno': {
+			'required':			'El nombre del dueño es obligatorio.'
+		},
+		'nombreMascota': {
+			'required':			'El nombre de la mascota es obligatorio.'
+		},
 	}
 
 	public static validacionesCentro = {

@@ -39,7 +39,7 @@ export class AgendarComponent implements OnInit {
 
   public enviandoFlag:boolean = false;
 
-  @ViewChild('bottomSheetModal') bottomSheetModal: MzModalComponent;
+  @ViewChild('agendarSheetModal') agendarSheetModal: MzModalComponent;
   @ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
 
   // Errores
@@ -183,7 +183,7 @@ export class AgendarComponent implements OnInit {
 
   public onSubmit(values:Object):void {
     if (this.agendarForm.valid) {
-      this.reservar();
+      this.agendarSheetModal.open();
     } else {
       this.MzToastService.show("Revisa los datos de tu agendamiento",5000);
     }
@@ -222,19 +222,19 @@ export class AgendarComponent implements OnInit {
     if(enviar){
       this.citaModel.fecha+=" "+this.hora;
       console.log(this.citaModel);
-      this.agendarHora();
+      this.enviar();
     } else {
       this.errorSheetModal.open();
     }
 
   }
 
-  public agendarHora(): void {
-    console.log("agendarHora");
+  public enviar(): void {
+    console.log("enviar");
     this.CitaLocalDBService.guardar(this.citaModel).then((data:any)=>{
       console.log(data);
       if(data.result){          
-        this.bottomSheetModal.close();
+        this.agendarSheetModal.close();
         this.MzToastService.show(data.mensajes, 4000, 'green');    
         this.router.navigate(['/recepcionista/horas/finalizar/'+data.cita.idcita]);
       } else {

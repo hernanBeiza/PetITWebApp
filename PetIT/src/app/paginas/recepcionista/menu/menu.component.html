@@ -4,12 +4,10 @@
   [fixed]="true"
   >
   <mz-sidenav-header>
-    <a href="/#/">
-      <img src="assets/img/petitlogo.png" width="100px">
-    </a>
+    <img class="circle" src="assets/img/petitlogo.png" width="100px">
   </mz-sidenav-header>
   <mz-sidenav-subheader>Pet-IT</mz-sidenav-subheader>
-  
+  <!--
   <mz-collapsible (click)="irRuta('/recepcionista/inicio');">
     <mz-collapsible-item>
       <mz-collapsible-item-header>        
@@ -74,13 +72,112 @@
       </mz-collapsible-item-header>
     </mz-collapsible-item>
   </mz-collapsible>
+-->
+
+
+
+  <mz-sidenav-collapsible (click)="irRuta('/recepcionista/inicio');" [onClose]="closeFunctionCallback" [onOpen]="openFunctionCallback">
+    <mz-sidenav-collapsible-header>
+      <i mz-icon-mdi mz-input-prefix [icon]="'home'"></i>
+      Inicio
+    </mz-sidenav-collapsible-header>
+    <mz-sidenav-collapsible-content>
+    </mz-sidenav-collapsible-content>
+  </mz-sidenav-collapsible>
+
+  <mz-sidenav-collapsible [onClose]="closeFunctionCallback" [onOpen]="openFunctionCallback">
+    <mz-sidenav-collapsible-header>
+      <i mz-icon-mdi mz-input-prefix [icon]="'calendar-clock'"></i>
+      Horas
+    </mz-sidenav-collapsible-header>
+    <mz-sidenav-collapsible-content>
+      <mz-sidenav-link>
+        <a [routerLink]="['/recepcionista/horas/buscar']">
+          <i mz-icon-mdi mz-input-prefix [icon]="'plus'"></i>
+          Agendar Hora
+        </a>
+      </mz-sidenav-link>
+      <mz-sidenav-link>
+        <a [routerLink]="['/recepcionista/horas/consultar']">
+          <i mz-icon-mdi mz-input-prefix [icon]="'format-list-bulleted'"></i>
+          Consultar Horas
+        </a>
+      </mz-sidenav-link>
+    </mz-sidenav-collapsible-content>
+  </mz-sidenav-collapsible>
+
+  <mz-sidenav-collapsible [onClose]="closeFunctionCallback" [onOpen]="openFunctionCallback">
+    <mz-sidenav-collapsible-header>
+      <i mz-icon-mdi mz-input-prefix [icon]="'account-multiple'"></i>
+      Dueños
+    </mz-sidenav-collapsible-header>
+    <mz-sidenav-collapsible-content>
+      <mz-sidenav-link>
+        <a [routerLink]="['/recepcionista/duenos/agregar']">
+          <i mz-icon-mdi mz-input-prefix [icon]="'plus'"></i>
+          Registrar Dueño
+        </a>
+      </mz-sidenav-link>
+      <mz-sidenav-link>
+        <a [routerLink]="['/recepcionista/duenos/consultar']">
+          <i mz-icon-mdi mz-input-prefix [icon]="'format-list-bulleted'"></i>
+          Consultar Dueños
+        </a>
+      </mz-sidenav-link>
+    </mz-sidenav-collapsible-content>
+  </mz-sidenav-collapsible>
+
+  <mz-sidenav-collapsible [onClose]="closeFunctionCallback" [onOpen]="openFunctionCallback">
+    <mz-sidenav-collapsible-header>
+      <i mz-icon-mdi mz-input-prefix [icon]="'paw'"></i>
+      Mascotas
+    </mz-sidenav-collapsible-header>
+    <mz-sidenav-collapsible-content>
+      <!--
+      <mz-sidenav-link>
+        <a [routerLink]="['/recepcionista/mascotas/agregar']">
+          <i class="material-icons">add</i>
+          Registrar Mascotas
+        </a>
+      </mz-sidenav-link>
+      -->
+      <mz-sidenav-link>
+        <a [routerLink]="['/recepcionista/mascotas/consultar']">
+          <i mz-icon-mdi mz-input-prefix [icon]="'format-list-bulleted'"></i>
+          Consultar Mascotas
+        </a>
+      </mz-sidenav-link>
+    </mz-sidenav-collapsible-content>
+  </mz-sidenav-collapsible>
+
+  <mz-sidenav-collapsible [onClose]="closeFunctionCallback" [onOpen]="openFunctionCallback">
+    <mz-sidenav-collapsible-header>
+      <i mz-icon-mdi mz-input-prefix [icon]="'email'"></i>
+      Notificaciones
+    </mz-sidenav-collapsible-header>
+    <mz-sidenav-collapsible-content>
+      <mz-sidenav-link>
+        <a [routerLink]="['/recepcionista/notificaciones/enviar']">
+        <i mz-icon-mdi mz-input-prefix [icon]="'send'"></i>
+          Enviar notificación
+        </a>
+      </mz-sidenav-link>
+    </mz-sidenav-collapsible-content>
+  </mz-sidenav-collapsible>
+
+
+  <mz-sidenav-collapsible (click)="cerrarSesion();" [onClose]="closeFunctionCallback" [onOpen]="openFunctionCallback">
+    <mz-sidenav-collapsible-header>
+      <i class="material-icons">close</i>
+      Cerrar sesión
+    </mz-sidenav-collapsible-header>
+    <mz-sidenav-collapsible-content>
+    </mz-sidenav-collapsible-content>
+  </mz-sidenav-collapsible>
 
 </mz-sidenav>
-
-<!-- Botón para abrir menú en móvil -->
+  <!-- Botón para abrir menú en móvil -->
 <button class="sidenav-button hide-on-large-only btn btn-floating btn-large waves-effect waves-light" 
 id="btn-sidenav" mz-button id="btn-sidenav-demo">
   <i class="mdi mdi-menu mdi-24px"></i>
 </button>
-
-

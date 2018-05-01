@@ -114,7 +114,7 @@
 	</div>
 
 	<!-- Ventana modal -->
-<mz-modal #bottomSheetModal [options]="modalOptions">
+<mz-modal #agendarSheetModal [options]="modalOptions">
 	<mz-modal-header>
 		<h4>¿Desea tomar esta hora?</h4>
 	</mz-modal-header>
@@ -125,7 +125,7 @@
 	</mz-modal-content>
 	<mz-modal-footer>
 		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
-		<button mz-button [flat]="true" (click)="agendarHora();">Agendar Hora</button>
+		<button mz-button [flat]="true" class="green" (click)="agendar();">Agendar Hora</button>
 	</mz-modal-footer>
 </mz-modal>
 <!-- Ventana modal error -->

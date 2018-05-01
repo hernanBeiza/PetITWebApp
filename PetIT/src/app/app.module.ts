@@ -10,34 +10,23 @@ import { AppRoutingModule } from './app.routing';
 
 import { AppComponent } from './app.component';
 
-import { LoginComponent } from './paginas/login/login.component';
-
-import { AdminModule } from './paginas/admin/admin.module';
-import { RecepcionistaModule } from './paginas/recepcionista/recepcionista.module';
+import { PaginasModule } from './paginas/paginas.module';
 
 import { LocalDBService } from './services/LocalDB.service';
-import { UsuarioService } from './services/Usuario.service';
-
-import { Ng2Rut, RutValidator } from 'ng2-rut';
-
-import { CompartidoModule } from './compartido.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
     HttpModule,
-    CompartidoModule, Ng2Rut,
     AppRoutingModule,
-    AdminModule,
-    RecepcionistaModule,
+    PaginasModule
   ],
-  providers: [LocalDBService,UsuarioService,RutValidator],
+  providers: [LocalDBService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

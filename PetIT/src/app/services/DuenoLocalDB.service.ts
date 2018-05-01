@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map'
 import { Observable } from 'rxjs/Rx';
 
+import { Subject } from 'rxjs/Subject';
+
 import { LocalDBService } from './LocalDB.service';
 
 import { MascotaModel } from './../models/MascotaModel';
@@ -15,6 +17,8 @@ export class DuenoLocalDBService {
 
   public constDueno:string = "DBDUENO";
   public constDuenoSelected:string = "DBDUENOSELECTED";
+
+  private subject = new Subject<any>();
 
   constructor(private LocalDBService:LocalDBService) { 
     /*
@@ -57,7 +61,92 @@ export class DuenoLocalDBService {
     return dueno;
   }
 
+  public guardar(dueno:DuenoModel): Promise<Object> {
+    var db = this.LocalDBService.obtenerDB();
+    var promesa = new Promise((resolve, reject) => {
+      db.transaction(function (tx){
+        var sql = "INSERT INTO dueno (rut,nombre,direccion) VALUES('"+dueno.rut+"','"+dueno.nombre+"','"+dueno.direccion+"')";
+        console.info(sql);
+        tx.executeSql(sql,[],function(tx,results){
+          console.log(tx,results,results.rows.length);
+          if(results.insertId>0){
+            var result = {result:true,mensajes:"Dueño guardado correctamente"};
+            resolve(result);
+          } else {
+            var resultNoEncontrado = {result:false,errores:"No se ha podido guardar el dueño"};
+            reject(resultNoEncontrado);                        
+          }
+        },function(tx,results){
+          console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          reject(result);            
+          return false;
+        });
+      });
+    });
+    return promesa;    
+  }  
+
+  public modificar(dueno:DuenoModel): Promise<Object> {
+    var db = this.LocalDBService.obtenerDB();
+    var promesa = new Promise((resolve, reject) => {
+      db.transaction(function (tx){
+        var sql = "UPDATE dueno SET rut='"+dueno.rut+"', nombre='"+dueno.nombre+"', direccion='"+dueno.direccion+"' WHERE iddueno = "+dueno.iddueno;
+        console.info(sql);
+        tx.executeSql(sql,[],function(tx,results){
+          console.log(tx,results,results.rows.length);
+          if(results.rowsAffected>0){
+            var result = {result:true,mensajes:"Dueño modificado correctamente"};
+            resolve(result);
+          } else {
+            var resultNoEncontrado = {result:false,errores:"No se han podido modificar los datos del dueño"};
+            reject(resultNoEncontrado);                        
+          }
+        },function(tx,results){
+          console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          reject(result);            
+          return false;
+        });
+      });
+    });
+    return promesa;    
+  }
+
   public obtener(): Promise<Object> {
+    var db = this.LocalDBService.obtenerDB();
+    var promesa = new Promise((resolve, reject) => {
+      db.transaction(function (tx){
+        var sql = "SELECT * FROM dueno"
+        console.info(sql);
+        tx.executeSql(sql,[],function(tx,results){
+          console.log(tx,results,results.rows.length);
+          if(results.rows.length>0){
+            var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
+            var duenos:Array<DuenoModel> = new Array<DuenoModel>();
+            for (var i = 0; i < results.rows.length; i++){
+              var item:any = results.rows[i] as any;
+              var model:DuenoModel = new DuenoModel(item.iddueno,item.idusuario,item.rut,item.nombre,item.direccion);
+              duenos.push(model);
+            }
+            var result = {result:true,mensajes:"Dueños encontrados",duenos:duenos};
+            resolve(result);
+          } else {
+            var resultNoEncontrado = {result:false,errores:"No se han encontrado dueños"};
+            reject(resultNoEncontrado);                        
+          }
+        },function(tx,results){
+          console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          reject(result);            
+          return false;
+        });
+      });
+    });
+    return promesa;    
+  }
+
+  public obtenerConMascota(): Promise<Object> {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -70,14 +159,14 @@ export class DuenoLocalDBService {
             var duenos:Array<DuenoModel> = new Array<DuenoModel>();
             for (var i = 0; i < results.rows.length; i++){
               var item:any = results.rows[i] as any;
-              var mascota:MascotaModel = new MascotaModel(item.idmascota,item.nombreMascota);
+              var mascota:MascotaModel = new MascotaModel(item.idmascota,item.iddueno,item.nombreMascota);
               var model:DuenoModel = new DuenoModel(item.iddueno,item.idusuario,item.rut,item.nombre,item.direccion,mascota);
               duenos.push(model);
             }
             var result = {result:true,mensajes:"Dueños encontrados",duenos:duenos};
             resolve(result);
           } else {
-            var resultNoEncontrado = {result:false,errores:"No se han encontrados dueños"};
+            var resultNoEncontrado = {result:false,errores:"No se han encontrado dueños"};
             reject(resultNoEncontrado);                        
           }
         },function(tx,results){
@@ -101,35 +190,7 @@ export class DuenoLocalDBService {
           console.log(tx,results,results.rows.length);
           if(results.rows.length>0){
             var item:any = results.rows[0] as any;
-            var mascota:MascotaModel = new MascotaModel(item.idmascota,item.nombreMascota);
-            var model:DuenoModel = new DuenoModel(item.iddueno,item.idusuario,item.rut,item.nombre,item.direccion,mascota);
-            var result = {result:true,mensajes:"Dueño encontrado",dueno:model};
-            resolve(result);
-          } else {
-            var resultNoEncontrado = {result:false,errores:"No se ha encontrado dueño con esos datos"};
-            reject(resultNoEncontrado);                        
-          }
-        },function(tx,results){
-          console.log(tx,results);
-          var result = {result:false,errores:"Intenta de nuevo más tarde"};
-          reject(result);            
-          return false;
-        });
-      });
-    });
-    return promesa;    
-  }
-  public obtenerDuenoConMascota(iddueno:number,idmascota:number): Promise<Object> {
-    var db = this.LocalDBService.obtenerDB();
-    var promesa = new Promise((resolve, reject) => {
-      db.transaction(function (tx){
-        var sql = "SELECT du.*, ma.idmascota,ma.iddueno,ma.nombre as nombreMascota FROM dueno AS du INNER JOIN mascota AS ma ON du.iddueno = ma.iddueno WHERE du.iddueno = "+iddueno.toString()+ " AND ma.idmascota = "+idmascota.toString();
-        console.info(sql);
-        tx.executeSql(sql,[],function(tx,results){
-          console.log(tx,results,results.rows.length);
-          if(results.rows.length>0){
-            var item:any = results.rows[0] as any;
-            var mascota:MascotaModel = new MascotaModel(item.idmascota,item.nombreMascota);
+            var mascota:MascotaModel = new MascotaModel(item.idmascota,item.iddueno,item.nombreMascota);
             var model:DuenoModel = new DuenoModel(item.iddueno,item.idusuario,item.rut,item.nombre,item.direccion,mascota);
             var result = {result:true,mensajes:"Dueño encontrado",dueno:model};
             resolve(result);
@@ -148,5 +209,109 @@ export class DuenoLocalDBService {
     return promesa;    
   }
 
+  public obtenerDuenoConMascota(iddueno:number,idmascota:number): Promise<Object> {
+    var db = this.LocalDBService.obtenerDB();
+    var promesa = new Promise((resolve, reject) => {
+      db.transaction(function (tx){
+        var sql = "SELECT du.*, ma.idmascota,ma.iddueno,ma.nombre as nombreMascota FROM dueno AS du INNER JOIN mascota AS ma ON du.iddueno = ma.iddueno WHERE du.iddueno = "+iddueno.toString()+ " AND ma.idmascota = "+idmascota.toString();
+        console.info(sql);
+        tx.executeSql(sql,[],function(tx,results){
+          console.log(tx,results,results.rows.length);
+          if(results.rows.length>0){
+            var item:any = results.rows[0] as any;
+            var mascota:MascotaModel = new MascotaModel(item.idmascota,item.iddueno,item.nombreMascota);
+            var model:DuenoModel = new DuenoModel(item.iddueno,item.idusuario,item.rut,item.nombre,item.direccion,mascota);
+            var result = {result:true,mensajes:"Dueño encontrado",dueno:model};
+            resolve(result);
+          } else {
+            var resultNoEncontrado = {result:false,errores:"No se ha encontrado dueño con esos datos"};
+            reject(resultNoEncontrado);                        
+          }
+        },function(tx,results){
+          console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          reject(result);            
+          return false;
+        });
+      });
+    });
+    return promesa;    
+  }
+
+  public buscarDuenoConRut(rut:string): void{
+    //SELECT * FROM dueno WHERE rut LIKE 'g%'
+    if(rut.length>3){
+      var db = this.LocalDBService.obtenerDB();
+      db.transaction((tx)=>{
+        var sql = "SELECT du.*, ma.idmascota,ma.iddueno,ma.nombre as nombreMascota FROM dueno AS du INNER JOIN mascota AS ma ON du.iddueno = ma.iddueno WHERE du.rut LIKE '"+rut.toString()+"%'";
+        console.info(sql);
+        tx.executeSql(sql,[],(tx,results)=>{
+          console.log(tx,results,results.rows.length);
+          if(results.rows.length>0){
+            var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
+            var duenos:Array<DuenoModel> = new Array<DuenoModel>();
+            for (var i = 0; i < results.rows.length; i++){
+              var item:any = results.rows[i] as any;
+              var mascota:MascotaModel = new MascotaModel(item.idmascota,item.iddueno,item.nombreMascota);
+              var model:DuenoModel = new DuenoModel(item.iddueno,item.idusuario,item.rut,item.nombre,item.direccion,mascota);
+              duenos.push(model);
+            }
+            var result = {result:true,mensajes:"Dueños encontrados",duenos:duenos};
+            this.subject.next(result);
+          } else {
+            var resultNoEncontrado = {result:false,errores:"No se han encontrados dueños"};
+            this.subject.next(resultNoEncontrado);
+          }
+        },(tx,results)=>{
+          console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          this.subject.next(result);
+          return false;
+        });
+      });      
+    }
+  }
+
+  public buscarDuenoConNombre(nombre:string):void {
+    //SELECT * FROM dueno WHERE nombre LIKE 'g%'
+    if(nombre.length>3){
+      var db = this.LocalDBService.obtenerDB();
+      db.transaction((tx)=>{
+        var sql = "SELECT du.*, ma.idmascota,ma.iddueno,ma.nombre as nombreMascota FROM dueno AS du INNER JOIN mascota AS ma ON du.iddueno = ma.iddueno WHERE du.nombre LIKE '"+nombre.toString()+"%'";
+        console.info(sql);
+        tx.executeSql(sql,[],(tx,results)=>{
+
+          console.log(tx,results,results.rows.length);
+          if(results.rows.length>0){
+            var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
+            var duenos:Array<DuenoModel> = new Array<DuenoModel>();
+            for (var i = 0; i < results.rows.length; i++){
+              var item:any = results.rows[i] as any;
+              var mascota:MascotaModel = new MascotaModel(item.idmascota,item.iddueno,item.nombreMascota);
+              var model:DuenoModel = new DuenoModel(item.iddueno,item.idusuario,item.rut,item.nombre,item.direccion,mascota);
+              duenos.push(model);
+            }
+            var result = {result:true,mensajes:"Dueños encontrados",duenos:duenos};
+            this.subject.next(result);
+          } else {
+            var resultNoEncontrado = {result:false,errores:"No se han encontrados dueños"};
+            this.subject.next(resultNoEncontrado);
+          }
+
+
+        },(tx,results)=>{
+          console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          this.subject.next(result);
+          return false;
+        });
+      });
+
+    }
+  }
+
+  public obtenerDuenosEncontrados(): Observable<any> {
+    return this.subject.asObservable();
+  }
 
 }

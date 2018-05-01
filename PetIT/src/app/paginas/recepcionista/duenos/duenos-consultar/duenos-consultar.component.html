@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col s12 m12">
+		<mz-card [hoverable]="true">
+			<mz-card-title>
+				Dueños Registrados
+			</mz-card-title>
+			<mz-card-content>
+				<table class="striped">
+				    <thead>
+				      <tr>
+				          <th>Rut</th>
+				          <th>Nombre</th>
+				          <th>Dirección</th>
+				          <th>Acciones</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+			    	    <tr *ngFor="let item of duenos">
+				        <td>{{item.rut | rut }}</td>
+				        <td>{{item.nombre}}</td>
+				        <td>{{item.direccion}}</td>
+				        <td>
+							<a class="btn-floating waves-effect waves-light green" 
+							(click)="irModificar(item);">
+								<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>
+							</a>
+							<a class="btn-floating waves-effect waves-light green" 
+							(click)="irRegistrarMascota(item);">
+								<i mz-icon-mdi mz-input-prefix [icon]="'paw'"></i>
+							</a>
+					    </td>
+				      </tr>
+				    </tbody>
+				</table>
+			</mz-card-content>
+		</mz-card>
+	</div>
+</div>

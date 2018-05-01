@@ -9,7 +9,7 @@ import { AgendarComponent } from './agendar/agendar.component';
 import { ConsultarComponent } from './consultar/consultar.component';
 import { FinalizarComponent } from './finalizar/finalizar.component';
 
-const routes: Routes =[
+const routes: Routes = [
   { path: 'horas',              component: HorasComponent },
   { path: 'buscar',         component: BuscarComponent },
   { path: 'agendar/:iddueno/:idmascota',         component: AgendarComponent },
@@ -32,4 +32,5 @@ const routes: Routes =[
 })
 export class HorasRoutingComponent { }
 */
+
 export const HorasRoutingComponent: ModuleWithProviders = RouterModule.forChild(routes);

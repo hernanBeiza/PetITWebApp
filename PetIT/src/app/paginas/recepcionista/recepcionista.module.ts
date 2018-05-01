@@ -7,6 +7,8 @@ import { RecepcionistaRoutingModule } from './recepcionista.routing';
 
 // SubMódulos del recepcionista
 import { HorasModule } from './horas/horas.module';
+import { DuenosModule } from './duenos/duenos.module';
+import { MascotasModule } from './mascotas/mascotas.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
 
 // Componentes del recepcionista
@@ -28,7 +30,7 @@ import { HoraLocalDBService } from './../../services/HoraLocalDB.service';
 	    CommonModule,
 	    RecepcionistaRoutingModule,
 		CompartidoModule,
-		HorasModule, NotificacionesModule
+		HorasModule, DuenosModule, MascotasModule, NotificacionesModule
 	],
 	providers: [
 		DuenoLocalDBService,EspecialidadLocalDBService,CitaLocalDBService,

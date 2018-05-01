@@ -7,11 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecepcionistaComponent implements OnInit {
 
-  constructor() { 
-		console.log("RecepcionistaComponent");
-  }
+	constructor() { 
+		//console.log("RecepcionistaComponent");
+	}
 
-  ngOnInit() {
-  }
+	ngOnInit() { }
 
 }

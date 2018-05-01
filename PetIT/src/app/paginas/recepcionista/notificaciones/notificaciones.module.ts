@@ -4,13 +4,15 @@ import { CommonModule } from '@angular/common';
 import { CompartidoModule } from './../../../compartido.module';
 
 import { NotificacionesComponent } from './notificaciones.component';
+import { NotificacionesRoutingModule } from './notificaciones.routing';
 
 import { EnviarComponent } from './enviar/enviar.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    CompartidoModule
+    CompartidoModule,
+    NotificacionesRoutingModule
   ],
   exports: [
 	  CompartidoModule

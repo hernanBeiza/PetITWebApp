@@ -45,4 +45,12 @@ export class MenuComponent implements OnInit {
 	    */
 	}
 
+	public closeFunctionCallback():void {
+		console.log("closeFunctionCallback();");
+	}
+
+	public openFunctionCallback(): void {
+		console.log("openFunctionCallback();");
+	}
+
 }

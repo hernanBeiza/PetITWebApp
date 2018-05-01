@@ -10,25 +10,29 @@ import { MzModalService, MzToastService } from 'ng2-materialize'
 // Pipes, filtro
 import { FiltroPipe } from './pipes/filtro.pipe';
 
+import { Ng2Rut, RutValidator } from 'ng2-rut';
+
 @NgModule({
   declarations: [
     FiltroPipe
   ],
   imports: [
     FormsModule, ReactiveFormsModule, RouterModule,
+    Ng2Rut,
     MzNavbarModule, MzSidenavModule, MzModalModule,MzSpinnerModule,MzCardModule,MzCollapsibleModule,
     MzIconMdiModule, MzRadioButtonModule, MzInputModule, MzButtonModule, MzSelectModule, MzValidationModule, 
     MzDatepickerModule, MzTimepickerModule
   ],
   exports: [
     FormsModule, ReactiveFormsModule, RouterModule, 
+    Ng2Rut,
     MzNavbarModule, MzSidenavModule, MzModalModule,MzSpinnerModule,MzCardModule,MzCollapsibleModule,
     MzIconMdiModule, MzRadioButtonModule, MzInputModule, MzButtonModule, MzSelectModule, MzValidationModule, 
     MzDatepickerModule, MzTimepickerModule, 
     FiltroPipe
   ],
   providers: [
-    MzModalService, MzToastService
+    MzModalService, MzToastService, RutValidator
   ]
 })
 export class CompartidoModule { }

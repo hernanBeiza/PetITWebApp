@@ -10,7 +10,6 @@ import { RecepcionistaModule } from './recepcionista/recepcionista.module';
 import { LocalDBService } from './../services/LocalDB.service';
 import { UsuarioService } from './../services/Usuario.service';
 
-import { Ng2Rut, RutValidator } from 'ng2-rut';
 
 import { CompartidoModule } from './../compartido.module';
 
@@ -18,7 +17,6 @@ import { CompartidoModule } from './../compartido.module';
 @NgModule({
   imports: [
     CommonModule,
-    Ng2Rut,
     CompartidoModule,
     AdminModule,RecepcionistaModule
   ],
@@ -31,7 +29,6 @@ import { CompartidoModule } from './../compartido.module';
     CompartidoModule
   ],
   providers: [
-    RutValidator,
     LocalDBService,UsuarioService
   ]
 })

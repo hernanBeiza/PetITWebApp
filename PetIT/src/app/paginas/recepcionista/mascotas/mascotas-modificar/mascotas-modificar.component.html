@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col s12 m12">
+		<mz-card [hoverable]="true">
+			<mz-card-title>
+            	<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+				Datos del dueño de la mascota seleccionada:
+			</mz-card-title>
+			<mz-card-content>
+				<p>
+                	Rut: {{duenoModel.rut | rut}} 
+                </p>
+                <p>
+                	Nombre: {{duenoModel.nombre}} 
+            	</p>
+                <p>
+                	Dirección: {{duenoModel.direccion}} 
+            	</p>
+			</mz-card-content>
+		</mz-card>
+	</div>
+</div>
+<div class="row">
+    <div class="col s12 m12">
+		<mz-card [hoverable]="true">
+			<mz-card-title>
+            	<i mz-icon-mdi mz-input-prefix [icon]="'paw'"></i>
+				Modificar una mascota
+			</mz-card-title>
+			<mz-card-content>
+                <form
+                [formGroup]="modificarForm" 
+                (ngSubmit)="onSubmit(modificarForm.value)">									
+					<mz-input-container class="input-field col s12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'paw'"></i>
+                        <input mz-input id="nombre" type="text"
+                        placeholder="Nombre Mascota"
+						[formControl]="nombreMascotaControl" 
+						[(ngModel)]="mascotaModel.nombre"
+						mz-validation
+				        [errorMessageResource]="formErrors.nombreMascota"
+						required>
+					</mz-input-container>			
+                    <button mz-button type="submit" 
+                    [disabled]="!modificarForm.valid || enviandoFlag"
+                    name="action">Modificar Mascota</button>
+				</form>
+			</mz-card-content>
+		</mz-card>
+	</div>
+</div>
+
+<!-- Ventana modal -->
+<mz-modal #modificarSheetModal [options]="modalOptions">
+	<mz-modal-header>
+		<h4>¿Desea modificar esta mascota?</h4>
+	</mz-modal-header>
+	<mz-modal-content>
+	</mz-modal-content>
+	<mz-modal-footer>
+		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
+		<button mz-button [flat]="true" class="green" (click)="modificar();">Modificar Mascota</button>
+	</mz-modal-footer>
+</mz-modal>
+<!-- Ventana modal error -->
+<mz-modal #errorSheetModal [options]="modalOptions">
+	<mz-modal-header>
+		<h4>Atención</h4>
+	</mz-modal-header>
+	<mz-modal-content>
+		<div [innerHTML]="errores"></div>
+	</mz-modal-content>
+	<mz-modal-footer>
+		<button mz-button [flat]="true" mz-modal-close>Ok</button>
+	</mz-modal-footer>
+</mz-modal>

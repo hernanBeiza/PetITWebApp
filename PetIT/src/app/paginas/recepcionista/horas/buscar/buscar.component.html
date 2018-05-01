@@ -5,7 +5,6 @@
 					1. Agendar Hora: 
 				</mz-card-title>
 				<mz-card-content>
-
 					Buscar dueño por: 
 					<mz-radio-button-container>
 					  <input mz-radio-button
@@ -58,12 +57,20 @@
 					      </tr>
 					    </thead>
 					    <tbody>
-				    	    <tr *ngFor="let item of duenos | filter : filtroField : 	filtroString">
-					        <td>{{item.rut}}</td>
+				    	    <tr *ngFor="let item of duenos | filtro : filtroField : filtroString">
+					        <td>{{item.rut | rut}}</td>
 					        <td>{{item.nombre}}</td>
 					        <td>{{item.mascota.nombre}}</td>
 					        <td>{{item.direccion}}</td>
+					        <!--
 					        <td><button mz-button (click)="irAgendar(item);">Agendar</button></td>
+						    -->
+						    <td>
+								<a class="btn-floating waves-effect waves-light green" 
+								(click)="irAgendar(item);">
+									<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>
+								</a>
+						    </td>
 					      </tr>
 					    </tbody>
 					</table>

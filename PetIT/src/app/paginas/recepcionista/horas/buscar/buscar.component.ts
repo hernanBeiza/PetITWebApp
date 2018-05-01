@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { MzToastService } from 'ng2-materialize';
+
 import { DuenoModel } from './../../../../models/DuenoModel';
 import { MascotaModel } from './../../../../models/MascotaModel';
 import { DuenoLocalDBService} from './../../../../services/DuenoLocalDB.service';
@@ -17,8 +19,10 @@ export class BuscarComponent implements OnInit {
   public filtroString: string = ""
   public filtroField: string = "nombre";
 
-  constructor(private router:Router, private DuenoLocalDBService:DuenoLocalDBService) { 
-    console.log("BuscarComponent");
+  constructor(private router:Router, 
+    private DuenoLocalDBService:DuenoLocalDBService,
+    private MzToastService:MzToastService) { 
+      console.log("BuscarComponent");
   }
 
   ngOnInit() {
@@ -26,19 +30,23 @@ export class BuscarComponent implements OnInit {
   }
 
   public cargar():void {
-    this.DuenoLocalDBService.obtener().then((data:any)=> {
+    this.DuenoLocalDBService.obtenerConMascota().then((data:any)=> {
       console.log(data);
       if(data.result){
         this.duenos = data.duenos;
+        this.MzToastService.show(data.mensajes,3000,'green');
+      } else {
+        this.MzToastService.show(data.errores,5000,'red');
       }
     },(dataError)=> {
       console.error(dataError);
+      this.MzToastService.show(dataError.errores,5000,'red');
     });
   }
 
   public irAgendar(dueno:DuenoModel):void {
   	console.log("irSeleccionar");
-    console.log(dueno);
+    //console.log(dueno);
     this.router.navigate(['/recepcionista/horas/agendar/'+dueno.iddueno+'/'+dueno.mascota.idmascota]);
   }
 

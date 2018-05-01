@@ -19,7 +19,7 @@ export class CitaLocalDBService {
   constructor(private LocalDBService:LocalDBService) { }
  
   public guardar(cita:CitaModel): Promise<Object> {
-    console.warn("Sin Implementar");
+    console.log("CitaLocalDBService: guardar();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -47,10 +47,11 @@ export class CitaLocalDBService {
   }
 
   public obtener(): Promise<Object> {
+    console.log("CitaLocalDBService: obtener();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT ci.*, ma.nombre, ma.iddueno, ma.nombre AS nombreMascota,du.nombre AS nombreDueno, es.nombre AS nombreEspecialista, esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.idmascota = ma.idmascota INNER JOIN dueno AS du ON ma.iddueno = du.iddueno INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad";
+        var sql = "SELECT ci.*, ma.nombre, ma.iddueno, ma.nombre AS nombreMascota,du.rut as rutDueno, du.nombre AS nombreDueno, es.nombre AS nombreEspecialista, esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.idmascota = ma.idmascota INNER JOIN dueno AS du ON ma.iddueno = du.iddueno INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -62,6 +63,7 @@ export class CitaLocalDBService {
 
               var dueno:DuenoModel = new DuenoModel();
               dueno.iddueno = item.iddueno;
+              dueno.rut = item.rutDueno;
               dueno.nombre = item.nombreDueno;
 
               var mascota:MascotaModel = new MascotaModel();
@@ -94,6 +96,7 @@ export class CitaLocalDBService {
   }
 
   public obtenerConID(idcita:number): Promise<Object> {
+    console.log("CitaLocalDBService: obtenerConID();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
