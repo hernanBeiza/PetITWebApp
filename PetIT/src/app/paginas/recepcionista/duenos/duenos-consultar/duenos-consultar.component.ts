@@ -21,7 +21,7 @@ import { DuenoModel } from './../../../../models/DuenoModel';
 })
 export class DuenosConsultarComponent implements OnInit {
 
-	private duenos:Array<DuenoModel>;
+	public duenos:Array<DuenoModel>;
 
 	constructor(private router:Router, private fb:FormBuilder, private activatedRoute: ActivatedRoute, 
 	    private MzToastService:MzToastService,

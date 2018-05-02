@@ -189,7 +189,7 @@ export class AgendarComponent implements OnInit {
     }
   }
 
-  public reservar():void {
+  public agendar():void {
   	console.log("reservar");    
     var enviar:boolean = true;
     this.errores = "Faltó seleccionar:";

@@ -55,6 +55,9 @@ export class Mensajes {
 		'telefono': {
 			'required':			'El teléfono es obligatorio.',
 		},
+		'direccion': {
+			'required':			'La dirección es obligatoria.',
+		},
 	}	
 	public static validacionesAgregarMascota = {
 		'rutDueno': {

@@ -34,6 +34,7 @@ export class DuenosAgregarComponent implements OnInit {
 
 	@ViewChild('registrarSheetModal') registrarSheetModal: MzModalComponent;
 	@ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
+	public errores:string = "";
 
 	public duenoModel:DuenoModel = new DuenoModel();
 
@@ -85,7 +86,7 @@ export class DuenosAgregarComponent implements OnInit {
 		}
 	}
 
-	private registrar():void {
+	public registrar():void {
 		this.DuenoLocalDBService.guardar(this.duenoModel).then((data:any)=>{
 			this.registrarSheetModal.close();
 			if(data.result){

@@ -22,7 +22,7 @@ import { MascotaModel } from './../../../../models/MascotaModel';
 })
 export class MascotasConsultarComponent implements OnInit {
 
-	private mascotas:Array<MascotaModel>;
+	public mascotas:Array<MascotaModel>;
 
 	constructor(private router:Router, private fb:FormBuilder, private ActivatedRoute: ActivatedRoute, 
 	    private MzToastService:MzToastService,

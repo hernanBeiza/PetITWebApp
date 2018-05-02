@@ -34,6 +34,7 @@ export class DuenosModificarComponent implements OnInit {
 
 	@ViewChild('modificarSheetModal') modificarSheetModal: MzModalComponent;
 	@ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
+	public errores:string = "";
 
 	public duenoModel:DuenoModel = new DuenoModel();
 
@@ -107,7 +108,7 @@ export class DuenosModificarComponent implements OnInit {
 		}
 	}
 
-	private modificar():void {
+	public modificar():void {
 		this.DuenoLocalDBService.modificar(this.duenoModel).then((data:any)=>{
 			this.modificarSheetModal.close();
 			if(data.result){

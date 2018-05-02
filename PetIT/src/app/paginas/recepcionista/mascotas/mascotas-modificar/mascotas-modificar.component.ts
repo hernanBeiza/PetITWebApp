@@ -30,7 +30,8 @@ export class MascotasModificarComponent implements OnInit {
 
 	@ViewChild('modificarSheetModal') modificarSheetModal: MzModalComponent;
 	@ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
-
+	public errores:string = "";
+	
 	public mascotaModel:MascotaModel = new MascotaModel();
 	public duenoModel:DuenoModel = new DuenoModel();
 
@@ -115,7 +116,7 @@ export class MascotasModificarComponent implements OnInit {
 		}
 	}
 
-	private modificar():void {
+	public modificar():void {
 		console.warn("Sin Implementar aún");
 		this.MascotaLocalDBService.modificar(this.mascotaModel).then((data:any)=>{
 			this.modificarSheetModal.close();

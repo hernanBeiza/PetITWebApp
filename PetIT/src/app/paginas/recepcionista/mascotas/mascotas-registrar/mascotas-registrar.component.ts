@@ -32,7 +32,8 @@ export class MascotasRegistrarComponent implements OnInit {
 
 	@ViewChild('registrarSheetModal') registrarSheetModal: MzModalComponent;
 	@ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
-
+	public errores:string = "";
+	
 	public duenoModel:DuenoModel = new DuenoModel();
 	public mascotaModel:MascotaModel = new MascotaModel();
 
@@ -108,7 +109,7 @@ export class MascotasRegistrarComponent implements OnInit {
 		}
 	}
 
-	private registrar():void {
+	public registrar():void {
 		console.warn("Sin Implementar aún");
 		console.log(this.mascotaModel);
 		this.mascotaModel.iddueno = this.duenoModel.iddueno;
