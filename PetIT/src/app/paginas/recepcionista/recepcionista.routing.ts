@@ -12,7 +12,7 @@ import { MascotasModule } from './mascotas/mascotas.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
 
 export function loadHorasModule() {
-  return DuenosModule;
+  return HorasModule;
 }
 export function loadDuenosModule() {
   return DuenosModule;
@@ -35,10 +35,10 @@ const routes: Routes =[
       { path: 'mascotas',          loadChildren: () => MascotasModule },
       { path: 'notificaciones',          loadChildren: () => NotificacionesModule }, 
       */
-      { path: 'horas',          loadChildren: loadHorasModule },
-      { path: 'duenos',          loadChildren: loadDuenosModule },
-      { path: 'mascotas',          loadChildren: loadMascotasModule },
-      { path: 'notificaciones',          loadChildren: loadNotificacionesModule },
+      { path: 'horas',                loadChildren: './horas/horas.module#HorasModule' },
+      { path: 'duenos',          loadChildren: './duenos/duenos.module#DuenosModule' },
+      { path: 'mascotas',          loadChildren: './mascotas/mascotas.module#MascotasModule' },
+      { path: 'notificaciones',          loadChildren: './notificaciones/notificaciones.module#NotificacionesModule' },
     ]
   }
 ];

@@ -66,7 +66,7 @@ export class LocalDBService {
     db.transaction(function (tx) {
       var queries = [
         "INSERT INTO `usuariorol` VALUES (1,'Dueño Veterinaria'), (2,'Recepcionista'), (3,'Dueño Mascota'); ",
-        "INSERT INTO `usuario` VALUES (1,1,'59290282','dorisnapolitano','Doris Napolitano',1), (2,2,'166926688','9040207','Hernán Beiza',1), (3,3,'132699461','andres','Andrés',1), (4,2,'173158246','admin','Graciela Baldrich',1), (5,3,'10773614k','cote','María José',1), (6,3,'139184718','cristian','Cristián Contreras',1)",
+        "INSERT INTO `usuario` VALUES (1,1,'59290282','dorisnapolitano','Doris Napolitano',1), (2,2,'166926688','9040207','Hernán Beiza',1), (3,3,'132699461','andres1234','Andrés',1), (4,2,'173158246','admin1234','Graciela Baldrich',1), (5,3,'10773614k','cote1234','María José',1), (6,3,'139184718','cristian1234','Cristián Contreras',1)",
         "INSERT INTO `mascota` VALUES (1,1,'Tody'), (2,2,'Mamut'), (3,3,'Fideo'), (4,3,'Luna')",
         "INSERT INTO `especialista` VALUES (1,1,'Joseph Jimenez'), (2,1,'Claudio Igor'), (3,2,'Daniel Águila'), (4,2,'Hans Poffald')",
         "INSERT INTO `especialidad` VALUES (1,'General'), (2,'Peluquería')",

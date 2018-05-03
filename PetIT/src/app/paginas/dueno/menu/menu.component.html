@@ -1,0 +1,60 @@
+<mz-sidenav
+  [id]="'sidenav-demo'"
+  [collapseButtonId]="'btn-sidenav-demo'"
+  [fixed]="true"
+  >
+  <mz-sidenav-header>
+    <a href="/#/">
+      <img src="assets/img/petitlogo.png" width="100px">
+    </a>
+  </mz-sidenav-header>
+  <mz-sidenav-subheader>Pet-IT</mz-sidenav-subheader>
+  
+  <mz-collapsible (click)="irRuta('/dueno/inicio');">
+    <mz-collapsible-item>
+      <mz-collapsible-item-header>        
+        <i class="material-icons">home</i>
+        Inicio
+      </mz-collapsible-item-header>
+    </mz-collapsible-item>
+  </mz-collapsible>
+
+  <mz-sidenav-collapsible [onClose]="closeFunctionCallback" [onOpen]="openFunctionCallback">
+    <mz-sidenav-collapsible-header>
+      <i mz-icon-mdi mz-input-prefix [icon]="'calendar-clock'"></i>
+      Horas
+    </mz-sidenav-collapsible-header>
+    <mz-sidenav-collapsible-content>
+      <mz-sidenav-link>
+        <a [routerLink]="['/dueno/horas/buscar']">
+          <i mz-icon-mdi mz-input-prefix [icon]="'plus'"></i>
+          Agendar Hora
+        </a>
+      </mz-sidenav-link>
+      <mz-sidenav-link>
+        <a [routerLink]="['/dueno/horas/consultar']">
+          <i mz-icon-mdi mz-input-prefix [icon]="'format-list-bulleted'"></i>
+          Consultar Horas
+        </a>
+      </mz-sidenav-link>
+    </mz-sidenav-collapsible-content>
+  </mz-sidenav-collapsible>
+
+  <mz-collapsible (click)="cerrarSesion();">
+    <mz-collapsible-item>
+      <mz-collapsible-item-header>        
+        <i class="material-icons">close</i>
+        Cerrar sesión
+      </mz-collapsible-item-header>
+    </mz-collapsible-item>
+  </mz-collapsible>
+
+</mz-sidenav>
+
+<!-- Botón para abrir menú en móvil -->
+<button class="sidenav-button hide-on-large-only btn btn-floating btn-large waves-effect waves-light" 
+id="btn-sidenav" mz-button id="btn-sidenav-demo">
+  <i class="mdi mdi-menu mdi-24px"></i>
+</button>
+
+

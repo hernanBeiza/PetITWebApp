@@ -90,8 +90,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate([ruta]);                      
           break;        
         default:
-          console.log("propietario")
-          ruta = 'propietario/inicio';
+          console.log("dueno")
+          ruta = 'dueno/inicio';
           this.router.navigate([ruta]);                      
           break;
       } 

@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 
 import { AdminModule } from './admin/admin.module';
 import { RecepcionistaModule } from './recepcionista/recepcionista.module';
+import { DuenoModule } from './dueno/dueno.module';
 
 import { LocalDBService } from './../services/LocalDB.service';
 import { UsuarioService } from './../services/Usuario.service';
@@ -18,7 +19,7 @@ import { CompartidoModule } from './../compartido.module';
   imports: [
     CommonModule,
     CompartidoModule,
-    AdminModule,RecepcionistaModule
+    AdminModule,RecepcionistaModule,DuenoModule
   ],
   declarations: [
     LoginComponent,

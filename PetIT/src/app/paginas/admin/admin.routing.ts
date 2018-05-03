@@ -18,7 +18,8 @@ const routes: Routes = [
     children: [
       { path: 'inicio',                 component: InicioComponent },
       //{ path: 'informe',                loadChildren: () => InformeModule },
-      { path: 'informe',                loadChildren: loadInformeModule },
+      //{ path: 'informe',                loadChildren: loadInformeModule },
+      { path: 'informe',                loadChildren: './informe/informe.module#InformeModule' },
     ],
   }
 ];
