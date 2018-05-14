@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { CompartidoModule } from './../../compartido.module';
 
@@ -31,6 +32,9 @@ import { HoraLocalDBService } from './../../services/HoraLocalDB.service';
 	    RecepcionistaRoutingModule,
 		CompartidoModule,
 		HorasModule, DuenosModule, MascotasModule, NotificacionesModule
+	],
+	exports: [
+		RouterModule
 	],
 	providers: [
 		DuenoLocalDBService,EspecialidadLocalDBService,CitaLocalDBService,

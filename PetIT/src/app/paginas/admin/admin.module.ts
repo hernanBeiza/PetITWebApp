@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -13,6 +12,8 @@ import { InicioComponent } from './inicio/inicio.component';
 
 import { CompartidoModule } from './../../compartido.module';
 
+import { CitaLocalDBService } from './../../services/CitaLocalDB.service';
+
 @NgModule({
 	imports: [
 	    CommonModule,
@@ -23,7 +24,9 @@ import { CompartidoModule } from './../../compartido.module';
 	exports: [
 		RouterModule
 	],
-	providers: [],
+	providers: [
+		CitaLocalDBService
+	],
 	declarations: [MenuComponent, AdminComponent, InicioComponent]
 })
 export class AdminModule { }

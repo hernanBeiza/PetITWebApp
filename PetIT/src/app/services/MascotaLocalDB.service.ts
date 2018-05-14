@@ -68,21 +68,21 @@ export class MascotaLocalDBService {
 		    var sql = "SELECT * FROM mascota"
 		    console.info(sql);
 		    tx.executeSql(sql,[],function(tx,results){
-		      console.log(tx,results,results.rows.length);
-		      if(results.rows.length>0){
-		        var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
-		        var mascotas:Array<MascotaModel> = new Array<MascotaModel>();
-		        for (var i = 0; i < results.rows.length; i++){
-		          var item:any = results.rows[i] as any;
-		          var model:MascotaModel = new MascotaModel(item.idmascota,item.iddueno,item.nombre);
-		          mascotas.push(model);
-		        }
-		        var result = {result:true,mensajes:"Masctoas encontradas",mascotas:mascotas};
-		        resolve(result);
-		      } else {
-		        var resultNoEncontrado = {result:false,errores:"No se han encontrado mascotas"};
-		        reject(resultNoEncontrado);                        
-		      }
+				console.log(tx,results,results.rows.length);
+				if(results.rows.length>0){
+			        var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
+			        var mascotas:Array<MascotaModel> = new Array<MascotaModel>();
+			        for (var i = 0; i < results.rows.length; i++){
+			          var item:any = results.rows[i] as any;
+			          var model:MascotaModel = new MascotaModel(item.idmascota,item.iddueno,item.nombre);
+			          mascotas.push(model);
+			        }
+		        	var result = {result:true,mensajes:"Masctoas encontradas",mascotas:mascotas};
+					resolve(result);
+				} else {
+		    	    var resultNoEncontrado = {result:false,errores:"No se han encontrado mascotas"};
+			        reject(resultNoEncontrado);                        
+				}
 		    },function(tx,results){
 		      console.log(tx,results);
 		      var result = {result:false,errores:"Intenta de nuevo más tarde"};

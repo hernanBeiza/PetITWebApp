@@ -22,12 +22,24 @@ export class UsuarioService  {
         var sql = "SELECT * FROM `usuario` WHERE usuario='"+rut+ "' AND contrasena='"+contrasena+"'";
         console.log(sql);
         tx.executeSql(sql,[],function(tx,results){
-          console.log(tx,results,results.rows.length);
+          //console.log(tx,results,results.rows.length);
           if(results.rows.length>0){
-            var item:any = results.rows[0];
-            var model:UsuarioModel = new UsuarioModel(item.idusuario,item.idusuariorol,item.user,item.pass,item.nombre,item.valid);
-            var result = {result:true,mensajes:"Bienvenido "+item.nombre,usuario:model};
-            resolve(result);
+            //Safari no puede recorrer este arreglo
+            var items = [];
+            for (var i = 0; i < results.rows.length; i++){
+                items.push(results.rows.item(i));
+            }
+
+            if(items.length>0){
+              var item:any = items[0] as any;
+              var model:UsuarioModel = new UsuarioModel(item.idusuario,item.idusuariorol,item.user,item.pass,item.nombre,item.valid);
+              var result = {result:true,mensajes:"Bienvenido "+item.nombre,usuario:model};
+              resolve(result);              
+            } else {
+              var resultNoEncontrado = {result:false,errores:"No se ha encontrado usuario con esos datos"};
+              reject(resultNoEncontrado);                                      
+            }
+
           } else {
             var resultNoEncontrado = {result:false,errores:"No se ha encontrado usuario con esos datos"};
             reject(resultNoEncontrado);                        

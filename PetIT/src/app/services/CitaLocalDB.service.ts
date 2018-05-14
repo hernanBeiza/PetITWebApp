@@ -51,15 +51,20 @@ export class CitaLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT ci.*, ma.nombre, ma.iddueno, ma.nombre AS nombreMascota,du.rut as rutDueno, du.nombre AS nombreDueno, es.nombre AS nombreEspecialista, esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.idmascota = ma.idmascota INNER JOIN dueno AS du ON ma.iddueno = du.iddueno INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad";
+        var sql = "SELECT ci.*, ma.nombre, ma.iddueno, ma.nombre AS nombreMascota,du.rut as rutDueno, du.nombre AS nombreDueno, es.nombre AS nombreEspecialista, esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.idmascota = ma.idmascota INNER JOIN dueno AS du ON ma.iddueno = du.iddueno INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad ORDER BY ci.fecha DESC";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
           if(results.rows.length>0){
-            var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var citas:Array<CitaModel> = new Array<CitaModel>();
+            //Safari no puede recorrer este arreglo
+            var items = [];
             for (var i = 0; i < results.rows.length; i++){
-              var item:any = results.rows[i] as any;
+                items.push(results.rows.item(i));
+            }
+
+            for (var i = 0; i < items.length; i++){
+              var item:any = items[i] as any;
 
               var dueno:DuenoModel = new DuenoModel();
               dueno.iddueno = item.iddueno;

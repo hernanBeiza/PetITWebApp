@@ -31,7 +31,8 @@ import { ListaEncontradosComponent } from './lista-encontrados/lista-encontrados
 	declarations: [
 	    FiltroCitasPipe,
 		HorasComponent, 
-		BuscarComponent, AgendarComponent, ConsultarComponent, FinalizarComponent, BuscadorComponent, ListaEncontradosComponent, 
+		BuscarComponent, AgendarComponent, ConsultarComponent, FinalizarComponent, 
+		BuscadorComponent, ListaEncontradosComponent, 
 	]
 })
 export class HorasModule { }

@@ -26,21 +26,11 @@
 				          </tr>
 				        </thead>
 				        <tbody>
-				          <tr>
-				            <td>Alvin</td>
-				            <td>Eclair Talbot</td>
-				            <td>03-04-2018</td>
-				          </tr>
-				          <tr>
-				            <td>Fideo</td>
-				            <td>Andrés Osorio</td>
-				            <td>04-04-2018</td>
-				          </tr>
-				          <tr>
-				            <td>Jony</td>
-				            <td>Domingo Beiza</td>
-				            <td>04-04-2018</td>
-				          </tr>
+				    	    <tr *ngFor="let item of citas">
+						        <td>{{item.mascota.nombre }}</td>
+						        <td>{{item.dueno.nombre}}</td>
+						        <td>{{item.fecha}}</td>
+						      </tr>
 				        </tbody>
 					</table>
 				</mz-card-content>

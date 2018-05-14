@@ -30,15 +30,21 @@ const routes: Routes =[
       children: [
       { path: 'inicio',         component: InicioComponent },
       /*
-      { path: 'horas',          loadChildren: () => HorasModule },
-      { path: 'duenos',          loadChildren: () => DuenosModule },
-      { path: 'mascotas',          loadChildren: () => MascotasModule },
-      { path: 'notificaciones',          loadChildren: () => NotificacionesModule }, 
+      { path: 'horas',          loadChildren: loadHorasModule },
+      { path: 'duenos',          loadChildren: loadDuenosModule },
+      { path: 'mascotas',          loadChildren: loadMascotasModule },
+      { path: 'notificaciones',          loadChildren: loadNotificacionesModule }, 
       */
       { path: 'horas',                loadChildren: './horas/horas.module#HorasModule' },
       { path: 'duenos',          loadChildren: './duenos/duenos.module#DuenosModule' },
       { path: 'mascotas',          loadChildren: './mascotas/mascotas.module#MascotasModule' },
       { path: 'notificaciones',          loadChildren: './notificaciones/notificaciones.module#NotificacionesModule' },
+     /*
+      { path: 'horas',                loadChildren: () => HorasModule },
+      { path: 'duenos',          loadChildren: () => DuenosModule },
+      { path: 'mascotas',          loadChildren: () => MascotasModule },
+      { path: 'notificaciones',          loadChildren: () => NotificacionesModule },
+      */
     ]
   }
 ];
