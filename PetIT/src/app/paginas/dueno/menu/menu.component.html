@@ -8,7 +8,9 @@
       <img src="assets/img/petitlogo.png" width="100px">
     </a>
   </mz-sidenav-header>
+  <!--
   <mz-sidenav-subheader>Pet-IT</mz-sidenav-subheader>
+  -->
   
   <mz-collapsible (click)="irRuta('/dueno/inicio');">
     <mz-collapsible-item>
@@ -26,13 +28,13 @@
     </mz-sidenav-collapsible-header>
     <mz-sidenav-collapsible-content>
       <mz-sidenav-link>
-        <a [routerLink]="['/dueno/horas/buscar']">
+        <a (click)="irAgendar();">
           <i mz-icon-mdi mz-input-prefix [icon]="'plus'"></i>
           Agendar Hora
         </a>
       </mz-sidenav-link>
       <mz-sidenav-link>
-        <a [routerLink]="['/dueno/horas/consultar']">
+        <a (click)="irConsultar();">
           <i mz-icon-mdi mz-input-prefix [icon]="'format-list-bulleted'"></i>
           Consultar Horas
         </a>

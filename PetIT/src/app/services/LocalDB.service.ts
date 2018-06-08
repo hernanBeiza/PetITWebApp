@@ -10,7 +10,7 @@ export class LocalDBService {
   public constUsuario:string = "DBLOCAL";
 
   constructor() { 
-    console.log("LocalDBService");
+    //console.log("LocalDBService");
 
     const db: Database = window.openDatabase('petiddb', '1.0', 'petiddb', 2 * 1024 * 1024);
     if(!db){
@@ -32,7 +32,7 @@ export class LocalDBService {
   }
 
   private crearTablas():void {
-    console.log("crearTablas");
+    //console.log("crearTablas");
     var me = this as LocalDBService;
     var db = this.obtenerDB();
     db.transaction(function (tx){
@@ -61,7 +61,7 @@ export class LocalDBService {
   }
 
   private popularTablas(): void {
-    console.log("popularTablas");
+    //console.log("popularTablas");
     var db = this.obtenerDB();
     db.transaction(function (tx) {
       var queries = [
@@ -84,11 +84,5 @@ export class LocalDBService {
 
     });
   }
-
-  public borrarTodo():boolean {
-
-    return true;
-  }
-
 
 }

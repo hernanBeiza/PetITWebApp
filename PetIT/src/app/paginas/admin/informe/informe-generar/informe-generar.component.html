@@ -56,7 +56,7 @@
 	</div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="mostrar">
     <div class="col m12">
 		<mz-card
 		[hoverable]="true">
@@ -65,7 +65,7 @@
 			</mz-card-title>
 			<mz-card-content>
 
-				<div style="display: block" *ngIf="mostrar">
+				<div style="display: block">
 				    <canvas baseChart
 				            [datasets]="barChartData"
 				            [labels]="barChartLabels"

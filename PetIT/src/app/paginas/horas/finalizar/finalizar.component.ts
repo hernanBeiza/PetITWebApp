@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { CitaLocalDBService } from './../../../../services/CitaLocalDB.service';
+import { CitaLocalDBService } from './../../../services/CitaLocalDB.service';
 import { MzToastService } from 'ng2-materialize';
 
-import {DuenoModel} from './../../../../models/DuenoModel';
-import {EspecialidadModel} from './../../../../models/EspecialidadModel';
-import {EspecialistaModel} from './../../../../models/EspecialistaModel';
-import {FechaModel} from './../../../../models/FechaModel';
-import {HoraModel} from './../../../../models/HoraModel';
+import {DuenoModel} from './../../../models/DuenoModel';
+import {EspecialidadModel} from './../../../models/EspecialidadModel';
+import {EspecialistaModel} from './../../../models/EspecialistaModel';
+import {FechaModel} from './../../../models/FechaModel';
+import {HoraModel} from './../../../models/HoraModel';
 
-import {CitaModel} from './../../../../models/CitaModel';
+import {CitaModel} from './../../../models/CitaModel';
 
 @Component({
   selector: 'app-finalizar',

@@ -6,23 +6,23 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { MzModalComponent,MzToastService } from 'ng2-materialize';
 
-import {DuenoLocalDBService} from './../../../../services/DuenoLocalDB.service';
-import {EspecialidadLocalDBService} from './../../../../services/EspecialidadLocalDB.service';
-import {EspecialistaLocalDBService} from './../../../../services/EspecialistaLocalDB.service';
-import {CitaLocalDBService} from './../../../../services/CitaLocalDB.service';
+import {DuenoLocalDBService} from './../../../services/DuenoLocalDB.service';
+import {EspecialidadLocalDBService} from './../../../services/EspecialidadLocalDB.service';
+import {EspecialistaLocalDBService} from './../../../services/EspecialistaLocalDB.service';
+import {CitaLocalDBService} from './../../../services/CitaLocalDB.service';
 
-import {DuenoModel} from './../../../../models/DuenoModel';
-import {MascotaModel} from './../../../../models/MascotaModel';
-import {EspecialidadModel} from './../../../../models/EspecialidadModel';
-import {EspecialistaModel} from './../../../../models/EspecialistaModel';
-import {FechaModel} from './../../../../models/FechaModel';
-import {HoraModel} from './../../../../models/HoraModel';
+import {DuenoModel} from './../../../models/DuenoModel';
+import {MascotaModel} from './../../../models/MascotaModel';
+import {EspecialidadModel} from './../../../models/EspecialidadModel';
+import {EspecialistaModel} from './../../../models/EspecialistaModel';
+import {FechaModel} from './../../../models/FechaModel';
+import {HoraModel} from './../../../models/HoraModel';
 
-import {CitaModel} from './../../../../models/CitaModel';
+import {CitaModel} from './../../../models/CitaModel';
 
 
-import { Mensajes } from './../../../../libs/Mensajes';
-import { Validaciones } from './../../../../libs/Validaciones';
+import { Mensajes } from './../../../libs/Mensajes';
+import { Validaciones } from './../../../libs/Validaciones';
 
 @Component({
   selector: 'app-agendar',

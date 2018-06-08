@@ -6,19 +6,17 @@ import { AdminComponent } from './admin.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { InformeModule } from './informe/informe.module';
 
-
-// Do not delete. Used to ensure ProfileModule is loaded in the same bundle.
-// Referencing the function directly in `loadChildren` breaks AoT compiler.
 export function loadInformeModule() {
-    return InformeModule;
+  return InformeModule;
 }
+
 
 const routes: Routes = [
   { path: 'admin',  component: AdminComponent,
     children: [
       { path: 'inicio',                 component: InicioComponent },
-      //{ path: 'informe',                loadChildren: loadInformeModule },
-      { path: 'informe',                loadChildren: './informe/informe.module#InformeModule' },
+      { path: 'informe',                loadChildren: loadInformeModule },
+      //{ path: 'informe',                loadChildren: './informe/informe.module#InformeModule' },
     ],
   }
 ];

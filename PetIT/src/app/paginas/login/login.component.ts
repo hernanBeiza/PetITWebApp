@@ -77,6 +77,9 @@ export class LoginComponent implements OnInit {
       console.log(data);
       this.MzToastService.show(data.mensajes,3000,'green');
       var model:UsuarioModel = data.usuario as UsuarioModel;
+      //Guardar en la DB Local
+      this.UsuarioService.guardarLocal(model);
+      //
       var ruta = "";
       switch (model.idusuariorol) {
         case 1:

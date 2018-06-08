@@ -2,13 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { CompartidoModule } from './../../../compartido.module';
+import { CompartidoModule } from './../../compartido.module';
 
 import { HorasRoutingComponent } from './horas.routing';
 
-import { HorasComponent } from './horas.component';
 
-import {FiltroCitasPipe} from './../../../pipes/filtroCitas.pipe';
+import {FiltroCitasPipe} from './../../pipes/filtroCitas.pipe';
 //Horas
 import { BuscarComponent } from './buscar/buscar.component';
 import { AgendarComponent } from './agendar/agendar.component';
@@ -30,7 +29,6 @@ import { ListaEncontradosComponent } from './lista-encontrados/lista-encontrados
 	],
 	declarations: [
 	    FiltroCitasPipe,
-		HorasComponent, 
 		BuscarComponent, AgendarComponent, ConsultarComponent, FinalizarComponent, 
 		BuscadorComponent, ListaEncontradosComponent, 
 	]

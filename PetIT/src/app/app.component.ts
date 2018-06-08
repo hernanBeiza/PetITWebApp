@@ -13,12 +13,12 @@ export class AppComponent implements OnInit {
   
 	constructor(public location: Location, public router: Router, 
 		private LocalDBService:LocalDBService) {
-		console.log("AppComponent");
+		//console.log("AppComponent");
 	}
 
 	ngOnInit() {
-		console.log("AppComponent: ngOnInit();");
-		console.log(this.location.path());
+		//console.log("AppComponent: ngOnInit();");
+		//console.log(this.location.path());
 	  	/*
 	    if (this.location.path() =='' || this.location.path() == '/home') {
 	      this.router.navigate(['/home/dashboard']);

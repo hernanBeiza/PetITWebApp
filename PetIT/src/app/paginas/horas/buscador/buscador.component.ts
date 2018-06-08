@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 
-import { DuenoModel } from './../../../../models/DuenoModel';
-import { MascotaModel } from './../../../../models/MascotaModel';
-import { DuenoLocalDBService} from './../../../../services/DuenoLocalDB.service';
+import { DuenoModel } from './../../../models/DuenoModel';
+import { MascotaModel } from './../../../models/MascotaModel';
+import { DuenoLocalDBService} from './../../../services/DuenoLocalDB.service';
 
 @Component({
   selector: 'app-buscador',
@@ -14,7 +14,7 @@ export class BuscadorComponent implements OnInit {
 
 	public duenos:Array<DuenoModel> = new Array<DuenoModel>();
 	public filtroString: string = ""
-	public filtroField: string = "nombre";
+	public filtroField: string = "rut";
     
 	constructor(private DuenoLocalDBService:DuenoLocalDBService) { }
 

@@ -3,14 +3,14 @@ import { Router } from '@angular/router';
 
 import { MzToastService } from 'ng2-materialize';
 
-import {DuenoLocalDBService} from './../../../../services/DuenoLocalDB.service';
-import {EspecialidadLocalDBService} from './../../../../services/EspecialidadLocalDB.service';
-import {CitaLocalDBService} from './../../../../services/CitaLocalDB.service';
+import {DuenoLocalDBService} from './../../../services/DuenoLocalDB.service';
+import {EspecialidadLocalDBService} from './../../../services/EspecialidadLocalDB.service';
+import {CitaLocalDBService} from './../../../services/CitaLocalDB.service';
 
-import {DuenoModel} from './../../../../models/DuenoModel';
-import {MascotaModel} from './../../../../models/MascotaModel';
+import {DuenoModel} from './../../../models/DuenoModel';
+import {MascotaModel} from './../../../models/MascotaModel';
 
-import {CitaModel} from './../../../../models/CitaModel';
+import {CitaModel} from './../../../models/CitaModel';
 
 @Component({
   selector: 'app-consultar',
@@ -22,7 +22,7 @@ export class ConsultarComponent implements OnInit {
 	public citas:Array<CitaModel> = new Array<CitaModel>();
 
 	public filtroString: string = ""
-	public filtroField: string = "nombre";
+	public filtroField: string = "rut";
 
 	constructor(private router:Router, 
 	    private MzToastService:MzToastService,

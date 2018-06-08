@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 
 import { MzToastService } from 'ng2-materialize';
 
-import { DuenoModel } from './../../../../models/DuenoModel';
-import { MascotaModel } from './../../../../models/MascotaModel';
-import { DuenoLocalDBService} from './../../../../services/DuenoLocalDB.service';
+import { DuenoModel } from './../../../models/DuenoModel';
+import { MascotaModel } from './../../../models/MascotaModel';
+import { DuenoLocalDBService} from './../../../services/DuenoLocalDB.service';
 
 @Component({
   selector: 'app-buscar',
@@ -17,7 +17,7 @@ export class BuscarComponent implements OnInit {
   public duenos:Array<DuenoModel> = new Array<DuenoModel>();
 
   public filtroString: string = ""
-  public filtroField: string = "nombre";
+  public filtroField: string = "rut";
 
   constructor(private router:Router, 
     private DuenoLocalDBService:DuenoLocalDBService,

@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { LocalDBService } from './../../../services/LocalDB.service';
 import { UsuarioService } from './../../../services/Usuario.service';
 
+import { UsuarioModel } from './../../../models/UsuarioModel';
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -26,7 +28,7 @@ export class MenuComponent implements OnInit {
 
 	public cerrarSesion():void {
 	  	console.log("cerrarSesion");
-	    this.LocalDBService.borrarTodo();
+	  	this.UsuarioService.borrarLocal();
 	    this.router.navigate(['/login']);
 	  	//TODO
 	  	//Llmar al backend
@@ -48,12 +50,26 @@ export class MenuComponent implements OnInit {
 	    */
 	}
 
+	public irAgendar(): void {
+		console.log("irAgendar();");
+		console.warn("Sin implementar");
+		let usuario:UsuarioModel = this.UsuarioService.obtenerLocal();
+		console.log(usuario);
+		let ruta:string = '/dueno/agendar/'+usuario.idusuario;
+		console.log(ruta);
+	}
+
+	public irConsultar(): void {
+		console.log("irConsultar");
+		console.warn("Sin implementar");
+	}
+
 	public closeFunctionCallback():void {
-		console.log("closeFunctionCallback();");
+		//console.log("closeFunctionCallback();");
 	}
 
 	public openFunctionCallback(): void {
-		console.log("openFunctionCallback();");
+		//console.log("openFunctionCallback();");
 	}
 
 }

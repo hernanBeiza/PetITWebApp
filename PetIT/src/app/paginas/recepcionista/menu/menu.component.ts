@@ -23,10 +23,10 @@ export class MenuComponent implements OnInit {
 
 	public cerrarSesion():void {
 	  	console.log("cerrarSesion");
-	    this.LocalDBService.borrarTodo();
+	    this.UsuarioService.borrarLocal();
 	    this.router.navigate(['/login']);
 	  	//TODO
-	  	//Llmar al backend
+	  	//Llamar al backend
 	  	/*
 	    this.UsuarioService.logout().subscribe(
 	      data => {            
@@ -46,11 +46,11 @@ export class MenuComponent implements OnInit {
 	}
 
 	public closeFunctionCallback():void {
-		console.log("closeFunctionCallback();");
+		//console.log("closeFunctionCallback();");
 	}
 
 	public openFunctionCallback(): void {
-		console.log("openFunctionCallback();");
+		//console.log("openFunctionCallback();");
 	}
 
 }

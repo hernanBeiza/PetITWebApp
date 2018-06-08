@@ -7,7 +7,7 @@ import { CompartidoModule } from './../../compartido.module';
 import { RecepcionistaRoutingModule } from './recepcionista.routing';
 
 // SubMódulos del recepcionista
-import { HorasModule } from './horas/horas.module';
+import { HorasModule } from './../horas/horas.module';
 import { DuenosModule } from './duenos/duenos.module';
 import { MascotasModule } from './mascotas/mascotas.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';

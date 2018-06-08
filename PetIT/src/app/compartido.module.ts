@@ -12,9 +12,12 @@ import { FiltroPipe } from './pipes/filtro.pipe';
 
 import { Ng2Rut, RutValidator } from 'ng2-rut';
 
+import { CabeceraComponent } from './paginas/cabecera/cabecera.component';
+
 @NgModule({
   declarations: [
-    FiltroPipe
+    FiltroPipe,
+    CabeceraComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule, RouterModule,
@@ -24,6 +27,7 @@ import { Ng2Rut, RutValidator } from 'ng2-rut';
     MzDatepickerModule, MzTimepickerModule
   ],
   exports: [
+    CabeceraComponent,
     FormsModule, ReactiveFormsModule, RouterModule, 
     Ng2Rut,
     MzNavbarModule, MzSidenavModule, MzModalModule,MzSpinnerModule,MzCardModule,MzCollapsibleModule,

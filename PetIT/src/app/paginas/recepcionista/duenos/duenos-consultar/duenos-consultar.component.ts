@@ -53,4 +53,9 @@ export class DuenosConsultarComponent implements OnInit {
 		this.router.navigate(["/recepcionista/mascotas/registrar/"+dueno.iddueno]);
 	}
 
+	public irAgregarUsuario(dueno:DuenoModel): void {
+		console.log("irAgregarUsuario",dueno);
+		//this.router.navigate(["/recepcionista/usuarios/agregar/"+dueno.iddueno]);
+	}
+
 }

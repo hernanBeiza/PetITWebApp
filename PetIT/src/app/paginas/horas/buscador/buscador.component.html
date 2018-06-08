@@ -24,7 +24,7 @@ Buscar dueño por:
 	[(ngModel)]="filtroString"
 	(input)="onSearchChange($event.target.value);"
 	id="buscar-input"
-	placeholder="Ingrese nombre o rut"
+	placeholder="Ingrese {{filtroField}}"
 	length="20"
 	type="text">
 </mz-input-container>

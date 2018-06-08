@@ -13,6 +13,8 @@ import { environment } from './../../environments/environment';
 @Injectable()
 export class UsuarioService  {
 
+  public constUsuario:string = "PetITLocalUsuario";
+
   constructor(private http: Http, private LocalDBService:LocalDBService) { }
  
   public iniciarSesion(rut:string,contrasena:string): Promise<Object> {
@@ -152,6 +154,20 @@ export class UsuarioService  {
         return Observable.throw(errMsg);
       }
     });
+  }
+
+  public guardarLocal(usuario:UsuarioModel): boolean {
+    localStorage.setItem(this.constUsuario, JSON.stringify(usuario));
+    return true;
+  }
+
+  public obtenerLocal():UsuarioModel {
+    return JSON.parse(localStorage.getItem(this.constUsuario)) as UsuarioModel;
+  }
+
+  public borrarLocal():boolean {
+    localStorage.removeItem(this.constUsuario);
+    return true;
   }
 
   private getOptions(): RequestOptions{

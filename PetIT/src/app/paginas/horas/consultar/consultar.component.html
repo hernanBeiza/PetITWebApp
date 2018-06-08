@@ -2,21 +2,21 @@
 	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
 				<mz-card-title>
-					1. Agendar Hora: 
+					1. Consultar horas
 				</mz-card-title>
 				<mz-card-content>
-					Buscar dueño por: 
+					Buscar hora por: 
 					<mz-radio-button-container>
 					  <input mz-radio-button
 						[(ngModel)]="filtroField"
-					    [label]="'Rut'"
+					    [label]="'Rut del dueño'"
 						value="rut"
 					    id="rut"
 					    name="radio-group"
 					    type="radio">
 					  <input mz-radio-button
 						[(ngModel)]="filtroField"
-					    [label]="'Nombre'"
+					    [label]="'Nombre del dueño'"
 						value="nombre" 
 					    id="nombre"
 					    name="radio-group"
@@ -30,7 +30,7 @@
 						<input mz-input
 						[(ngModel)]="filtroString"
 						id="buscar-input"
-						placeholder="Ingrese nombre o rut"
+						placeholder="Ingrese {{filtroField}}"
 						length="20"
 						type="text">
 					</mz-input-container>
@@ -43,37 +43,39 @@
 	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
 				<mz-card-title>
-					2. Dueños Encontrados:
-				</mz-card-title>
+					2. Horas encontradas
+				</mz-card-title>				
 				<mz-card-content>
 					<table class="striped">
 					    <thead>
 					      <tr>
 					          <th>Rut</th>
-					          <th>Nombre</th>
+					          <th>Nombre Dueño</th>
 					          <th>Nombre Mascota</th>
-					          <th>Dirección</th>
+					          <th>Fecha Atención</th>
 					          <th>Acciones</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-				    	    <tr *ngFor="let item of duenos | filtro : filtroField : filtroString">
-					        <td>{{item.rut | rut}}</td>
-					        <td>{{item.nombre}}</td>
+				    	    <tr *ngFor="let item of citas | filtroCitas : filtroField : filtroString">
+					        <td>{{item.dueno.rut | rut}}</td>
+					        <td>{{item.dueno.nombre}}</td>
 					        <td>{{item.mascota.nombre}}</td>
-					        <td>{{item.direccion}}</td>
-					        <!--
-					        <td><button mz-button (click)="irAgendar(item);">Agendar</button></td>
-						    -->
+					        <td>{{item.fecha}}</td>
 						    <td>
 								<a class="btn-floating waves-effect waves-light green" 
-								(click)="irAgendar(item);">
-									<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>
+								(click)="irModificar(item);">
+									<i mz-icon-mdi mz-input-prefix [icon]="'calendar-edit'"></i>
+								</a>			
+								<a class="btn-floating waves-effect waves-light red" 
+								(click)="anular(item);">
+									<i mz-icon-mdi mz-input-prefix [icon]="'delete'"></i>
 								</a>
-						    </td>
-					      </tr>
+						    </td>					      
+							</tr>
 					    </tbody>
 					</table>
+
 				</mz-card-content>
 			</mz-card>
 		</div>

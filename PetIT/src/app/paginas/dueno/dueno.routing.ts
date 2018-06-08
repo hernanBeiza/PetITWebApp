@@ -5,11 +5,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { DuenoComponent } from './dueno.component';
 import { InicioComponent } from './inicio/inicio.component';
 
-const routes: Routes =[
+import { HorasModule } from './../horas/horas.module';
+
+const routes: Routes = [
   { 
     path: 'dueno',  component: DuenoComponent,
-      children: [
-      { path: 'inicio',         component: InicioComponent },
+    children: [
+      { path: 'inicio',          component: InicioComponent },
+      { path: 'horas',           loadChildren: './../horas/horas.module#HorasModule' },
+      //{ path: 'horas',                loadChildren: () => HorasModule },
     ]
   }
 ];

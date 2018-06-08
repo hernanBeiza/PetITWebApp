@@ -27,6 +27,10 @@ export class InformeGenerarComponent implements OnInit {
 	public opcionesCalendario: Pickadate.DateOptions = {
 		format: 'dd-mm-yyyy',
 		formatSubmit: 'dd-mm-yyyy',
+	    max: new Date(),
+	    today: 'Hoy',
+	    clear: 'Limpiar',
+	    close: 'OK'
 	};
 
 	// Errores

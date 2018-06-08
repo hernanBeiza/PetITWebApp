@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { HiperMenuService } from './../../services/HiperMenu.service';
+
 @Component({
   selector: 'app-cabecera',
   templateUrl: './cabecera.component.html',
@@ -7,13 +9,20 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CabeceraComponent implements OnInit {
 
-	@Input() titulo: string;
+	public titulo: string;
+	public bajada: string;
 
-	constructor() { }
+	constructor(private HiperMenuService:HiperMenuService) { 
+		//console.log("CabeceraComponent");
+	    this.HiperMenuService.seccionEmmiter.subscribe(seccion => {
+	    	console.log(seccion);
+	    	this.titulo = seccion.titulo;
+	    	this.bajada = seccion.bajada;
+	    });
+	}
 
 	ngOnInit() {
-		console.log("Cabecera");
-		console.log(this.titulo);
+
 	}
 
 }

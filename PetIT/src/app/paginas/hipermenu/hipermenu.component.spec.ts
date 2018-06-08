@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HorasComponent } from './horas.component';
+import { HiperMenu } from './hipermenu.component';
 
-describe('HorasComponent', () => {
-  let component: HorasComponent;
-  let fixture: ComponentFixture<HorasComponent>;
+describe('HiperMenu', () => {
+  let component: HiperMenu;
+  let fixture: ComponentFixture<HiperMenu>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HorasComponent ]
+      declarations: [ HiperMenu ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HorasComponent);
+    fixture = TestBed.createComponent(HiperMenu);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

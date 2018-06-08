@@ -6,7 +6,7 @@ import { RecepcionistaComponent } from './recepcionista.component';
 
 import { InicioComponent } from './inicio/inicio.component';
 
-import { HorasModule } from './horas/horas.module';
+import { HorasModule } from './../horas/horas.module';
 import { DuenosModule } from './duenos/duenos.module';
 import { MascotasModule } from './mascotas/mascotas.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
@@ -24,22 +24,23 @@ export function loadNotificacionesModule() {
   return NotificacionesModule;
 }
 
-const routes: Routes =[
+const routes: Routes = 
+[
   { 
     path: 'recepcionista',  component: RecepcionistaComponent,
-      children: [
-      { path: 'inicio',         component: InicioComponent },
-      /*
-      { path: 'horas',          loadChildren: loadHorasModule },
-      { path: 'duenos',          loadChildren: loadDuenosModule },
-      { path: 'mascotas',          loadChildren: loadMascotasModule },
-      { path: 'notificaciones',          loadChildren: loadNotificacionesModule }, 
-      */
-      { path: 'horas',                loadChildren: './horas/horas.module#HorasModule' },
+    children: [
+      { path: 'inicio',             component: InicioComponent },
+      { path: 'horas',              loadChildren: loadHorasModule },
+      { path: 'duenos',             loadChildren: loadDuenosModule },
+      { path: 'mascotas',           loadChildren: loadMascotasModule },
+      { path: 'notificaciones',     loadChildren: loadNotificacionesModule },
+     /*
+      { path: 'horas',                loadChildren: './../horas/horas.module#HorasModule' },
       { path: 'duenos',          loadChildren: './duenos/duenos.module#DuenosModule' },
       { path: 'mascotas',          loadChildren: './mascotas/mascotas.module#MascotasModule' },
       { path: 'notificaciones',          loadChildren: './notificaciones/notificaciones.module#NotificacionesModule' },
-     /*
+      */
+      /*  
       { path: 'horas',                loadChildren: () => HorasModule },
       { path: 'duenos',          loadChildren: () => DuenosModule },
       { path: 'mascotas',          loadChildren: () => MascotasModule },

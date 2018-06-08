@@ -4,10 +4,10 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { MzToastService } from 'ng2-materialize';
 
-import { DuenoLocalDBService} from './../../../../services/DuenoLocalDB.service';
+import { DuenoLocalDBService} from './../../../services/DuenoLocalDB.service';
 
-import { DuenoModel } from './../../../../models/DuenoModel';
-import { MascotaModel } from './../../../../models/MascotaModel';
+import { DuenoModel } from './../../../models/DuenoModel';
+import { MascotaModel } from './../../../models/MascotaModel';
 
 @Component({
   selector: 'app-lista-encontrados',

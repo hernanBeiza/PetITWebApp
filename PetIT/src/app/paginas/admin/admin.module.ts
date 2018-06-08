@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AdminRoutingModule } from './admin.routing';
 import { InformeModule } from './informe/informe.module';
 
+
 import { AdminComponent } from './admin.component';
 import { MenuComponent } from './menu/menu.component';
 
@@ -22,11 +23,13 @@ import { CitaLocalDBService } from './../../services/CitaLocalDB.service';
 	    InformeModule
 	],
 	exports: [
-		RouterModule
+		RouterModule,
 	],
 	providers: [
 		CitaLocalDBService
 	],
-	declarations: [MenuComponent, AdminComponent, InicioComponent]
+	declarations: [
+		MenuComponent, AdminComponent, InicioComponent
+	]
 })
 export class AdminModule { }

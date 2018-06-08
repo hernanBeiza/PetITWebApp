@@ -24,7 +24,7 @@ export class MenuComponent implements OnInit {
 
 	public cerrarSesion():void {
 	  	console.log("cerrarSesion");
-	    this.LocalDBService.borrarTodo();
+	    this.UsuarioService.borrarLocal();
 	    this.router.navigate(['/login']);
 	  	//TODO
 	  	//Llmar al backend

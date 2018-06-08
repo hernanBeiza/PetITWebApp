@@ -2,9 +2,14 @@
     <div class="col m2">
 	</div>
     <div class="col m10">
-    	<!-- Menú del administrador -->
+    	<!-- Menú del administrador -->    	
+    	<!--
+    	<app-hiper [secciones]="menu"></app-hiper>
+	    -->
 		<app-menu></app-menu>
 		<div class="container">
+	    	<!-- Título de la página -->
+	    	<app-cabecera></app-cabecera>
 			<!-- Router Outlet -->
 			<router-outlet></router-outlet>
 		</div>
