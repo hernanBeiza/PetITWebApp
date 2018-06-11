@@ -12,7 +12,6 @@ import { EspecialidadModel } from './../models/EspecialidadModel';
 export class EspecialistaLocalDBService {
 
   constructor(private LocalDBService:LocalDBService) { }
- 
 
   public obtener(): Promise<Object> {
     var db = this.LocalDBService.obtenerDB();
@@ -27,8 +26,8 @@ export class EspecialistaLocalDBService {
             var especialidades:Array<EspecialistaModel> = new Array<EspecialistaModel>();
             for (var i = 0; i < results.rows.length; i++){
               var item:any = results.rows[i] as any;
-              let especialidad:EspecialistaModel = new EspecialistaModel(item.idespecialidad,item.nombre);
-              especialidades.push(especialidad);
+              let especialista:EspecialistaModel = new EspecialistaModel(item.idespecialista,item.idespecialidad,item.rut,item.nombres,item.apellidopaterno,item.apellidomaterno,item.correo,item.direccion,item.comuna,item.valid);
+              especialidades.push(especialista);
             }
             var result = {result:true,mensajes:"Especialistas encontrados",especialidades:especialidades};
             resolve(result);
@@ -58,7 +57,7 @@ export class EspecialistaLocalDBService {
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var item:any = results.rows[0] as any;
-            let especialista:EspecialistaModel = new EspecialistaModel(item.idespecialista,item.nombre);
+            let especialista:EspecialistaModel = new EspecialistaModel(item.idespecialista,item.idespecialidad,item.rut,item.nombres,item.apellidopaterno,item.apellidomaterno,item.correo,item.direccion,item.comuna,item.valid);
             var result = {result:true,mensajes:"Especialista encontrado",especialista:especialista};
             resolve(result);
           } else {
@@ -89,7 +88,7 @@ export class EspecialistaLocalDBService {
             var especialistas:Array<EspecialistaModel> = new Array<EspecialistaModel>();
             for (var i = 0; i < results.rows.length; i++){
               var item:any = results.rows[i] as any;
-              let especialista:EspecialistaModel = new EspecialistaModel(item.idespecialista,item.nombre);
+              let especialista:EspecialistaModel = new EspecialistaModel(item.idespecialista,item.idespecialidad,item.rut,item.nombres,item.apellidopaterno,item.apellidomaterno,item.correo,item.direccion,item.comuna,item.valid);
               especialistas.push(especialista);
             }
             var result = {result:true,mensajes:"Especialistas encontrados",especialistas:especialistas};

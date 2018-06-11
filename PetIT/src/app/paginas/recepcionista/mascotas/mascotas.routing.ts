@@ -8,8 +8,8 @@ import { MascotasConsultarComponent } from './mascotas-consultar/mascotas-consul
 
 
 const routes: Routes = [
-  { path: 'registrar/:iddueno',               component: MascotasRegistrarComponent },
-  { path: 'modificar/:idmascota',          component: MascotasModificarComponent },
+  { path: 'registrar/:rutdueno',               component: MascotasRegistrarComponent },
+  { path: 'modificar/:rutmascota',          component: MascotasModificarComponent },
   { path: 'consultar',                      component: MascotasConsultarComponent },
 ];
 

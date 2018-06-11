@@ -10,7 +10,7 @@ import { FinalizarComponent } from './finalizar/finalizar.component';
 
 const routes: Routes = [
   { path: 'buscar',         component: BuscarComponent },
-  { path: 'agendar/:iddueno/:idmascota',         component: AgendarComponent },
+  { path: 'agendar/:rutdueno/:rutmascota',         component: AgendarComponent },
   { path: 'consultar',         component: ConsultarComponent },
   { path: 'finalizar/:idcita',         component: FinalizarComponent },
 ];

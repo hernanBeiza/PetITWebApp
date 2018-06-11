@@ -10,11 +10,15 @@ import { Mensajes } from './../../../../libs/Mensajes';
 
 import { DuenoLocalDBService } from './../../../../services/DuenoLocalDB.service';
 import { MascotaLocalDBService } from './../../../../services/MascotaLocalDB.service';
+import { RazaLocalDBService } from './../../../../services/RazaLocalDB.service';
+import { TipoMascotaLocalDBService } from './../../../../services/TipoMascotaLocalDB.service';
 
 import { RutValidator } from 'ng2-rut';
 
 import { DuenoModel } from './../../../../models/DuenoModel';
 import { MascotaModel } from './../../../../models/MascotaModel';
+import { TipoMascotaModel } from './../../../../models/TipoMascotaModel';
+import { RazaModel } from './../../../../models/RazaModel';
 
 @Component({
   selector: 'app-mascotas-registrar',
@@ -25,8 +29,12 @@ export class MascotasRegistrarComponent implements OnInit {
 	public registrarForm:FormGroup;
 
 	public rutDuenoControl:AbstractControl;
-	public nombreDuenoControl:AbstractControl;
+	public rutMascotaControl:AbstractControl;
+	public tipoMascotaControl:AbstractControl;
+	public razaMascotaControl:AbstractControl;
 	public nombreMascotaControl:AbstractControl;
+	public pesoMascotaControl:AbstractControl;
+	public edadMascotaControl:AbstractControl;
 
 	public enviandoFlag:boolean = false;
 
@@ -38,6 +46,9 @@ export class MascotasRegistrarComponent implements OnInit {
 	public mascotaModel:MascotaModel = new MascotaModel();
 
 	public formErrors = Mensajes.validacionesAgregarMascota;
+
+	public tipos:Array<TipoMascotaModel> = new Array<TipoMascotaModel>();
+	public razas:Array<RazaModel> = new Array<RazaModel>();
 
 	public modalOptions: Materialize.ModalOptions = {
     dismissible: false, // Modal can be dismissed by clicking outside of the modal
@@ -59,40 +70,69 @@ export class MascotasRegistrarComponent implements OnInit {
 	constructor(private router:Router, private fb:FormBuilder, private ActivatedRoute: ActivatedRoute, 
 	    private MzToastService:MzToastService,
 	    private DuenoLocalDBService:DuenoLocalDBService,
-	    private MascotaLocalDBService:MascotaLocalDBService) { }
+	    private MascotaLocalDBService:MascotaLocalDBService,
+	    private RazaLocalDBService:RazaLocalDBService,
+	    private TipoMascotaLocalDBService:TipoMascotaLocalDBService) { }
 
 	ngOnInit(): void { 
 	    console.log("MascotaAgregarComponent");
 	    this.registrarForm = this.fb.group({
-	      'rutDueno': [this.duenoModel.rut, Validators.compose([Validators.required])],
-	      'nombreDueno': [this.duenoModel.nombre, Validators.compose([Validators.required])],
+	      'rutMascota': [this.mascotaModel.rutmascota, Validators.compose([Validators.required])],
+	      'tipoMascota': [this.mascotaModel.idtipomascota, Validators.compose([Validators.required])],
+	      'razaMascota': [this.mascotaModel.idraza, Validators.compose([Validators.required])],
 	      'nombreMascota': [this.mascotaModel.nombre, Validators.compose([Validators.required])],
+	      'pesoMascota': [this.mascotaModel.peso, Validators.compose([Validators.required])],
+	      'edadMascota': [this.mascotaModel.edad, Validators.compose([Validators.required])],
 	    });
         
-        this.rutDuenoControl = this.registrarForm.controls['rutDueno'];
-
-        this.nombreDuenoControl = this.registrarForm.controls['nombreDueno'];
-
+        this.rutMascotaControl = this.registrarForm.controls['rutMascota'];
+		this.tipoMascotaControl = this.registrarForm.controls['tipoMascota'];
+		this.razaMascotaControl = this.registrarForm.controls['razaMascota'];
 		this.nombreMascotaControl = this.registrarForm.controls['nombreMascota'];
+		this.pesoMascotaControl = this.registrarForm.controls['pesoMascota'];
+		this.edadMascotaControl = this.registrarForm.controls['edadMascota'];
 		// Obtener el id del dueño desde la ruta del navegador para poder asignarlo a la mascota
 	    this.ActivatedRoute.params.subscribe((param: any) => {
-			let iddueno = param['iddueno'];
-			if(iddueno != undefined || iddueno == "undefined"){
-				this.obtenerConID(iddueno);
-
+			let rutdueno = param['rutdueno'];
+			if(rutdueno != undefined || rutdueno == "undefined"){
+				this.obtenerConRut(rutdueno);
 			} else {
-				this.MzToastService.show("No hay id de dueno.",5000,"red");
+				this.MzToastService.show("No hay rut de dueño.",5000,"red");
 			}
+		});
+		this.obtenerTipos();
+		this.obtenerRazas();
+	}
+
+	private obtenerRazas():void {
+		this.RazaLocalDBService.obtener().then((data:any) =>{
+			if(data.result){
+				this.razas = data.razas;
+			} else {
+				this.MzToastService.show(data.errores,5000,'red');
+			}
+		},(dataError:any)=>{
+			this.MzToastService.show(dataError.errores,5000,'red');
 		});
 	}
 
-	private obtenerConID(id:number): void {
-		this.DuenoLocalDBService.obtenerConID(id).then((data:any)=>{
+	private obtenerTipos(): void {
+		this.TipoMascotaLocalDBService.obtener().then((data:any) =>{
 			if(data.result){
-				this.duenoModel = data.dueno;
-		        this.rutDuenoControl.disable();        
-		        this.nombreDuenoControl.disable();
+				this.tipos = data.tipos;
+			} else {
+				this.MzToastService.show(data.errores,5000,'red');
+			}
+		},(dataError:any)=>{
+			this.MzToastService.show(dataError.errores,5000,'red');
+		});
+	}
 
+	private obtenerConRut(rut:string): void {
+		this.DuenoLocalDBService.obtenerConRut(rut).then((data:any)=>{
+			if(data.result){
+				console.log(data.dueno);
+				this.duenoModel = data.dueno;
 			} else {
 				this.MzToastService.show(data.errores,5000,'red');
 			}
@@ -110,9 +150,8 @@ export class MascotasRegistrarComponent implements OnInit {
 	}
 
 	public registrar():void {
-		console.warn("Sin Implementar aún");
 		console.log(this.mascotaModel);
-		this.mascotaModel.iddueno = this.duenoModel.iddueno;
+		this.mascotaModel.rutdueno = this.duenoModel.rutdueno;
 		console.log(this.duenoModel);
 		this.MascotaLocalDBService.guardar(this.mascotaModel).then((data:any)=>{
 			this.registrarSheetModal.close();

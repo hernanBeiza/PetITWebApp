@@ -9,13 +9,13 @@
 					    <div class="col m6">
 							<i mz-icon-mdi mz-input-prefix
 						    	[icon]="'calendar'">
-						    	Fecha: {{cita.fecha}}
+						    	Fecha: {{cita.hora?.fecha}} {{cita.hora?.hora}}
 							</i>
 					    </div>
 					    <div class="col m6">
 							<i mz-icon-mdi mz-input-prefix
 						    	[icon]="'medical-bag'">
-						    	Especialista: {{cita.especialista?.nombre}}
+						    	Especialista: {{cita.especialista?.nombres}} {{cita.especialista?.apellidopaterno}} {{cita.especialista?.apellidomaterno}}
 							</i>
 					    </div>
 				    </div>
@@ -23,7 +23,7 @@
 					    <div class="col m6">
 							<i mz-icon-mdi mz-input-prefix
 						    	[icon]="'account'">
-						    	Dueño: {{cita.dueno?.nombre}}
+						    	Dueño: {{cita.dueno?.nombres}} {{ cita.dueno?.apellidopaterno}} {{cita.dueno?.apellidomaterno}}
 							</i>
 					    </div>
 					    <div class="col m6">

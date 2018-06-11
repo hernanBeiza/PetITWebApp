@@ -18,11 +18,12 @@ import { RecepcionistaComponent } from './recepcionista.component';
 import { InicioComponent } from './inicio/inicio.component';
 
 // Services
+import { RazaLocalDBService } from './../../services/RazaLocalDB.service';
+import { TipoMascotaLocalDBService } from './../../services/TipoMascotaLocalDB.service';
 import { DuenoLocalDBService } from './../../services/DuenoLocalDB.service';
 import { CitaLocalDBService } from './../../services/CitaLocalDB.service';
 import { EspecialidadLocalDBService } from './../../services/EspecialidadLocalDB.service';
 import { EspecialistaLocalDBService } from './../../services/EspecialistaLocalDB.service';
-import { FechaLocalDBService } from './../../services/FechaLocalDB.service';
 import { HoraLocalDBService } from './../../services/HoraLocalDB.service';
 
 
@@ -37,8 +38,8 @@ import { HoraLocalDBService } from './../../services/HoraLocalDB.service';
 		RouterModule
 	],
 	providers: [
-		DuenoLocalDBService,EspecialidadLocalDBService,CitaLocalDBService,
-		EspecialistaLocalDBService,FechaLocalDBService,
+		RazaLocalDBService,TipoMascotaLocalDBService,DuenoLocalDBService,EspecialidadLocalDBService,CitaLocalDBService,
+		EspecialistaLocalDBService,
 		HoraLocalDBService
 	],
 	declarations: [

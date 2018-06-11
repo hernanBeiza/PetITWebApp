@@ -5,7 +5,7 @@
 				Registrar un dueño
 			</mz-card-title>
 			<mz-card-content>
-                <form
+				<form
                 [formGroup]="registrarForm" 
                 (ngSubmit)="onSubmit(registrarForm.value)">				
 					<mz-input-container class="input-field col s12">
@@ -13,7 +13,7 @@
                         <input mz-input id="rut" type="text"
                         placeholder="Rut" 
 						[formControl]="rutControl" 
-						[(ngModel)]="duenoModel.rut"
+						[(ngModel)]="duenoModel.rutdueno"
 						mz-validation
 				        [errorMessageResource]="formErrors.rut"
 						validateRut
@@ -22,12 +22,42 @@
 					</mz-input-container>	
 					<mz-input-container class="input-field col s12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
-                        <input mz-input id="nombre" type="text"
-                        placeholder="Nombre"
-						[formControl]="nombreControl" 
-						[(ngModel)]="duenoModel.nombre"
+                        <input mz-input id="nombres" type="text"
+                        placeholder="Nombres"
+						[formControl]="nombresControl" 
+						[(ngModel)]="duenoModel.nombres"
 						mz-validation
-				        [errorMessageResource]="formErrors.nombre"
+				        [errorMessageResource]="formErrors.nombres"
+						required>
+					</mz-input-container>					
+					<mz-input-container class="input-field col s12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+                        <input mz-input id="paterno" type="text"
+                        placeholder="Apellido Paterno"
+						[formControl]="paternoControl" 
+						[(ngModel)]="duenoModel.apellidopaterno"
+						mz-validation
+				        [errorMessageResource]="formErrors.paterno"
+						required>
+					</mz-input-container>						
+					<mz-input-container class="input-field col s12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+                        <input mz-input id="materno" type="text"
+                        placeholder="Apellido Materno"
+						[formControl]="maternoControl" 
+						[(ngModel)]="duenoModel.apellidomaterno"
+						mz-validation
+				        [errorMessageResource]="formErrors.materno"
+						required>
+					</mz-input-container>						
+					<mz-input-container class="input-field col s12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+                        <input mz-input id="comuna" type="text"
+                        placeholder="Comuna" 
+						[formControl]="comunaControl" 
+						[(ngModel)]="duenoModel.comuna"
+						mz-validation
+				        [errorMessageResource]="formErrors.comuna"
 						required>
 					</mz-input-container>						
 					<mz-input-container class="input-field col s12">
@@ -38,6 +68,26 @@
 						[(ngModel)]="duenoModel.direccion"
 						mz-validation
 				        [errorMessageResource]="formErrors.direccion"
+						required>
+					</mz-input-container>	
+					<mz-input-container class="input-field col s12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+                        <input mz-input id="telefono" type="text"
+                        placeholder="Teléfono" 
+						[formControl]="telefonoControl" 
+						[(ngModel)]="duenoModel.telefono"
+						mz-validation
+				        [errorMessageResource]="formErrors.telefono"
+						required>
+					</mz-input-container>
+					<mz-input-container class="input-field col s12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+                        <input mz-input id="email" type="text"
+                        placeholder="Correo" 
+						[formControl]="emailControl" 
+						[(ngModel)]="duenoModel.correo"
+						mz-validation
+				        [errorMessageResource]="formErrors.email"
 						required>
 					</mz-input-container>
                     <button mz-button type="submit" 
@@ -58,8 +108,8 @@
 
 	</mz-modal-content>
 	<mz-modal-footer>
-		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
 		<button mz-button [flat]="true" class="green" (click)="modificar();">Modificar Dueño</button>
+		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
 	</mz-modal-footer>
 </mz-modal>
 <!-- Ventana modal error -->

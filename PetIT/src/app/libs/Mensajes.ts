@@ -37,39 +37,56 @@ export class Mensajes {
 	}
 
 	public static validacionesAgregarDueno = {
-		'nombre': {
-			'required':			'El nombre del dueño es obligatorio.'
-		},		
-		'apellido': {
-			'required':			'El apellido del dueño es obligatorio.'
-		},		
-		'email': {
-			'required':			'El email del dueño es obligatorio.',
-			'email':			'El email del dueño es inválido.'
-		},
 	    'rut': {
 			'required':			'El rut es obligatorio.',
 			'minlength':		'El rut debe ser de al menos de 9 carácter de largo.',
 			'invalidRut':		'El rut es inválido.'
 	    },
-		'telefono': {
-			'required':			'El teléfono es obligatorio.',
+		'nombres': {
+			'required':			'El nombre del dueño es obligatorio.'
+		},		
+		'paterno': {
+			'required':			'El apellido del dueño es obligatorio.'
+		},		
+		'materno': {
+			'required':			'El apellido del dueño es obligatorio.'
+		},		
+		'comuna': {
+			'required':			'La comuna es obligatoria.',
 		},
 		'direccion': {
 			'required':			'La dirección es obligatoria.',
 		},
+		'telefono': {
+			'required':			'El teléfono es obligatorio.',
+		},
+		'email': {
+			'required':			'El email del dueño es obligatorio.',
+			'email':			'El email del dueño es inválido.'
+		},
 	}	
+	
 	public static validacionesAgregarMascota = {
 		'rutDueno': {
 			'required':			'El rut del dueño es obligatorio.',
 			'minlength':		'El rut debe ser de al menos de 9 carácter de largo.',
 			'invalidRut':		'El rut es inválido.'
 		},		
-		'nombreDueno': {
-			'required':			'El nombre del dueño es obligatorio.'
+		'rutMascota': {
+			'required':			'El rut del dueño es obligatorio.',
+			'minlength':		'El rut debe ser de al menos de 9 carácter de largo.',
 		},
-		'nombreMascota': {
+		'tipo': {
+			'required':			'El tipo es obligatorio.'
+		},
+		'raza': {
+			'required':			'La raza es obligatoria.'
+		},
+		'nombre': {
 			'required':			'El nombre de la mascota es obligatorio.'
+		},
+		'peso': {
+			'required':			'El peso de la mascota es obligatorio.'
 		},
 	}
 

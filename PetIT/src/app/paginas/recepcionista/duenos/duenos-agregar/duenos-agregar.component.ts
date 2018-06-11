@@ -24,11 +24,13 @@ export class DuenosAgregarComponent implements OnInit {
 	public registrarForm:FormGroup;
 
 	public rutControl:AbstractControl;
-	public nombreControl:AbstractControl;
-	public apellidoControl:AbstractControl;
-	public emailControl:AbstractControl;
-	public telefonoControl:AbstractControl;
+	public nombresControl:AbstractControl;
+	public paternoControl:AbstractControl;
+	public maternoControl:AbstractControl;
+	public comunaControl:AbstractControl;
 	public direccionControl:AbstractControl;
+	public telefonoControl:AbstractControl;
+	public emailControl:AbstractControl;
 
 	public enviandoFlag:boolean = false;
 
@@ -65,17 +67,24 @@ export class DuenosAgregarComponent implements OnInit {
 	ngOnInit(): void { 
 	    console.log("DuenoAgregarComponent");
 	    this.registrarForm = this.fb.group({
-	      'rut': [this.duenoModel.rut, Validators.compose([Validators.required])],
-	      'nombre': [this.duenoModel.nombre, Validators.compose([Validators.required])],
-	      //'apellido': [this.duenoModel.apellido, Validators.compose([Validators.required])],
-	      //'email': [this.duenoModel.email, Validators.compose([Validators.required,Validators.email])],
-	      //'telefono': [this.duenoModel.telefono, Validators.compose([Validators.required])],
+	      'rut': [this.duenoModel.rutdueno, Validators.compose([Validators.required])],
+	      'nombres': [this.duenoModel.nombres, Validators.compose([Validators.required])],
+	      'paterno': [this.duenoModel.apellidopaterno, Validators.compose([Validators.required])],
+	      'materno': [this.duenoModel.apellidomaterno, Validators.compose([Validators.required])],
+	      'comuna': [this.duenoModel.comuna, Validators.compose([Validators.required])],
 	      'direccion': [this.duenoModel.direccion, Validators.compose([Validators.required])],
+	      'email': [this.duenoModel.correo, Validators.compose([Validators.required,Validators.email])],
+	      'telefono': [this.duenoModel.telefono, Validators.compose([Validators.required])],
 	    });
         
         this.rutControl = this.registrarForm.controls['rut'];
-		this.nombreControl = this.registrarForm.controls['nombre'];
+		this.nombresControl = this.registrarForm.controls['nombres'];
+		this.paternoControl = this.registrarForm.controls['paterno'];
+		this.maternoControl = this.registrarForm.controls['materno'];
+		this.comunaControl = this.registrarForm.controls['comuna'];
 		this.direccionControl = this.registrarForm.controls['direccion'];
+		this.emailControl = this.registrarForm.controls['email'];
+		this.telefonoControl = this.registrarForm.controls['telefono'];
 	}
 
 	public onSubmit(values:Object):void {

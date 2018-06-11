@@ -7,7 +7,6 @@ import { LocalDBService } from './LocalDB.service';
 
 import { EspecialidadModel } from './../models/EspecialidadModel';
 import { EspecialistaModel } from './../models/EspecialistaModel';
-import { FechaModel } from './../models/FechaModel';
 import { HoraModel } from './../models/HoraModel';
 
 @Injectable()

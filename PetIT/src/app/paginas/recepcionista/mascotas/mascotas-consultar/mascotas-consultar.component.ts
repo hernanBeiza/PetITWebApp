@@ -46,7 +46,7 @@ export class MascotasConsultarComponent implements OnInit {
 	}
 
 	public irModificar(mascota:MascotaModel): void {
-		this.router.navigate(["/recepcionista/mascotas/modificar/"+mascota.idmascota]);
+		this.router.navigate(["/recepcionista/mascotas/modificar/"+mascota.rutmascota]);
 	}
 
 }

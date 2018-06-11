@@ -24,11 +24,13 @@ export class DuenosModificarComponent implements OnInit {
 	public registrarForm:FormGroup;
 
 	public rutControl:AbstractControl;
-	public nombreControl:AbstractControl;
-	public apellidoControl:AbstractControl;
-	public emailControl:AbstractControl;
-	public telefonoControl:AbstractControl;
+	public nombresControl:AbstractControl;
+	public paternoControl:AbstractControl;
+	public maternoControl:AbstractControl;
+	public comunaControl:AbstractControl;
 	public direccionControl:AbstractControl;
+	public telefonoControl:AbstractControl;
+	public emailControl:AbstractControl;
 
 	public enviandoFlag:boolean = false;
 
@@ -63,32 +65,38 @@ export class DuenosModificarComponent implements OnInit {
 
 	ngOnInit(): void { 
 	    console.log("DuenoModificarComponent");
-	    this.registrarForm = this.fb.group({
-	      'rut': [this.duenoModel.rut, Validators.compose([Validators.required])],
-	      'nombre': [this.duenoModel.nombre, Validators.compose([Validators.required])],
-	      //'apellido': [this.duenoModel.apellido, Validators.compose([Validators.required])],
-	      //'email': [this.duenoModel.email, Validators.compose([Validators.required,Validators.email])],
-	      //'telefono': [this.duenoModel.telefono, Validators.compose([Validators.required])],
+   		this.registrarForm = this.fb.group({
+	      'rut': [this.duenoModel.rutdueno, Validators.compose([Validators.required])],
+	      'nombres': [this.duenoModel.nombres, Validators.compose([Validators.required])],
+	      'paterno': [this.duenoModel.apellidopaterno, Validators.compose([Validators.required])],
+	      'materno': [this.duenoModel.apellidomaterno, Validators.compose([Validators.required])],
+	      'comuna': [this.duenoModel.comuna, Validators.compose([Validators.required])],
 	      'direccion': [this.duenoModel.direccion, Validators.compose([Validators.required])],
+	      'email': [this.duenoModel.correo, Validators.compose([Validators.required,Validators.email])],
+	      'telefono': [this.duenoModel.telefono, Validators.compose([Validators.required])],
 	    });
         
         this.rutControl = this.registrarForm.controls['rut'];
-		this.nombreControl = this.registrarForm.controls['nombre'];
+		this.nombresControl = this.registrarForm.controls['nombres'];
+		this.paternoControl = this.registrarForm.controls['paterno'];
+		this.maternoControl = this.registrarForm.controls['materno'];
+		this.comunaControl = this.registrarForm.controls['comuna'];
 		this.direccionControl = this.registrarForm.controls['direccion'];
-
+		this.emailControl = this.registrarForm.controls['email'];
+		this.telefonoControl = this.registrarForm.controls['telefono'];
 		// Obtener el id del dueño desde la ruta del navegador
 	    this.ActivatedRoute.params.subscribe((param: any) => {
-			let iddueno = param['iddueno'];
-			if(iddueno != undefined || iddueno == "undefined"){
-				this.obtenerConID(iddueno);
+			let rutdueno = param['rutdueno'];
+			if(rutdueno != undefined || rutdueno == "undefined"){
+				this.obtenerConRut(rutdueno);
 			} else {
 				this.MzToastService.show("No hay id de dueno.",5000,"red");
 			}
 		});
 	}
 
-	public obtenerConID(id:number){
-		this.DuenoLocalDBService.obtenerConID(id).then((data:any)=>{
+	public obtenerConRut(rut:string){
+		this.DuenoLocalDBService.obtenerConRut(rut).then((data:any)=>{
 			if(data.result){
 				this.duenoModel = data.dueno;
 				this.MzToastService.show(data.mensajes,2000,'green');

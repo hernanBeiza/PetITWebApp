@@ -7,9 +7,7 @@ import { MzToastService } from 'ng2-materialize';
 import {DuenoModel} from './../../../models/DuenoModel';
 import {EspecialidadModel} from './../../../models/EspecialidadModel';
 import {EspecialistaModel} from './../../../models/EspecialistaModel';
-import {FechaModel} from './../../../models/FechaModel';
 import {HoraModel} from './../../../models/HoraModel';
-
 import {CitaModel} from './../../../models/CitaModel';
 
 @Component({

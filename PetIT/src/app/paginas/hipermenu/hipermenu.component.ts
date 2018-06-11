@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MzSidenavCollapsibleComponent } from 'ng2-materialize';
 
 import { LocalDBService } from './../../services/LocalDB.service';
-import { UsuarioService } from './../../services/Usuario.service';
+import { UsuarioLocalDBService } from './../../services/UsuarioLocalDB.service';
 
 import { HiperMenuService } from './../../services/HiperMenu.service';
 
@@ -19,7 +19,7 @@ export class HiperMenuComponent implements OnInit {
 	@ViewChild('menu') menuComponent: MzSidenavCollapsibleComponent;
 
 	constructor(private router:Router,
-		private LocalDBService:LocalDBService, private UsuarioService:UsuarioService,
+		private LocalDBService:LocalDBService, private UsuarioLocalDBService:UsuarioLocalDBService,
 		private HiperMenuService:HiperMenuService) { }
 
 	ngOnInit() {
@@ -39,7 +39,7 @@ export class HiperMenuComponent implements OnInit {
 		    // Enviar datos de la sección a quienes la quieran recibir
 		    this.HiperMenuService.enviar(seccion);
 			if(seccion.link=="/login"){
-				this.UsuarioService.borrarLocal();
+				this.UsuarioLocalDBService.borrarLocal();
 			}
 			this.router.navigate([seccion.link]);		
 		}

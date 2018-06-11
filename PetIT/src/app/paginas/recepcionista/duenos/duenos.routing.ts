@@ -9,7 +9,7 @@ import { DuenosModificarComponent } from './duenos-modificar/duenos-modificar.co
 
 const routes: Routes = [
   { path: 'agregar',               component: DuenosAgregarComponent },
-  { path: 'modificar/:iddueno',    component: DuenosModificarComponent },
+  { path: 'modificar/:rutdueno',    component: DuenosModificarComponent },
   { path: 'consultar',             component: DuenosConsultarComponent },
 ];
 

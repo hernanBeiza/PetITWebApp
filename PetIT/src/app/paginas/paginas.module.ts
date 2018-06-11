@@ -13,8 +13,7 @@ import { DuenoModule } from './dueno/dueno.module';
 import { HorasModule } from './horas/horas.module';
 
 import { LocalDBService } from './../services/LocalDB.service';
-import { UsuarioService } from './../services/Usuario.service';
-import { HiperMenuService } from './../services/HiperMenu.service';
+import { UsuarioLocalDBService } from './../services/UsuarioLocalDB.service';
 
 import { CompartidoModule } from './../compartido.module';
 
@@ -33,7 +32,7 @@ import { CompartidoModule } from './../compartido.module';
     CompartidoModule
   ],
   providers: [
-    LocalDBService,UsuarioService,HiperMenuService
+    LocalDBService,UsuarioLocalDBService
   ]
 })
 export class PaginasModule { }

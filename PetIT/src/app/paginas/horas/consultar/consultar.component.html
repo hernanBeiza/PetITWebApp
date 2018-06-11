@@ -6,34 +6,44 @@
 				</mz-card-title>
 				<mz-card-content>
 					Buscar hora por: 
-					<mz-radio-button-container>
-					  <input mz-radio-button
-						[(ngModel)]="filtroField"
-					    [label]="'Rut del dueño'"
-						value="rut"
-					    id="rut"
-					    name="radio-group"
-					    type="radio">
-					  <input mz-radio-button
-						[(ngModel)]="filtroField"
-					    [label]="'Nombre del dueño'"
-						value="nombre" 
-					    id="nombre"
-					    name="radio-group"
-					    type="radio">
-					</mz-radio-button-container>
+	                <form
+	                [formGroup]="buscarForm" 
+	                (ngSubmit)="onSubmit(buscarForm.value)">
+						<mz-radio-button-container>
+						  <input mz-radio-button
+  							[formControl]="fieldControl" 
+							[(ngModel)]="filtroField"
+						    [label]="'Rut del dueño'"
+							value="rut"
+						    id="rut"
+						    name="radio-group"
+						    type="radio">
+						  <input mz-radio-button
+							[formControl]="fieldControl" 
+							[(ngModel)]="filtroField"
+						    [label]="'Nombre del dueño'"
+							value="nombre" 
+						    id="nombre"
+						    name="radio-group"
+						    type="radio">
+						</mz-radio-button-container>
 
-					<mz-input-container>
-						<i mz-icon-mdi mz-input-prefix
-					    	[icon]="'magnify'">
-						</i>
-						<input mz-input
-						[(ngModel)]="filtroString"
-						id="buscar-input"
-						placeholder="Ingrese {{filtroField}}"
-						length="20"
-						type="text">
-					</mz-input-container>
+						<mz-input-container>
+							<i mz-icon-mdi mz-input-prefix
+						    	[icon]="'magnify'">
+							</i>
+							<input mz-input
+  							[formControl]="stringControl" 
+							[(ngModel)]="filtroString"
+							id="buscar-input"
+							placeholder="Ingrese {{filtroField}}"
+							length="20"
+							type="text">
+		                    <button mz-button type="submit" 
+			                    [disabled]="!buscarForm.valid || enviandoFlag"
+			                    name="action">Buscar dueño</button>
+						</mz-input-container>
+					</form>
 
 				</mz-card-content>
 			</mz-card>

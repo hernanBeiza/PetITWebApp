@@ -7,10 +7,10 @@
 			</mz-card-title>
 			<mz-card-content>
 				<p>
-                	Rut: {{duenoModel.rut | rut}} 
+                	Rut: {{duenoModel.rutdueno | rut}} 
                 </p>
                 <p>
-                	Nombre: {{duenoModel.nombre}} 
+                	Nombre: {{duenoModel.nombres}} {{duenoModel.apellidopaterno}} {{duenoModel.apellidomaterno}} 
             	</p>
                 <p>
                 	Dirección: {{duenoModel.direccion}} 
@@ -29,17 +29,81 @@
 			<mz-card-content>
                 <form
                 [formGroup]="modificarForm" 
-                (ngSubmit)="onSubmit(modificarForm.value)">									
+                (ngSubmit)="onSubmit(modificarForm.value)">
+					<mz-input-container class="input-field col s12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'paw'"></i>
+                        <input mz-input id="rut" type="text"
+					    placeholder="Rut Mascota"
+						[formControl]="rutMascotaControl" 
+						[(ngModel)]="mascotaModel.rutmascota"
+						mz-validation
+				        [errorMessageResource]="formErrors.rutMascota"
+						required>
+					</mz-input-container>						
+					<mz-select-container class="col s12 m12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'medical-bag'"></i>
+						<select mz-select
+						id="tipo"	
+						[formControl]="tipoMascotaControl" 
+						[label]="'Tipo'"
+						[placeholder]="'Seleccionar tipo de Mascota'"
+    					[(ngModel)]="mascotaModel.idtipomascota"
+						mz-validation required
+				        [errorMessageResource]="formErrors.tipo">
+						<option class="left circle"	*ngFor="let item of tipos"
+						[ngValue]="item.idtipomascota"
+						[selected]="mascotaModel.idtipomascota==item.idtipomascota">
+							{{item?.nombre}}
+						</option>
+						</select>
+					</mz-select-container>
+					<mz-select-container class="col s12 m12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'medical-bag'"></i>
+						<select mz-select
+						id="raza"
+						[formControl]="razaMascotaControl" 
+						[label]="'Raza'"
+						[placeholder]="'Seleccionar Raza'"
+    					[(ngModel)]="mascotaModel.idraza"
+						mz-validation required
+				        [errorMessageResource]="formErrors.raza">
+						<option class="left circle"	*ngFor="let item of razas"
+						[ngValue]="item.idraza"
+						[selected]="mascotaModel.idraza==item.idraza">
+							{{item?.nombre}}
+						</option>
+						</select>
+					</mz-select-container>
 					<mz-input-container class="input-field col s12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'paw'"></i>
                         <input mz-input id="nombre" type="text"
-                        placeholder="Nombre Mascota"
 						[formControl]="nombreMascotaControl" 
+                        placeholder="Nombre Mascota"
 						[(ngModel)]="mascotaModel.nombre"
 						mz-validation
-				        [errorMessageResource]="formErrors.nombreMascota"
+				        [errorMessageResource]="formErrors.nombre"
 						required>
 					</mz-input-container>			
+					<mz-input-container class="input-field col s12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'paw'"></i>
+                        <input mz-input id="nombre" type="text"
+                        placeholder="Peso Mascota"
+						[formControl]="pesoMascotaControl" 
+						[(ngModel)]="mascotaModel.peso"
+						mz-validation
+				        [errorMessageResource]="formErrors.peso"
+						required>
+					</mz-input-container>						
+					<mz-input-container class="input-field col s12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'paw'"></i>
+					    <input mz-input id="nombre" type="text"
+					    placeholder="Edad Mascota"
+						[formControl]="edadMascotaControl" 
+						[(ngModel)]="mascotaModel.edad"
+						mz-validation
+					    [errorMessageResource]="formErrors.edad"
+						required>
+					</mz-input-container>	
                     <button mz-button type="submit" 
                     [disabled]="!modificarForm.valid || enviandoFlag"
                     name="action">Modificar Mascota</button>
@@ -57,8 +121,8 @@
 	<mz-modal-content>
 	</mz-modal-content>
 	<mz-modal-footer>
-		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
 		<button mz-button [flat]="true" class="green" (click)="modificar();">Modificar Mascota</button>
+		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
 	</mz-modal-footer>
 </mz-modal>
 <!-- Ventana modal error -->

@@ -16,8 +16,8 @@
 				    </thead>
 				    <tbody>
 			    	    <tr *ngFor="let item of duenos">
-				        <td>{{item.rut | rut }}</td>
-				        <td>{{item.nombre}}</td>
+				        <td>{{item.rutdueno | rut }}</td>
+				        <td>{{item.nombres}} {{item.apellidopaterno}} {{item.apellidomaterno}}</td>
 				        <td>{{item.direccion}}</td>
 				        <td>
 							<a class="btn-floating waves-effect waves-light green" 

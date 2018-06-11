@@ -1,6 +1,4 @@
-import { MascotaModel } from './MascotaModel';
-
-export class DuenoModel { 
+export class DuenoEntity { 
 	
 	public rutdueno?: string;
 	public idusuario?: number;
@@ -13,8 +11,6 @@ export class DuenoModel {
 	public correo?: string;
 	public valid?: number;
 
-	public mascota?:MascotaModel;
-	
 	constructor(rut?:string,idusuario?:number,
 		nombres?:string,apellidopaterno?:string,apellidomaterno?:string,
 		comuna?:string,direccion?:string,telefono?:string,correo?:string,valid?:number){

@@ -46,16 +46,16 @@ export class DuenosConsultarComponent implements OnInit {
 
 
 	public irModificar(dueno:DuenoModel): void {
-		this.router.navigate(["/recepcionista/duenos/modificar/"+dueno.iddueno]);
+		this.router.navigate(["/recepcionista/duenos/modificar/"+dueno.rutdueno]);
 	}
 
 	public irRegistrarMascota(dueno:DuenoModel): void {
-		this.router.navigate(["/recepcionista/mascotas/registrar/"+dueno.iddueno]);
+		this.router.navigate(["/recepcionista/mascotas/registrar/"+dueno.rutdueno]);
 	}
 
 	public irAgregarUsuario(dueno:DuenoModel): void {
 		console.log("irAgregarUsuario",dueno);
-		//this.router.navigate(["/recepcionista/usuarios/agregar/"+dueno.iddueno]);
+		//this.router.navigate(["/recepcionista/usuarios/agregar/"+dueno.rutdueno]);
 	}
 
 }

@@ -17,7 +17,7 @@
 							formControlName="especialidad"
 							[label]="'Especialidad'"
 							[placeholder]="'2. Seleccionar especialidad'"
-	    					[(ngModel)]="citaModel.especialidad"
+	    					[(ngModel)]="especialidadModel"
 							mz-validation required
 					        [errorMessageResource]="formErrors.especialidad">
 							<option class="left circle"	*ngFor="let item of especialidades"
@@ -29,16 +29,17 @@
 						<mz-select-container class="col s12 m12">
 							<i mz-icon-mdi mz-input-prefix [icon]="'medical-bag'"></i>
 							<select mz-select
+							(change)="seleccionarEspecialista($event);"
 							id="especialista"
 							formControlName="especialista"
 							[label]="'Especialista'"
 							[placeholder]="'3. Seleccionar Especialista'"
-	    					[(ngModel)]="citaModel.especialista"
+	    					[(ngModel)]="especialistaModel"
 							mz-validation required
 					        [errorMessageResource]="formErrors.especialista">
 							<option class="left circle"	*ngFor="let item of especialistas"
 							[ngValue]="item">
-								{{item?.nombre}}
+								{{item?.nombres}} {{item?.apellidopaterno}}
 							</option>
 							</select>
 						</mz-select-container>
@@ -49,12 +50,32 @@
 							formControlName="fecha"
 							[label]="'Fecha'"
 							[placeholder]="'3. Fecha Preferencia'"
-	    					[(ngModel)]="citaModel.fecha"
+	    					[(ngModel)]="fecha"
 							mz-validation required
 							[errorMessageResource]="formErrors.fecha"
 							[options]="opcionesCalendario">
 						</mz-datepicker-container>
-
+						<table class="striped">
+						    <thead>
+						      <tr>
+						          <th>Nombre Especialista</th>
+						          <th>Fecha</th>
+						          <th>Hora</th>
+						          <th>Acciones</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+					    	    <tr *ngFor="let item of horas">
+						        <td>{{item.especialistaModel.nombres}} {{item.especialistaModel.apellidopaterno}}</td>
+						        <td>{{item.fecha}}</td>
+						        <td>{{item.hora}}</td>
+							    <td>
+							    	<button mz-button type="button" (click)="reservar(item)">Reservar</button>
+							    </td>					      
+								</tr>
+						    </tbody>
+						</table>
+						<!--
 						<mz-timepicker-container class="col s12">
 						  <i mz-icon-mdi mz-input-prefix
 						    [icon]="'clock'">
@@ -69,6 +90,7 @@
 							[errorMessageResource]="formErrors.hora"
 						    type="text">
 						</mz-timepicker-container>
+						-->
 						<!--
 						<mz-select-container>
 							<select mz-select
@@ -102,10 +124,11 @@
 						</mz-select-container>
 						-->
 						<button mz-button (click)="volver();">Volver</button>
-						<!--<button mz-button (click)="reservar();">Reservar</button>-->
+						<!--
 	                    <button mz-button type="submit" 
 	                    [disabled]="!agendarForm.valid || enviandoFlag"
 	                    name="action">Reservar</button>
+		                -->
 					</form>
 
 				</mz-card-content>
@@ -119,13 +142,14 @@
 		<h4>¿Desea tomar esta hora?</h4>
 	</mz-modal-header>
 	<mz-modal-content>
-		<p>Nombre Doctor: {{citaModel.especialista?.nombre}}</p>
-		<p>Dueño: {{citaModel.dueno?.nombre}}</p>
-		<p>Paciente: {{citaModel.mascota?.nombre}}</p>
+		<p>Nombre Doctor: {{citaModel.especialistaModel?.nombres}} {{citaModel.especialistaModel?.apellidopaterno}}</p>
+		<p>Fecha: {{citaModel.hora?.fecha}} a las {{citaModel.hora?.hora}} hrs</p>
+		<p>Dueño: {{citaModel.dueno?.nombres}} {{citaModel.dueno?.apellidopaterno}} {{citaModel.dueno?.apellidomaterno}}</p>
+		<p>Nombre Mascota: {{citaModel.mascota?.nombre}}</p>
 	</mz-modal-content>
 	<mz-modal-footer>
-		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
 		<button mz-button [flat]="true" class="green" (click)="agendar();">Agendar Hora</button>
+		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
 	</mz-modal-footer>
 </mz-modal>
 <!-- Ventana modal error -->

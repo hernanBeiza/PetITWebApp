@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { LocalDBService } from './../../../services/LocalDB.service';
-import { UsuarioService } from './../../../services/Usuario.service';
+import { UsuarioLocalDBService } from './../../../services/UsuarioLocalDB.service';
 
 import { UsuarioModel } from './../../../models/UsuarioModel';
 
@@ -15,7 +15,7 @@ export class MenuComponent implements OnInit {
 
 	constructor(private router:Router,
 		private LocalDBService:LocalDBService, 
-		private UsuarioService:UsuarioService) { }
+		private UsuarioLocalDBService:UsuarioLocalDBService) { }
 
 	ngOnInit() { 
 		//console.log("MenuComponent");
@@ -28,32 +28,15 @@ export class MenuComponent implements OnInit {
 
 	public cerrarSesion():void {
 	  	console.log("cerrarSesion");
-	  	this.UsuarioService.borrarLocal();
+	  	this.UsuarioLocalDBService.borrarLocal();
 	    this.router.navigate(['/login']);
-	  	//TODO
-	  	//Llmar al backend
-	  	/*
-	    this.UsuarioService.logout().subscribe(
-	      data => {            
-	        var datos:any = data as any;
-	      	//console.info(datos);
-	        this.LocalDBService.borrarTodo();
-	      	this.mostrarme = false;
-	        this.router.navigate(['/login']);
-	      },
-	      error => {
-	        console.error(error);
-	        this.LocalDBService.borrarTodo();
-	      	this.mostrarme = false;
-	        this.router.navigate(['/login']);
-	    });
-	    */
+	    console.warn("Falta terminar: Llamar al backend");
 	}
 
 	public irAgendar(): void {
 		console.log("irAgendar();");
 		console.warn("Sin implementar");
-		let usuario:UsuarioModel = this.UsuarioService.obtenerLocal();
+		let usuario:UsuarioModel = this.UsuarioLocalDBService.obtenerLocal();
 		console.log(usuario);
 		let ruta:string = '/dueno/agendar/'+usuario.idusuario;
 		console.log(ruta);

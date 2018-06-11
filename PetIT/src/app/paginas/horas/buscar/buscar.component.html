@@ -6,35 +6,45 @@
 				</mz-card-title>
 				<mz-card-content>
 					Buscar dueño por: 
-					<mz-radio-button-container>
-					  <input mz-radio-button
-						[(ngModel)]="filtroField"
-					    [label]="'Rut'"
-						value="rut"
-					    id="rut"
-					    name="radio-group"
-					    type="radio">
-					  <input mz-radio-button
-						[(ngModel)]="filtroField"
-					    [label]="'Nombre'"
-						value="nombre" 
-					    id="nombre"
-					    name="radio-group"
-					    type="radio">
-					</mz-radio-button-container>
-
-					<mz-input-container>
-						<i mz-icon-mdi mz-input-prefix
-					    	[icon]="'magnify'">
-						</i>
-						<input mz-input
-						[(ngModel)]="filtroString"
-						id="buscar-input"
-						placeholder="Ingrese {{filtroField}}"
-						length="20"
-						type="text">
-					</mz-input-container>
-
+	                <form
+	                [formGroup]="buscarForm" 
+	                (ngSubmit)="onSubmit(buscarForm.value)">
+						<mz-radio-button-container>
+							<input mz-radio-button
+  							[formControl]="fieldControl" 
+							[(ngModel)]="filtroField"
+						    [label]="'Rut'"
+							value="rut"
+						    id="rut"
+						    name="radio-group"
+						    type="radio">
+							<input mz-radio-button
+							[formControl]="fieldControl" 
+							[(ngModel)]="filtroField"
+						    [label]="'Nombre'"
+							value="nombre" 
+						    id="nombre"
+						    name="radio-group"
+						    type="radio">
+						</mz-radio-button-container>
+						<mz-input-container>
+							<i mz-icon-mdi mz-input-prefix
+						    	[icon]="'magnify'">
+							</i>
+							<input mz-input
+  							[formControl]="stringControl" 
+							[(ngModel)]="filtroString"
+							placeholder="Ingrese {{filtroField}}"
+							length="20"
+							type="text">
+		                    <button mz-button type="submit" 
+		                    [disabled]="!buscarForm.valid || enviandoFlag"
+		                    name="action">Buscar dueño</button>
+						</mz-input-container>
+					</form>
+					<!--
+					<app-buscador-duenos></app-buscador-duenos>
+					-->
 				</mz-card-content>
 			</mz-card>
 		</div>
@@ -57,9 +67,10 @@
 					      </tr>
 					    </thead>
 					    <tbody>
-				    	    <tr *ngFor="let item of duenos | filtro : filtroField : filtroString">
-					        <td>{{item.rut | rut}}</td>
-					        <td>{{item.nombre}}</td>
+				    	    <!--<tr *ngFor="let item of duenos | filtro : filtroField : filtroString">-->
+				    	    <tr *ngFor="let item of duenos">
+					        <td>{{item.rutdueno | rut}}</td>
+					        <td>{{item.nombres}} {{item.apellidopaterno}}</td>
 					        <td>{{item.mascota.nombre}}</td>
 					        <td>{{item.direccion}}</td>
 					        <!--

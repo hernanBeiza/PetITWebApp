@@ -10,7 +10,7 @@ import { Validaciones } from './../../libs/Validaciones';
 import { UsuarioModel } from './../../models/UsuarioModel';
 
 import { LocalDBService } from './../../services/LocalDB.service';
-import { UsuarioService } from './../../services/Usuario.service';
+import { UsuarioLocalDBService } from './../../services/UsuarioLocalDB.service';
 
 import { MzToastService } from 'ng2-materialize';
 
@@ -41,15 +41,15 @@ export class LoginComponent implements OnInit {
   public formErrors = Mensajes.validacionesLogin;
 
   constructor(private router: Router, 
-    private LocalDBService:LocalDBService, private UsuarioService: UsuarioService,
+    private LocalDBService:LocalDBService, private UsuarioLocalDBService: UsuarioLocalDBService,
     private RutValidator: RutValidator,
     private fb:FormBuilder,
     private MzToastService: MzToastService) { }
 
   ngOnInit(): void { 
     this.loginForm = this.fb.group({
-      'rut': [this.usuarioModel.user, Validators.compose([Validators.required])],
-      'contrasena': [this.usuarioModel.pass, Validators.compose([Validators.required, Validators.minLength(7)])],
+      'rut': [this.usuarioModel.rut, Validators.compose([Validators.required])],
+      'contrasena': [this.usuarioModel.password, Validators.compose([Validators.required, Validators.minLength(7)])],
     });
 
     this.rut = this.loginForm.controls['rut'];
@@ -72,16 +72,16 @@ export class LoginComponent implements OnInit {
   }
 
   private iniciarSesion(): void {
-    this.UsuarioService.iniciarSesion(this.usuarioModel.user,this.usuarioModel.pass)
+    this.UsuarioLocalDBService.iniciarSesion(this.usuarioModel.rut,this.usuarioModel.password)
     .then((data:any) => {
       console.log(data);
       this.MzToastService.show(data.mensajes,3000,'green');
       var model:UsuarioModel = data.usuario as UsuarioModel;
       //Guardar en la DB Local
-      this.UsuarioService.guardarLocal(model);
+      this.UsuarioLocalDBService.guardarLocal(model);
       //
       var ruta = "";
-      switch (model.idusuariorol) {
+      switch (model.idrol) {
         case 1:
           console.log("admin");
           ruta = 'admin/inicio';
@@ -104,60 +104,6 @@ export class LoginComponent implements OnInit {
       console.log(this);
       this.MzToastService.show(dataError.errores,3000,'red');
     });
-
-    /*
-    this.MzToastService.show("Bienvenido",3000);
-    var ruta = "";
-    switch (this.usuarioModel.user) {
-      case "111111111":
-        //console.log("admin");
-        ruta = 'admin/inicio';
-        this.router.navigate([ruta]);                      
-        break;
-      case "222222222":
-        //console.log("recepcionista")
-        ruta = 'recepcionista/inicio';
-        this.router.navigate([ruta]);                      
-        break;        
-      default:
-        //console.log("propietario")
-        ruta = 'propietario/inicio';
-        this.router.navigate([ruta]);                      
-        break;
-    } 
-    console.log(ruta);
-    this.LocalDBService.guardarUsuario(this.usuarioModel);
-    */
-   
-    // TODO
-    // Conectar con backend
-  	/*
-    this.enviandoFlag = true;
-    this.UsuarioService.login(this.usuarioModel).subscribe(
-  		data => {
-  		  //console.log(data);
-  		  this.enviandoFlag = false;
-  		  var datos:any = data as any;
-  		  if(datos.result){
-          this.usuarioModel = datos.usuario;
-          this.MzToastService.show(datos.mensajes,3000);
-          this.LocalDBService.guardarUsuario(this.usuarioModel);
-  		    var ruta = 'producto/listar';
-  		    this.router.navigate([ruta]);                      
-  		  } else {
-          this.MzToastService.show(datos.mensajes,3000);
-          console.log(datos.mensajes);
-  		  }
-  		},
-  		error => {
-  		  console.error(error);
-  		  this.enviandoFlag = false;
-        this.MzToastService.show(error,3000);
-  		  //var dataError = error.json();
-  		  //console.error(dataError);
-  		}
-    );
-    */
   }
 
   private onValueChanged(data?: any) {

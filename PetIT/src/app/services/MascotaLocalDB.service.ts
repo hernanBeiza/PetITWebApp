@@ -13,7 +13,7 @@ export class MascotaLocalDBService {
 	    var db = this.LocalDBService.obtenerDB();
 	    var promesa = new Promise((resolve, reject) => {
 	      db.transaction(function (tx){
-	        var sql = "INSERT INTO mascota (iddueno,nombre) VALUES("+mascota.iddueno+",'"+mascota.nombre+"')";
+	        var sql = "INSERT INTO mascota (rutmascota,idtipomascota,idraza,rutdueno,nombre,peso,edad) VALUES('"+mascota.rutmascota+"','"+mascota.idtipomascota+"','"+mascota.idraza+"','"+mascota.rutdueno+"','"+mascota.nombre+"','"+mascota.peso+"','"+mascota.edad+"')";
 	        console.info(sql);
 	        tx.executeSql(sql,[],function(tx,results){
 	          console.log(tx,results,results.rows.length);
@@ -36,10 +36,13 @@ export class MascotaLocalDBService {
 	}  
 
 	public modificar(mascota:MascotaModel): Promise<Object> {
+		console.log("modificar();");
+		console.log(mascota);
+		
 		var db = this.LocalDBService.obtenerDB();
 		var promesa = new Promise((resolve, reject) => {
 		  db.transaction(function (tx){
-		    var sql = "UPDATE mascota SET iddueno="+mascota.iddueno+", nombre='"+mascota.nombre+"' WHERE iddueno = "+mascota.idmascota;
+		    var sql = "UPDATE mascota SET idtipomascota="+mascota.idtipomascota+", idraza="+mascota.idraza+", rutdueno='"+mascota.rutdueno+"', nombre='"+mascota.nombre+"', peso="+mascota.peso+", edad="+mascota.edad+" WHERE rutmascota = '"+mascota.rutmascota+"'";
 		    console.info(sql);
 		    tx.executeSql(sql,[],function(tx,results){
 		      console.log(tx,results,results.rows.length);
@@ -73,11 +76,11 @@ export class MascotaLocalDBService {
 			        var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
 			        var mascotas:Array<MascotaModel> = new Array<MascotaModel>();
 			        for (var i = 0; i < results.rows.length; i++){
-			          var item:any = results.rows[i] as any;
-			          var model:MascotaModel = new MascotaModel(item.idmascota,item.iddueno,item.nombre);
-			          mascotas.push(model);
+						var item:any = results.rows[i] as any;
+						var model:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutdueno,item.nombre,item.peso,item.edad,item.valid); 
+          		        mascotas.push(model);
 			        }
-		        	var result = {result:true,mensajes:"Masctoas encontradas",mascotas:mascotas};
+		        	var result = {result:true,mensajes:"Mascotas encontradas",mascotas:mascotas};
 					resolve(result);
 				} else {
 		    	    var resultNoEncontrado = {result:false,errores:"No se han encontrado mascotas"};
@@ -94,18 +97,18 @@ export class MascotaLocalDBService {
 		return promesa;    
 	}
 
-	public obtenerConID(idmascota:number): Promise<Object> {
+	public obtenerConRut(rutmascota:string): Promise<Object> {
 	    var db = this.LocalDBService.obtenerDB();
 	    var promesa = new Promise((resolve, reject) => {
 	      db.transaction(function (tx){
-	        var sql = "SELECT * FROM mascota WHERE idmascota = "+idmascota.toString();
+	        var sql = "SELECT * FROM mascota WHERE rutmascota = "+rutmascota;
 	        console.info(sql);
 	        tx.executeSql(sql,[],function(tx,results){
 	          console.log(tx,results,results.rows.length);
 	          if(results.rows.length>0){
 	            var item:any = results.rows[0] as any;
-	            var mascota:MascotaModel = new MascotaModel(item.idmascota,item.iddueno,item.nombre);
-	            var result = {result:true,mensajes:"Mascota encontrada",mascota:mascota};
+				var model:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutdueno,item.nombre,item.peso,item.edad,item.valid); 
+	            var result = {result:true,mensajes:"Mascota encontrada",mascota:model};
 	            resolve(result);
 	          } else {
 	            var resultNoEncontrado = {result:false,errores:"No se ha encontrado mascota con esos datos"};
