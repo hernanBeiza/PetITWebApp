@@ -20,7 +20,7 @@ export class InicioComponent implements OnInit {
 
 	ngOnInit() {
 		console.log("InicioComponent: ngOnInit();");
-		this.CitaLocalDBService.obtener().then((data:any) => {
+		this.CitaLocalDBService.obtenerUltimas().then((data:any) => {
 			console.log(data);
 			if(data.result){
 				this.citas = data.citas;

@@ -1,3 +1,105 @@
-<p>
-	Acá irá el formulario para enviar la notificación
-</p>
+	<div class="row">
+	    <div class="col s12 m12">
+			<mz-card [hoverable]="true">
+				<mz-card-title>
+					Enviar notificaciones
+				</mz-card-title>
+				<mz-card-content>
+					Seleccionar destinatario
+					<table class="striped">
+					    <thead>
+					      <tr>
+					          <th>Rut</th>
+					          <th>Nombre</th>
+					          <th>Dirección</th>
+					          <th>Enviar</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+				    	    <tr *ngFor="let item of duenos">
+					        <td>{{item.rutdueno}}</td>
+					        <td>{{item.nombres}} {{item.apellidopaterno}}</td>
+					        <td>{{item.direccion}}</td>
+					        <td>
+					        	<!--
+								<a class="btn-floating waves-effect waves-light green" 
+								(click)="irModificar(item);">
+									<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>
+								</a>
+								-->
+								<mz-checkbox-container>
+									<input mz-checkbox
+								    [label]="''"
+								    id="{{item.rutdueno}}"
+								    type="checkbox">
+								</mz-checkbox-container>
+						    </td>
+					      </tr>
+					    </tbody>
+					</table>
+					<mz-pagination
+						(pageChange)="onPageChange($event)"
+						[currentPage]="1"
+						[enableFirstAndLastPageButtons]="false"
+						[itemsPerPage]="10"
+						[totalItems]="30"
+					>
+					</mz-pagination>
+				</mz-card-content>
+			</mz-card>
+		</div>
+	</div>
+	<div class="row">
+	    <div class="col s12 m12">
+			<mz-card [hoverable]="true">
+				<mz-card-title>
+					Datos de la notificación
+				</mz-card-title>
+				<mz-card-content>
+				<form
+                [formGroup]="enviarForm" 
+                (ngSubmit)="onSubmit(enviarForm.value)">
+					<mz-input-container>
+						<i mz-icon-mdi mz-input-prefix [icon]="'message-reply-text'"></i>
+                        <input mz-input id="rut" type="text"
+                        placeholder="Título de la notificación"
+						[formControl]="tituloControl" 
+						[(ngModel)]="notificacionModel.titulo"
+						mz-validation
+				        [errorMessageResource]="formErrors.titulo"
+						required>
+					</mz-input-container>											
+					<mz-textarea-container>
+						<i mz-icon-mdi mz-textarea-prefix [icon]="'message-reply-text'"></i>
+						<textarea mz-textarea
+						id="comment-textarea"
+						placeholder="Mensaje de la notificaicón"
+						length="150"
+						[formControl]="mensajeControl" 
+						[(ngModel)]="notificacionModel.mensaje"
+						mz-validation
+				        [errorMessageResource]="formErrors.mensaje"
+				        required></textarea>
+					</mz-textarea-container>
+                    <button mz-button type="submit" 
+                    [disabled]="!enviarForm.valid || enviandoFlag"
+                    name="action">Enviar notificación</button>
+				</form>
+				</mz-card-content>
+			</mz-card>
+		</div>
+	</div>
+
+	<!-- Ventana modal detalle Dueño Mascota-->
+	<mz-modal #confirmarSheetModal [options]="modalOptions">
+		<mz-modal-header>
+			<h5>Confirmación envío</h5>
+		</mz-modal-header>
+		<mz-modal-content>
+			¿Desea enviar esta notificación a los dueños seleccionados?
+		</mz-modal-content>
+		<mz-modal-footer>
+			<button mz-button [flat]="true" class="green" (click)="enviarNotificacion();">Enviar</button>
+			<button mz-button [flat]="true" class="ed" mz-modal-close>Cancelar</button>
+		</mz-modal-footer>
+	</mz-modal>

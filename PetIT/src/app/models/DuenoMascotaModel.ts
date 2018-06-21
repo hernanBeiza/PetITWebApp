@@ -1,6 +1,6 @@
 import { MascotaModel } from './MascotaModel';
 
-export class DuenoModel { 
+export class DuenoMascotaModel { 
 	
 	public rutdueno?: string;
 	public idusuario?: number;
@@ -13,7 +13,7 @@ export class DuenoModel {
 	public correo?: string;
 	public valid?: number;
 
-	public mascota?:MascotaModel;
+	public mascotas:Array<MascotaModel> = new Array<MascotaModel>();
 	
 	constructor(rut?:string,idusuario?:number,
 		nombres?:string,apellidopaterno?:string,apellidomaterno?:string,

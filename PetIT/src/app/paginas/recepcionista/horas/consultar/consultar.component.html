@@ -1,8 +1,8 @@
-	<div class="row">
+	<div class="row" *ngIf="usuarioModel.idrol==2">
 	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
 				<mz-card-title>
-					1. Buscar dueño: 
+					1. Buscar dueño
 				</mz-card-title>
 				<mz-card-content>
 					Buscar dueño por: 
@@ -42,9 +42,25 @@
 		                    name="action">Buscar dueño</button>
 						</mz-input-container>
 					</form>
-					<!--
-					<app-buscador-duenos></app-buscador-duenos>
-					-->
+				</mz-card-content>
+			</mz-card>
+		</div>
+	</div>
+	<div class="row" *ngIf="usuarioModel.idrol==2">
+	    <div class="col s12 m12">
+			<mz-card [hoverable]="true">
+				<mz-card-title>
+					Datos Dueño Mascota
+				</mz-card-title>
+				<mz-card-content>
+					<div class="row">
+					    <div class="col s4 m4">
+							Rut: {{duenoEncontrado?.rutdueno}} 
+						</div>
+					    <div class="col s8 m8">
+							Nombre: {{duenoEncontrado?.nombres}} {{duenoEncontrado?.apellidopaterno}} {{duenoEncontrado?.apellidomaterno}}			
+						</div>
+					</div>
 				</mz-card-content>
 			</mz-card>
 		</div>
@@ -53,39 +69,58 @@
 	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
 				<mz-card-title>
-					2. Dueños Encontrados:
+					2. Mascotas encontradas
 				</mz-card-title>
 				<mz-card-content>
-					<table class="striped">
+					<table>
 					    <thead>
-					      <tr>
-					          <th>Rut</th>
-					          <th>Nombre</th>
-					          <th>Nombre Mascota</th>
-					          <th>Dirección</th>
-					          <th>Acciones</th>
-					      </tr>
+							<tr>
+								<th>Rut</th>
+								<th>Tipo</th>
+								<th>Raza</th>
+								<th>Nombre</th>
+				          		<th>Acciones</th>
+							</tr>
 					    </thead>
 					    <tbody>
 				    	    <!--<tr *ngFor="let item of duenos | filtro : filtroField : filtroString">-->
-				    	    <tr *ngFor="let item of duenos">
-					        <td>{{item.rutdueno | rut}}</td>
-					        <td>{{item.nombres}} {{item.apellidopaterno}}</td>
-					        <td>{{item.mascota.nombre}}</td>
-					        <td>{{item.direccion}}</td>
-					        <!--
-					        <td><button mz-button (click)="irAgendar(item);">Agendar</button></td>
-						    -->
+				    	    <tr *ngFor="let item of mascotas" style="cursor: pointer;" 
+				    	    (click)="seleccionarMascota(item);"
+							[class.seleccionada]="item.rutmascota == mascotaSeleccionada?.rutmascota"
+				    	    >
+					        <td>{{item.rutmascota | rut}}</td>
+					        <td>{{item.tipoMascotaModel.nombre}}</td>
+					        <td>{{item.razaModel.nombre}}</td>
+					        <td>{{item.nombre}}</td>
 						    <td>
+								<!--
 								<a class="btn-floating waves-effect waves-light green" 
 								(click)="irAgendar(item);">
+									<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>
+								</a>
+								-->
+								<a href="#" (click)="irEditar(item);" mz-tooltip [tooltip]="'Editar horas de esta mascota'" [position]="'top'">
 									<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>
 								</a>
 						    </td>
 					      </tr>
 					    </tbody>
 					</table>
+					<mz-pagination
+						(pageChange)="onPageChange($event)"
+						[currentPage]="1"
+						[enableFirstAndLastPageButtons]="false"
+						[itemsPerPage]="10"
+						[totalItems]="30"
+					>
+					</mz-pagination>
 				</mz-card-content>
 			</mz-card>
 		</div>
 	</div>
+	<div class="row">
+	    <div class="col s8 m8"></div>
+	    <div class="col s4 m4">
+			<a style="cursor: pointer;" (click)="irAgendar();">Agendar hora</a>
+	    </div>
+    </div>

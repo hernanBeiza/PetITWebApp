@@ -1,8 +1,8 @@
-import { DuenoModel } from './DuenoModel';
 import { MascotaModel } from './MascotaModel';
-import { EspecialidadModel } from './EspecialidadModel';
+import { DuenoMascotaModel } from './DuenoMascotaModel';
 import { EspecialistaModel } from './EspecialistaModel';
 import { HoraModel } from './HoraModel';
+import { OrigenModel } from './OrigenModel';
 
 export class CitaModel { 
 	
@@ -13,13 +13,19 @@ export class CitaModel {
 	public origen?: number;
 	public valid?: number;
 
+	public mascotaModel?:MascotaModel;
+	public duenoMascotaModel?:DuenoMascotaModel;
+	public especialistaModel?:EspecialistaModel;
+	public horaModel?:HoraModel;
+	public origenModel?:OrigenModel;
+
 	constructor(idcita?:number,rutmascota?:string,idespecialista?:number,idhora?:number,origen?:number,valid?:number){
-			this.idcita = idcita;
-			this.rutmascota = rutmascota;
-			this.idespecialista = idespecialista;
-			this.idhora = idhora;
-			this.origen = origen;
-			this.valid = valid;
+		this.idcita = idcita;
+		this.rutmascota = rutmascota;
+		this.idespecialista = idespecialista;
+		this.idhora = idhora;
+		this.origen = origen;
+		this.valid = valid;
 	}
 	
 }

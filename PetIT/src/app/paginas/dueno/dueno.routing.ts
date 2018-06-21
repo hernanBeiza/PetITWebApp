@@ -4,15 +4,18 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DuenoComponent } from './dueno.component';
 import { InicioComponent } from './inicio/inicio.component';
+import { NotificacionesModule } from './notificaciones/notificaciones.module';
 
-import { HorasModule } from './../horas/horas.module';
+export function loadNotificacionesModule() {
+  return NotificacionesModule;
+}
 
 const routes: Routes = [
   { 
     path: 'dueno',  component: DuenoComponent,
     children: [
-      { path: 'inicio',          component: InicioComponent },
-      { path: 'horas',           loadChildren: './../horas/horas.module#HorasModule' },
+      { path: 'inicio',            component: InicioComponent },
+      { path: 'notificaciones',    loadChildren: loadNotificacionesModule },
       //{ path: 'horas',                loadChildren: () => HorasModule },
     ]
   }

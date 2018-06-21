@@ -32,4 +32,4 @@ const routes: Routes = [
 })
 */
 //export class AppRoutingModule { }
-export const AppRoutingModule: ModuleWithProviders = RouterModule.forRoot(routes);
+export const AppRoutingModule: ModuleWithProviders = RouterModule.forRoot(routes,{ useHash: true });

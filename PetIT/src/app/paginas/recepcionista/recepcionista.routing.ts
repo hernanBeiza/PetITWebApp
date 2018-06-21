@@ -6,7 +6,7 @@ import { RecepcionistaComponent } from './recepcionista.component';
 
 import { InicioComponent } from './inicio/inicio.component';
 
-import { HorasModule } from './../horas/horas.module';
+import { HorasModule } from './horas/horas.module';
 import { DuenosModule } from './duenos/duenos.module';
 import { MascotasModule } from './mascotas/mascotas.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';

@@ -1,4 +1,6 @@
-import { DuenoModel } from './DuenoModel';
+import { DuenoMascotaModel } from './DuenoMascotaModel';
+import { RazaModel } from './RazaModel';
+import { TipoMascotaModel } from './TipoMascotaModel';
 
 export class MascotaModel { 
 	
@@ -11,7 +13,9 @@ export class MascotaModel {
 	public edad?: string;
 	public valid?: number;
 
-
+	public razaModel:RazaModel;
+	public tipoMascotaModel:TipoMascotaModel;
+	
 	constructor(rutmascota?:string,idtipomascota?:number,idraza?:number,rutdueno?:string,
 		nombre?:string,
 		peso?:string,

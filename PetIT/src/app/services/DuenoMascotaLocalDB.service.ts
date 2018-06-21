@@ -8,16 +8,16 @@ import { Subject } from 'rxjs/Subject';
 import { LocalDBService } from './LocalDB.service';
 
 import { MascotaModel } from './../models/MascotaModel';
-import { DuenoModel } from './../models/DuenoModel';
+import { DuenoMascotaModel } from './../models/DuenoMascotaModel';
 
 import { environment } from './../../environments/environment';
 
 @Injectable()
-export class DuenoLocalDBService {
+export class DuenoMascotaLocalDBService {
 
   constructor(private LocalDBService:LocalDBService) { }
 
-  public guardar(dueno:DuenoModel): Promise<Object> {
+  public guardar(dueno:DuenoMascotaModel): Promise<Object> {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -43,7 +43,7 @@ export class DuenoLocalDBService {
     return promesa;    
   }  
 
-  public modificar(dueno:DuenoModel): Promise<Object> {
+  public modificar(dueno:DuenoMascotaModel): Promise<Object> {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -80,10 +80,10 @@ export class DuenoLocalDBService {
           console.log(tx,results,results.rows.length);
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
-            var duenos:Array<DuenoModel> = new Array<DuenoModel>();
+            var duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
             for (var i = 0; i < results.rows.length; i++){
               var item:any = results.rows[i] as any;
-              var dueno:DuenoModel = new DuenoModel(item.rutdueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);              
+              var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutdueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);              
               duenos.push(dueno);
             }
             var result = {result:true,mensajes:"Dueños encontrados",duenos:duenos};
@@ -115,15 +115,15 @@ export class DuenoLocalDBService {
           console.log(tx,results,results.rows.length);
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
-            var duenos:Array<DuenoModel> = new Array<DuenoModel>();
+            var duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
             for (var i = 0; i < results.rows.length; i++){
               var item:any = results.rows[i] as any;
               var mascota:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutDueno,item.nombreMascota,item.peso,item.edad,item.validMascota);
-              var dueno:DuenoModel = new DuenoModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
-              dueno.mascota = mascota;
+              var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
+              dueno.mascotas.push(mascota);
               duenos.push(dueno);
             }
-            var result = {result:true,mensajes:"Dueños encontrados",duenos:duenos};
+            var result = {result:true,mensajes:"Dueño encontrado",duenos:duenos};
             resolve(result);
           } else {
             var resultNoEncontrado = {result:false,errores:"No se han encontrado dueños"};
@@ -145,21 +145,19 @@ export class DuenoLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT du.rutdueno AS rutDueno, du.*, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza,ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du LEFT JOIN mascota AS ma ON du.rutdueno = ma.rutdueno WHERE du.rutdueno = '"+rutdueno.toString()+"'";
+        var sql = "SELECT du.rutdueno AS rutDueno, du.*, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza,ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du LEFT JOIN mascota AS ma ON du.rutdueno = ma.rutdueno WHERE du.rutdueno = '"+rutdueno.toString()+"' LIMIT 1";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
-            var duenos:Array<DuenoModel> = new Array<DuenoModel>();
+            var duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
             for (var i = 0; i < results.rows.length; i++){
               var item:any = results.rows[i] as any;
-              var mascota:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutDueno,item.nombreMascota,item.peso,item.edad,item.validMascota);
-              var dueno:DuenoModel = new DuenoModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
-              dueno.mascota = mascota;
+              var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
               duenos.push(dueno);
             }
-            var result = {result:true,mensajes:"Dueños encontrados",duenos:duenos};
+            var result = {result:true,mensajes:"Dueño encontrado",dueno:duenos[0]};
             resolve(result);
           } else {
             var resultNoEncontrado = {result:false,errores:"No se han encontrados dueños"};
@@ -178,25 +176,23 @@ export class DuenoLocalDBService {
 
 
   public obtenerConNombreApellido(dato:string): Promise<Object> {
-    console.log("DuenoLocalDB: obtenerConRut();");
+    console.log("DuenoLocalDB: obtenerConNombreApellido();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT du.rutdueno AS rutDueno, du.*, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza,ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du LEFT JOIN mascota AS ma ON du.rutdueno = ma.rutdueno WHERE du.nombres LIKE '"+dato.toString()+ "%' OR du.apellidopaterno LIKE '"+dato.toString()+"%' OR du.apellidomaterno LIKE '"+dato.toString()+"%'";
+        var sql = "SELECT du.rutdueno AS rutDueno, du.*, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza,ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du LEFT JOIN mascota AS ma ON du.rutdueno = ma.rutdueno WHERE du.nombres LIKE '"+dato.toString()+ "%' OR du.apellidopaterno LIKE '"+dato.toString()+"%' OR du.apellidomaterno LIKE '"+dato.toString()+"%' LIMIT 1";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
-            var duenos:Array<DuenoModel> = new Array<DuenoModel>();
+            var duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
             for (var i = 0; i < results.rows.length; i++){
               var item:any = results.rows[i] as any;
-              var mascota:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutDueno,item.nombreMascota,item.peso,item.edad,item.validMascota);
-              var dueno:DuenoModel = new DuenoModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);               
-              dueno.mascota = mascota;
+              var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);               
               duenos.push(dueno);
             }
-            var result = {result:true,mensajes:"Dueños encontrados",duenos:duenos};
+            var result = {result:true,mensajes:"Dueño encontrado",dueno:duenos[0]};
             resolve(result);
           } else {
             var resultNoEncontrado = {result:false,errores:"No se han encontrados dueños"};
@@ -214,7 +210,7 @@ export class DuenoLocalDBService {
   }
 
 
-  public obtenerDuenoConMascota(rutdueno:string,rutmascota:number): Promise<Object> {
+  public obtenerDuenoConMascota(rutdueno:string,rutmascota:string): Promise<Object> {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -225,8 +221,8 @@ export class DuenoLocalDBService {
           if(results.rows.length>0){
             var item:any = results.rows[0] as any;
             var mascota:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutDueno,item.nombreMascota,item.peso,item.edad,item.validMascota);
-            var dueno:DuenoModel = new DuenoModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
-            dueno.mascota = mascota;
+            var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
+            dueno.mascotas.push(mascota);
             var result = {result:true,mensajes:"Dueño encontrado",dueno:dueno};
             resolve(result);
           } else {
@@ -242,6 +238,34 @@ export class DuenoLocalDBService {
       });
     });
     return promesa;    
+  }
+
+  public obtenerConIDUsuario(idusuario:number): Promise<Object> {
+    var db = this.LocalDBService.obtenerDB();
+    var promesa = new Promise((resolve, reject) => {
+      db.transaction(function (tx){
+        var sql = "SELECT du.rutdueno AS rutDueno, du.*, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza, ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du INNER JOIN mascota AS ma ON du.rutdueno = ma.rutdueno WHERE du.idusuario = "+idusuario.toString();
+        console.info(sql);
+        tx.executeSql(sql,[],function(tx,results){
+          console.log(tx,results,results.rows.length);
+          if(results.rows.length>0){
+            var item:any = results.rows[0] as any;
+            var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
+            var result = {result:true,mensajes:"Dueño encontrado",dueno:dueno};
+            resolve(result);
+          } else {
+            var resultNoEncontrado = {result:false,errores:"No se ha encontrado dueño con esos datos"};
+            reject(resultNoEncontrado);                        
+          }
+        },function(tx,results){
+          console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          reject(result);            
+          return false;
+        });
+      });
+    });
+    return promesa;     
   }
 
 }

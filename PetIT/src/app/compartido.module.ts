@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { MzNavbarModule, MzSidenavModule, MzModalModule, MzSpinnerModule, MzCardModule, 
   MzCollapsibleModule, MzIconMdiModule, MzRadioButtonModule, MzInputModule, MzButtonModule, 
-  MzSelectModule, MzValidationModule, MzDatepickerModule, MzTimepickerModule } from 'ng2-materialize';
+  MzSelectModule, MzValidationModule, MzDatepickerModule, MzTimepickerModule, MzPaginationModule, MzCheckboxModule, MzTextareaModule, MzTooltipModule } from 'ng2-materialize';
 import { MzModalService, MzToastService } from 'ng2-materialize'
 
 // Pipes, filtro
@@ -24,7 +24,7 @@ import { CabeceraComponent } from './paginas/cabecera/cabecera.component';
     Ng2Rut,
     MzNavbarModule, MzSidenavModule, MzModalModule,MzSpinnerModule,MzCardModule,MzCollapsibleModule,
     MzIconMdiModule, MzRadioButtonModule, MzInputModule, MzButtonModule, MzSelectModule, MzValidationModule, 
-    MzDatepickerModule, MzTimepickerModule
+    MzDatepickerModule, MzTimepickerModule, MzPaginationModule, MzCheckboxModule, MzTextareaModule, MzTooltipModule
   ],
   exports: [
     CabeceraComponent,
@@ -32,7 +32,7 @@ import { CabeceraComponent } from './paginas/cabecera/cabecera.component';
     Ng2Rut,
     MzNavbarModule, MzSidenavModule, MzModalModule,MzSpinnerModule,MzCardModule,MzCollapsibleModule,
     MzIconMdiModule, MzRadioButtonModule, MzInputModule, MzButtonModule, MzSelectModule, MzValidationModule, 
-    MzDatepickerModule, MzTimepickerModule, 
+    MzDatepickerModule, MzTimepickerModule, MzPaginationModule, MzCheckboxModule, MzTextareaModule, MzTooltipModule,
     FiltroPipe
   ],
   providers: [

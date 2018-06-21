@@ -7,7 +7,7 @@ import { CompartidoModule } from './../../compartido.module';
 import { RecepcionistaRoutingModule } from './recepcionista.routing';
 
 // SubMódulos del recepcionista
-import { HorasModule } from './../horas/horas.module';
+import { HorasModule } from './horas/horas.module';
 import { DuenosModule } from './duenos/duenos.module';
 import { MascotasModule } from './mascotas/mascotas.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
@@ -20,12 +20,11 @@ import { InicioComponent } from './inicio/inicio.component';
 // Services
 import { RazaLocalDBService } from './../../services/RazaLocalDB.service';
 import { TipoMascotaLocalDBService } from './../../services/TipoMascotaLocalDB.service';
-import { DuenoLocalDBService } from './../../services/DuenoLocalDB.service';
+import { DuenoMascotaLocalDBService } from './../../services/DuenoMascotaLocalDB.service';
 import { CitaLocalDBService } from './../../services/CitaLocalDB.service';
 import { EspecialidadLocalDBService } from './../../services/EspecialidadLocalDB.service';
 import { EspecialistaLocalDBService } from './../../services/EspecialistaLocalDB.service';
 import { HoraLocalDBService } from './../../services/HoraLocalDB.service';
-
 
 @NgModule({
 	imports: [
@@ -38,9 +37,9 @@ import { HoraLocalDBService } from './../../services/HoraLocalDB.service';
 		RouterModule
 	],
 	providers: [
-		RazaLocalDBService,TipoMascotaLocalDBService,DuenoLocalDBService,EspecialidadLocalDBService,CitaLocalDBService,
+		RazaLocalDBService,TipoMascotaLocalDBService,DuenoMascotaLocalDBService,EspecialidadLocalDBService,CitaLocalDBService,
 		EspecialistaLocalDBService,
-		HoraLocalDBService
+		HoraLocalDBService,
 	],
 	declarations: [
 		RecepcionistaComponent, 

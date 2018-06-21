@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { MascotaModel } from './../models/MascotaModel';
+import { RazaModel } from './../models/RazaModel';
+import { TipoMascotaModel } from './../models/TipoMascotaModel';
+import { DuenoMascotaModel } from './../models/DuenoMascotaModel';
 
 import { LocalDBService } from './LocalDB.service';
 
@@ -68,7 +71,7 @@ export class MascotaLocalDBService {
 		var db = this.LocalDBService.obtenerDB();
 		var promesa = new Promise((resolve, reject) => {
 		  db.transaction(function (tx){
-		    var sql = "SELECT * FROM mascota"
+		    var sql = "SELECT ma.*,tp.nombre as nombreTipoMascota,ra.nombre AS nombreRaza FROM mascota AS ma INNER JOIN tipomascota AS tp ON ma.idtipomascota = tp.idtipomascota INNER JOIN raza AS ra ON ma.idraza = ra.idraza"
 		    console.info(sql);
 		    tx.executeSql(sql,[],function(tx,results){
 				console.log(tx,results,results.rows.length);
@@ -100,29 +103,118 @@ export class MascotaLocalDBService {
 	public obtenerConRut(rutmascota:string): Promise<Object> {
 	    var db = this.LocalDBService.obtenerDB();
 	    var promesa = new Promise((resolve, reject) => {
-	      db.transaction(function (tx){
-	        var sql = "SELECT * FROM mascota WHERE rutmascota = "+rutmascota;
-	        console.info(sql);
-	        tx.executeSql(sql,[],function(tx,results){
-	          console.log(tx,results,results.rows.length);
-	          if(results.rows.length>0){
-	            var item:any = results.rows[0] as any;
-				var model:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutdueno,item.nombre,item.peso,item.edad,item.valid); 
-	            var result = {result:true,mensajes:"Mascota encontrada",mascota:model};
-	            resolve(result);
-	          } else {
-	            var resultNoEncontrado = {result:false,errores:"No se ha encontrado mascota con esos datos"};
-	            reject(resultNoEncontrado);                        
-	          }
-	        },function(tx,results){
-	          console.log(tx,results);
-	          var result = {result:false,errores:"Intenta de nuevo más tarde"};
-	          reject(result);            
-	          return false;
-	        });
-	      });
+			db.transaction(function (tx){
+		        var sql = "SELECT ma.*,tp.nombre as nombreTipoMascota,ra.nombre AS nombreRaza FROM mascota AS ma INNER JOIN tipomascota AS tp ON ma.idtipomascota = tp.idtipomascota INNER JOIN raza AS ra ON ma.idraza = ra.idraza WHERE ma.rutmascota = '"+rutmascota+"'";
+		        console.info(sql);
+		        tx.executeSql(sql,[],function(tx,results){
+					console.log(tx,results,results.rows.length);
+					if(results.rows.length>0){
+				        var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
+				        var mascotas:Array<MascotaModel> = new Array<MascotaModel>();
+				        for (var i = 0; i < results.rows.length; i++){
+							var item:any = results.rows[i] as any;
+							var raza:RazaModel = new RazaModel();
+							raza.nombre = item.nombreRaza;
+							var tipoMascota:TipoMascotaModel = new TipoMascotaModel();
+							tipoMascota.nombre = item.nombreTipoMascota;
+							var model:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutdueno,item.nombre,item.peso,item.edad,item.valid); 
+							model.tipoMascotaModel = tipoMascota;
+							model.razaModel = raza;
+	          		        mascotas.push(model);
+				        }
+	    	            var result = {result:true,mensajes:"Mascotas encontradas",mascotas:mascotas};
+			            resolve(result);
+					} else {
+						var resultNoEncontrado = {result:false,errores:"No se ha encontrado mascota con esos datos"};
+		        		reject(resultNoEncontrado);                        
+					}
+		        },function(tx,results){
+					console.log(tx,results);
+					var result = {result:false,errores:"Intenta de nuevo más tarde"};
+					reject(result);            
+					return false;
+		        });
+	  		});
 	    });
 	    return promesa;    
+	}
+
+	public obtenerConNombre(nombre:string): Promise<Object> {
+	    var db = this.LocalDBService.obtenerDB();
+	    var promesa = new Promise((resolve, reject) => {
+			db.transaction(function (tx){
+		        var sql = "SELECT ma.*,tp.nombre as nombreTipoMascota,ra.nombre AS nombreRaza FROM mascota AS ma INNER JOIN tipomascota AS tp ON ma.idtipomascota = tp.idtipomascota INNER JOIN raza AS ra ON ma.idraza = ra.idraza WHERE ma.nombre LIKE '"+nombre+"'";
+		        console.info(sql);
+		        tx.executeSql(sql,[],function(tx,results){
+					console.log(tx,results,results.rows.length);
+					if(results.rows.length>0){
+				        var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
+				        var mascotas:Array<MascotaModel> = new Array<MascotaModel>();
+				        for (var i = 0; i < results.rows.length; i++){
+							var item:any = results.rows[i] as any;
+							var raza:RazaModel = new RazaModel();
+							raza.nombre = item.nombreRaza;
+							var tipoMascota:TipoMascotaModel = new TipoMascotaModel();
+							tipoMascota.nombre = item.nombreTipoMascota;
+							var model:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutdueno,item.nombre,item.peso,item.edad,item.valid); 
+							model.tipoMascotaModel = tipoMascota;
+							model.razaModel = raza;
+	          		        mascotas.push(model);
+				        }
+	    	            var result = {result:true,mensajes:"Mascotas encontradas",mascotas:mascotas};
+			            resolve(result);
+					} else {
+		            	var resultNoEncontrado = {result:false,errores:"No se ha encontrado mascota con esos datos"};
+		            	reject(resultNoEncontrado);                        
+					}
+		        },function(tx,results){
+					console.log(tx,results);
+					var result = {result:false,errores:"Intenta de nuevo más tarde"};
+					reject(result);            
+					return false;
+		        });
+			});
+	    });
+	    return promesa;    
+	}
+
+	public obtenerConDueno(dueno:DuenoMascotaModel): Promise <Object> {
+	    var db = this.LocalDBService.obtenerDB();
+	    var promesa = new Promise((resolve, reject) => {
+			db.transaction(function (tx){
+		        var sql = "SELECT ma.*,tp.nombre as nombreTipoMascota,ra.nombre AS nombreRaza FROM mascota AS ma INNER JOIN tipomascota AS tp ON ma.idtipomascota = tp.idtipomascota INNER JOIN raza AS ra ON ma.idraza = ra.idraza WHERE ma.rutdueno = '"+dueno.rutdueno+"'";
+		        console.info(sql);
+		        tx.executeSql(sql,[],function(tx,results){
+					console.log(tx,results,results.rows.length);
+					if(results.rows.length>0){
+				        var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
+				        var mascotas:Array<MascotaModel> = new Array<MascotaModel>();
+				        for (var i = 0; i < results.rows.length; i++){
+							var item:any = results.rows[i] as any;
+							var raza:RazaModel = new RazaModel();
+							raza.nombre = item.nombreRaza;
+							var tipoMascota:TipoMascotaModel = new TipoMascotaModel();
+							tipoMascota.nombre = item.nombreTipoMascota;
+							var model:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutdueno,item.nombre,item.peso,item.edad,item.valid); 
+							model.tipoMascotaModel = tipoMascota;
+							model.razaModel = raza;
+	          		        mascotas.push(model);
+				        }
+	    	            var result = {result:true,mensajes:"Mascotas encontradas",mascotas:mascotas};
+			            resolve(result);
+					} else {
+		            	var resultNoEncontrado = {result:false,errores:"No se ha encontrado mascota con esos datos"};
+		            	reject(resultNoEncontrado);                        
+					}
+		        },function(tx,results){
+					console.log(tx,results);
+					var result = {result:false,errores:"Intenta de nuevo más tarde"};
+					reject(result);            
+					return false;
+		        });
+			});
+	    });
+	    return promesa;		
 	}
 
 }

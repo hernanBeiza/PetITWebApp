@@ -8,14 +8,14 @@ import { MzModalComponent,MzToastService } from 'ng2-materialize';
 
 import { Mensajes } from './../../../../libs/Mensajes';
 
-import { DuenoLocalDBService } from './../../../../services/DuenoLocalDB.service';
+import { DuenoMascotaLocalDBService } from './../../../../services/DuenoMascotaLocalDB.service';
 import { MascotaLocalDBService } from './../../../../services/MascotaLocalDB.service';
 import { RazaLocalDBService } from './../../../../services/RazaLocalDB.service';
 import { TipoMascotaLocalDBService } from './../../../../services/TipoMascotaLocalDB.service';
 
 import { RutValidator } from 'ng2-rut';
 
-import { DuenoModel } from './../../../../models/DuenoModel';
+import { DuenoMascotaModel } from './../../../../models/DuenoMascotaModel';
 import { MascotaModel } from './../../../../models/MascotaModel';
 import { TipoMascotaModel } from './../../../../models/TipoMascotaModel';
 import { RazaModel } from './../../../../models/RazaModel';
@@ -42,7 +42,7 @@ export class MascotasRegistrarComponent implements OnInit {
 	@ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
 	public errores:string = "";
 	
-	public duenoModel:DuenoModel = new DuenoModel();
+	public duenoModel:DuenoMascotaModel = new DuenoMascotaModel();
 	public mascotaModel:MascotaModel = new MascotaModel();
 
 	public formErrors = Mensajes.validacionesAgregarMascota;
@@ -69,7 +69,7 @@ export class MascotasRegistrarComponent implements OnInit {
 
 	constructor(private router:Router, private fb:FormBuilder, private ActivatedRoute: ActivatedRoute, 
 	    private MzToastService:MzToastService,
-	    private DuenoLocalDBService:DuenoLocalDBService,
+	    private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService,
 	    private MascotaLocalDBService:MascotaLocalDBService,
 	    private RazaLocalDBService:RazaLocalDBService,
 	    private TipoMascotaLocalDBService:TipoMascotaLocalDBService) { }
@@ -129,7 +129,7 @@ export class MascotasRegistrarComponent implements OnInit {
 	}
 
 	private obtenerConRut(rut:string): void {
-		this.DuenoLocalDBService.obtenerConRut(rut).then((data:any)=>{
+		this.DuenoMascotaLocalDBService.obtenerConRut(rut).then((data:any)=>{
 			if(data.result){
 				console.log(data.dueno);
 				this.duenoModel = data.dueno;

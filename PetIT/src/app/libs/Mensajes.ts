@@ -65,6 +65,22 @@ export class Mensajes {
 			'email':			'El email del dueño es inválido.'
 		},
 	}	
+
+
+	public static validacionesBuscarDueno = {
+	    'filtro': {
+	    	'required': 		'El criterio de búsqueda es obligatorio.',
+		},
+	    'rut': {
+			'required':			'El rut es obligatorio.',
+			'minlength':		'El rut debe ser de al menos de 9 carácter de largo.',
+			'invalidRut':		'El rut es inválido.'
+	    },
+		'nombre': {
+			'required':			'El nombre del dueño es obligatorio.'
+		},
+	}		
+	
 	
 	public static validacionesAgregarMascota = {
 		'rutDueno': {
@@ -87,6 +103,17 @@ export class Mensajes {
 		},
 		'peso': {
 			'required':			'El peso de la mascota es obligatorio.'
+		},
+	}
+
+	public static validacionesEnviarNotificacion = {
+		'titulo': {
+			'required':			'El título es obligatorio.',
+			'minlength':		'El título debe ser de al menos de 9 carácter de largo.',
+			'maxlength':		'El título no debe ser de más de 100 carácteres de largo.',
+		},		
+		'mensaje': {
+			'required':			'El mensaje es obligatorio.'
 		},
 	}
 

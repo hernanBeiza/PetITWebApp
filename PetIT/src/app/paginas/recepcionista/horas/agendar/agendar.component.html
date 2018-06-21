@@ -136,16 +136,16 @@
 		</div>
 	</div>
 
-	<!-- Ventana modal -->
+<!-- Ventana modal -->
 <mz-modal #agendarSheetModal [options]="modalOptions">
 	<mz-modal-header>
 		<h4>¿Desea tomar esta hora?</h4>
 	</mz-modal-header>
 	<mz-modal-content>
 		<p>Nombre Doctor: {{citaModel.especialistaModel?.nombres}} {{citaModel.especialistaModel?.apellidopaterno}}</p>
-		<p>Fecha: {{citaModel.hora?.fecha}} a las {{citaModel.hora?.hora}} hrs</p>
-		<p>Dueño: {{citaModel.dueno?.nombres}} {{citaModel.dueno?.apellidopaterno}} {{citaModel.dueno?.apellidomaterno}}</p>
-		<p>Nombre Mascota: {{citaModel.mascota?.nombre}}</p>
+		<p>Fecha: {{citaModel.horaModel?.fecha}} a las {{citaModel.horaModel?.hora}} hrs</p>
+		<p>Dueño: {{citaModel.duenoMascotaModel?.nombres}} {{citaModel.duenoMascotaModel?.apellidopaterno}} {{citaModel.duenoMascotaModel?.apellidomaterno}}</p>
+		<p>Nombre Mascota: {{citaModel.mascotaModel?.nombre}}</p>
 	</mz-modal-content>
 	<mz-modal-footer>
 		<button mz-button [flat]="true" class="green" (click)="agendar();">Agendar Hora</button>

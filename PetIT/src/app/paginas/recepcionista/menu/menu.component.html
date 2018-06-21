@@ -1,14 +1,13 @@
 <mz-sidenav
   [id]="'sidenav-demo'"
   [collapseButtonId]="'btn-sidenav-demo'"
-  [fixed]="true"
-  >
+  [fixed]="true">
   <mz-sidenav-header>
-    <img class="circle" src="assets/img/petitlogo.png" width="100px">
+    <img id="logo" src="assets/img/petitlogo.png">
   </mz-sidenav-header>
-  <!--
-  <mz-sidenav-subheader>Pet-IT</mz-sidenav-subheader>
-  -->
+  <mz-sidenav-subheader>
+    Pet-IT
+  </mz-sidenav-subheader>
   <!--
   <mz-collapsible (click)="irRuta('/recepcionista/inicio');">
     <mz-collapsible-item>
@@ -76,8 +75,8 @@
   </mz-collapsible>
 -->
 
-
-
+  <!-- Menu antiguo -->
+  <!--
   <mz-sidenav-collapsible (click)="irRuta('/recepcionista/inicio');" [onClose]="closeFunctionCallback" [onOpen]="openFunctionCallback">
     <mz-sidenav-collapsible-header>
       <i mz-icon-mdi mz-input-prefix [icon]="'home'"></i>
@@ -135,14 +134,6 @@
       Mascotas
     </mz-sidenav-collapsible-header>
     <mz-sidenav-collapsible-content>
-      <!--
-      <mz-sidenav-link>
-        <a [routerLink]="['/recepcionista/mascotas/agregar']">
-          <i class="material-icons">add</i>
-          Registrar Mascotas
-        </a>
-      </mz-sidenav-link>
-      -->
       <mz-sidenav-link>
         <a [routerLink]="['/recepcionista/mascotas/consultar']">
           <i mz-icon-mdi mz-input-prefix [icon]="'format-list-bulleted'"></i>
@@ -176,7 +167,51 @@
     <mz-sidenav-collapsible-content>
     </mz-sidenav-collapsible-content>
   </mz-sidenav-collapsible>
+  -->
 
+  <!-- menú nuevo y sencillo -->
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <a [routerLink]="['/recepcionista/inicio']">
+      <i mz-icon-mdi mz-input-prefix [icon]="'home'"></i>
+      Inicio
+    </a>
+  </mz-sidenav-link>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <a [routerLink]="['/recepcionista/duenos/consultar']">
+      <i mz-icon-mdi mz-input-prefix [icon]="'account'"></i>
+      Gestionar dueños
+    </a>
+  </mz-sidenav-link>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <a [routerLink]="['/recepcionista/mascotas/consultar']">
+      <i mz-icon-mdi mz-input-prefix [icon]="'paw'"></i>
+      Gestionar mascotas
+    </a>
+  </mz-sidenav-link>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <a [routerLink]="['/recepcionista/horas/consultar']">
+      <i mz-icon-mdi mz-input-prefix [icon]="'calendar-range'"></i>
+      Consultar horas
+    </a>
+  </mz-sidenav-link>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <a [routerLink]="['/recepcionista/notificaciones/enviar']">
+      <i mz-icon-mdi mz-input-prefix [icon]="'send'"></i>
+      Notificaciones
+    </a>
+  </mz-sidenav-link>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <a href="#" (click)="cerrarSesion();">
+      <i mz-icon-mdi mz-input-prefix [icon]="'logout'"></i>
+      Cerrar Sesión
+    </a>
+  </mz-sidenav-link>
 </mz-sidenav>
   <!-- Botón para abrir menú en móvil -->
 <button class="sidenav-button hide-on-large-only btn btn-floating btn-large waves-effect waves-light" 

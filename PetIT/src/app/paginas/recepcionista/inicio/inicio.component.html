@@ -19,18 +19,18 @@
 				<mz-card-content>
 					<table class="striped">
 				        <thead>
-				          <tr>
-				              <th>Nombre</th>
-				              <th>Dueño</th>
-				              <th>Fecha Atención</th>
-				          </tr>
+							<tr>
+								<th>Nombre</th>
+								<th>Dueño</th>
+								<th>Fecha Atención</th>
+							</tr>
 				        </thead>
 						<tbody>
-				    	    <tr *ngFor="let item of citas">
-					        <td>{{item.mascota.nombre}}</td>
-					        <td>{{item.dueno.nombres}} {{item.dueno.apellidopaterno}}</td>
-					        <td>{{item.hora.fecha}} {{item.hora.hora}}</td>
-					      </tr>
+							<tr *ngFor="let item of citas">
+						        <td>{{item?.mascotaModel?.nombre}}</td>
+						        <td>{{item?.duenoMascotaModel?.nombres}} {{item?.duenoMascotaModel?.apellidopaterno}}</td>
+						        <td>{{item?.horaModel?.fecha}} {{item?.horaModel?.hora}}</td>
+							</tr>
 					    </tbody>
 					</table>
 				</mz-card-content>

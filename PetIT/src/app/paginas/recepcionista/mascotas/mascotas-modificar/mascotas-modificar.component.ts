@@ -9,13 +9,13 @@ import { MzModalComponent,MzToastService } from 'ng2-materialize';
 import { Mensajes } from './../../../../libs/Mensajes';
 
 import { MascotaLocalDBService } from './../../../../services/MascotaLocalDB.service';
-import { DuenoLocalDBService } from './../../../../services/DuenoLocalDB.service';
+import { DuenoMascotaLocalDBService } from './../../../../services/DuenoMascotaLocalDB.service';
 import { RazaLocalDBService } from './../../../../services/RazaLocalDB.service';
 import { TipoMascotaLocalDBService } from './../../../../services/TipoMascotaLocalDB.service';
 
 import { RutValidator } from 'ng2-rut';
 
-import { DuenoModel } from './../../../../models/DuenoModel';
+import { DuenoMascotaModel } from './../../../../models/DuenoMascotaModel';
 import { MascotaModel } from './../../../../models/MascotaModel';
 import { TipoMascotaModel } from './../../../../models/TipoMascotaModel';
 import { RazaModel } from './../../../../models/RazaModel';
@@ -43,7 +43,7 @@ export class MascotasModificarComponent implements OnInit {
 	public errores:string = "";
 	
 	public mascotaModel:MascotaModel = new MascotaModel();
-	public duenoModel:DuenoModel = new DuenoModel();
+	public duenoModel:DuenoMascotaModel = new DuenoMascotaModel();
 
 	public razaModel:RazaModel = new RazaModel();
 	public tipoModel:TipoMascotaModel = new TipoMascotaModel();
@@ -76,7 +76,7 @@ export class MascotasModificarComponent implements OnInit {
 	    private MascotaLocalDBService:MascotaLocalDBService,
 	    private RazaLocalDBService:RazaLocalDBService,
 	    private TipoMascotaLocalDBService:TipoMascotaLocalDBService,
-	    private DuenoLocalDBService:DuenoLocalDBService) { }
+	    private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService) { }
 
 	ngOnInit(): void { 
 	    console.log("MascotaModificarComponent");
@@ -159,7 +159,7 @@ export class MascotasModificarComponent implements OnInit {
 
 	public obtenerDuenoConRut(rutdueno:string){
 		console.log("obtenerDuenoConID",rutdueno);
-		this.DuenoLocalDBService.obtenerConRut(rutdueno).then((data:any)=>{
+		this.DuenoMascotaLocalDBService.obtenerConRut(rutdueno).then((data:any)=>{
 			if(data.result){
 				this.duenoModel = data.dueno;
 				//this.MzToastService.show(data.mensajes,2000,'green');

@@ -10,7 +10,7 @@ import { MascotasConsultarComponent } from './mascotas-consultar/mascotas-consul
 import { MascotasRegistrarComponent } from './mascotas-registrar/mascotas-registrar.component';
 import { MascotasModificarComponent } from './mascotas-modificar/mascotas-modificar.component';
 
-import { DuenoLocalDBService } from './../../../services/DuenoLocalDB.service';
+import { DuenoMascotaLocalDBService } from './../../../services/DuenoMascotaLocalDB.service';
 import { MascotaLocalDBService } from './../../../services/MascotaLocalDB.service';
 
 
@@ -26,7 +26,7 @@ import { MascotaLocalDBService } from './../../../services/MascotaLocalDB.servic
   		MascotasModificarComponent
 	],
 	providers: [
-		DuenoLocalDBService,
+		DuenoMascotaLocalDBService,
 		MascotaLocalDBService
 	]
 })

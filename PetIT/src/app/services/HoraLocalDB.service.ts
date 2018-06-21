@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { DuenoModel } from './../models/DuenoModel';
+import { DuenoMascotaModel } from './../models/DuenoMascotaModel';
 import { LocalDBService } from './LocalDB.service';
 
 import { HoraModel } from './../models/HoraModel';

@@ -4,53 +4,31 @@
   [fixed]="true"
   >
   <mz-sidenav-header>
-    <a href="/#/">
-      <img src="assets/img/petitlogo.png" width="100px">
-    </a>
+    <img id="logo" src="assets/img/petitlogo.png">
   </mz-sidenav-header>
-  <!--
-    <mz-sidenav-subheader>Pet-IT</mz-sidenav-subheader>
-  -->
-  
-  <mz-collapsible (click)="irRuta('/admin/inicio');">
-    <mz-collapsible-item>
-      <mz-collapsible-item-header>        
-        <i class="material-icons">home</i>
-        Inicio
-      </mz-collapsible-item-header>
-    </mz-collapsible-item>
-  </mz-collapsible>
-
-  <mz-sidenav-divider></mz-sidenav-divider>      
-
-  <mz-collapsible>
-    <mz-collapsible-item>
-      <mz-collapsible-item-header>        
-        <i class="material-icons">show_charts</i>
-        Informes
-      </mz-collapsible-item-header>
-      <mz-collapsible-item-body>
-          <mz-sidenav-link>
-          <a [routerLink]="['/admin/informe/generar']">
-            <i class="material-icons">insert_chart</i>
-            Generar Informe
-          </a>
-        </mz-sidenav-link>
-      </mz-collapsible-item-body>
-    </mz-collapsible-item>
-  </mz-collapsible>
-
+  <mz-sidenav-subheader>
+    Pet-IT
+  </mz-sidenav-subheader>
+  <mz-sidenav-link>
+    <a [routerLink]="['/admin/inicio']">
+      <i mz-icon-mdi mz-input-prefix [icon]="'home'"></i>
+      Inicio
+    </a>
+  </mz-sidenav-link>
   <mz-sidenav-divider></mz-sidenav-divider>
-
-  <mz-collapsible (click)="cerrarSesion();">
-    <mz-collapsible-item>
-      <mz-collapsible-item-header>        
-        <i class="material-icons">close</i>
-        Cerrar sesión
-      </mz-collapsible-item-header>
-    </mz-collapsible-item>
-  </mz-collapsible>
-
+    <mz-sidenav-link>
+    <a [routerLink]="['/admin/informe/generar']">
+      <i mz-icon-mdi mz-input-prefix [icon]="'chart-bar'"></i>
+      Generar Informe
+    </a>
+  </mz-sidenav-link>
+  <mz-sidenav-divider></mz-sidenav-divider>
+  <mz-sidenav-link>
+    <a href="#" (click)="cerrarSesion();">
+      <i mz-icon-mdi mz-input-prefix [icon]="'logout'"></i>
+        Cerrar Sesión
+    </a>
+  </mz-sidenav-link>
 </mz-sidenav>
 
 <!-- Botón para abrir menú en móvil -->

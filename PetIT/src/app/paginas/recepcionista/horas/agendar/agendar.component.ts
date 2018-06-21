@@ -1,27 +1,24 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-
 import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-
 import { Router, ActivatedRoute } from '@angular/router';
-
 import { MzModalComponent,MzToastService } from 'ng2-materialize';
 
-import {DuenoLocalDBService} from './../../../services/DuenoLocalDB.service';
-import {EspecialidadLocalDBService} from './../../../services/EspecialidadLocalDB.service';
-import {EspecialistaLocalDBService} from './../../../services/EspecialistaLocalDB.service';
-import {HoraLocalDBService} from './../../../services/HoraLocalDB.service';
-import {CitaLocalDBService} from './../../../services/CitaLocalDB.service';
+import {Mensajes} from './../../../../libs/Mensajes';
+import {Validaciones} from './../../../../libs/Validaciones';
 
-import {DuenoModel} from './../../../models/DuenoModel';
-import {MascotaModel} from './../../../models/MascotaModel';
-import {EspecialidadModel} from './../../../models/EspecialidadModel';
-import {EspecialistaModel} from './../../../models/EspecialistaModel';
-import {HoraModel} from './../../../models/HoraModel';
-import {CitaModel} from './../../../models/CitaModel';
-
-
-import { Mensajes } from './../../../libs/Mensajes';
-import { Validaciones } from './../../../libs/Validaciones';
+// Services
+import {DuenoMascotaLocalDBService} from './../../../../services/DuenoMascotaLocalDB.service';
+import {EspecialidadLocalDBService} from './../../../../services/EspecialidadLocalDB.service';
+import {EspecialistaLocalDBService} from './../../../../services/EspecialistaLocalDB.service';
+import {HoraLocalDBService} from './../../../../services/HoraLocalDB.service';
+import {CitaLocalDBService} from './../../../../services/CitaLocalDB.service';
+// Models
+import {DuenoMascotaModel} from './../../../../models/DuenoMascotaModel';
+import {MascotaModel} from './../../../../models/MascotaModel';
+import {EspecialidadModel} from './../../../../models/EspecialidadModel';
+import {EspecialistaModel} from './../../../../models/EspecialistaModel';
+import {HoraModel} from './../../../../models/HoraModel';
+import {CitaModel} from './../../../../models/CitaModel';
 
 @Component({
   selector: 'app-agendar',
@@ -65,11 +62,10 @@ export class AgendarComponent implements OnInit {
   public horas:Array<HoraModel> = new Array<HoraModel>();
   
   public fecha:string = "";
-  public duenoModel:DuenoModel = new DuenoModel();
+
   public especialidadModel:EspecialidadModel = new EspecialidadModel();
   public especialistaModel:EspecialistaModel = new EspecialistaModel();
   public citaModel:CitaModel = new CitaModel();
-  public horaModel:HoraModel = new HoraModel();
 
   public opcionesCalendario: Pickadate.DateOptions = {
     format: 'dd-mm-yyyy',
@@ -94,7 +90,7 @@ export class AgendarComponent implements OnInit {
 
   constructor(private router:Router, private fb:FormBuilder, private activatedRoute: ActivatedRoute, 
     private MzToastService:MzToastService,
-    private DuenoLocalDBService:DuenoLocalDBService,
+    private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService,
     private EspecialidadLocalDBService:EspecialidadLocalDBService,
     private EspecialistaLocalDBService:EspecialistaLocalDBService,
     private HoraLocalDBService:HoraLocalDBService,
@@ -116,16 +112,7 @@ export class AgendarComponent implements OnInit {
       let rutdueno = param['rutdueno'];
       let rutmascota = param['rutmascota'];
       if(rutdueno != undefined || rutdueno == "undefined" || rutmascota != undefined || rutmascota == "undefined"){
-        this.DuenoLocalDBService.obtenerDuenoConMascota(rutdueno,rutmascota).then((data:any)=>{
-          console.log(data);
-          if(data.result){
-            this.duenoModel = data.dueno;
-          } else {
-            this.MzToastService.show(data.errores,5000,"red");
-          }
-        },(dataError:any)=>{
-            this.MzToastService.show(dataError.errores,5000,"red");
-        });
+        this.obtenerDatos(rutdueno,rutmascota);
       } else {
         this.MzToastService.show("No hay id de dueno.",5000,"red");
       }
@@ -133,7 +120,24 @@ export class AgendarComponent implements OnInit {
     this.cargarEspecialidades();
   }
 
-  public cargarEspecialidades():void {
+  private obtenerDatos(rutdueno:string,rutmascota:string): void {
+    this.DuenoMascotaLocalDBService.obtenerDuenoConMascota(rutdueno,rutmascota).then((data:any)=>{
+      console.log(data);
+      if(data.result){
+        let dueno:DuenoMascotaModel = data.dueno;
+        let mascota:MascotaModel = data.dueno.mascotas[0] as MascotaModel;
+        this.citaModel.duenoMascotaModel = dueno;
+        this.citaModel.mascotaModel = mascota;
+        this.citaModel.rutmascota = mascota.rutmascota;
+      } else {
+        this.MzToastService.show(data.errores,5000,"red");
+      }
+    },(dataError:any)=>{
+      this.MzToastService.show(dataError.errores,5000,"red");
+    });
+  }
+
+  private cargarEspecialidades():void {
     this.EspecialidadLocalDBService.obtener().then((data:any)=> {
       console.log(data);
       if(data.result){
@@ -144,7 +148,7 @@ export class AgendarComponent implements OnInit {
     });
   }
 
-  public seleccionarEspecialidad(event):void {
+  private seleccionarEspecialidad(event):void {
     console.log("seleccionarEspecialidad");
     console.log(this.especialidadModel);
     this.especialistaControl.reset();
@@ -153,13 +157,15 @@ export class AgendarComponent implements OnInit {
     this.cargarEspecialistas();
   }
 
-  public seleccionarEspecialista(event):void {    
+  private seleccionarEspecialista(event):void {    
     console.log("seleccionarEspecialista");
+    this.citaModel.idespecialista = this.especialistaModel.idespecialista;
+    this.citaModel.especialistaModel = this.especialistaModel;
     this.fechaControl.reset();
     this.horas = new Array<HoraModel>();    
   }
 
-  public cargarEspecialistas():void {
+  private cargarEspecialistas():void {
     this.EspecialistaLocalDBService.obtenerConEspecialidad(this.especialidadModel).then((data:any)=>{
       if(data.result){
         this.especialistas = data.especialistas;
@@ -169,7 +175,7 @@ export class AgendarComponent implements OnInit {
     });
   }
 
-  public cargarHoras():void {
+  private cargarHoras():void {
     console.log("cargarHoras();");
     this.HoraLocalDBService.obtenerConEspecialistayFecha(this.especialistaModel,this.fecha).then((data:any)=>{
       console.log(data);
@@ -184,35 +190,25 @@ export class AgendarComponent implements OnInit {
   }
 
   public volver():void {
-    console.log("volver");
-    this.router.navigate(['/recepcionista/horas/buscar']);
+    this.router.navigate(['/recepcionista/horas/consultar']);
   }
-  
-  /*
-  public onSubmit(values:Object):void {
+
+  private reservar(hora:HoraModel): void {
     if (this.agendarForm.valid) {
+      this.citaModel.especialistaModel = hora.especialistaModel;
+      this.citaModel.idhora = hora.idhora;
+      this.citaModel.horaModel = hora;
       this.agendarSheetModal.open();
     } else {
       this.MzToastService.show("Revisa los datos de tu agendamiento",5000);
     }
   }
-  */
-
-  public reservar(hora:HoraModel): void {
-    if (this.agendarForm.valid) {
-      this.horaModel = hora;
-      this.agendarSheetModal.open();
-    } else {
-      this.MzToastService.show("Revisa los datos de tu agendamiento",5000);
-    }    
-  }
   
-  public agendar():void {
+  private agendar():void {
   	console.log("agendar();");
-
     var enviar:boolean = true;
     this.errores = "Faltó seleccionar:";
-    if(!this.duenoModel.rutdueno){
+    if(!this.citaModel.duenoMascotaModel.rutdueno){
       enviar = false;
       this.errores+="<br>Dueño";
     }
@@ -220,7 +216,7 @@ export class AgendarComponent implements OnInit {
       enviar = false;
       this.errores+="<br>Mascota";
     }
-    if(!this.especialidadModel.idespecialidad){
+    if(!this.citaModel.especialistaModel.idespecialidad){
       enviar = false;
       this.errores+="<br>Especialidad";
     }
@@ -231,8 +227,8 @@ export class AgendarComponent implements OnInit {
     if(!this.fecha){
       enviar = false;
       this.errores+="<br>Fecha";
-    }    
-    if(!this.horaModel){
+    }
+    if(!this.citaModel.horaModel){
       enviar = false;
       this.errores+="<br>Hora";
     }
@@ -241,10 +237,9 @@ export class AgendarComponent implements OnInit {
     } else {
       this.errorSheetModal.open();
     }
-
   }
 
-  public enviar(): void {
+  private enviar(): void {
     console.log("enviar");
     this.CitaLocalDBService.guardar(this.citaModel).then((data:any)=>{
       console.log(data);

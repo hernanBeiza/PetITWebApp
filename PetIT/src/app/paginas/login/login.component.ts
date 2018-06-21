@@ -31,13 +31,6 @@ export class LoginComponent implements OnInit {
 
   public usuarioModel:UsuarioModel = new UsuarioModel();
 
-  // Errores
-  /*
-  public formErrors = {
-    'rut': '',
-    'contrasena': ''
-  };
-  */
   public formErrors = Mensajes.validacionesLogin;
 
   constructor(private router: Router, 
@@ -54,54 +47,53 @@ export class LoginComponent implements OnInit {
 
     this.rut = this.loginForm.controls['rut'];
     this.contrasena = this.loginForm.controls['contrasena'];
-
     //this.loginForm.valueChanges.subscribe(data => this.onValueChanged(data));
     //this.onValueChanged(); // (re)set validation messages now
-
   }
 
   public onSubmit(values:Object):void {
-
     if (this.loginForm.valid) {
-      console.log(this.usuarioModel);
       this.iniciarSesion();
     } else {
       this.MzToastService.show("¡Error! Revisa tus datos de acceso",3000);
     }
-
   }
 
   private iniciarSesion(): void {
-    this.UsuarioLocalDBService.iniciarSesion(this.usuarioModel.rut,this.usuarioModel.password)
-    .then((data:any) => {
+    this.UsuarioLocalDBService.iniciarSesion(this.usuarioModel.rut,this.usuarioModel.password).then((data:any) => {
       console.log(data);
-      this.MzToastService.show(data.mensajes,3000,'green');
-      var model:UsuarioModel = data.usuario as UsuarioModel;
-      //Guardar en la DB Local
-      this.UsuarioLocalDBService.guardarLocal(model);
-      //
-      var ruta = "";
-      switch (model.idrol) {
-        case 1:
-          console.log("admin");
-          ruta = 'admin/inicio';
-          this.router.navigate([ruta]);                      
-          break;
-        case 2:
-          console.log("recepcionista")
-          ruta = 'recepcionista/inicio';
-          this.router.navigate([ruta]);                      
-          break;        
-        default:
-          console.log("dueno")
-          ruta = 'dueno/inicio';
-          this.router.navigate([ruta]);                      
-          break;
-      } 
-      console.log(ruta);
+      if(data.result){
+        //Guardar en la DB Local
+        let usuario:UsuarioModel = data.usuario;
+        this.UsuarioLocalDBService.guardarLocal(usuario);        
+        this.MzToastService.show(data.mensajes,3000,'green');
+        var ruta = "";
+        switch (usuario.idrol) {
+          case 1:
+            console.log("admin");
+            ruta = 'admin/inicio';
+            this.router.navigate([ruta]);                      
+            break;
+          case 2:
+            console.log("recepcionista")
+            ruta = 'recepcionista/inicio';
+            this.router.navigate([ruta]);                      
+            break;
+          case 3:
+            console.log("dueno")
+            ruta = 'dueno/inicio';
+            this.router.navigate([ruta]);                      
+            break;                  
+          default:
+            this.MzToastService.show("Hubo un error al intentar de identificar el usuario. Intenta más tarde",5000,'red');
+            break;
+        }
+      } else {
+        console.error(data.errores);
+        this.MzToastService.show(data.errores,3000,'red');
+      }
     },(dataError)=>{
-      console.warn(dataError);
-      console.log(this);
+      console.error(dataError);
       this.MzToastService.show(dataError.errores,3000,'red');
     });
   }

@@ -1,18 +1,14 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-
 import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-
 import { Router, ActivatedRoute } from '@angular/router';
-
 import { MzModalComponent,MzToastService } from 'ng2-materialize';
 
 import { Mensajes } from './../../../../libs/Mensajes';
 
-import { DuenoLocalDBService } from './../../../../services/DuenoLocalDB.service';
-
-import { RutValidator } from 'ng2-rut';
-
-import { DuenoModel } from './../../../../models/DuenoModel';
+// Services
+import { DuenoMascotaLocalDBService } from './../../../../services/DuenoMascotaLocalDB.service';
+// Models
+import { DuenoMascotaModel } from './../../../../models/DuenoMascotaModel';
 
 @Component({
   selector: 'app-duenos-agregar',
@@ -38,7 +34,7 @@ export class DuenosAgregarComponent implements OnInit {
 	@ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
 	public errores:string = "";
 
-	public duenoModel:DuenoModel = new DuenoModel();
+	public duenoModel:DuenoMascotaModel = new DuenoMascotaModel();
 
 	public formErrors = Mensajes.validacionesAgregarDueno;
 
@@ -61,8 +57,7 @@ export class DuenosAgregarComponent implements OnInit {
 
 	constructor(private router:Router, private fb:FormBuilder, private activatedRoute: ActivatedRoute, 
 	    private MzToastService:MzToastService,
-        private RutValidator: RutValidator,
-	    private DuenoLocalDBService:DuenoLocalDBService) { }
+	    private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService) { }
 
 	ngOnInit(): void { 
 	    console.log("DuenoAgregarComponent");
@@ -96,7 +91,7 @@ export class DuenosAgregarComponent implements OnInit {
 	}
 
 	public registrar():void {
-		this.DuenoLocalDBService.guardar(this.duenoModel).then((data:any)=>{
+		this.DuenoMascotaLocalDBService.guardar(this.duenoModel).then((data:any)=>{
 			this.registrarSheetModal.close();
 			if(data.result){
 				this.MzToastService.show(data.mensajes,3000,'green');
