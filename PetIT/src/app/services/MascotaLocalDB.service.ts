@@ -79,7 +79,7 @@ export class MascotaLocalDBService {
 			        var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
 			        var mascotas:Array<MascotaModel> = new Array<MascotaModel>();
 			        for (var i = 0; i < results.rows.length; i++){
-						var item:any = results.rows[i] as any;
+						var item:any = results.rows.item(i) as any;
 						var model:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutdueno,item.nombre,item.peso,item.edad,item.valid); 
           		        mascotas.push(model);
 			        }
@@ -112,7 +112,7 @@ export class MascotaLocalDBService {
 				        var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
 				        var mascotas:Array<MascotaModel> = new Array<MascotaModel>();
 				        for (var i = 0; i < results.rows.length; i++){
-							var item:any = results.rows[i] as any;
+							var item:any = results.rows.item(i) as any;
 							var raza:RazaModel = new RazaModel();
 							raza.nombre = item.nombreRaza;
 							var tipoMascota:TipoMascotaModel = new TipoMascotaModel();
@@ -151,7 +151,7 @@ export class MascotaLocalDBService {
 				        var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
 				        var mascotas:Array<MascotaModel> = new Array<MascotaModel>();
 				        for (var i = 0; i < results.rows.length; i++){
-							var item:any = results.rows[i] as any;
+							var item:any = results.rows.item(i) as any;
 							var raza:RazaModel = new RazaModel();
 							raza.nombre = item.nombreRaza;
 							var tipoMascota:TipoMascotaModel = new TipoMascotaModel();
@@ -190,7 +190,8 @@ export class MascotaLocalDBService {
 				        var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
 				        var mascotas:Array<MascotaModel> = new Array<MascotaModel>();
 				        for (var i = 0; i < results.rows.length; i++){
-							var item:any = results.rows[i] as any;
+							var item:any = results.rows.item(i) as any;
+							console.log(item);
 							var raza:RazaModel = new RazaModel();
 							raza.nombre = item.nombreRaza;
 							var tipoMascota:TipoMascotaModel = new TipoMascotaModel();

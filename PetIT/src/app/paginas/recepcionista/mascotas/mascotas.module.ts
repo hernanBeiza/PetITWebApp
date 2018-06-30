@@ -5,7 +5,6 @@ import { MascotasRoutingModule } from './mascotas.routing';
 
 import { CompartidoModule } from './../../../compartido.module';
 
-import { MascotasComponent } from './mascotas.component';
 import { MascotasConsultarComponent } from './mascotas-consultar/mascotas-consultar.component';
 import { MascotasRegistrarComponent } from './mascotas-registrar/mascotas-registrar.component';
 import { MascotasModificarComponent } from './mascotas-modificar/mascotas-modificar.component';
@@ -20,7 +19,7 @@ import { MascotaLocalDBService } from './../../../services/MascotaLocalDB.servic
 		MascotasRoutingModule,
 		CompartidoModule
 	],
-	declarations: [MascotasComponent, 
+	declarations: [
   		MascotasConsultarComponent, 
   		MascotasRegistrarComponent, 
   		MascotasModificarComponent

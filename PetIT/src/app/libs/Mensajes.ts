@@ -110,6 +110,9 @@ export class Mensajes {
 	}
 
 	public static validacionesEnviarNotificacion = {
+		'destinatarios': {
+			'required':			'Al menos debe seleccionar un destinatario.',
+		},	
 		'titulo': {
 			'required':			'El título es obligatorio.',
 			'minlength':		'El título debe ser de al menos de 9 carácter de largo.',

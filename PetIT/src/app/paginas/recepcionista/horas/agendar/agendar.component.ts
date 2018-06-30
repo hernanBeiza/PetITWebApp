@@ -144,7 +144,7 @@ export class AgendarComponent implements OnInit {
         this.especialidades = data.especialidades;
       }
     },(dataError)=> {
-      console.error(dataError);
+      console.warn(dataError);
     });
   }
 
@@ -171,7 +171,7 @@ export class AgendarComponent implements OnInit {
         this.especialistas = data.especialistas;
       }
     },(dataError:any)=>{
-      console.error(dataError);
+      console.warn(dataError);
     });
   }
 
@@ -184,7 +184,7 @@ export class AgendarComponent implements OnInit {
         this.MzToastService.show(data.mensajes, 4000, 'green');
       }
     },(dataError:any)=>{
-      console.error(dataError);  
+      console.warn(dataError);  
       this.MzToastService.show(dataError.errores, 5000, 'red');
     });
   }
@@ -255,7 +255,7 @@ export class AgendarComponent implements OnInit {
         this.MzToastService.show(data.errores, 5000, 'red');    
       }
     },(dataError:any)=>{
-      console.error(dataError);
+      console.warn(dataError);
       this.MzToastService.show(dataError.errores, 5000, 'red');    
     });
   }

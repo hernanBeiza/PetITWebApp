@@ -25,7 +25,7 @@ export class EspecialistaLocalDBService {
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var especialidades:Array<EspecialistaModel> = new Array<EspecialistaModel>();
             for (var i = 0; i < results.rows.length; i++){
-              var item:any = results.rows[i] as any;
+              var item:any = results.rows.item(i) as any;
               let especialista:EspecialistaModel = new EspecialistaModel(item.idespecialista,item.idespecialidad,item.rut,item.nombres,item.apellidopaterno,item.apellidomaterno,item.correo,item.direccion,item.comuna,item.valid);
               especialidades.push(especialista);
             }
@@ -56,7 +56,7 @@ export class EspecialistaLocalDBService {
           console.log(tx,results,results.rows.length);
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
-            var item:any = results.rows[0] as any;
+            var item:any = results.rows.item(0) as any;
             let especialista:EspecialistaModel = new EspecialistaModel(item.idespecialista,item.idespecialidad,item.rut,item.nombres,item.apellidopaterno,item.apellidomaterno,item.correo,item.direccion,item.comuna,item.valid);
             var result = {result:true,mensajes:"Especialista encontrado",especialista:especialista};
             resolve(result);
@@ -87,7 +87,7 @@ export class EspecialistaLocalDBService {
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var especialistas:Array<EspecialistaModel> = new Array<EspecialistaModel>();
             for (var i = 0; i < results.rows.length; i++){
-              var item:any = results.rows[i] as any;
+              var item:any = results.rows.item(i) as any;
               let especialista:EspecialistaModel = new EspecialistaModel(item.idespecialista,item.idespecialidad,item.rut,item.nombres,item.apellidopaterno,item.apellidomaterno,item.correo,item.direccion,item.comuna,item.valid);
               especialistas.push(especialista);
             }

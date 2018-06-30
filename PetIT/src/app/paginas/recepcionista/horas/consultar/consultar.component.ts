@@ -71,7 +71,7 @@ export class ConsultarComponent implements OnInit {
 					this.MzToastService.show(data.errores,5000,'red');
 				}
 			},(dataError:any)=>{
-				console.error(dataError);
+				console.warn(dataError);
 				this.MzToastService.show(dataError.errores,5000,'red');
 			});
 		}
@@ -103,7 +103,7 @@ export class ConsultarComponent implements OnInit {
 				this.MzToastService.show(data.errores,5000,'red');
 			}
 	    },(dataError:any)=>{
-			console.error(dataError);
+			console.warn(dataError);
 			this.MzToastService.show(dataError.errores,5000,'red');
 	    });
 	}
@@ -120,7 +120,7 @@ export class ConsultarComponent implements OnInit {
 	        	this.MzToastService.show(data.errores,5000,'red');
 			}
 	    },(dataError:any)=>{
-			console.error(dataError);
+			console.warn(dataError);
 			this.MzToastService.show(dataError.errores,5000,'red');
 	    });
 	}
@@ -135,7 +135,7 @@ export class ConsultarComponent implements OnInit {
 				this.MzToastService.show(data.errores,5000,'red');
 			}
 	    },(dataError:any)=>{
-			console.error(dataError);
+			console.warn(dataError);
 			this.MzToastService.show(dataError.errores,5000,'red');
 	    });
 	}
@@ -148,6 +148,7 @@ export class ConsultarComponent implements OnInit {
 
 	public irEditar(mascota:MascotaModel):void {
 	    console.warn("irEditar:", mascota);
+		//this.router.navigate(['/recepcionista/horas/agendar/'+this.duenoEncontrado.rutdueno+'/'+this.mascotaSeleccionada.rutmascota]);        
 	}
 
 	public irAgendar():void {

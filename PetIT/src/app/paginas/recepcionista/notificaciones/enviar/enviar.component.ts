@@ -20,6 +20,7 @@ import { DuenoMascotaLocalDBService} from './../../../../services/DuenoMascotaLo
 export class EnviarComponent implements OnInit {
 	public enviarForm:FormGroup;
 
+	public destinatarioControl:AbstractControl;
 	public tituloControl:AbstractControl;
 	public mensajeControl:AbstractControl;
 
@@ -49,7 +50,7 @@ export class EnviarComponent implements OnInit {
 
 	public notificacionModel:NotificacionModel = new NotificacionModel();
 
-	public seleccionado:boolean = true;
+	public seleccionado:boolean = false;
 
 	constructor(private router:Router, private fb:FormBuilder,
 		private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService,
@@ -58,9 +59,11 @@ export class EnviarComponent implements OnInit {
 	ngOnInit(): void { 
 	    console.log("EnviarComponent: ngOnInit();");
 	    this.enviarForm = this.fb.group({
+	      'destinatarios': [this.seleccionado, Validators.compose([Validators.required])],
 	      'titulo': [this.notificacionModel.titulo, Validators.compose([Validators.required,Validators.minLength(9),Validators.maxLength(100)])],
 	      'mensaje': [this.notificacionModel.mensaje, Validators.compose([Validators.required])],
 	    });        
+        this.destinatarioControl = this.enviarForm.controls['destinatarios'];
         this.tituloControl = this.enviarForm.controls['titulo'];
         this.mensajeControl = this.enviarForm.controls['mensaje'];
 		this.cargarDuenos();

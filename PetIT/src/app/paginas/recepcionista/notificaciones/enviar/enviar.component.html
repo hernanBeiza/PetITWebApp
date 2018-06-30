@@ -31,9 +31,13 @@
 						        <td>
 									<mz-checkbox-container>
 										<input mz-checkbox
+										[formControl]="destinatarioControl" 
 									    [label]="''"
 									    id="{{item.rutdueno}}"
 										[(ngModel)]="item.seleccionado"
+										mz-validation
+								        [errorMessageResource]="formErrors.destinatarios"
+										required
 									    type="checkbox">
 									</mz-checkbox-container>
 							    </td>
@@ -85,7 +89,7 @@
 				        required></textarea>
 					</mz-textarea-container>
                     <button mz-button type="submit" 
-                    [disabled]="!enviarForm.valid || enviandoFlag || !haySeleccionados()"
+                    [disabled]="!enviarForm.valid || enviandoFlag"
                     name="action">Enviar notificación</button>
 				</form>
 				</mz-card-content>

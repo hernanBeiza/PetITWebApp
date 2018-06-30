@@ -24,7 +24,7 @@ export class HoraLocalDBService {
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var horas:Array<HoraModel> = new Array<HoraModel>();
             for (var i = 0; i < results.rows.length; i++){
-              var item:any = results.rows[i] as any;
+              var item:any = results.rows.item(i) as any;
               let especialista:EspecialistaModel = new EspecialistaModel(item.idespecialista,item.idespecialidad,item.rut,item.nombres,item.apellidopaterno,item.apellidomaterno,item.correo,item.direccion,item.comuna,item.valid);
               let hora:HoraModel = new HoraModel(item.idhora,item.idespecialista,item.fecha,item.hora,item.valid);
               hora.especialistaModel = especialista;

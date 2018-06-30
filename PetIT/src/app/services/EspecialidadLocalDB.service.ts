@@ -26,7 +26,7 @@ export class EspecialidadLocalDBService {
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var especialidades:Array<EspecialidadModel> = new Array<EspecialidadModel>();
             for (var i = 0; i < results.rows.length; i++){
-              var item:any = results.rows[i] as any;
+              var item:any = results.rows.item(i) as any;
               let especialidad:EspecialidadModel = new EspecialidadModel(item.idespecialidad,item.nombre);
               especialidades.push(especialidad);
             }
@@ -57,7 +57,7 @@ export class EspecialidadLocalDBService {
           console.log(tx,results,results.rows.length);
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
-            var item:any = results.rows[0] as any;
+            var item:any = results.rows.item(0) as any;
             let especialidad:EspecialidadModel = new EspecialidadModel(item.idespecialidad,item.nombre);
             var result = {result:true,mensajes:"Especialidad encontrada",especialidad:especialidad};
             resolve(result);
