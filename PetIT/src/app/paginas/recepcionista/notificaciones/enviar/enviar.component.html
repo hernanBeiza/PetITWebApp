@@ -8,32 +8,35 @@
 					Seleccionar destinatario
 					<table class="striped">
 					    <thead>
-					      <tr>
-					          <th>Rut</th>
-					          <th>Nombre</th>
-					          <th>Dirección</th>
-					          <th>Enviar</th>
-					      </tr>
+							<tr>
+								<th>Rut</th>
+								<th>Nombre</th>
+								<th>Dirección</th>
+								<th>						
+									<mz-checkbox-container>
+									<input mz-checkbox
+									(change)="seleccionarTodos();"
+									[label]="'Enviar a todos'"
+									id="seleccionar"
+									type="checkbox">
+									</mz-checkbox-container>
+								</th>
+							</tr>
 					    </thead>
 					    <tbody>
 				    	    <tr *ngFor="let item of duenos">
-					        <td>{{item.rutdueno}}</td>
-					        <td>{{item.nombres}} {{item.apellidopaterno}}</td>
-					        <td>{{item.direccion}}</td>
-					        <td>
-					        	<!--
-								<a class="btn-floating waves-effect waves-light green" 
-								(click)="irModificar(item);">
-									<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>
-								</a>
-								-->
-								<mz-checkbox-container>
-									<input mz-checkbox
-								    [label]="''"
-								    id="{{item.rutdueno}}"
-								    type="checkbox">
-								</mz-checkbox-container>
-						    </td>
+						        <td>{{item.rutdueno}}</td>
+						        <td>{{item.nombres}} {{item.apellidopaterno}}</td>
+						        <td>{{item.direccion}}</td>
+						        <td>
+									<mz-checkbox-container>
+										<input mz-checkbox
+									    [label]="''"
+									    id="{{item.rutdueno}}"
+										[(ngModel)]="item.seleccionado"
+									    type="checkbox">
+									</mz-checkbox-container>
+							    </td>
 					      </tr>
 					    </tbody>
 					</table>
@@ -82,7 +85,7 @@
 				        required></textarea>
 					</mz-textarea-container>
                     <button mz-button type="submit" 
-                    [disabled]="!enviarForm.valid || enviandoFlag"
+                    [disabled]="!enviarForm.valid || enviandoFlag || !haySeleccionados()"
                     name="action">Enviar notificación</button>
 				</form>
 				</mz-card-content>

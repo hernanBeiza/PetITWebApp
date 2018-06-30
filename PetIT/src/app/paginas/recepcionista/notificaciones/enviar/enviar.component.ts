@@ -49,6 +49,8 @@ export class EnviarComponent implements OnInit {
 
 	public notificacionModel:NotificacionModel = new NotificacionModel();
 
+	public seleccionado:boolean = true;
+
 	constructor(private router:Router, private fb:FormBuilder,
 		private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService,
 	    private MzToastService: MzToastService) { }
@@ -76,12 +78,24 @@ export class EnviarComponent implements OnInit {
 		});
 	}
 
+	public seleccionarTodos(): void {
+		console.log("seleccionarTodos");
+		for (var i = 0; i < this.duenos.length; ++i) {
+			var dueno:DuenoMascotaModel = this.duenos[i];
+			if(dueno.seleccionado){
+				dueno.seleccionado = false;
+			} else {
+				dueno.seleccionado = true;
+			}
+		}
+	}
+
 	public onPageChange(pagina:number): void {
 		console.log(pagina);
 	}
 
 	public onSubmit(values:Object):void {
-	    if (this.enviarForm.valid) {
+	    if (this.enviarForm.valid) {	    	
 	    	this.confirmarSheetModal.open();
 	    } else {
 			this.MzToastService.show("¡Error! Revisa tus datos de acceso",3000,"red");
@@ -90,7 +104,27 @@ export class EnviarComponent implements OnInit {
 
 	public enviarNotificacion(): void {
 		this.confirmarSheetModal.close();
+		console.log(this.duenos);
+		for (var i = 0; i < this.duenos.length; ++i) {
+			var dueno:DuenoMascotaModel = this.duenos[i];
+			if(dueno.seleccionado){
+				console.log(dueno);
+			}
+		}
+		this.enviarForm.reset();
 		this.MzToastService.show("¡Notificación enviada!", 5000,"green");
+	}
+
+	public haySeleccionados(): boolean {
+		var hay:boolean = false;
+		for (var i = 0;i<this.duenos.length; i ++) {
+			let dueno:DuenoMascotaModel = this.duenos[i];
+			if(dueno.seleccionado){
+				hay = true;
+				break;
+			}
+		}
+		return hay;
 	}
 
 	private onValueChanged(data?: any) {

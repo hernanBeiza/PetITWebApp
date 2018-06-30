@@ -70,19 +70,19 @@ export class DuenoMascotaLocalDBService {
   }
 
   public obtener(): Promise<Object> {
-    console.log("DuenoLocalDB: obtener();");
+    console.log("DuenoMascotaLocalDB: obtener();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
         var sql = "SELECT * FROM duenomascota";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
-          console.log(tx,results,results.rows.length);
+          console.log(tx,results);
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
-            for (var i = 0; i < results.rows.length; i++){
-              var item:any = results.rows[i] as any;
+            for (var i = 0; i < rows.length; i++){
+              var item:any = rows.item(i) as any;
               var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutdueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);              
               duenos.push(dueno);
             }
@@ -104,7 +104,7 @@ export class DuenoMascotaLocalDBService {
   }
 
   public obtenerConMascota(): Promise<Object> {
-    console.log("DuenoLocalDB: obtenerConMascota();");
+    console.log("DuenoMascotaLocalDB: obtenerConMascota();");
 
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
@@ -117,7 +117,7 @@ export class DuenoMascotaLocalDBService {
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
             for (var i = 0; i < results.rows.length; i++){
-              var item:any = results.rows[i] as any;
+              var item:any = rows.item(i) as any;
               var mascota:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutDueno,item.nombreMascota,item.peso,item.edad,item.validMascota);
               var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
               dueno.mascotas.push(mascota);
@@ -141,7 +141,7 @@ export class DuenoMascotaLocalDBService {
   }
 
   public obtenerConRut(rutdueno:string): Promise<Object> {
-    console.log("DuenoLocalDB: obtenerConRut();");
+    console.log("DuenoMascotaLocalDB: obtenerConRut();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -153,7 +153,7 @@ export class DuenoMascotaLocalDBService {
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
             for (var i = 0; i < results.rows.length; i++){
-              var item:any = results.rows[i] as any;
+              var item:any = rows.item(i) as any;
               var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
               duenos.push(dueno);
             }
@@ -176,7 +176,7 @@ export class DuenoMascotaLocalDBService {
 
 
   public obtenerConNombreApellido(dato:string): Promise<Object> {
-    console.log("DuenoLocalDB: obtenerConNombreApellido();");
+    console.log("DuenoMascotaLocalDB: obtenerConNombreApellido();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -188,7 +188,7 @@ export class DuenoMascotaLocalDBService {
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
             for (var i = 0; i < results.rows.length; i++){
-              var item:any = results.rows[i] as any;
+              var item:any = rows.item(i) as any;
               var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);               
               duenos.push(dueno);
             }
@@ -211,6 +211,8 @@ export class DuenoMascotaLocalDBService {
 
 
   public obtenerDuenoConMascota(rutdueno:string,rutmascota:string): Promise<Object> {
+    console.log("DuenoMascotaLocalDB: obtenerDuenoConMascota();");
+
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -218,8 +220,9 @@ export class DuenoMascotaLocalDBService {
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
+          var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
           if(results.rows.length>0){
-            var item:any = results.rows[0] as any;
+            var item:any = rows.item(0) as any;
             var mascota:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutDueno,item.nombreMascota,item.peso,item.edad,item.validMascota);
             var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
             dueno.mascotas.push(mascota);
@@ -241,6 +244,8 @@ export class DuenoMascotaLocalDBService {
   }
 
   public obtenerConIDUsuario(idusuario:number): Promise<Object> {
+    console.log("DuenoMascotaLocalDB: obtenerConIDUsuario();");
+
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -248,8 +253,9 @@ export class DuenoMascotaLocalDBService {
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
+          var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
           if(results.rows.length>0){
-            var item:any = results.rows[0] as any;
+            var item:any = rows.item(0) as any;
             var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
             var result = {result:true,mensajes:"Dueño encontrado",dueno:dueno};
             resolve(result);

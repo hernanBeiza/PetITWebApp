@@ -99,6 +99,7 @@ export class ConsultarComponent implements OnInit {
 				this.obtenerMascotasConDueno(data.dueno);
 				this.MzToastService.show(data.mensajes,3000,'green');
 			} else {
+				this.duenoEncontrado = new DuenoMascotaModel();
 				this.MzToastService.show(data.errores,5000,'red');
 			}
 	    },(dataError:any)=>{
@@ -115,6 +116,7 @@ export class ConsultarComponent implements OnInit {
 				this.obtenerMascotasConDueno(data.dueno);
 		        this.MzToastService.show(data.mensajes,3000,'green');
 			} else {
+				this.duenoEncontrado = new DuenoMascotaModel();
 	        	this.MzToastService.show(data.errores,5000,'red');
 			}
 	    },(dataError:any)=>{

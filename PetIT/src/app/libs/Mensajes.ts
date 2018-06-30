@@ -104,6 +104,9 @@ export class Mensajes {
 		'peso': {
 			'required':			'El peso de la mascota es obligatorio.'
 		},
+		'edad': {
+			'required':			'La edad de la mascota es obligatoria.'
+		},
 	}
 
 	public static validacionesEnviarNotificacion = {

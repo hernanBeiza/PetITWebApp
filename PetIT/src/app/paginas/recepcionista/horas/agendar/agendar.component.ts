@@ -148,7 +148,7 @@ export class AgendarComponent implements OnInit {
     });
   }
 
-  private seleccionarEspecialidad(event):void {
+  public seleccionarEspecialidad(event):void {
     console.log("seleccionarEspecialidad");
     console.log(this.especialidadModel);
     this.especialistaControl.reset();
@@ -157,7 +157,7 @@ export class AgendarComponent implements OnInit {
     this.cargarEspecialistas();
   }
 
-  private seleccionarEspecialista(event):void {    
+  public seleccionarEspecialista(event):void {    
     console.log("seleccionarEspecialista");
     this.citaModel.idespecialista = this.especialistaModel.idespecialista;
     this.citaModel.especialistaModel = this.especialistaModel;
@@ -204,7 +204,11 @@ export class AgendarComponent implements OnInit {
     }
   }
   
-  private agendar():void {
+  public onSubmit(values:Object):void {
+    console.warn("Ya no debería usarse");
+  }
+
+  public agendar():void {
   	console.log("agendar();");
     var enviar:boolean = true;
     this.errores = "Faltó seleccionar:";

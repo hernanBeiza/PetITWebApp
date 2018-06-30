@@ -13,6 +13,9 @@ export class DuenoMascotaModel {
 	public correo?: string;
 	public valid?: number;
 
+	//Para enviar notificación
+	public seleccionado?:boolean = false;
+
 	public mascotas:Array<MascotaModel> = new Array<MascotaModel>();
 	
 	constructor(rut?:string,idusuario?:number,

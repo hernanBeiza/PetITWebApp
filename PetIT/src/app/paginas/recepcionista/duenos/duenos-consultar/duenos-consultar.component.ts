@@ -26,6 +26,7 @@ export class DuenosConsultarComponent implements OnInit {
 	public stringControl:AbstractControl;
 	public fieldControl:AbstractControl;
 
+	public enviandoFlag:boolean = false;
 	@ViewChild('detalleSheetModal') detalleSheetModal: MzModalComponent;
 	@ViewChild('eliminarSheetModal') eliminarSheetModal: MzModalComponent;
 

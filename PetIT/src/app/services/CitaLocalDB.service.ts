@@ -101,7 +101,8 @@ export class CitaLocalDBService {
           var citas:Array<CitaModel>= new Array<CitaModel>();
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
-            var item:any = results.rows[0] as any;
+            var item:any = rows.item(0) as any;
+            console.log(item);
             var dueno:DuenoMascotaModel = new DuenoMascotaModel();
             dueno.rutdueno = item.rutdueno;
             dueno.nombres = item.nombreDueno;
@@ -159,7 +160,8 @@ export class CitaLocalDBService {
           var citas:Array<CitaModel>= new Array<CitaModel>();
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
-            var item:any = results.rows[0] as any;
+            var item:any = rows.item(0) as any;
+            console.log(item);
 
             var dueno:DuenoMascotaModel = new DuenoMascotaModel();
             dueno.rutdueno = item.rutdueno;
@@ -218,7 +220,8 @@ export class CitaLocalDBService {
           console.log(tx,results,results.rows.length);
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
-            var item:any = results.rows[0] as any;
+            var item:any = rows.item(0) as any;
+            console.log(item);
             var dueno:DuenoMascotaModel = new DuenoMascotaModel();
             dueno.rutdueno = item.rutdueno;
             dueno.nombres = item.nombreDueno;
@@ -277,7 +280,7 @@ export class CitaLocalDBService {
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var citas:Array<CitaModel> = new Array<CitaModel>();
             for (var i = 0; i < results.rows.length; i++){
-              var item:any = results.rows[i] as any;
+              var item:any = results.rows.item(i) as any;
 
               var cita:CitaModel = new CitaModel(item.idcita,item.rutmascota,item.idespecialista,item.idhora,item.origen,item.valid);
               var mascota:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutDueno,item.nombreMascota,item.peso,item.edad,item.validMascota);

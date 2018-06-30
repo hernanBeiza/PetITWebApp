@@ -25,6 +25,8 @@ export class MascotasConsultarComponent implements OnInit {
 	public mascotaSeleccionada:MascotaModel;
 	public mascotas:Array<MascotaModel>;
 
+	public enviandoFlag:boolean = false;
+	
 	@ViewChild('detalleSheetModal') detalleSheetModal: MzModalComponent;
 	@ViewChild('eliminarSheetModal') eliminarSheetModal: MzModalComponent;
 

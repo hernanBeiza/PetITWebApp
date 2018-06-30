@@ -27,7 +27,6 @@ export class InicioComponent implements OnInit {
       if(data.result){
         this.MzToastService.show(data.mensajes,5000,'green');
         this.citas = data.citas;
-        console.log(this.citas);
       } else {
         this.MzToastService.show(data.errores,5000,'red');
       }
