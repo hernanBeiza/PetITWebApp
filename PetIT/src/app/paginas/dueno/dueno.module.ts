@@ -7,7 +7,6 @@ import { DuenoRoutingModule } from './dueno.routing';
 
 import { DuenoComponent } from './dueno.component';
 import { InicioComponent } from './inicio/inicio.component';
-import { MenuComponent } from './menu/menu.component';
 
 // SubMódulos del dueño de mascota
 import { CompartidoModule } from './../../compartido.module';
@@ -24,6 +23,6 @@ import { NotificacionLocalDBService } from './../../services/NotificacionLocalDB
 		RouterModule
 	],
 	providers: [NotificacionLocalDBService],
-	declarations: [DuenoComponent, MenuComponent, InicioComponent]
+	declarations: [DuenoComponent, InicioComponent]
 })
 export class DuenoModule { }

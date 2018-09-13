@@ -20,10 +20,10 @@ export class HiperMenuComponent implements OnInit {
 
 	constructor(private router:Router,
 		private LocalDBService:LocalDBService, private UsuarioLocalDBService:UsuarioLocalDBService,
-		private HiperMenuService:HiperMenuService) { }
+		private HiperMenuService:HiperMenuService) { 
+	}
 
 	ngOnInit() {
-		console.log("HiperMenu");
 		console.log(this.secciones);
 		console.log(this.secciones[0]);
 		//Cargar la primera sección

@@ -7,7 +7,6 @@ import { InformeModule } from './informe/informe.module';
 
 
 import { AdminComponent } from './admin.component';
-import { MenuComponent } from './menu/menu.component';
 
 import { InicioComponent } from './inicio/inicio.component';
 
@@ -24,12 +23,13 @@ import { CitaLocalDBService } from './../../services/CitaLocalDB.service';
 	],
 	exports: [
 		RouterModule,
+		CompartidoModule
 	],
 	providers: [
 		CitaLocalDBService
 	],
 	declarations: [
-		MenuComponent, AdminComponent, InicioComponent
+		AdminComponent, InicioComponent
 	]
 })
 export class AdminModule { }

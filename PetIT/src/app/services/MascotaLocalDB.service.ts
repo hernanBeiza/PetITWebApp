@@ -122,7 +122,7 @@ export class MascotaLocalDBService {
 							model.razaModel = raza;
 	          		        mascotas.push(model);
 				        }
-	    	            var result = {result:true,mensajes:"Mascotas encontradas",mascotas:mascotas};
+	    	            var result = {result:true,mensajes:"Mascotas encontradas",mascota:mascotas[0]};
 			            resolve(result);
 					} else {
 						var resultNoEncontrado = {result:false,errores:"No se ha encontrado mascota con esos datos"};

@@ -15,11 +15,17 @@ import { DuenosModificarComponent } from './duenos-modificar/duenos-modificar.co
 		CommonModule,
 		DuenosRoutingModule,
 		CompartidoModule,
+
 	],
 	exports: [
 		CompartidoModule,
 		RouterModule
 	],
-	declarations: [DuenosComponent, DuenosConsultarComponent, DuenosAgregarComponent, DuenosModificarComponent]
+	declarations: [
+		DuenosComponent, 
+		DuenosConsultarComponent, 
+		DuenosAgregarComponent, 
+		DuenosModificarComponent
+	]
 })
 export class DuenosModule { }

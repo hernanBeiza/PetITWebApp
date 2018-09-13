@@ -1,0 +1,24 @@
+<mz-sidenav
+	[id]="'sidenav-demo'"
+	[collapseButtonId]="'btn-sidenav-demo'"
+	[fixed]="true">
+  <mz-sidenav-header>
+    <img id="logo" src="assets/img/petitlogo.png">
+  </mz-sidenav-header>
+  <mz-sidenav-subheader>
+    Pet-IT
+  </mz-sidenav-subheader>
+	<mz-sidenav-link *ngFor="let seccion of secciones" >
+	    <a title="{{seccion.titulo}}" style="cursor:pointer;" (click)="irSeccion(seccion)">
+	      <i mz-icon-mdi mz-input-prefix [icon]="seccion.icono"></i>
+	      {{seccion.nombre}}
+	    </a>
+		<mz-sidenav-divider></mz-sidenav-divider>
+	</mz-sidenav-link>
+</mz-sidenav>
+
+<!-- Botón para abrir menú en móvil -->
+<button class="sidenav-button hide-on-large-only btn btn-floating btn-large waves-effect waves-light" 
+id="btn-sidenav" mz-button id="btn-sidenav-demo">
+	<i class="mdi mdi-menu mdi-24px"></i>
+</button>

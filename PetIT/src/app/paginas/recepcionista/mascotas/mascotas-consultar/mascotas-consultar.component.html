@@ -2,49 +2,51 @@
 	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
 				<mz-card-title>
-					Buscar mascota: 
+					Buscar mascota por: 
 				</mz-card-title>
 				<mz-card-content>
-					Buscar mascota por: 
-	                <form
-	                [formGroup]="buscarForm" 
-	                (ngSubmit)="onSubmit(buscarForm.value)">
-						<mz-radio-button-container>
-							<input mz-radio-button
+					<div>
+						Datos de Mascota
+						<form
+		                [formGroup]="buscarForm" 
+		                (ngSubmit)="onSubmit(buscarForm.value)">
+							<mz-radio-button-container>
+								<input mz-radio-button
 								[formControl]="fieldControl" 
-							[(ngModel)]="filtroField"
-						    [label]="'Rut'"
-							value="rut"
-						    id="rut"
-						    name="radio-group"
-						    type="radio">
-							<input mz-radio-button
-							[formControl]="fieldControl" 
-							[(ngModel)]="filtroField"
-						    [label]="'Nombre'"
-							value="nombre" 
-						    id="nombre"
-						    name="radio-group"
-						    type="radio">
-						</mz-radio-button-container>
-						<mz-input-container>
-							<i mz-icon-mdi mz-input-prefix
-						    	[icon]="'magnify'">
-							</i>
-							<input mz-input
-								[formControl]="stringControl" 
-							[(ngModel)]="filtroString"
-							placeholder="Ingrese {{filtroField}}"
-							length="20"
-							type="text">
-		                    <button mz-button type="submit" 
-		                    [disabled]="!buscarForm.valid || enviandoFlag"
-		                    name="action">Buscar dueño</button>
-						</mz-input-container>
-					</form>
-					<!--
-					<app-buscador-duenos></app-buscador-duenos>
-					-->
+								[(ngModel)]="filtroField"
+							    [label]="'Rut'"
+								value="rut"
+							    id="rut"
+							    name="radio-group"
+							    type="radio">
+								<input mz-radio-button
+								[formControl]="fieldControl" 
+								[(ngModel)]="filtroField"
+							    [label]="'Nombre'"
+								value="nombre" 
+							    id="nombre"
+							    name="radio-group"
+							    type="radio">
+							</mz-radio-button-container>
+							<mz-input-container>
+								<i mz-icon-mdi mz-input-prefix
+							    	[icon]="'magnify'">
+								</i>
+								<input mz-input
+									[formControl]="stringControl" 
+								[(ngModel)]="filtroString"
+								placeholder="Ingrese {{filtroField}}"
+								length="20"
+								type="text">
+			                    <button mz-button type="submit" 
+			                    [disabled]="!buscarForm.valid || enviandoFlag"
+			                    name="action">Buscar mascota</button>
+							</mz-input-container>
+						</form>
+					</div>
+					<div>
+						Datos del Dueño
+					</div>
 				</mz-card-content>
 			</mz-card>
 		</div>
@@ -77,19 +79,13 @@
 						        <td>{{item.tipoMascotaModel.nombre}}</td>
 						        <td>{{item.razaModel.nombre}}</td>
 						        <td>
-						        	<!--
-									<a class="btn-floating waves-effect waves-light green" 
-									(click)="irModificar(item);">
-										<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>
-									</a>
-									-->
 									<a (click)="verDetalle(item);" style="cursor: pointer;" mz-tooltip [tooltip]="'Ver información en detalle'" [position]="'top'">
 										<i mz-icon-mdi mz-input-prefix [icon]="'magnify'"></i>
 									</a>
 									<a (click)="irModificar(item);" style="cursor: pointer;"mz-tooltip [tooltip]="'Modificar datos'" [position]="'top'">
 										<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>
 									</a>
-									<a (click)="eliminar(item);" style="cursor: pointer;" mz-tooltip [tooltip]="'Eliminar datos'" [position]="'top'">>
+									<a (click)="eliminar(item);" style="cursor: pointer;" mz-tooltip [tooltip]="'Eliminar datos'" [position]="'top'">
 										<i mz-icon-mdi mz-input-prefix [icon]="'delete'"></i>
 									</a>
 								</td>
@@ -101,7 +97,7 @@
 		</div>
 	</div>
 
-	<!-- Ventana modal detalle Dueño Mascota-->
+	<!-- Ventana modal detalle Mascota-->
 	<mz-modal #detalleSheetModal [options]="modalOptions">
 		<mz-modal-header>
 			<h5>Datos mascota</h5>
@@ -122,7 +118,7 @@
 			<button mz-button [flat]="true" class="green" mz-modal-close>Cerrar</button>
 		</mz-modal-footer>
 	</mz-modal>
-	<!-- Ventana modal eliminar Dueño Mascota-->
+	<!-- Ventana modal eliminar Mascota-->
 	<mz-modal #eliminarSheetModal [options]="modalOptions">
 		<mz-modal-header>
 			<h6>Eliminar mascota</h6>

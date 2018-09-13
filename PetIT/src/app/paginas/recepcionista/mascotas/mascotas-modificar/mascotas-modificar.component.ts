@@ -146,7 +146,6 @@ export class MascotasModificarComponent implements OnInit {
 		this.MascotaLocalDBService.obtenerConRut(rutmascota).then((data:any)=>{
 			if(data.result){
 				this.mascotaModel = data.mascota;
-				console.log(this.mascotaModel);
 				this.obtenerDuenoConRut(this.mascotaModel.rutdueno);
 				this.MzToastService.show(data.mensajes,2000,'green');
 			} else {
@@ -158,7 +157,7 @@ export class MascotasModificarComponent implements OnInit {
 	}
 
 	public obtenerDuenoConRut(rutdueno:string){
-		console.log("obtenerDuenoConID",rutdueno);
+		console.log("obtenerDuenoConRut",rutdueno);
 		this.DuenoMascotaLocalDBService.obtenerConRut(rutdueno).then((data:any)=>{
 			if(data.result){
 				this.duenoModel = data.dueno;
@@ -180,7 +179,6 @@ export class MascotasModificarComponent implements OnInit {
 	}
 
 	public modificar():void {
-
 		this.MascotaLocalDBService.modificar(this.mascotaModel).then((data:any)=>{
 			this.modificarSheetModal.close();
 			if(data.result){

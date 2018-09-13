@@ -13,7 +13,6 @@ import { MascotasModule } from './mascotas/mascotas.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
 
 // Componentes del recepcionista
-import { MenuComponent } from './menu/menu.component';
 import { RecepcionistaComponent } from './recepcionista.component';
 import { InicioComponent } from './inicio/inicio.component';
 
@@ -26,12 +25,14 @@ import { EspecialidadLocalDBService } from './../../services/EspecialidadLocalDB
 import { EspecialistaLocalDBService } from './../../services/EspecialistaLocalDB.service';
 import { HoraLocalDBService } from './../../services/HoraLocalDB.service';
 
+import { DuenosConsultarComponent } from './duenos/duenos-consultar/duenos-consultar.component';
+
 @NgModule({
 	imports: [
 	    CommonModule,
 	    RecepcionistaRoutingModule,
 		CompartidoModule,
-		HorasModule, DuenosModule, MascotasModule, NotificacionesModule
+		HorasModule, DuenosModule, MascotasModule, NotificacionesModule,
 	],
 	exports: [
 		RouterModule
@@ -42,8 +43,8 @@ import { HoraLocalDBService } from './../../services/HoraLocalDB.service';
 		HoraLocalDBService,
 	],
 	declarations: [
-		RecepcionistaComponent, 
-		MenuComponent,InicioComponent
+		RecepcionistaComponent,
+		InicioComponent
 	]
 })
 export class RecepcionistaModule { }

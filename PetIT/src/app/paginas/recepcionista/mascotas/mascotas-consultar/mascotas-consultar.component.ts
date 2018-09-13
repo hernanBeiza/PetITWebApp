@@ -4,7 +4,7 @@ import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from
 
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import { MzModalComponent,MzToastService} from 'ng2-materialize';
 
 import { Mensajes } from './../../../../libs/Mensajes';
 
@@ -53,7 +53,8 @@ export class MascotasConsultarComponent implements OnInit {
 	public filtroString: string = ""
 	public filtroField: string = "rut";
 
-	constructor(private router:Router, private fb:FormBuilder, private ActivatedRoute: ActivatedRoute, 
+	constructor(private router:Router, private fb:FormBuilder, 
+		private ActivatedRoute: ActivatedRoute, 
 	    private MzToastService:MzToastService,
 	    private MascotaLocalDBService:MascotaLocalDBService) { 
 		this.buscarForm = this.fb.group({
@@ -84,11 +85,13 @@ export class MascotasConsultarComponent implements OnInit {
 	        this.mascotas = data.mascotas;
 	        this.MzToastService.show(data.mensajes,3000,'green');
 	      } else {
+	      	this.mascotas = new Array<MascotaModel>();
 	        this.MzToastService.show(data.errores,5000,'red');
 	      }
 	    },(dataError:any)=>{
-	      console.error(dataError);
-	      this.MzToastService.show(dataError.errores,5000,'red');
+				console.error(dataError);
+				this.mascotas = new Array<MascotaModel>();
+				this.MzToastService.show(dataError.errores,5000,'red');
 	    });
 	}
 
@@ -99,10 +102,12 @@ export class MascotasConsultarComponent implements OnInit {
 	        this.mascotas = data.mascotas;
 	        this.MzToastService.show(data.mensajes,3000,'green');
 	      } else {
+	      	this.mascotas = new Array<MascotaModel>();
 	        this.MzToastService.show(data.errores,5000,'red');
 	      }
 	    },(dataError:any)=>{
 	      console.error(dataError);
+      	this.mascotas = new Array<MascotaModel>();	      
 	      this.MzToastService.show(dataError.errores,5000,'red');
 	    });
 	}

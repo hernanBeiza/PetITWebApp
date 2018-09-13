@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 
 import { LoginComponent } from './login/login.component';
 
-import { HiperMenuComponent } from './hipermenu/hipermenu.component';
-
 import { AdminModule } from './admin/admin.module';
 import { RecepcionistaModule } from './recepcionista/recepcionista.module';
 import { DuenoModule } from './dueno/dueno.module';
@@ -24,7 +22,6 @@ import { CompartidoModule } from './../compartido.module';
   ],
   declarations: [
     LoginComponent,
-    HiperMenuComponent
   ],
   exports: [ 
     CompartidoModule

@@ -12,7 +12,6 @@ import { MascotasModificarComponent } from './mascotas-modificar/mascotas-modifi
 import { DuenoMascotaLocalDBService } from './../../../services/DuenoMascotaLocalDB.service';
 import { MascotaLocalDBService } from './../../../services/MascotaLocalDB.service';
 
-
 @NgModule({
 	imports: [
     	CommonModule,
