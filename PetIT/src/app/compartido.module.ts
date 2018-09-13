@@ -14,9 +14,9 @@ import { FiltroPipe } from './pipes/filtro.pipe';
 import { Ng2Rut, RutValidator } from 'ng2-rut';
 
 // Componentes Compartidos
-import { CabeceraComponent } from './components/cabecera/cabecera.component';
-import { HiperMenuComponent } from './components/hipermenu/hipermenu.component';
-import { HiperMenuService } from './services/HiperMenu.service';
+import { CabeceraComponent } from './compartido/cabecera/cabecera.component';
+import { HiperMenuComponent } from './compartido/hipermenu/hipermenu.component';
+import { HiperMenuService } from './compartido/hipermenu/HiperMenu.service';
 
 @NgModule({
   declarations: [

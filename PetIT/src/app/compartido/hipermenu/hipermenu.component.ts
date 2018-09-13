@@ -6,7 +6,7 @@ import { MzSidenavCollapsibleComponent } from 'ng2-materialize';
 import { LocalDBService } from './../../services/LocalDB.service';
 import { UsuarioLocalDBService } from './../../services/UsuarioLocalDB.service';
 
-import { HiperMenuService } from './../../services/HiperMenu.service';
+import { HiperMenuService } from './HiperMenu.service';
 
 @Component({
 	selector: 'app-hiper',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
 
-import {LocalDBService} from './services/LocalDB.service';
+import { LocalDBService } from './services/LocalDB.service';
 
 @Component({
   selector: 'app-root',

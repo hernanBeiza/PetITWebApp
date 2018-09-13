@@ -9,6 +9,7 @@ import { InicioComponent } from './inicio/inicio.component';
 import { HorasModule } from './horas/horas.module';
 import { DuenosModule } from './duenos/duenos.module';
 import { MascotasModule } from './mascotas/mascotas.module';
+import { EspecialistasModule } from './especialistas/especialistas.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
 
 export function loadHorasModule() {
@@ -19,6 +20,9 @@ export function loadDuenosModule() {
 }
 export function loadMascotasModule() {
   return MascotasModule;
+}
+export function loadEspecialistasModule() {
+  return EspecialistasModule;
 }
 export function loadNotificacionesModule() {
   return NotificacionesModule;
@@ -33,6 +37,7 @@ const routes: Routes =
       { path: 'horas',              loadChildren: loadHorasModule },
       { path: 'duenos',             loadChildren: loadDuenosModule },
       { path: 'mascotas',           loadChildren: loadMascotasModule },
+      { path: 'especialistas',           loadChildren: loadEspecialistasModule },
       { path: 'notificaciones',     loadChildren: loadNotificacionesModule },
      /*
       { path: 'horas',                loadChildren: './../horas/horas.module#HorasModule' },
