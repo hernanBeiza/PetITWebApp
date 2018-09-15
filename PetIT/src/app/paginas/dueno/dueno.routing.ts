@@ -5,9 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { DuenoComponent } from './dueno.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
+import { HorasModule } from './horas/horas.module';
 
 export function loadNotificacionesModule() {
   return NotificacionesModule;
+}
+
+export function loadHorasModule() {
+  return HorasModule;
 }
 
 const routes: Routes = [
@@ -16,7 +21,7 @@ const routes: Routes = [
     children: [
       { path: 'inicio',            component: InicioComponent },
       { path: 'notificaciones',    loadChildren: loadNotificacionesModule },
-      //{ path: 'horas',                loadChildren: () => HorasModule },
+      { path: 'horas',                loadChildren: loadHorasModule },
     ]
   }
 ];

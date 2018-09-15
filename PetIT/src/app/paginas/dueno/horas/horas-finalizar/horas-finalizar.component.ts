@@ -13,11 +13,11 @@ import {HoraModel} from './../../../../models/HoraModel';
 import {CitaModel} from './../../../../models/CitaModel';
 
 @Component({
-  selector: 'app-finalizar',
-  templateUrl: './finalizar.component.html',
-  styleUrls: ['./finalizar.component.css']
+  selector: 'app-horas-finalizar',
+  templateUrl: './horas-finalizar.component.html',
+  styleUrls: ['./horas-finalizar.component.css']
 })
-export class FinalizarComponent implements OnInit {
+export class HorasFinalizarComponent implements OnInit {
 
 	public citaModel:CitaModel = new CitaModel();
 

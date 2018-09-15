@@ -113,6 +113,9 @@ export class Mensajes {
 		'destinatarios': {
 			'required':			'Al menos debe seleccionar un destinatario.',
 		},	
+		'imagen': {
+			'required':			'La imagen es obligatoria.',
+		},		
 		'titulo': {
 			'required':			'El título es obligatorio.',
 			'minlength':		'El título debe ser de al menos de 9 carácter de largo.',

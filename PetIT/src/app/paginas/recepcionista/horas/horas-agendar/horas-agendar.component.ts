@@ -21,11 +21,11 @@ import {HoraModel} from './../../../../models/HoraModel';
 import {CitaModel} from './../../../../models/CitaModel';
 
 @Component({
-  selector: 'app-agendar',
-  templateUrl: './agendar.component.html',
-  styleUrls: ['./agendar.component.css']
+  selector: 'app-horas-agendar',
+  templateUrl: './horas-agendar.component.html',
+  styleUrls: ['./horas-agendar.component.css']
 })
-export class AgendarComponent implements OnInit {
+export class HorasAgendarComponent implements OnInit {
 
   public agendarForm:FormGroup;
   public especialidadControl:AbstractControl;

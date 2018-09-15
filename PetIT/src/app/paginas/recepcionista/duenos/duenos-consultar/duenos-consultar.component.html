@@ -2,10 +2,9 @@
 	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
 				<mz-card-title>
-					Buscar dueño: 
+					Buscar dueño por:
 				</mz-card-title>
 				<mz-card-content>
-					Buscar dueño por: 
 	                <form
 	                [formGroup]="buscarForm" 
 	                (ngSubmit)="onSubmit(buscarForm.value)">
@@ -72,24 +71,6 @@
 					        <td>{{item.nombres}} {{item.apellidopaterno}} {{item.apellidomaterno}}</td>
 					        <td>{{item.direccion}}</td>
 					        <td>
-					        	<!--
-								<a class="btn-floating waves-effect waves-light green" 
-								(click)="verDetalle(item);">
-									<i mz-icon-mdi mz-input-prefix [icon]="'account-card-details'"></i>
-								</a>
-								<a class="btn-floating waves-effect waves-light green" 
-								(click)="irRegistrarMascota(item);">
-									<i mz-icon-mdi mz-input-prefix [icon]="'paw'"></i>
-								</a>
-								<a class="btn-floating waves-effect waves-light green" 
-								(click)="irModificar(item);">
-									<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>
-								</a>
-								<a class="btn-floating waves-effect waves-light green" 
-								(click)="eliminar(item);">
-									<i mz-icon-mdi mz-input-prefix [icon]="'delete'"></i>
-								</a>
-								-->
 								<a (click)="verDetalle(item);" style="cursor: pointer;" mz-tooltip [tooltip]="'Ver información en detalle'" [position]="'top'">
 									<i mz-icon-mdi mz-input-prefix [icon]="'magnify'"></i>
 								</a>

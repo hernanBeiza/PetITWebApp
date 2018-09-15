@@ -1,0 +1,31 @@
+	<div class="row">
+	    <div class="col s12 m12">
+			<mz-card [hoverable]="true">
+				<mz-card-title>
+					Datos Dueño Mascota
+				</mz-card-title>
+				<mz-card-content>
+					<div class="row">
+					    <div class="col s4 m4">
+							Rut: {{duenoEncontrado?.rutdueno}} 
+						</div>
+					    <div class="col s8 m8">
+							Nombre: {{duenoEncontrado?.nombres}} {{duenoEncontrado?.apellidopaterno}} {{duenoEncontrado?.apellidomaterno}}			
+						</div>
+					</div>
+				</mz-card-content>
+			</mz-card>
+		</div>
+	</div>
+
+	<app-listar-mascotas 
+	#listarMascotasComponent
+	(mascotaSeleccionadaEmitter)="onMascotaSeleccionada($event)"
+	></app-listar-mascotas>
+	
+	<div class="row">
+	    <div class="col s8 m8"></div>
+	    <div class="col s4 m4">
+			<a style="cursor: pointer;" (click)="irAgendar();">Agendar hora</a>
+	    </div>
+    </div>

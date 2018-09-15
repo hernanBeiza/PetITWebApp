@@ -67,6 +67,26 @@
                 [formGroup]="enviarForm" 
                 (ngSubmit)="onSubmit(enviarForm.value)">
 					<mz-input-container>
+						<div class="file-field input-field">
+							<div class="btn">
+								<i class="material-icons left">file_upload</i>
+								<span>Imagen</span>
+								<input mz-input id="imagen" type="file"
+								(change)="obtenerArchivos($event.target.files)"
+								[formControl]="imagenControl" 
+								[(ngModel)]="notificacionModel.imagen"
+								mz-validation
+						        [errorMessageResource]="formErrors.imagen"
+								required>
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" 
+								placeholder="Selecciona una imagen"
+								type="text">
+							</div>
+						</div>
+					</mz-input-container>
+					<mz-input-container>
 						<i mz-icon-mdi mz-input-prefix [icon]="'message-reply-text'"></i>
                         <input mz-input id="rut" type="text"
                         placeholder="Título de la notificación"

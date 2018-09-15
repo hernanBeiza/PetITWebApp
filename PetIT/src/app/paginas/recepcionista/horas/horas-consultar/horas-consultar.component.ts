@@ -17,19 +17,22 @@ import {MascotaModel} from './../../../../models/MascotaModel';
 
 import {CitaModel} from './../../../../models/CitaModel';
 
+import { ListarMascotasComponent} from '../../../../compartido/listar-mascotas/listar-mascotas.component';
+
 @Component({
-  selector: 'app-consultar',
-  templateUrl: './consultar.component.html',
-  styleUrls: ['./consultar.component.css']
+  selector: 'app-horas-consultar',
+  templateUrl: './horas-consultar.component.html',
+  styleUrls: ['./horas-consultar.component.css']
 })
-export class ConsultarComponent implements OnInit {
+export class HorasConsultarComponent implements OnInit {
+
+	@ViewChild('listarMascotasComponent') listarMascotasComponent: ListarMascotasComponent;
 
 	public buscarForm:FormGroup;
 	public stringControl:AbstractControl;
 	public fieldControl:AbstractControl;
 
 	public duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
-	public mascotas:Array<MascotaModel> = new Array<MascotaModel>();
 
 	public filtroString: string = ""
 	public filtroField: string = "rut";
@@ -126,29 +129,12 @@ export class ConsultarComponent implements OnInit {
 	}
 
 	private obtenerMascotasConDueno(model:DuenoMascotaModel): void {
-	    this.MascotaLocalDBService.obtenerConDueno(model).then((data:any)=>{
-			console.log(data);
-			if(data.result){
-				this.mascotas = data.mascotas;
-		        this.MzToastService.show(data.mensajes,3000,'green');
-			} else {
-				this.MzToastService.show(data.errores,5000,'red');
-			}
-	    },(dataError:any)=>{
-			console.warn(dataError);
-			this.MzToastService.show(dataError.errores,5000,'red');
-	    });
+		this.listarMascotasComponent.buscarMascotasConDueno(model);
 	}
 
-	public seleccionarMascota(model:MascotaModel): void {
-	    console.warn("seleccionarMascota");
-	    console.log(model);
-	    this.mascotaSeleccionada = model;
-	}
-
-	public irEditar(mascota:MascotaModel):void {
-	    console.warn("irEditar:", mascota);
-		//this.router.navigate(['/recepcionista/horas/agendar/'+this.duenoEncontrado.rutdueno+'/'+this.mascotaSeleccionada.rutmascota]);        
+	public onMascotaSeleccionada(model:MascotaModel): void {
+		console.log("onMascotaSeleccionada");
+		this.mascotaSeleccionada = model;
 	}
 
 	public irAgendar():void {

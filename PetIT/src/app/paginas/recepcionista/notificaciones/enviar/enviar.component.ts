@@ -18,17 +18,21 @@ import { DuenoMascotaLocalDBService} from './../../../../services/DuenoMascotaLo
   styleUrls: ['./enviar.component.css']
 })
 export class EnviarComponent implements OnInit {
+
+	private imagen:File;
+
 	public enviarForm:FormGroup;
 
 	public destinatarioControl:AbstractControl;
+	public imagenControl:AbstractControl;
 	public tituloControl:AbstractControl;
 	public mensajeControl:AbstractControl;
 
-  @ViewChild('confirmarSheetModal') confirmarSheetModal: MzModalComponent;
+	@ViewChild('confirmarSheetModal') confirmarSheetModal: MzModalComponent;
 
-  public formErrors = Mensajes.validacionesEnviarNotificacion;
+	public formErrors = Mensajes.validacionesEnviarNotificacion;
 
-  public modalOptions: Materialize.ModalOptions = {
+	public modalOptions: Materialize.ModalOptions = {
 	dismissible: false, // Modal can be dismissed by clicking outside of the modal
 	opacity: .5, // Opacity of modal background
 	inDuration: 300, // Transition in duration
@@ -52,18 +56,19 @@ export class EnviarComponent implements OnInit {
 
 	public seleccionado:boolean = false;
 
-	constructor(private router:Router, private fb:FormBuilder,
-		private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService,
-	    private MzToastService: MzToastService) { }
+	constructor(private router:Router, private fb:FormBuilder,private MzToastService: MzToastService,
+		private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService) { }
 
 	ngOnInit(): void { 
-	    console.log("EnviarComponent: ngOnInit();");
+	    //console.log("EnviarComponent: ngOnInit();");
 	    this.enviarForm = this.fb.group({
 	      'destinatarios': [this.seleccionado, Validators.compose([Validators.required])],
+	      'imagen': [this.notificacionModel.imagen, Validators.compose([Validators.required])],
 	      'titulo': [this.notificacionModel.titulo, Validators.compose([Validators.required,Validators.minLength(9),Validators.maxLength(100)])],
 	      'mensaje': [this.notificacionModel.mensaje, Validators.compose([Validators.required])],
 	    });        
         this.destinatarioControl = this.enviarForm.controls['destinatarios'];
+        this.imagenControl = this.enviarForm.controls['imagen'];
         this.tituloControl = this.enviarForm.controls['titulo'];
         this.mensajeControl = this.enviarForm.controls['mensaje'];
 		this.cargarDuenos();
@@ -97,7 +102,15 @@ export class EnviarComponent implements OnInit {
 		console.log(pagina);
 	}
 
+	public obtenerArchivos(files:FileList) {
+		console.log("obtenerArchivos");
+		//console.log(files);
+		this.imagen = files[0];
+		console.log(this.imagen);
+	}
+
 	public onSubmit(values:Object):void {
+		console.log(this.notificacionModel);
 	    if (this.enviarForm.valid) {	    	
 	    	this.confirmarSheetModal.open();
 	    } else {
@@ -135,7 +148,7 @@ export class EnviarComponent implements OnInit {
 	}
 
 	ngOnDestroy() {
-		console.log("EnviarComponent: ngOnDestroy();");
+		//console.log("EnviarComponent: ngOnDestroy();");
 	}
 
 }

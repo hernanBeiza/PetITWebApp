@@ -6,7 +6,6 @@
 				</mz-card-title>
 				<mz-card-content>
 					<div>
-						Datos de Mascota
 						<form
 		                [formGroup]="buscarForm" 
 		                (ngSubmit)="onSubmit(buscarForm.value)">
@@ -44,9 +43,6 @@
 							</mz-input-container>
 						</form>
 					</div>
-					<div>
-						Datos del Dueño
-					</div>
 				</mz-card-content>
 			</mz-card>
 		</div>
@@ -71,7 +67,8 @@
 					      </tr>
 					    </thead>
 					    <tbody>
-				    	    <tr *ngFor="let item of mascotas">
+				    	    <tr *ngFor="let item of mascotas"
+							[class.seleccionada]="item.rutmascota == mascotaSeleccionada?.rutmascota">
 						        <td>{{item.rutmascota}}</td>
 						        <td>{{item.nombre}}</td>
 						        <td>{{item.peso}}</td>
@@ -96,7 +93,6 @@
 			</mz-card>
 		</div>
 	</div>
-
 	<!-- Ventana modal detalle Mascota-->
 	<mz-modal #detalleSheetModal [options]="modalOptions">
 		<mz-modal-header>

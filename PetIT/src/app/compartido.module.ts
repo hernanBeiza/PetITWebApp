@@ -3,46 +3,40 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { MzNavbarModule, MzSidenavModule, MzModalModule, MzSpinnerModule, MzCardModule, 
-  MzCollapsibleModule, MzIconMdiModule, MzRadioButtonModule, MzInputModule, MzButtonModule, 
-  MzSelectModule, MzValidationModule, MzDatepickerModule, MzTimepickerModule, MzPaginationModule, MzCheckboxModule, MzTextareaModule, MzTooltipModule } from 'ng2-materialize';
-import { MzModalService, MzToastService } from 'ng2-materialize';
+import { LibreriasModule } from './librerias.module';
+
 
 // Pipes, filtro
 import { FiltroPipe } from './pipes/filtro.pipe';
-
-import { Ng2Rut, RutValidator } from 'ng2-rut';
+import { FiltroCitasPipe } from './pipes/filtroCitas.pipe';
 
 // Componentes Compartidos
 import { CabeceraComponent } from './compartido/cabecera/cabecera.component';
 import { HiperMenuComponent } from './compartido/hipermenu/hipermenu.component';
+import { ListarMascotasComponent } from './compartido/listar-mascotas/listar-mascotas.component';
+
+// Servicios
 import { HiperMenuService } from './compartido/hipermenu/HiperMenu.service';
 
 @NgModule({
   declarations: [
-    FiltroPipe,
+    FiltroPipe,FiltroCitasPipe,
     CabeceraComponent,
-    HiperMenuComponent
+    HiperMenuComponent,
+    ListarMascotasComponent
   ],
   imports: [
     CommonModule,
     FormsModule, ReactiveFormsModule, RouterModule,
-    Ng2Rut,
-    MzNavbarModule, MzSidenavModule, MzModalModule,MzSpinnerModule,MzCardModule,MzCollapsibleModule,
-    MzIconMdiModule, MzRadioButtonModule, MzInputModule, MzButtonModule, MzSelectModule, MzValidationModule, 
-    MzDatepickerModule, MzTimepickerModule, MzPaginationModule, MzCheckboxModule, MzTextareaModule, MzTooltipModule
+    LibreriasModule
   ],
   exports: [
-    CabeceraComponent,HiperMenuComponent,
+    CabeceraComponent,HiperMenuComponent,ListarMascotasComponent,
     FormsModule, ReactiveFormsModule, RouterModule, 
-    Ng2Rut,
-    MzNavbarModule, MzSidenavModule, MzModalModule,MzSpinnerModule,MzCardModule,MzCollapsibleModule,
-    MzIconMdiModule, MzRadioButtonModule, MzInputModule, MzButtonModule, MzSelectModule, MzValidationModule, 
-    MzDatepickerModule, MzTimepickerModule, MzPaginationModule, MzCheckboxModule, MzTextareaModule, MzTooltipModule,
-    FiltroPipe
+    FiltroPipe,FiltroCitasPipe,
+    LibreriasModule
   ],
   providers: [
-    MzModalService, MzToastService, RutValidator,
     HiperMenuService
   ]
 })

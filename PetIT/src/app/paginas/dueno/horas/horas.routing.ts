@@ -7,9 +7,9 @@ import { HorasConsultarComponent } from './horas-consultar/horas-consultar.compo
 import { HorasFinalizarComponent } from './horas-finalizar/horas-finalizar.component';
 
 const routes: Routes = [
-  { path: 'agendar/:rutdueno/:rutmascota',         component: HorasAgendarComponent },
-  { path: 'consultar',         component: HorasConsultarComponent },
-  { path: 'finalizar/:idcita',         component: HorasFinalizarComponent },
+  { path: 'agendar/:rutdueno/:rutmascota',  component: HorasAgendarComponent },
+  { path: 'consultar',                       component: HorasConsultarComponent },
+  { path: 'finalizar/:idcita',               component: HorasFinalizarComponent },
 ];
 
 /*
