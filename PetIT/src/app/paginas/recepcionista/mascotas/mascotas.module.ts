@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MascotasRoutingModule } from './mascotas.routing';
 
-import { CompartidoModule } from './../../../compartido.module';
+import { LibreriasModule } from './../../../librerias.module';
 
 import { MascotasConsultarComponent } from './mascotas-consultar/mascotas-consultar.component';
 import { MascotasRegistrarComponent } from './mascotas-registrar/mascotas-registrar.component';
@@ -16,7 +16,7 @@ import { MascotaLocalDBService } from './../../../services/MascotaLocalDB.servic
 	imports: [
     	CommonModule,
 		MascotasRoutingModule,
-		CompartidoModule
+		LibreriasModule
 	],
 	declarations: [
   		MascotasConsultarComponent, 

@@ -4,23 +4,23 @@ import { MzToastService } from 'ng2-materialize';
 import { EventEmitter } from '@angular/core';
 
 // Services
-import {MascotaLocalDBService} from './../../services/MascotaLocalDB.service';
-import {DuenoMascotaLocalDBService} from './../../services/DuenoMascotaLocalDB.service';
-import {EspecialidadLocalDBService} from './../../services/EspecialidadLocalDB.service';
-import {EspecialistaLocalDBService} from './../../services/EspecialistaLocalDB.service';
-import {HoraLocalDBService} from './../../services/HoraLocalDB.service';
-import {CitaLocalDBService} from './../../services/CitaLocalDB.service';
+import {MascotaLocalDBService} from './../../../services/MascotaLocalDB.service';
+import {DuenoMascotaLocalDBService} from './../../../services/DuenoMascotaLocalDB.service';
+import {EspecialidadLocalDBService} from './../../../services/EspecialidadLocalDB.service';
+import {EspecialistaLocalDBService} from './../../../services/EspecialistaLocalDB.service';
+import {HoraLocalDBService} from './../../../services/HoraLocalDB.service';
+import {CitaLocalDBService} from './../../../services/CitaLocalDB.service';
 
-import {UsuarioModel} from './../../models/UsuarioModel';
-import {DuenoMascotaModel} from './../../models/DuenoMascotaModel';
-import {MascotaModel} from './../../models/MascotaModel';
+import {UsuarioModel} from './../../../models/UsuarioModel';
+import {DuenoMascotaModel} from './../../../models/DuenoMascotaModel';
+import {MascotaModel} from './../../../models/MascotaModel';
 
 @Component({
-  selector: 'app-listar-mascotas',
-  templateUrl: './listar-mascotas.component.html',
-  styleUrls: ['./listar-mascotas.component.css']
+  selector: 'app-mascotas-listar',
+  templateUrl: './mascotas-listar.component.html',
+  styleUrls: ['./mascotas-listar.component.css']
 })
-export class ListarMascotasComponent implements OnInit {
+export class MascotasListarComponent implements OnInit {
 
 	@Output() mascotaSeleccionadaEmitter: EventEmitter<MascotaModel> = new EventEmitter();
 
@@ -46,6 +46,10 @@ export class ListarMascotasComponent implements OnInit {
 			console.warn(dataError);
 			this.MzToastService.show(dataError.errores,5000,'red');
 	    });
+	}
+
+	public onPageChange(page:number): void {
+		console.log(page);
 	}
 
 	public seleccionarMascota(model:MascotaModel): void {

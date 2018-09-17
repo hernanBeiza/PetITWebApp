@@ -7,9 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InformeRoutingModule } from './informe.routing';
 
 import { InformeGenerarComponent } from './informe-generar/informe-generar.component';
-import { InformeComponent } from './informe.component';
 
-import { CompartidoModule} from './../../../compartido.module';
+import { LibreriasModule} from './../../../librerias.module';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
@@ -18,7 +17,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 		CommonModule,
 	    RouterModule,
 	    FormsModule,ReactiveFormsModule,
-	    CompartidoModule,
+	    LibreriasModule,
 	    ChartsModule,
 	    InformeRoutingModule
 	],
@@ -27,7 +26,6 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 	],
 	providers: [],
 	declarations: [
-		InformeComponent,
 		InformeGenerarComponent
 	]
 })

@@ -17,7 +17,7 @@ import {MascotaModel} from './../../../../models/MascotaModel';
 
 import {CitaModel} from './../../../../models/CitaModel';
 
-import { ListarMascotasComponent} from '../../../../compartido/listar-mascotas/listar-mascotas.component';
+import { MascotasListarComponent } from '../../../../compartido/mascotas/mascotas-listar/mascotas-listar.component';
 
 @Component({
   selector: 'app-horas-consultar',
@@ -26,7 +26,7 @@ import { ListarMascotasComponent} from '../../../../compartido/listar-mascotas/l
 })
 export class HorasConsultarComponent implements OnInit {
 
-	@ViewChild('listarMascotasComponent') listarMascotasComponent: ListarMascotasComponent;
+	@ViewChild('mascotasListarComponent') mascotasListarComponent: MascotasListarComponent;
 
 	public buscarForm:FormGroup;
 	public stringControl:AbstractControl;
@@ -82,7 +82,7 @@ export class HorasConsultarComponent implements OnInit {
 	}
 
 	private obtenerMascotasConDueno(model:DuenoMascotaModel): void {
-		this.listarMascotasComponent.buscarMascotasConDueno(model);
+		this.mascotasListarComponent.buscarMascotasConDueno(model);
 	}
 
 	public onMascotaSeleccionada(model:MascotaModel): void {

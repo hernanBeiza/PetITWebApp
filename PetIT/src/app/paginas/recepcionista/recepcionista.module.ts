@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { CompartidoModule } from './../../compartido.module';
-
 import { RecepcionistaRoutingModule } from './recepcionista.routing';
 
+import { CompartidoModule } from './../../compartido/compartido.module';
 // SubMódulos del recepcionista
+
 import { HorasModule } from './horas/horas.module';
 import { DuenosModule } from './duenos/duenos.module';
 import { MascotasModule } from './mascotas/mascotas.module';
@@ -30,8 +30,8 @@ import { DuenosConsultarComponent } from './duenos/duenos-consultar/duenos-consu
 @NgModule({
 	imports: [
 	    CommonModule,
+	    CompartidoModule,
 	    RecepcionistaRoutingModule,
-		CompartidoModule,
 		HorasModule, DuenosModule, MascotasModule, NotificacionesModule,
 	],
 	exports: [

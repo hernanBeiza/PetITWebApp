@@ -2,11 +2,9 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
-import { InformeComponent } from './informe.component';
 import { InformeGenerarComponent } from './informe-generar/informe-generar.component';
 
 const routes: Routes =[
-  { path: 'informe',  component: InformeComponent },
   { path: 'generar', component: InformeGenerarComponent},
 ];
 

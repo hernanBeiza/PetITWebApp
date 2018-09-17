@@ -1,0 +1,172 @@
+<div class="row">
+	    <div class="col s12 m12">
+			<mz-card [hoverable]="true">
+				<mz-card-title>
+
+				</mz-card-title>
+
+				<mz-card-content>
+	                <form
+	                [formGroup]="agendarForm" 
+	                (ngSubmit)="onSubmit(agendarForm.value)">		
+						<mz-select-container class="col s12 m12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'pill'"></i>
+							<select mz-select
+							(change)="seleccionarEspecialidad($event);"
+							id="especialidad"
+							formControlName="especialidad"
+							[label]="'Especialidad'"
+							[placeholder]="'2. Seleccionar especialidad'"
+	    					[(ngModel)]="especialidadModel"
+							mz-validation required
+					        [errorMessageResource]="formErrors.especialidad">
+							<option class="left circle"	*ngFor="let item of especialidades"
+							[ngValue]="item">
+								{{item?.nombre}}
+							</option>
+							</select>
+						</mz-select-container>
+						<mz-select-container class="col s12 m12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'medical-bag'"></i>
+							<select mz-select
+							(change)="seleccionarEspecialista($event);"
+							id="especialista"
+							formControlName="especialista"
+							[label]="'Especialista'"
+							[placeholder]="'3. Seleccionar Especialista'"
+	    					[(ngModel)]="especialistaModel"
+							mz-validation required
+					        [errorMessageResource]="formErrors.especialista">
+							<option class="left circle"	*ngFor="let item of especialistas"
+							[ngValue]="item">
+								{{item?.nombres}} {{item?.apellidopaterno}}
+							</option>
+							</select>
+						</mz-select-container>
+						<mz-datepicker-container class="col s12 m12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
+					        <input mz-datepicker mz-validation required 
+							id="fecha"
+							formControlName="fecha"
+							[label]="'Fecha'"
+							[placeholder]="'3. Fecha Preferencia'"
+	    					[(ngModel)]="fecha"
+							mz-validation required
+							[errorMessageResource]="formErrors.fecha"
+							[options]="opcionesCalendario">
+						</mz-datepicker-container>
+						<table class="striped">
+						    <thead>
+						      <tr>
+						          <th>Nombre Especialista</th>
+						          <th>Fecha</th>
+						          <th>Hora</th>
+						          <th>Acciones</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+					    	    <tr *ngFor="let item of horas">
+						        <td>{{item.especialistaModel.nombres}} {{item.especialistaModel.apellidopaterno}}</td>
+						        <td>{{item.fecha}}</td>
+						        <td>{{item.hora}}</td>
+							    <td>
+							    	<button mz-button type="button" (click)="reservar(item)">Reservar</button>
+							    </td>					      
+								</tr>
+						    </tbody>
+						</table>
+						<!--
+						<mz-timepicker-container class="col s12">
+						  <i mz-icon-mdi mz-input-prefix
+						    [icon]="'clock'">
+						  </i>
+						  <input mz-timepicker mz-validation required
+  							id="hora"
+							formControlName="hora"
+							[label]="'Hora'"
+							[placeholder]="'4. Hora de preferencia'"
+	    					[(ngModel)]="hora"
+						    [options]="opcionesReloj"
+							[errorMessageResource]="formErrors.hora"
+						    type="text">
+						</mz-timepicker-container>
+						-->
+						<!--
+						<mz-select-container>
+							<select mz-select
+							id="fecha"
+							formControlName="fecha"
+							[label]="'Fecha'"
+							[placeholder]="'4. Fecha Preferencia'"
+	    					[(ngModel)]="fechaModel"
+							mz-validation required
+					        [errorMessageResource]="formErrors.fecha">
+							<option class="left circle"	*ngFor="let item of especialistaModel?.fechas"
+							[ngValue]="item">
+								{{item?.fecha}}
+							</option>
+							</select>
+						</mz-select-container>
+						<mz-select-container>
+							<select mz-select
+							id="hora"
+							formControlName="hora"
+							[label]="'Hora'"
+							[placeholder]="'5. Horas Disponibles'"
+	    					[(ngModel)]="horaModel"
+							mz-validation required
+					        [errorMessageResource]="formErrors.hora">
+							<option class="left circle"	*ngFor="let item of fechaModel?.horas"
+							[ngValue]="item">
+								{{item?.hora}}
+							</option>
+							</select>
+						</mz-select-container>
+						-->
+						<button mz-button (click)="volver();">Volver</button>
+						<!--
+	                    <button mz-button type="submit" 
+	                    [disabled]="!agendarForm.valid || enviandoFlag"
+	                    name="action">Reservar</button>
+		                -->
+					</form>
+
+				</mz-card-content>
+			</mz-card>
+		</div>
+	</div>
+
+<!-- Ventana modal -->
+<mz-modal #agendarSheetModal [options]="modalOptions">
+	<mz-modal-header>
+		<h4>¿Desea tomar esta hora?</h4>
+	</mz-modal-header>
+	<mz-modal-content>
+		<div class="row">
+		    <div class="col s12 m6">
+				<p>Nombre Doctor: {{citaModel.especialistaModel?.nombres}} {{citaModel.especialistaModel?.apellidopaterno}}</p>
+				<p>Fecha: {{citaModel.horaModel?.fecha}} a las {{citaModel.horaModel?.hora}} hrs</p>
+			</div>
+		    <div class="col s12 m6">
+				<p>Dueño: {{citaModel.duenoMascotaModel?.nombres}} {{citaModel.duenoMascotaModel?.apellidopaterno}} {{citaModel.duenoMascotaModel?.apellidomaterno}}</p>
+				<p>Nombre Mascota: {{citaModel.mascotaModel?.nombre}}</p>
+			</div>
+		</div>
+	</mz-modal-content>
+	<mz-modal-footer>
+		<button mz-button [flat]="true" class="green" (click)="agendar();">Agendar Hora</button>
+		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
+	</mz-modal-footer>
+</mz-modal>
+<!-- Ventana modal error -->
+<mz-modal #errorSheetModal [options]="modalOptions">
+	<mz-modal-header>
+		<h4>Atención</h4>
+	</mz-modal-header>
+	<mz-modal-content>
+		<div [innerHTML]="errores"></div>
+	</mz-modal-content>
+	<mz-modal-footer>
+		<button mz-button [flat]="true" mz-modal-close>Ok</button>
+	</mz-modal-footer>
+</mz-modal>

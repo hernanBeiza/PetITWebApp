@@ -5,12 +5,11 @@ import { RouterModule } from '@angular/router';
 import { AdminRoutingModule } from './admin.routing';
 import { InformeModule } from './informe/informe.module';
 
-
 import { AdminComponent } from './admin.component';
 
 import { InicioComponent } from './inicio/inicio.component';
 
-import { CompartidoModule } from './../../compartido.module';
+import { CompartidoModule } from './../../compartido/compartido.module';
 
 import { CitaLocalDBService } from './../../services/CitaLocalDB.service';
 

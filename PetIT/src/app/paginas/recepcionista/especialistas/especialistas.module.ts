@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { EspecialistasRoutingModule } from './especialistas.routing';
-import { CompartidoModule } from './../../../compartido.module';
+import { LibreriasModule } from './../../../librerias.module';
+import { CompartidoModule } from './../../../compartido/compartido.module';
 
 import { EspecialistasAsignarComponent } from './especialistas-asignar/especialistas-asignar.component';
 
@@ -11,10 +12,10 @@ import { EspecialistasAsignarComponent } from './especialistas-asignar/especiali
 	imports: [
 		CommonModule,
 		EspecialistasRoutingModule,
-		CompartidoModule
+		LibreriasModule, CompartidoModule
 	],
 	exports: [
-		CompartidoModule,
+		LibreriasModule, CompartidoModule,
 		RouterModule
 	],
 	declarations: [

@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { DuenosRoutingModule } from './duenos.routing';
-import { CompartidoModule } from './../../../compartido.module';
+import { LibreriasModule } from './../../../librerias.module';
 
-import { DuenosComponent } from './duenos.component';
 import { DuenosConsultarComponent } from './duenos-consultar/duenos-consultar.component';
 import { DuenosAgregarComponent } from './duenos-agregar/duenos-agregar.component';
 import { DuenosModificarComponent } from './duenos-modificar/duenos-modificar.component';
@@ -14,15 +13,12 @@ import { DuenosModificarComponent } from './duenos-modificar/duenos-modificar.co
 	imports: [
 		CommonModule,
 		DuenosRoutingModule,
-		CompartidoModule,
-
+		LibreriasModule
 	],
 	exports: [
-		CompartidoModule,
-		RouterModule
+		RouterModule,
 	],
 	declarations: [
-		DuenosComponent, 
 		DuenosConsultarComponent, 
 		DuenosAgregarComponent, 
 		DuenosModificarComponent

@@ -2,28 +2,29 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { CompartidoModule } from './../../../compartido.module';
+import { CompartidoModule } from './../../../compartido/compartido.module';
+import { LibreriasModule } from './../../../librerias.module';
 
 import { HorasRoutingComponent } from './horas.routing';
 
 //Horas
-import { HorasAgendarComponent } from './horas-agendar/horas-agendar.component';
+//import { HorasAgendarComponent } from './horas-agendar/horas-agendar.component';
 import { HorasConsultarComponent } from './horas-consultar/horas-consultar.component';
-import { HorasFinalizarComponent } from './horas-finalizar/horas-finalizar.component';
+//import { HorasFinalizarComponent } from './horas-finalizar/horas-finalizar.component';
 
 @NgModule({
 	imports: [
 		CommonModule,
 	    RouterModule,
-		CompartidoModule,
-		HorasRoutingComponent
+		LibreriasModule,
+		HorasRoutingComponent,CompartidoModule
 	],
 	exports: [
-		CompartidoModule,
-		RouterModule
+		RouterModule,
+		LibreriasModule,CompartidoModule
 	],
 	declarations: [
-		HorasAgendarComponent, HorasConsultarComponent, HorasFinalizarComponent
+		HorasConsultarComponent
 	]
 })
 export class HorasModule { }

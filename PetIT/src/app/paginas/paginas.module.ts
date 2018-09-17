@@ -10,21 +10,18 @@ import { DuenoModule } from './dueno/dueno.module';
 import { LocalDBService } from './../services/LocalDB.service';
 import { UsuarioLocalDBService } from './../services/UsuarioLocalDB.service';
 
-import { CompartidoModule } from './../compartido.module';
 import { LibreriasModule } from './../librerias.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
-    CompartidoModule,LibreriasModule,
     AdminModule,RecepcionistaModule,DuenoModule
   ],
   declarations: [
     LoginComponent,
   ],
   exports: [ 
-    CompartidoModule,LibreriasModule
   ],
   providers: [
     LocalDBService,UsuarioLocalDBService

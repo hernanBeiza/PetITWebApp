@@ -9,7 +9,7 @@ import { UsuarioLocalDBService } from './../../services/UsuarioLocalDB.service';
 import { HiperMenuService } from './HiperMenu.service';
 
 @Component({
-	selector: 'app-hiper',
+	selector: 'app-hiper-menu',
 	templateUrl: './hipermenu.component.html',
 	styleUrls: ['./hipermenu.component.css']
 })
