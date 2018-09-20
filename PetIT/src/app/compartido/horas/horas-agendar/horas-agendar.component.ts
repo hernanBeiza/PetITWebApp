@@ -7,12 +7,14 @@ import {Mensajes} from './../../../libs/Mensajes';
 import {Validaciones} from './../../../libs/Validaciones';
 
 // Services
+import {UsuarioLocalDBService} from './../../../services/UsuarioLocalDB.service';
 import {DuenoMascotaLocalDBService} from './../../../services/DuenoMascotaLocalDB.service';
 import {EspecialidadLocalDBService} from './../../../services/EspecialidadLocalDB.service';
 import {EspecialistaLocalDBService} from './../../../services/EspecialistaLocalDB.service';
 import {HoraLocalDBService} from './../../../services/HoraLocalDB.service';
 import {CitaLocalDBService} from './../../../services/CitaLocalDB.service';
 // Models
+import {UsuarioModel} from './../../../models/UsuarioModel';
 import {DuenoMascotaModel} from './../../../models/DuenoMascotaModel';
 import {MascotaModel} from './../../../models/MascotaModel';
 import {EspecialidadModel} from './../../../models/EspecialidadModel';
@@ -27,6 +29,7 @@ import {CitaModel} from './../../../models/CitaModel';
 })
 export class HorasAgendarComponent implements OnInit {
 
+  public usuario:UsuarioModel;
   public agendarForm:FormGroup;
   public especialidadControl:AbstractControl;
   public especialistaControl:AbstractControl;
@@ -89,6 +92,7 @@ export class HorasAgendarComponent implements OnInit {
   };
 
   constructor(private router:Router, private fb:FormBuilder, private activatedRoute: ActivatedRoute, 
+    private UsuarioLocalDBService:UsuarioLocalDBService,
     private MzToastService:MzToastService,
     private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService,
     private EspecialidadLocalDBService:EspecialidadLocalDBService,
@@ -97,7 +101,9 @@ export class HorasAgendarComponent implements OnInit {
     private CitaLocalDBService:CitaLocalDBService) { }
 
   ngOnInit(): void { 
-    console.log("AgendarComponent");
+    console.info("AgendarComponent");
+    this.usuario = this.UsuarioLocalDBService.obtenerLocal();
+
     this.agendarForm = this.fb.group({
       'especialidad': [this.especialidadModel, Validators.compose([Validators.required])],
       'especialista': [this.especialistaModel, Validators.compose([Validators.required])],
@@ -122,7 +128,7 @@ export class HorasAgendarComponent implements OnInit {
 
   private obtenerDatos(rutdueno:string,rutmascota:string): void {
     this.DuenoMascotaLocalDBService.obtenerDuenoConMascota(rutdueno,rutmascota).then((data:any)=>{
-      console.log(data);
+      console.info(data);
       if(data.result){
         let dueno:DuenoMascotaModel = data.dueno;
         let mascota:MascotaModel = data.dueno.mascotas[0] as MascotaModel;
@@ -139,7 +145,7 @@ export class HorasAgendarComponent implements OnInit {
 
   private cargarEspecialidades():void {
     this.EspecialidadLocalDBService.obtener().then((data:any)=> {
-      console.log(data);
+      console.info(data);
       if(data.result){
         this.especialidades = data.especialidades;
       }
@@ -149,8 +155,8 @@ export class HorasAgendarComponent implements OnInit {
   }
 
   public seleccionarEspecialidad(event):void {
-    console.log("seleccionarEspecialidad");
-    console.log(this.especialidadModel);
+    console.info("seleccionarEspecialidad");
+    console.info(this.especialidadModel);
     this.especialistaControl.reset();
     this.fechaControl.reset();
     this.horas = new Array<HoraModel>();    
@@ -158,7 +164,7 @@ export class HorasAgendarComponent implements OnInit {
   }
 
   public seleccionarEspecialista(event):void {    
-    console.log("seleccionarEspecialista");
+    console.info("seleccionarEspecialista");
     this.citaModel.idespecialista = this.especialistaModel.idespecialista;
     this.citaModel.especialistaModel = this.especialistaModel;
     this.fechaControl.reset();
@@ -176,9 +182,9 @@ export class HorasAgendarComponent implements OnInit {
   }
 
   private cargarHoras():void {
-    console.log("cargarHoras();");
+    console.info("cargarHoras();");
     this.HoraLocalDBService.obtenerConEspecialistayFecha(this.especialistaModel,this.fecha).then((data:any)=>{
-      console.log(data);
+      console.info(data);
       if(data.result){
         this.horas = data.horas;
         this.MzToastService.show(data.mensajes, 4000, 'green');
@@ -190,7 +196,12 @@ export class HorasAgendarComponent implements OnInit {
   }
 
   public volver():void {
-    this.router.navigate(['/recepcionista/horas/consultar']);
+    //Dependiendo del tipo de usuario
+    var ruta ="/recepcionista/horas/consultar";
+    if(this.usuario.idrol!=2){
+       ruta ="/dueno/horas/consultar";
+    }
+    this.router.navigate([ruta]);      
   }
 
   private reservar(hora:HoraModel): void {
@@ -209,7 +220,7 @@ export class HorasAgendarComponent implements OnInit {
   }
 
   public agendar():void {
-  	console.log("agendar();");
+  	console.info("agendar();");
     var enviar:boolean = true;
     this.errores = "Faltó seleccionar:";
     if(!this.citaModel.duenoMascotaModel.rutdueno){
@@ -244,13 +255,18 @@ export class HorasAgendarComponent implements OnInit {
   }
 
   private enviar(): void {
-    console.log("enviar");
+    console.info("enviar");
     this.CitaLocalDBService.guardar(this.citaModel).then((data:any)=>{
-      console.log(data);
+      console.info(data);
       if(data.result){          
         this.agendarSheetModal.close();
-        this.MzToastService.show(data.mensajes, 4000, 'green');    
-        this.router.navigate(['/recepcionista/horas/finalizar/'+data.cita.idcita]);
+        this.MzToastService.show(data.mensajes, 4000, 'green'); 
+        //Dependiendo del tipo de usuario
+        var ruta ="/recepcionista/horas/finalizar/";
+        if(this.usuario.idrol!=2){
+           ruta ="/dueno/horas/finalizar/";
+        }
+        this.router.navigate([ruta+data.cita.idcita]);
       } else {
         this.MzToastService.show(data.errores, 5000, 'red');    
       }

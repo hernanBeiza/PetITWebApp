@@ -38,7 +38,7 @@ export class HorasFinalizarComponent implements OnInit {
 
 	private obtenerCita(idcita:number):void {
 		this.CitaLocalDBService.obtenerConID(idcita).then((data:any)=>{
-			console.log(data);
+			console.info(data);
 			if(data.result){
 				this.citaModel = data.cita;
 			} else {

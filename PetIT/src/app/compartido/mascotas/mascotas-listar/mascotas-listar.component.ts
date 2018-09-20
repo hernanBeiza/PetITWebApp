@@ -35,7 +35,7 @@ export class MascotasListarComponent implements OnInit {
 
 	public buscarMascotasConDueno(dueno:DuenoMascotaModel):void {
 	    this.MascotaLocalDBService.obtenerConDueno(dueno).then((data:any)=>{
-			console.log(data);
+			console.info(data);
 			if(data.result){
 				this.mascotas = data.mascotas;
 		        this.MzToastService.show(data.mensajes,3000,'green');
@@ -49,18 +49,19 @@ export class MascotasListarComponent implements OnInit {
 	}
 
 	public onPageChange(page:number): void {
+		console.info("onPageChange");
 		console.log(page);
 	}
 
 	public seleccionarMascota(model:MascotaModel): void {
-	    console.warn("seleccionarMascota");
+	    console.info("seleccionarMascota");
 	    console.log(model);
 	    this.mascotaSeleccionada = model;
 	    this.mascotaSeleccionadaEmitter.emit(model);
 	}
 
 	public irEditar(mascota:MascotaModel):void {
-	    console.warn("irEditar:", mascota);
+	    console.info("irEditar:", mascota);
 		//this.router.navigate(['/recepcionista/horas/agendar/'+this.duenoEncontrado.rutdueno+'/'+this.mascotaSeleccionada.rutmascota]);        
 	}
 

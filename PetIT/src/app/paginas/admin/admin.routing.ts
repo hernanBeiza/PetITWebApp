@@ -11,12 +11,13 @@ export function loadInformeModule() {
 }
 
 
+
 const routes: Routes = [
   { path: 'admin',  component: AdminComponent,
     children: [
       { path: 'inicio',                 component: InicioComponent },
-      { path: 'informe',                loadChildren: loadInformeModule },
-      //{ path: 'informe',                loadChildren: './informe/informe.module#InformeModule' },
+      //{ path: 'informe',                loadChildren: loadInformeModule },
+      { path: 'informe',                loadChildren: './informe/informe.module#InformeModule' },
     ],
   }
 ];

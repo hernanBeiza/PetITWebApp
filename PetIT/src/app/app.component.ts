@@ -11,7 +11,8 @@ import { LocalDBService } from './services/LocalDB.service';
 })
 export class AppComponent implements OnInit {
   
-	constructor(public location: Location, public router: Router, 
+	constructor(public location: Location, 
+		public router: Router,
 		private LocalDBService:LocalDBService) {
 		//console.log("AppComponent");
 	}
