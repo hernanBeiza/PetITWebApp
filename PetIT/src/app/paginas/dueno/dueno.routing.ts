@@ -22,6 +22,10 @@ const routes: Routes = [
       { path: 'inicio',            component: InicioComponent },
       { path: 'notificaciones',    loadChildren: loadNotificacionesModule },
       { path: 'horas',                loadChildren: loadHorasModule },
+      /*
+      { path: 'notificaciones',                loadChildren: './notificaciones/notificaciones.module#NotificacionesModel' },
+      { path: 'horas',                loadChildren: './horas/horas.module#HorasModule' },
+      */
     ]
   }
 ];

@@ -8,3 +8,7 @@
     margin: 0 auto;
     width: 150px;	
 }
+.enlace {
+	cursor: pointer;
+	display: block;
+}

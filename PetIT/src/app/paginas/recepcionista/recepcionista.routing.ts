@@ -46,7 +46,6 @@ const routes: Routes =
       { path: 'especialistas',           loadChildren: './especialistas/especialistas.module#EspecialistasModule'  },
       { path: 'notificaciones',          loadChildren: './notificaciones/notificaciones.module#NotificacionesModule' },
       */
-
       /*  
       { path: 'horas',                loadChildren: () => HorasModule },
       { path: 'duenos',          loadChildren: () => DuenosModule },

@@ -6,10 +6,10 @@
     <img id="logo" src="assets/img/petitlogo.png">
   </mz-sidenav-header>
   <mz-sidenav-subheader>
-    Pet-IT
+  	Bienvenido {{rol}}
   </mz-sidenav-subheader>
 	<mz-sidenav-link *ngFor="let seccion of secciones" >
-	    <a title="{{seccion.titulo}}" style="cursor:pointer;" (click)="irSeccion(seccion)">
+	    <a title="{{seccion.titulo}}" class="enlace" (click)="irSeccion(seccion)">
 	      <i mz-icon-mdi mz-input-prefix [icon]="seccion.icono"></i>
 	      {{seccion.nombre}}
 	    </a>

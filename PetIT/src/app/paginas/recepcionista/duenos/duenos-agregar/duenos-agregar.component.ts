@@ -4,11 +4,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MzModalComponent,MzToastService } from 'ng2-materialize';
 
 import { Mensajes } from './../../../../libs/Mensajes';
+import { Validaciones } from './../../../../libs/Validaciones';
 
 // Services
 import { DuenoMascotaLocalDBService } from './../../../../services/DuenoMascotaLocalDB.service';
 // Models
+import { UsuarioModel } from './../../../../models/UsuarioModel';
 import { DuenoMascotaModel } from './../../../../models/DuenoMascotaModel';
+import { ComunaModel } from './../../../../models/ComunaModel';
 
 @Component({
   selector: 'app-duenos-agregar',
@@ -27,6 +30,8 @@ export class DuenosAgregarComponent implements OnInit {
 	public direccionControl:AbstractControl;
 	public telefonoControl:AbstractControl;
 	public emailControl:AbstractControl;
+	public contrasena:AbstractControl;
+	public contrasenaConfirmar:AbstractControl;
 
 	public enviandoFlag:boolean = false;
 
@@ -35,7 +40,8 @@ export class DuenosAgregarComponent implements OnInit {
 	public errores:string = "";
 
 	public duenoModel:DuenoMascotaModel = new DuenoMascotaModel();
-
+	public usuarioModel:UsuarioModel = new UsuarioModel();
+  	public comunas:Array<ComunaModel> = new Array<ComunaModel>();
 	public formErrors = Mensajes.validacionesAgregarDueno;
 
 	public modalOptions: Materialize.ModalOptions = {
@@ -60,7 +66,6 @@ export class DuenosAgregarComponent implements OnInit {
 	    private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService) { }
 
 	ngOnInit(): void { 
-	    console.log("DuenoAgregarComponent");
 	    this.registrarForm = this.fb.group({
 	      'rut': [this.duenoModel.rutdueno, Validators.compose([Validators.required])],
 	      'nombres': [this.duenoModel.nombres, Validators.compose([Validators.required])],
@@ -70,6 +75,8 @@ export class DuenosAgregarComponent implements OnInit {
 	      'direccion': [this.duenoModel.direccion, Validators.compose([Validators.required])],
 	      'email': [this.duenoModel.correo, Validators.compose([Validators.required,Validators.email])],
 	      'telefono': [this.duenoModel.telefono, Validators.compose([Validators.required])],
+	      'contrasena': [this.usuarioModel.password, Validators.compose([Validators.required])],
+	      'contrasenaConfirmar': [this.usuarioModel.passwordConfirmar, Validators.compose([Validators.required,Validaciones.MatchPassword])],
 	    });
         
         this.rutControl = this.registrarForm.controls['rut'];
@@ -80,8 +87,14 @@ export class DuenosAgregarComponent implements OnInit {
 		this.direccionControl = this.registrarForm.controls['direccion'];
 		this.emailControl = this.registrarForm.controls['email'];
 		this.telefonoControl = this.registrarForm.controls['telefono'];
+		this.contrasena = this.registrarForm.controls['contrasena'];
+		this.contrasenaConfirmar = this.registrarForm.controls['contrasenaConfirmar'];
 	}
 
+	public onSeleccionarComuna(event): void {
+
+	}
+	
 	public onSubmit(values:Object):void {
 		if (this.registrarForm.valid) {
 			this.registrarSheetModal.open();

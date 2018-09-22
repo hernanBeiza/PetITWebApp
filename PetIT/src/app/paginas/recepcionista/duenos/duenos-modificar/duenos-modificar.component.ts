@@ -5,12 +5,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MzModalComponent,MzToastService } from 'ng2-materialize';
 
 import { Mensajes } from './../../../../libs/Mensajes';
+import { Validaciones } from './../../../../libs/Validaciones';
 
 import { DuenoMascotaLocalDBService } from './../../../../services/DuenoMascotaLocalDB.service';
 
 import { RutValidator } from 'ng2-rut';
 
+//Models
+import { UsuarioModel } from './../../../../models/UsuarioModel';
 import { DuenoMascotaModel } from './../../../../models/DuenoMascotaModel';
+import { ComunaModel } from './../../../../models/ComunaModel';
 
 @Component({
   selector: 'app-duenos-modificar',
@@ -29,6 +33,8 @@ export class DuenosModificarComponent implements OnInit {
 	public direccionControl:AbstractControl;
 	public telefonoControl:AbstractControl;
 	public emailControl:AbstractControl;
+	public contrasena:AbstractControl;
+	public contrasenaConfirmar:AbstractControl;
 
 	public enviandoFlag:boolean = false;
 
@@ -37,7 +43,8 @@ export class DuenosModificarComponent implements OnInit {
 	public errores:string = "";
 
 	public duenoModel:DuenoMascotaModel = new DuenoMascotaModel();
-
+	public usuarioModel:UsuarioModel = new UsuarioModel();
+  	public comunas:Array<ComunaModel> = new Array<ComunaModel>();
 	public formErrors = Mensajes.validacionesAgregarDueno;
 
 	public modalOptions: Materialize.ModalOptions = {
@@ -72,6 +79,8 @@ export class DuenosModificarComponent implements OnInit {
 	      'direccion': [this.duenoModel.direccion, Validators.compose([Validators.required])],
 	      'email': [this.duenoModel.correo, Validators.compose([Validators.required,Validators.email])],
 	      'telefono': [this.duenoModel.telefono, Validators.compose([Validators.required])],
+	      'contrasena': [this.usuarioModel.password, Validators.compose([Validators.required])],
+	      'contrasenaConfirmar': [this.usuarioModel.passwordConfirmar, Validators.compose([Validators.required,Validaciones.MatchPassword])],
 	    });
         
         this.rutControl = this.registrarForm.controls['rut'];
@@ -82,6 +91,9 @@ export class DuenosModificarComponent implements OnInit {
 		this.direccionControl = this.registrarForm.controls['direccion'];
 		this.emailControl = this.registrarForm.controls['email'];
 		this.telefonoControl = this.registrarForm.controls['telefono'];
+		this.contrasena = this.registrarForm.controls['contrasena'];
+		this.contrasenaConfirmar = this.registrarForm.controls['contrasenaConfirmar'];
+
 		// Obtener el id del dueño desde la ruta del navegador
 	    this.ActivatedRoute.params.subscribe((param: any) => {
 			let rutdueno = param['rutdueno'];
@@ -106,6 +118,14 @@ export class DuenosModificarComponent implements OnInit {
 		});
 	}
 
+	public onSeleccionarComuna(event): void {
+
+	}
+
+	public volver(): void {
+
+	}
+	
 	public onSubmit(values:Object):void {
 		if (this.registrarForm.valid) {
 			this.modificarSheetModal.open();

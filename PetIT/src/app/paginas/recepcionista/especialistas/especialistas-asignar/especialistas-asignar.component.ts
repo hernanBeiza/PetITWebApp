@@ -27,14 +27,15 @@ export class EspecialistasAsignarComponent implements OnInit {
 	public buscarForm:FormGroup;
 	public especialidadControl:AbstractControl;
 	public especialistaControl:AbstractControl;
-	public fechaControl:AbstractControl;
+	public fechaDesdeControl:AbstractControl;
+	public fechaHastaControl:AbstractControl;
 
 	public enviandoFlag:boolean = false;
 
 	@ViewChild('registrarSheetModal') registrarSheetModal: MzModalComponent;
 	@ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
 
-	public formErrors = Mensajes.validacionesAgendar;
+	public formErrors = Mensajes.validacionesAsignar;
 
 	public modalOptions: Materialize.ModalOptions = {
 	dismissible: false, // Modal can be dismissed by clicking outside of the modal
@@ -58,13 +59,24 @@ export class EspecialistasAsignarComponent implements OnInit {
 	public especialistas:Array<EspecialistaModel> = new Array<EspecialistaModel>();
 	public horas:Array<HoraModel> = new Array<HoraModel>();
 
-	public fecha:string = "";
+	public fechaDesde:string = "";
+	public fechaHasta:string = "";
 
 	public especialidadModel:EspecialidadModel = new EspecialidadModel();
 	public especialistaModel:EspecialistaModel = new EspecialistaModel();
 	public citaModel:CitaModel = new CitaModel();
 
-	public opcionesCalendario: Pickadate.DateOptions = {
+	public opcionesCalendarioDesde: Pickadate.DateOptions = {
+	format: 'dd-mm-yyyy',
+	formatSubmit: 'yyyy-mm-dd',
+	min: new Date(),
+	today: 'Hoy',
+	clear: 'Limpiar',
+	close: 'OK',
+	onClose: () => { }
+	};
+
+	public opcionesCalendarioHasta: Pickadate.DateOptions = {
 	format: 'dd-mm-yyyy',
 	formatSubmit: 'yyyy-mm-dd',
 	min: new Date(),
@@ -97,12 +109,14 @@ export class EspecialistasAsignarComponent implements OnInit {
 		this.buscarForm = this.fb.group({
 			'especialidad': [this.especialidadModel, Validators.compose([Validators.required])],
 			'especialista': [this.especialistaModel, Validators.compose([Validators.required])],
-			'fecha': [this.fecha, Validators.compose([Validators.required])],
+			'fechaDesde': [this.fechaDesde, Validators.compose([Validators.required])],
+			'fechaHasta': [this.fechaHasta, Validators.compose([Validators.required])],
 		});
 
 	    this.especialidadControl = this.buscarForm.controls['especialidad'];
 	    this.especialistaControl = this.buscarForm.controls['especialista'];
-	    this.fechaControl = this.buscarForm.controls['fecha'];
+	    this.fechaDesdeControl = this.buscarForm.controls['fechaDesde'];
+	    this.fechaHastaControl = this.buscarForm.controls['fechaHasta'];
 
 		this.cargarEspecialidades();
 	}
@@ -122,7 +136,8 @@ export class EspecialistasAsignarComponent implements OnInit {
 		console.log("seleccionarEspecialidad");
 		console.log(this.especialidadModel);
 		this.especialistaControl.reset();
-		this.fechaControl.reset();
+		this.fechaDesdeControl.reset();
+		this.fechaHastaControl.reset();
 		this.horas = new Array<HoraModel>();    
 		this.cargarEspecialistas();
 	}
@@ -131,7 +146,8 @@ export class EspecialistasAsignarComponent implements OnInit {
 		console.log("seleccionarEspecialista");
 		this.citaModel.idespecialista = this.especialistaModel.idespecialista;
 		this.citaModel.especialistaModel = this.especialistaModel;
-		this.fechaControl.reset();
+		this.fechaDesdeControl.reset();
+		this.fechaHastaControl.reset();
 		this.horas = new Array<HoraModel>();    
 	}
 
@@ -147,6 +163,7 @@ export class EspecialistasAsignarComponent implements OnInit {
 
 	private cargarHoras():void {
 		console.log("cargarHoras();");
+		/*
 		this.HoraLocalDBService.obtenerConEspecialistayFecha(this.especialistaModel,this.fecha).then((data:any)=>{
 		  console.log(data);
 		  if(data.result){
@@ -157,6 +174,7 @@ export class EspecialistasAsignarComponent implements OnInit {
 		  console.warn(dataError);  
 		  this.MzToastService.show(dataError.errores, 5000, 'red');
 		});
+		*/
 	}
 
 	public onSubmit(values:Object):void {
@@ -169,7 +187,7 @@ export class EspecialistasAsignarComponent implements OnInit {
 		*/
 	}
 
-	public registrar():void {
+	public asignar():void {
 		/*
 		this.DuenoMascotaLocalDBService.guardar(this.duenoModel).then((data:any)=>{
 			this.registrarSheetModal.close();

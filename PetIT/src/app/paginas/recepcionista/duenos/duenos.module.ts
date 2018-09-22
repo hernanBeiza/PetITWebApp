@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { DuenosRoutingModule } from './duenos.routing';
 import { LibreriasModule } from './../../../librerias.module';
 
+import { CompartidoModule } from './../../../compartido/compartido.module';
+
 import { DuenosConsultarComponent } from './duenos-consultar/duenos-consultar.component';
 import { DuenosAgregarComponent } from './duenos-agregar/duenos-agregar.component';
 import { DuenosModificarComponent } from './duenos-modificar/duenos-modificar.component';
@@ -12,7 +14,7 @@ import { DuenosModificarComponent } from './duenos-modificar/duenos-modificar.co
 @NgModule({
 	imports: [
 		CommonModule,
-		DuenosRoutingModule,
+		DuenosRoutingModule,CompartidoModule,
 		LibreriasModule
 	],
 	exports: [

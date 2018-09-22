@@ -5,6 +5,9 @@ import { MascotasRoutingModule } from './mascotas.routing';
 
 import { LibreriasModule } from './../../../librerias.module';
 
+import { CompartidoModule } from './../../../compartido/compartido.module';
+
+
 import { MascotasConsultarComponent } from './mascotas-consultar/mascotas-consultar.component';
 import { MascotasRegistrarComponent } from './mascotas-registrar/mascotas-registrar.component';
 import { MascotasModificarComponent } from './mascotas-modificar/mascotas-modificar.component';
@@ -14,7 +17,7 @@ import { MascotaLocalDBService } from './../../../services/MascotaLocalDB.servic
 
 @NgModule({
 	imports: [
-    	CommonModule,
+    	CommonModule,CompartidoModule,
 		MascotasRoutingModule,
 		LibreriasModule
 	],

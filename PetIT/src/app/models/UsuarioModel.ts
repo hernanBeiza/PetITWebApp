@@ -4,6 +4,7 @@ export class UsuarioModel {
 	public idrol?: number;
 	public rut?: string;
 	public password?: string;
+	public passwordConfirmar?: string;
 	public nombre?: string;
 	public valid?: number;	
 

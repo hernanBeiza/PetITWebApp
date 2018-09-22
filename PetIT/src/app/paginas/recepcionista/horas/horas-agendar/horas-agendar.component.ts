@@ -189,10 +189,6 @@ export class HorasAgendarComponent implements OnInit {
     });
   }
 
-  public volver():void {
-    this.router.navigate(['/recepcionista/horas/consultar']);
-  }
-
   private reservar(hora:HoraModel): void {
     if (this.agendarForm.valid) {
       this.citaModel.especialistaModel = hora.especialistaModel;

@@ -49,17 +49,24 @@
 						mz-validation
 				        [errorMessageResource]="formErrors.materno"
 						required>
-					</mz-input-container>						
-					<mz-input-container class="input-field col s12">
+					</mz-input-container>	
+					<mz-select-container class="col s12 m12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
-                        <input mz-input id="comuna" type="text"
-                        placeholder="Comuna" 
-						[formControl]="comunaControl" 
-						[(ngModel)]="duenoModel.comuna"
-						mz-validation
-				        [errorMessageResource]="formErrors.comuna"
-						required>
-					</mz-input-container>						
+						<select mz-select
+						(change)="onSeleccionarComuna($event);"
+						id="comuna"
+						formControlName="comuna"
+						[label]="'Comuna'"
+						[placeholder]="'Seleccionar comuna'"
+    					[(ngModel)]="duenoModel.comuna"
+						mz-validation required
+				        [errorMessageResource]="formErrors.comuna">
+						<option class="left circle"	*ngFor="let item of comunas"
+						[ngValue]="item">
+							{{item?.nombre}}
+						</option>
+						</select>
+					</mz-select-container>					
 					<mz-input-container class="input-field col s12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
                         <input mz-input id="direccion" type="text"
@@ -88,6 +95,26 @@
 						[(ngModel)]="duenoModel.correo"
 						mz-validation
 				        [errorMessageResource]="formErrors.email"
+						required>
+					</mz-input-container>
+					<mz-input-container class="input-field col s12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+                        <input mz-input id="contrasena" type="password"
+                        placeholder="Contraseña" 
+						[formControl]="contrasena" 
+						[(ngModel)]="usuarioModel.contrasena"
+						mz-validation
+				        [errorMessageResource]="formErrors.contrasena"
+						required>
+					</mz-input-container>
+					<mz-input-container class="input-field col s12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+                        <input mz-input id="contrasenaConfirmar" type="password"
+                        placeholder="Confirmar Contraseña" 
+						[formControl]="contrasenaConfirmar" 
+						[(ngModel)]="usuarioModel.contrasenaConfirmar"
+						mz-validation
+				        [errorMessageResource]="formErrors.contrasenaConfirmar"
 						required>
 					</mz-input-container>
                     <button mz-button type="submit" 

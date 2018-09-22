@@ -43,24 +43,35 @@
 							</option>
 							</select>
 						</mz-select-container>
-						<mz-datepicker-container class="col s12 m12">
+						<mz-datepicker-container class="col s12 m6">
 							<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
-					        <input mz-datepicker mz-validation required 
-							id="fecha"
-							formControlName="fecha"
-							[label]="'Fecha'"
-							[placeholder]="'3. Fecha Preferencia'"
-	    					[(ngModel)]="fecha"
+					        <input mz-datepicker
+							id="fechaDesde"
+							formControlName="fechaDesde"
+							[label]="'Fecha Desde'"
+							[placeholder]="'3. Fecha Desde'"
+	    					[(ngModel)]="fechaDesde"
 							mz-validation required
-							[errorMessageResource]="formErrors.fecha"
-							[options]="opcionesCalendario">
+							[errorMessageResource]="formErrors.fechaDesde"
+							[options]="opcionesCalendarioDesde">
+						</mz-datepicker-container>
+						<mz-datepicker-container class="col s12 m6">
+							<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
+					        <input mz-datepicker
+							id="fechaHasta"
+							formControlName="fechaHasta"
+							[label]="'Fecha Hasta'"
+							[placeholder]="'4. Fecha Hasta'"
+	    					[(ngModel)]="fechaHasta"
+							mz-validation required
+							[errorMessageResource]="formErrors.fechaHasta"
+							[options]="opcionesCalendarioHasta">
 						</mz-datepicker-container>
 						<table class="striped">
 						    <thead>
 						      <tr>
-						          <th>Nombre Especialista</th>
-						          <th>Fecha</th>
-						          <th>Hora</th>
+						          <th>Desde</th>
+						          <th>Hasta</th>
 						          <th>Acciones</th>
 						      </tr>
 						    </thead>
@@ -70,7 +81,7 @@
 						        <td>{{item.fecha}}</td>
 						        <td>{{item.hora}}</td>
 							    <td>
-							    	<button mz-button type="button" (click)="reservar(item)">Reservar</button>
+							    	<button mz-button type="button" (click)="asignar(item)">Asignar</button>
 							    </td>					      
 								</tr>
 						    </tbody>

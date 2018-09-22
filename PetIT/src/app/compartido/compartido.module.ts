@@ -17,6 +17,7 @@ import { FiltroCitasPipe } from './../pipes/filtroCitas.pipe';
 // Componentes Compartidos
 import { CabeceraComponent } from './cabecera/cabecera.component';
 import { HiperMenuComponent } from './hipermenu/hipermenu.component';
+import { BotonVolverComponent } from './boton-volver/boton-volver.component';
 
 // Servicios
 import { HiperMenuService } from './hipermenu/HiperMenu.service';
@@ -25,7 +26,8 @@ import { HiperMenuService } from './hipermenu/HiperMenu.service';
   declarations: [
     FiltroPipe,FiltroCitasPipe,
     CabeceraComponent,
-    HiperMenuComponent
+    HiperMenuComponent,
+    BotonVolverComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,7 @@ import { HiperMenuService } from './hipermenu/HiperMenu.service';
     LibreriasModule, HorasModule, MascotasModule
   ],
   exports: [
-    CabeceraComponent,HiperMenuComponent,
+    CabeceraComponent,HiperMenuComponent,BotonVolverComponent,
     FormsModule, ReactiveFormsModule, RouterModule, 
     FiltroPipe, FiltroCitasPipe,
     LibreriasModule, HorasModule, MascotasModule

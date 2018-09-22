@@ -50,4 +50,44 @@ export class Validaciones {
 		}
 		return formErrors;
 	}
+
+	//abstractControl es el campo de confirmar contraseña
+	//MatchPassword debe estar en los Mensajes.ts
+    public static MatchPassword(abstractControl: AbstractControl) {
+    	if(abstractControl.parent!=null){
+			let password = abstractControl.parent.controls['contrasena'].value; 					// to get value in input tag
+			let confirmPassword = abstractControl.parent.controls['contrasenaConfirmar'].value; 	// to get value in input tag
+	        if(password != confirmPassword) {
+	            //console.log('false');
+	            //abstractControl.setErrors( {MatchPassword: true} );
+				return { 'MatchPassword': true };
+	        } else {
+	            //console.log('true');
+	            //abstractControl.setErrors( {MatchPassword: false} )
+	            return null;
+	        }			
+    	}
+    }
+
+    //Malo
+    /*
+	public static MatchPassword(AC: AbstractControl) {
+		if(AC.get('contrasena') != null && AC.get('contrasenaConfirmar') !=null){
+			let password = AC.get('contrasena').value; 					// to get value in input tag
+			let confirmPassword = AC.get('contrasenaConfirmar').value; 	// to get value in input tag
+	    	console.log(password,confirmPassword);
+	        if(password != confirmPassword) {
+	            console.log('false');
+	            AC.get('contrasenaConfirmar').setErrors( {MatchPassword: true} )
+	        } else {
+	            console.log('true');
+	            return null;
+	        }			
+		} else {
+            console.log('false');            
+            AC.get('contrasenaConfirmar').setErrors( {MatchPassword: true} )
+		}
+    }
+	*/
+
 }

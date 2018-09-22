@@ -64,6 +64,13 @@ export class Mensajes {
 			'required':			'El email del dueño es obligatorio.',
 			'email':			'El email del dueño es inválido.'
 		},
+		'contrasena': {
+			'required':			'La contraseña es obligatoria.',
+		},
+		'contrasenaConfirmar': {
+			'required':			'La confirmación de contraseña es obligatoria.',
+			'MatchPassword':	'Las contraseñas no son iguales.',
+		},
 	}	
 
 
@@ -126,21 +133,18 @@ export class Mensajes {
 		},
 	}
 
-	public static validacionesCentro = {
-		'idempresa': {
-			'required': 	'La empresa es obligatoria.'
+	public static validacionesAsignar = {
+		'idespecialidad': {
+			'required': 	'La especialidad es obligatoria.'
 		},
-		'nombre': {
-			'required':  	'El nombre es obligatorio.',
-			'minlength':  	'El nombre debe ser de al menos de 4 carácter de largo.'
+		'idespecialista': {
+			'required':  	'El especialista es obligatorio.',
 		},
-		'ubicacion': {
-			'required':     'La ubicación es obligatoria.',
-			'minlength':    'La ubicación debe ser de al menos de 4 carácter de largo.'
+		'fechaDesde': {
+			'required':     'La fecha es obligatoria.',
 		},
-		'team': {
-			'required':     'El team es obligatorio.',
-			'minlength':    'El team debe ser de al menos de 1 carácter de largo.'
+		'fechaHasta': {
+			'required':     'La fecha es obligatorio.',
 		},
 	}
 
