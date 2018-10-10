@@ -19,7 +19,7 @@
 							[placeholder]="'1. Seleccionar especialidad'"
 	    					[(ngModel)]="especialidadModel"
 							mz-validation required
-					        [errorMessageResource]="formErrors.especialidad">
+					        [errorMessageResource]="formErrors.idespecialidad">
 							<option class="left circle"	*ngFor="let item of especialidades"
 							[ngValue]="item">
 								{{item?.nombre}}
@@ -36,7 +36,7 @@
 							[placeholder]="'2. Seleccionar Especialista'"
 	    					[(ngModel)]="especialistaModel"
 							mz-validation required
-					        [errorMessageResource]="formErrors.especialista">
+					        [errorMessageResource]="formErrors.idespecialista">
 							<option class="left circle"	*ngFor="let item of especialistas"
 							[ngValue]="item">
 								{{item?.nombres}} {{item?.apellidopaterno}}
