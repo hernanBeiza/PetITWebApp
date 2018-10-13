@@ -8,7 +8,7 @@
   <mz-sidenav-subheader>
   	Bienvenido {{rol}}
   </mz-sidenav-subheader>
-	<mz-sidenav-link *ngFor="let seccion of secciones" >
+	<mz-sidenav-link  [active]="seccion.seleccionada" *ngFor="let seccion of secciones" >
 	    <a title="{{seccion.titulo}}" class="enlace" (click)="irSeccion(seccion)">
 	      <i mz-icon-mdi mz-input-prefix [icon]="seccion.icono"></i>
 	      {{seccion.nombre}}

@@ -23,8 +23,7 @@ export class HiperMenuComponent implements OnInit {
 
 	constructor(private router:Router,
 		private LocalDBService:LocalDBService, private UsuarioLocalDBService:UsuarioLocalDBService,
-		private HiperMenuService:HiperMenuService) { 
-	}
+		private HiperMenuService:HiperMenuService) { }
 
 	ngOnInit() { 
 		this.usuario = this.UsuarioLocalDBService.obtenerLocal();
@@ -45,9 +44,11 @@ export class HiperMenuComponent implements OnInit {
 	}
 
 	irSeccion(seccion:any){
-		console.log("irSeccion");
-		console.log(seccion);
+		//console.log("irSeccion");
+		//console.log(seccion);
 		if(seccion.link){
+			this.deseleccionarTodas();
+			seccion.seleccionada = true;
 			// console.log(seccion.link);
 		    // Enviar datos de la sección a quienes la quieran recibir
 		    this.HiperMenuService.enviar(seccion);
@@ -55,6 +56,13 @@ export class HiperMenuComponent implements OnInit {
 				this.UsuarioLocalDBService.borrarLocal();
 			}
 			this.router.navigate([seccion.link]);		
+		}
+	}
+
+	deseleccionarTodas():void {
+		for (var i = 0; i < this.secciones.length; i++) {
+			var seccion:any = this.secciones[i];
+			seccion.seleccionada = false;
 		}
 	}
 
