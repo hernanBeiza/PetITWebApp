@@ -102,7 +102,7 @@
                         <input mz-input id="contrasena" type="password"
                         placeholder="Contraseña" 
 						[formControl]="contrasena" 
-						[(ngModel)]="usuarioModel.contrasena"
+						[(ngModel)]="usuarioModel.password"
 						mz-validation
 				        [errorMessageResource]="formErrors.contrasena"
 						required>
@@ -111,8 +111,8 @@
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
                         <input mz-input id="contrasenaConfirmar" type="password"
                         placeholder="Confirmar Contraseña" 
-						[formControl]="contrasenaConfirmar" 
-						[(ngModel)]="usuarioModel.contrasenaConfirmar"
+						[formControl]="usuarioModel.passwordConfirmar" 
+						[(ngModel)]="usuarioModel.password"
 						mz-validation
 				        [errorMessageResource]="formErrors.contrasenaConfirmar"
 						required>

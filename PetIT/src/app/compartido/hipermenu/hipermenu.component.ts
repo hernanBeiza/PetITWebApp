@@ -26,6 +26,10 @@ export class HiperMenuComponent implements OnInit {
 		private HiperMenuService:HiperMenuService) { }
 
 	ngOnInit() { 
+		console.log(this.router.url);
+		let encontrada = this.buscarSeccionPorUrl(this.router.url);
+		this.irSeccion(encontrada);
+
 		this.usuario = this.UsuarioLocalDBService.obtenerLocal();
 		switch (this.usuario.idrol) {
 			case 1:
@@ -40,6 +44,17 @@ export class HiperMenuComponent implements OnInit {
 			default:
 				// code...
 				break;
+		}
+	}
+
+	buscarSeccionPorUrl(url:string){
+		for (var i = 0;i<this.secciones.length;i++) {
+			let seccion = this.secciones[i];
+			console.log(seccion.link,url);
+			if(seccion.link==url){
+				console.log("encontrada!");
+				return seccion;
+			}
 		}
 	}
 

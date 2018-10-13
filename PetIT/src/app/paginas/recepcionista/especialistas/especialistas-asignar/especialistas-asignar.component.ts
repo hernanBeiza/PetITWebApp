@@ -203,4 +203,8 @@ export class EspecialistasAsignarComponent implements OnInit {
 		});
 		*/
 	}
+
+	public registrar():void {
+		
+	}
 }

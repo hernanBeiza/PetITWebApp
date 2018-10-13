@@ -1,53 +1,52 @@
 <div class="row">
     <div class="col m12">
-		<mz-card
-			[hoverable]="true">
+		<mz-card [hoverable]="true">
 			<mz-card-title>
-			Generar Informe
-		</mz-card-title>
-		<mz-card-content>
-			<form 
-	        [formGroup]="generarForm" 
-	        (ngSubmit)="onSubmit(generarForm.value)">
-				<div class="row"></div>
-				<div class="row">
-					<mz-datepicker-container class="col s12 m12">
-						<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
-				        <input mz-datepicker mz-validation required 
-						id="inicio"
-						type="text"
-		                [formControl]="inicio" 
-						[(ngModel)]="informeModel.fechaInicio"
-						[errorMessageResource]="formErrors.inicio"
-						[options]="opcionesCalendario"
-						[label]="'Fecha Inicio'" />
-					</mz-datepicker-container>
-					<mz-datepicker-container class="col s12 m12">
-						<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
-				        <input mz-datepicker mz-validation required 
-						id="termino"
-						type="text"
-		                [formControl]="termino" 
-						[(ngModel)]="informeModel.fechaTermino"
-						[errorMessageResource]="formErrors.termino"
-						[options]="opcionesCalendario"
-						[label]="'Fecha Término'" />
-					</mz-datepicker-container>
-				</div>
-				<button class="btn" type="submit" name="action"
-	            [disabled]="!generarForm.valid || enviandoFlag"
-				>Generar Informe
-				<i class="material-icons right">show_chart</i>
-				<!--
-				<mz-spinner
-					*ngIf="enviandoFlag"
-					[color]="'blue'"
-					[size]="'small'">
-				</mz-spinner>
-				-->
-				</button>
-			</form>
-		</mz-card-content>
+				Seleccione los datos para generar el informe
+			</mz-card-title>
+			<mz-card-content>
+				<form 
+		        [formGroup]="generarForm" 
+		        (ngSubmit)="onSubmit(generarForm.value)">
+					<div class="row"></div>
+					<div class="row">
+						<mz-datepicker-container class="col s12 m12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
+					        <input mz-datepicker mz-validation required 
+							id="inicio"
+							type="text"
+			                [formControl]="inicio" 
+							[(ngModel)]="informeModel.fechaInicio"
+							[errorMessageResource]="formErrors.inicio"
+							[options]="opcionesCalendario"
+							[label]="'Fecha Inicio'" />
+						</mz-datepicker-container>
+						<mz-datepicker-container class="col s12 m12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
+					        <input mz-datepicker mz-validation required 
+							id="termino"
+							type="text"
+			                [formControl]="termino" 
+							[(ngModel)]="informeModel.fechaTermino"
+							[errorMessageResource]="formErrors.termino"
+							[options]="opcionesCalendario"
+							[label]="'Fecha Término'" />
+						</mz-datepicker-container>
+					</div>
+					<button class="btn" type="submit" name="action"
+		            [disabled]="!generarForm.valid || enviandoFlag"
+					>Generar Informe
+					<i class="material-icons right">show_chart</i>
+					<!--
+					<mz-spinner
+						*ngIf="enviandoFlag"
+						[color]="'blue'"
+						[size]="'small'">
+					</mz-spinner>
+					-->
+					</button>
+				</form>
+			</mz-card-content>
 			<!--
 			<mz-card-action>        
 			<a  class="btn-flat" (click)="generarInforme();">Generar Informe</a>
