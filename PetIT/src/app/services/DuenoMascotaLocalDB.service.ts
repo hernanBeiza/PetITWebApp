@@ -21,7 +21,7 @@ export class DuenoMascotaLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "INSERT INTO duenomascota (rutdueno,nombres,apellidopaterno,apellidomaterno,comuna,direccion,telefono,correo) VALUES('"+dueno.rutdueno+"','"+dueno.nombres+"','"+dueno.apellidopaterno+"','"+dueno.apellidomaterno+"','"+dueno.comuna+"','"+dueno.direccion+"','"+dueno.telefono+"','"+dueno.correo+"')";
+        var sql = "INSERT INTO duenomascota (rutdueno,nombres,apellidopaterno,apellidomaterno,idcomuna,direccion,telefono,correo) VALUES('"+dueno.rutdueno+"','"+dueno.nombres+"','"+dueno.apellidopaterno+"','"+dueno.apellidomaterno+"','"+dueno.comuna+"','"+dueno.direccion+"','"+dueno.telefono+"','"+dueno.correo+"')";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);

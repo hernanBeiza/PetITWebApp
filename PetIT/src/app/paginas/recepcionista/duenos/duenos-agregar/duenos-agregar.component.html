@@ -58,7 +58,7 @@
 						formControlName="comuna"
 						[label]="'Comuna'"
 						[placeholder]="'Seleccionar comuna'"
-    					[(ngModel)]="duenoModel.comuna"
+    					[(ngModel)]="comunaModel"
 						mz-validation required
 				        [errorMessageResource]="formErrors.comuna">
 						<option class="left circle"	*ngFor="let item of comunas"
@@ -111,8 +111,8 @@
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
                         <input mz-input id="contrasenaConfirmar" type="password"
                         placeholder="Confirmar Contraseña" 
-						[formControl]="usuarioModel.passwordConfirmar" 
-						[(ngModel)]="usuarioModel.password"
+						[formControl]="contrasenaConfirmar" 
+						[(ngModel)]="usuarioModel.passwordConfirmar"
 						mz-validation
 				        [errorMessageResource]="formErrors.contrasenaConfirmar"
 						required>

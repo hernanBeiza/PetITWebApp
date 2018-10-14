@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void { 
     this.loginForm = this.fb.group({
-      'rut': [this.usuarioModel.rut, Validators.compose([Validators.required])],
+      'rut': [this.usuarioModel.rut, Validators.compose([Validators.required,Validators.maxLength(12)])],
       'contrasena': [this.usuarioModel.password, Validators.compose([Validators.required, Validators.minLength(7)])],
     });
 

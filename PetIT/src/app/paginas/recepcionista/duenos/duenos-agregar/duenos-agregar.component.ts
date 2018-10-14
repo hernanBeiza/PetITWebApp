@@ -8,6 +8,7 @@ import { Validaciones } from './../../../../libs/Validaciones';
 
 // Services
 import { DuenoMascotaLocalDBService } from './../../../../services/DuenoMascotaLocalDB.service';
+import { ComunaLocalDBService } from './../../../../services/ComunaLocalDB.service';
 // Models
 import { UsuarioModel } from './../../../../models/UsuarioModel';
 import { DuenoMascotaModel } from './../../../../models/DuenoMascotaModel';
@@ -39,6 +40,7 @@ export class DuenosAgregarComponent implements OnInit {
 	@ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
 	public errores:string = "";
 
+	public comunaModel:ComunaModel = new ComunaModel();
 	public duenoModel:DuenoMascotaModel = new DuenoMascotaModel();
 	public usuarioModel:UsuarioModel = new UsuarioModel();
   	public comunas:Array<ComunaModel> = new Array<ComunaModel>();
@@ -63,6 +65,7 @@ export class DuenosAgregarComponent implements OnInit {
 
 	constructor(private router:Router, private fb:FormBuilder, private activatedRoute: ActivatedRoute, 
 	    private MzToastService:MzToastService,
+	    private ComunaLocalDBService:ComunaLocalDBService,
 	    private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService) { }
 
 	ngOnInit(): void { 
@@ -71,7 +74,7 @@ export class DuenosAgregarComponent implements OnInit {
 	      'nombres': [this.duenoModel.nombres, Validators.compose([Validators.required])],
 	      'paterno': [this.duenoModel.apellidopaterno, Validators.compose([Validators.required])],
 	      'materno': [this.duenoModel.apellidomaterno, Validators.compose([Validators.required])],
-	      'comuna': [this.duenoModel.comuna, Validators.compose([Validators.required])],
+	      'comuna': [this.comunaModel, Validators.compose([Validators.required])],
 	      'direccion': [this.duenoModel.direccion, Validators.compose([Validators.required])],
 	      'email': [this.duenoModel.correo, Validators.compose([Validators.required,Validators.email])],
 	      'telefono': [this.duenoModel.telefono, Validators.compose([Validators.required])],
@@ -89,10 +92,28 @@ export class DuenosAgregarComponent implements OnInit {
 		this.telefonoControl = this.registrarForm.controls['telefono'];
 		this.contrasena = this.registrarForm.controls['contrasena'];
 		this.contrasenaConfirmar = this.registrarForm.controls['contrasenaConfirmar'];
+
+		this.cargarComunas();
 	}
 
-	public onSeleccionarComuna(event): void {
+	public cargarComunas(): void {
+	this.ComunaLocalDBService.obtener().then((data:any)=>{
+		console.log(data);
+		if(data.result){
+			this.comunas = data.comunas;
+		} else {
+			this.MzToastService.show(data.errores,5000,'red');
+		}
+    },(dataError:any)=>{
+		console.error(dataError);
+		this.MzToastService.show(dataError.errores,5000,'red');
+	    });
+	}
 
+	public onSeleccionarComuna(event): void { 
+		console.log("onSeleccionarComuna");
+		console.log(this.comunaModel);
+		this.duenoModel.comuna = this.comunaModel.idcomuna.toString();
 	}
 	
 	public onSubmit(values:Object):void {

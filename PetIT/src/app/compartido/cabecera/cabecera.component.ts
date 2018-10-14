@@ -23,7 +23,7 @@ export class CabeceraComponent implements OnInit, OnDestroy {
 	seccionSeleccionada(seccion:any) {
 		console.log("seccionSeleccionada();");
 		console.log(seccion);
-		this.titulo = seccion.nombre;
+		this.titulo = seccion.titulo;
 		this.bajada = seccion.bajada;
 	}
 

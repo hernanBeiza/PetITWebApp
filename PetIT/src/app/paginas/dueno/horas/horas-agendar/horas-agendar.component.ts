@@ -182,9 +182,14 @@ export class HorasAgendarComponent implements OnInit {
       if(data.result){
         this.horas = data.horas;
         this.MzToastService.show(data.mensajes, 4000, 'green');
+      } else {
+        this.horas = new Array<HoraModel>();    
+        this.MzToastService.show(data.errores, 4000, 'red');
       }
+      console.log(this.horas);
     },(dataError:any)=>{
       console.warn(dataError);  
+      this.horas = new Array<HoraModel>();
       this.MzToastService.show(dataError.errores, 5000, 'red');
     });
   }

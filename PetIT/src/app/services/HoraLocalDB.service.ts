@@ -16,7 +16,7 @@ export class HoraLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT ho.*,es.* FROM hora AS ho INNER JOIN especialista AS es ON es.idespecialista = ho.idespecialista WHERE ho.idespecialista = "+especialista.idespecialista + " AND fecha='"+fecha+"' AND ho.valid=1";
+        var sql = "SELECT ho.*, strftime('%d-%m-%Y', ho.fecha) AS fecha, es.* FROM hora AS ho INNER JOIN especialista AS es ON es.idespecialista = ho.idespecialista WHERE ho.idespecialista = "+especialista.idespecialista + " AND fecha='"+fecha+"' AND ho.valid=1";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);

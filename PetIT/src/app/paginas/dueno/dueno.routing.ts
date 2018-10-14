@@ -19,14 +19,14 @@ const routes: Routes = [
   { 
     path: 'dueno',  component: DuenoComponent,
     children: [
-      { path: 'inicio',            component: InicioComponent },
+      { path: 'inicio',           component: InicioComponent },
+
       { path: 'notificaciones',    loadChildren: loadNotificacionesModule },
       { path: 'horas',                loadChildren: loadHorasModule },
       /*
       { path: 'notificaciones',                loadChildren: 'app/paginas/dueno/notificaciones/notificaciones.module#NotificacionesModule' },
       { path: 'horas',                loadChildren: 'app/paginas/dueno/horas/horas.module#HorasModule' },
       */
-
     ]
   }
 ];

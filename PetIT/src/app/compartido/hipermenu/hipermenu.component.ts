@@ -29,7 +29,6 @@ export class HiperMenuComponent implements OnInit {
 		console.log(this.router.url);
 		let encontrada = this.buscarSeccionPorUrl(this.router.url);
 		this.irSeccion(encontrada);
-
 		this.usuario = this.UsuarioLocalDBService.obtenerLocal();
 		switch (this.usuario.idrol) {
 			case 1:
@@ -59,8 +58,8 @@ export class HiperMenuComponent implements OnInit {
 	}
 
 	irSeccion(seccion:any){
-		//console.log("irSeccion");
-		//console.log(seccion);
+		console.log("irSeccion");
+		console.log(seccion);
 		if(seccion.link){
 			this.deseleccionarTodas();
 			seccion.seleccionada = true;

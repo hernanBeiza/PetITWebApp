@@ -4,11 +4,12 @@ export class Mensajes {
 	    'rut': {
 			'required':			'El rut es obligatorio.',
 			'minlength':		'El rut debe ser de al menos de 9 carácter de largo.',
+			'maxlength':		'El rut es inválido.',
 			'invalidRut':		'El rut es inválido.'
 	    },
 	    'contrasena': {
-			'required':      'La Contraseña es obligatoria.',
-			'minlength':     'La Contraseña debe ser de al menos de 7 carácter de largo.'
+			'required':      'La contraseña es obligatoria.',
+			'minlength':     'La contraseña debe ser de al menos de 7 carácter de largo.'
 	    }
 	};
 
@@ -40,7 +41,8 @@ export class Mensajes {
 	    'rut': {
 			'required':			'El rut es obligatorio.',
 			'minlength':		'El rut debe ser de al menos de 9 carácter de largo.',
-			'invalidRut':		'El rut es inválido.'
+			'invalidRut':		'El rut es inválido.',
+			'maxlength':		'El rut es inválido.',
 	    },
 		'nombres': {
 			'required':			'El nombre del dueño es obligatorio.'
@@ -81,6 +83,7 @@ export class Mensajes {
 	    'rut': {
 			'required':			'El rut es obligatorio.',
 			'minlength':		'El rut debe ser de al menos de 9 carácter de largo.',
+			'maxlength':		'El rut es inválido.',
 			'invalidRut':		'El rut es inválido.'
 	    },
 		'nombre': {
@@ -93,6 +96,7 @@ export class Mensajes {
 		'rutDueno': {
 			'required':			'El rut del dueño es obligatorio.',
 			'minlength':		'El rut debe ser de al menos de 9 carácter de largo.',
+			'maxlength':		'El rut es inválido.',
 			'invalidRut':		'El rut es inválido.'
 		},		
 		'rutMascota': {
@@ -174,43 +178,7 @@ export class Mensajes {
 			'minlength':    'El tamaño debe ser de al menos de 3 caracteres de largo.'
 		},
 	}	
-
-	public static validacionesAnomalia = {
-		'idanomaliaestado': {
-			'required':      'El estado es obligatorio.'
-		},
-		'detalle': {
-			'required':      'Los detalles son obligatorios.'
-		},
-	}
-
-	public static validacionesInforme = {
-		'idcentro': {
-			'required':      'El centro es obligatorio.'
-		},
-		'idmodulo': {
-			'required':      'El módulo es obligatorio.'
-		},
-		'descripcion': {
-			'required':      'La descripción es obligatoria.'
-		},
-		'fecha': {
-			'required':      'La fecha es obligatoria.'
-		},
-	}	
-
-	public static validacionesInformeConsultar = {
-		'idempresa': {
-			'required':      'La empresa es obligatoria.'
-		},
-		'idcentro': {
-			'required':      'El centro es obligatorio.'
-		},
-		'idmodulo': {
-			'required':      'El módulo es obligatorio.'
-		}
-	}	
-
+	
 	public static validacionesIncidencia = {
 		'profundidad': {
 			'required': 	'La profundidad es obligatoria.',
@@ -224,23 +192,6 @@ export class Mensajes {
 		},
 		'descripcion': {
 			'required': 	'La descripción es obligatoria.'
-		},
-	}
-
-	public static validacionesIncidenciaTensor = {
-		'idprofundidad': {
-			'required':      'La profundidad es obligatoria.'
-		},
-		'idtensorestado': {
-			'required':      'El estado del tensor es obligatorio.'
-		},
-		'coordenada': {
-			'required': 	'La coordenada es obligatoria.',
-			'minlength': 	'La coordenada debe ser al menos de 2 caracteres de largo.',
-			'maxlength': 	'La coordenada debe ser de a los más 4 caracteres de largo.'
-		},
-		'descripcion': {
-			'required':      'La descripción es obligatoria.'
 		},
 	}
 
