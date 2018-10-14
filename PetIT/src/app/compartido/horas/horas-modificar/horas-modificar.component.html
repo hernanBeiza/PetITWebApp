@@ -7,8 +7,8 @@
 
 				<mz-card-content>
 	                <form
-	                [formGroup]="agendarForm" 
-	                (ngSubmit)="onSubmit(agendarForm.value)">		
+	                [formGroup]="modificarForm" 
+	                (ngSubmit)="onSubmit(modificarForm.value)">		
 						<mz-select-container class="col s12 m12">
 							<i mz-icon-mdi mz-input-prefix [icon]="'pill'"></i>
 							<select mz-select
@@ -16,12 +16,12 @@
 							id="especialidad"
 							formControlName="especialidad"
 							[label]="'Especialidad'"
-							[placeholder]="'2. Seleccionar especialidad'"
-	    					[(ngModel)]="especialidadModel"
+							[placeholder]="'Seleccionar Especialidad'"
+	    					[(ngModel)]="especialidadModel.idespecialidad"
 							mz-validation required
 					        [errorMessageResource]="formErrors.especialidad">
 							<option class="left circle"	*ngFor="let item of especialidades"
-							[ngValue]="item">
+							[ngValue]="item.idespecialidad">
 								{{item?.nombre}}
 							</option>
 							</select>
@@ -33,12 +33,12 @@
 							id="especialista"
 							formControlName="especialista"
 							[label]="'Especialista'"
-							[placeholder]="'3. Seleccionar Especialista'"
-	    					[(ngModel)]="especialistaModel"
+							[placeholder]="'Seleccionar Especialista'"
+	    					[(ngModel)]="especialistaModel.idespecialista"
 							mz-validation required
 					        [errorMessageResource]="formErrors.especialista">
 							<option class="left circle"	*ngFor="let item of especialistas"
-							[ngValue]="item">
+							[ngValue]="item.idespecialista">
 								{{item?.nombres}} {{item?.apellidopaterno}}
 							</option>
 							</select>
@@ -49,7 +49,7 @@
 							id="fecha"
 							formControlName="fecha"
 							[label]="'Fecha'"
-							[placeholder]="'3. Fecha Preferencia'"
+							[placeholder]="'Fecha Preferencia'"
 	    					[(ngModel)]="fecha"
 							mz-validation required
 							[errorMessageResource]="formErrors.fecha"
@@ -74,8 +74,14 @@
 							    </td>					      
 								</tr>
 						    </tbody>
-						</table>
+						</table>						
+						Poner boton volver pulento
+						<!--
+						<boton-volver></boton-volver>
+						-->
+						<!--
 						<button mz-button (click)="volver();">Volver</button>
+						-->
 						<!--
 	                    <button mz-button type="submit" 
 	                    [disabled]="!agendarForm.valid || enviandoFlag"

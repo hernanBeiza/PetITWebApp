@@ -85,9 +85,16 @@ export class HorasConsultarComponent implements OnInit {
 		this.mascotasListarComponent.buscarMascotasConDueno(model);
 	}
 
-	public onMascotaSeleccionada(model:MascotaModel): void {
+	public onMascotaEditarHoras(mascota:MascotaModel): void {
+		console.log("onMascotaEditarHoras");
+		console.log(mascota);
+		this.router.navigate(['/dueno/horas/listar/'+mascota.rutmascota]);        
+	}
+
+	public onMascotaSeleccionada(mascota:MascotaModel): void {
 		console.log("onMascotaSeleccionada");
-		this.mascotaSeleccionada = model;
+		this.mascotaSeleccionada = mascota;
+		console.log(this.mascotaSeleccionada);
 	}
 
 	public irAgendar():void {

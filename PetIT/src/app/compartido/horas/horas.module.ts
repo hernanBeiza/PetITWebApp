@@ -6,9 +6,11 @@ import { LibreriasModule } from './../../librerias.module';
 
 //import { HorasRoutingComponent } from './horas.routing';
 
-//Mascotas
+//Horas
 import { HorasAgendarComponent } from './horas-agendar/horas-agendar.component';
+import { HorasModificarComponent } from './horas-modificar/horas-modificar.component';
 import { HorasFinalizarComponent } from './horas-finalizar/horas-finalizar.component';
+import { HorasListarComponent } from './horas-listar/horas-listar.component';
 
 @NgModule({
 	imports: [
@@ -20,12 +22,15 @@ import { HorasFinalizarComponent } from './horas-finalizar/horas-finalizar.compo
 	exports: [
 		LibreriasModule,
 		RouterModule,
-		//ListarMascotasComponent
 		HorasAgendarComponent,
+		HorasModificarComponent,
+		HorasListarComponent,
 		HorasFinalizarComponent
 	],
 	declarations: [
 		HorasAgendarComponent,
+		HorasModificarComponent,
+		HorasListarComponent,
 		HorasFinalizarComponent
 	]
 })

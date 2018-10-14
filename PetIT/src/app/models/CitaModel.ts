@@ -1,6 +1,7 @@
 import { MascotaModel } from './MascotaModel';
 import { DuenoMascotaModel } from './DuenoMascotaModel';
 import { EspecialistaModel } from './EspecialistaModel';
+import { EspecialidadModel } from './EspecialidadModel';
 import { HoraModel } from './HoraModel';
 import { OrigenModel } from './OrigenModel';
 
@@ -16,6 +17,7 @@ export class CitaModel {
 	public mascotaModel?:MascotaModel;
 	public duenoMascotaModel?:DuenoMascotaModel;
 	public especialistaModel?:EspecialistaModel;
+	public especialidadModel?:EspecialidadModel;
 	public horaModel?:HoraModel;
 	public origenModel?:OrigenModel;
 

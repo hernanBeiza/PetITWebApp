@@ -1,0 +1,74 @@
+<div class="row">
+	    <div class="col s12 m12">
+			<mz-card [hoverable]="true">
+				<mz-card-title>
+					Horas de la mascota
+				</mz-card-title>
+				<mz-card-content>
+					<table class="striped">
+					    <thead>
+					      <tr>
+					          <th>Especialista</th>
+					          <th>Especialidad</th>
+					          <th>Fecha</th>
+					          <th>Hora</th>
+					          <th>Acciones</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+				    	    <tr *ngFor="let item of citas"
+							[class.seleccionada]="item.idhora == horaSeleccionada?.idhora">
+						        <td>{{item?.especialistaModel?.nombres}} {{item?.especialistaModel?.apellidoPaterno}}</td>
+						        <td>{{item?.especialidadModel?.nombre}}</td>
+						        <td>{{item?.horaModel?.fecha}}</td>
+						        <td>{{item?.horaModel?.hora}}</td>
+						        <td>
+									<a (click)="irModificar(item);" style="cursor: pointer;"mz-tooltip [tooltip]="'Modificar datos de esta hora'" [position]="'top'">
+										<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>
+									</a>
+									<a (click)="irAnular(item);" style="cursor: pointer;" mz-tooltip [tooltip]="'Anular esta hora'" [position]="'top'">
+										<i mz-icon-mdi mz-input-prefix [icon]="'delete'"></i>
+									</a>
+								</td>
+							</tr>
+					    </tbody>
+					</table>
+				</mz-card-content>
+			</mz-card>
+		</div>
+	</div>
+
+<!-- Ventana modal -->
+<mz-modal #anularSheetModal [options]="modalOptions">
+	<mz-modal-header>
+		<h4>¿Desea anular esta hora?</h4>
+	</mz-modal-header>
+	<mz-modal-content>
+		<div class="row">
+		    <div class="col s12 m6">
+				<p>Nombre Doctor: {{citaModel.especialistaModel?.nombres}} {{citaModel.especialistaModel?.apellidopaterno}}</p>
+				<p>Fecha: {{citaModel.horaModel?.fecha}} a las {{citaModel.horaModel?.hora}} hrs</p>
+			</div>
+		    <div class="col s12 m6">
+				<p>Dueño: {{citaModel.duenoMascotaModel?.nombres}} {{citaModel.duenoMascotaModel?.apellidopaterno}} {{citaModel.duenoMascotaModel?.apellidomaterno}}</p>
+				<p>Nombre Mascota: {{citaModel.mascotaModel?.nombre}}</p>
+			</div>
+		</div>
+	</mz-modal-content>
+	<mz-modal-footer>
+		<button mz-button [flat]="true" class="red" (click)="anular();">Anular Hora</button>
+		<button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+	</mz-modal-footer>
+</mz-modal>
+<!-- Ventana modal error -->
+<mz-modal #errorSheetModal [options]="modalOptions">
+	<mz-modal-header>
+		<h4>Atención</h4>
+	</mz-modal-header>
+	<mz-modal-content>
+		<div [innerHTML]="errores"></div>
+	</mz-modal-content>
+	<mz-modal-footer>
+		<button mz-button [flat]="true" mz-modal-close>Ok</button>
+	</mz-modal-footer>
+</mz-modal>

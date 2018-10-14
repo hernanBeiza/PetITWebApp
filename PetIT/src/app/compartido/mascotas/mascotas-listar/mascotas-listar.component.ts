@@ -5,13 +5,7 @@ import { EventEmitter } from '@angular/core';
 
 // Services
 import {MascotaLocalDBService} from './../../../services/MascotaLocalDB.service';
-import {DuenoMascotaLocalDBService} from './../../../services/DuenoMascotaLocalDB.service';
-import {EspecialidadLocalDBService} from './../../../services/EspecialidadLocalDB.service';
-import {EspecialistaLocalDBService} from './../../../services/EspecialistaLocalDB.service';
-import {HoraLocalDBService} from './../../../services/HoraLocalDB.service';
-import {CitaLocalDBService} from './../../../services/CitaLocalDB.service';
 
-import {UsuarioModel} from './../../../models/UsuarioModel';
 import {DuenoMascotaModel} from './../../../models/DuenoMascotaModel';
 import {MascotaModel} from './../../../models/MascotaModel';
 
@@ -23,13 +17,13 @@ import {MascotaModel} from './../../../models/MascotaModel';
 export class MascotasListarComponent implements OnInit {
 
 	@Output() mascotaSeleccionadaEmitter: EventEmitter<MascotaModel> = new EventEmitter();
+	@Output() mascotaEditarEmitter: EventEmitter<MascotaModel> = new EventEmitter();
 
 	public mascotas:Array<MascotaModel> = new Array<MascotaModel>();
 	public mascotaSeleccionada:MascotaModel;
 
 	constructor(private MzToastService:MzToastService,
-	    private MascotaLocalDBService:MascotaLocalDBService,
-	    private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService) { }
+	    private MascotaLocalDBService:MascotaLocalDBService) { }
 
 	ngOnInit() { }
 
@@ -53,16 +47,16 @@ export class MascotasListarComponent implements OnInit {
 		console.log(page);
 	}
 
-	public seleccionarMascota(model:MascotaModel): void {
-	    console.info("seleccionarMascota");
-	    console.log(model);
-	    this.mascotaSeleccionada = model;
-	    this.mascotaSeleccionadaEmitter.emit(model);
+	public seleccionarMascota(mascota:MascotaModel): void {
+	    //console.info("seleccionarMascota");
+	    //console.log(mascota);
+	    this.mascotaSeleccionada = mascota;
+	    this.mascotaSeleccionadaEmitter.emit(mascota);
 	}
 
 	public irEditar(mascota:MascotaModel):void {
 	    console.info("irEditar:", mascota);
-		//this.router.navigate(['/recepcionista/horas/agendar/'+this.duenoEncontrado.rutdueno+'/'+this.mascotaSeleccionada.rutmascota]);        
+	    this.mascotaEditarEmitter.emit(mascota);
 	}
 
 

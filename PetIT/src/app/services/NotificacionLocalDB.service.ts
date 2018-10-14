@@ -19,7 +19,7 @@ export class NotificacionLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT ci.*, ho.fecha,ho.hora,ma.rutdueno, ma.nombre AS nombreMascota, du.nombres AS nombreDueno, du.apellidopaterno AS paternoDueno, du.apellidomaterno AS maternoDueno, es.nombres AS nombreEspecialista, es.apellidopaterno AS paternoEspecialista, es.apellidomaterno AS maternoEspecialista, esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.rutmascota = ma.rutmascota INNER JOIN duenomascota AS du ON ma.rutdueno = du.rutdueno INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad INNER JOIN hora AS ho ON ci.idhora = ho.idhora";
+        var sql = "SELECT ci.*, strftime('%d-%m-%Y', ho.fecha) AS fecha ,ho.hora,ma.rutdueno, ma.nombre AS nombreMascota, du.nombres AS nombreDueno, du.apellidopaterno AS paternoDueno, du.apellidomaterno AS maternoDueno, es.nombres AS nombreEspecialista, es.apellidopaterno AS paternoEspecialista, es.apellidomaterno AS maternoEspecialista, esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.rutmascota = ma.rutmascota INNER JOIN duenomascota AS du ON ma.rutdueno = du.rutdueno INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad INNER JOIN hora AS ho ON ci.idhora = ho.idhora";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -114,7 +114,7 @@ export class NotificacionLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT * FROM notificacion WHERE idusuario = '"+dueno.idusuario.toString()+"'";
+        var sql = "SELECT *,strftime('%d-%m-%Y', fecha) AS fecha FROM notificacion WHERE idusuario = '"+dueno.idusuario.toString()+"'";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);

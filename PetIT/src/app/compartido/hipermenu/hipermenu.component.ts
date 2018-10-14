@@ -59,17 +59,19 @@ export class HiperMenuComponent implements OnInit {
 
 	irSeccion(seccion:any){
 		console.log("irSeccion");
-		console.log(seccion);
-		if(seccion.link){
-			this.deseleccionarTodas();
-			seccion.seleccionada = true;
-			// console.log(seccion.link);
-		    // Enviar datos de la sección a quienes la quieran recibir
-		    this.HiperMenuService.enviar(seccion);
-			if(seccion.link=="/login"){
-				this.UsuarioLocalDBService.borrarLocal();
+		if(seccion){		
+			console.log(seccion);
+			if(seccion.link){
+				this.deseleccionarTodas();
+				seccion.seleccionada = true;
+				// console.log(seccion.link);
+			    // Enviar datos de la sección a quienes la quieran recibir
+			    this.HiperMenuService.enviar(seccion);
+				if(seccion.link=="/login"){
+					this.UsuarioLocalDBService.borrarLocal();
+				}
+				this.router.navigate([seccion.link]);		
 			}
-			this.router.navigate([seccion.link]);		
 		}
 	}
 

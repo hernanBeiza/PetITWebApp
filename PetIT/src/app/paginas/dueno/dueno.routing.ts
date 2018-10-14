@@ -20,7 +20,6 @@ const routes: Routes = [
     path: 'dueno',  component: DuenoComponent,
     children: [
       { path: 'inicio',           component: InicioComponent },
-
       { path: 'notificaciones',    loadChildren: loadNotificacionesModule },
       { path: 'horas',                loadChildren: loadHorasModule },
       /*

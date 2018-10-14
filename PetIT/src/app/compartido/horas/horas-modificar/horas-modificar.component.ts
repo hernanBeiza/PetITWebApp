@@ -23,14 +23,14 @@ import {HoraModel} from './../../../models/HoraModel';
 import {CitaModel} from './../../../models/CitaModel';
 
 @Component({
-  selector: 'app-horas-agendar',
-  templateUrl: './horas-agendar.component.html',
-  styleUrls: ['./horas-agendar.component.css']
+  selector: 'app-horas-modificar',
+  templateUrl: './horas-modificar.component.html',
+  styleUrls: ['./horas-modificar.component.css']
 })
-export class HorasAgendarComponent implements OnInit {
+export class HorasModificarComponent implements OnInit {
 
   public usuario:UsuarioModel;
-  public agendarForm:FormGroup;
+  public modificarForm:FormGroup;
   public especialidadControl:AbstractControl;
   public especialistaControl:AbstractControl;
   public fechaControl:AbstractControl;
@@ -68,6 +68,7 @@ export class HorasAgendarComponent implements OnInit {
 
   public especialidadModel:EspecialidadModel = new EspecialidadModel();
   public especialistaModel:EspecialistaModel = new EspecialistaModel();
+  public horaAntiguaModel:HoraModel = new HoraModel();
   public citaModel:CitaModel = new CitaModel();
 
   public opcionesCalendario: Pickadate.DateOptions = {
@@ -90,49 +91,30 @@ export class HorasAgendarComponent implements OnInit {
     private CitaLocalDBService:CitaLocalDBService) { }
 
   ngOnInit(): void { 
-    console.info("AgendarComponent");
     this.usuario = this.UsuarioLocalDBService.obtenerLocal();
 
-    this.agendarForm = this.fb.group({
+    this.modificarForm = this.fb.group({
       'especialidad': [this.especialidadModel, Validators.compose([Validators.required])],
       'especialista': [this.especialistaModel, Validators.compose([Validators.required])],
       'fecha': [this.fecha, Validators.compose([Validators.required])],
     });
 
-    this.especialidadControl = this.agendarForm.controls['especialidad'];
-    this.especialistaControl = this.agendarForm.controls['especialista'];
-    this.fechaControl = this.agendarForm.controls['fecha'];
+    this.especialidadControl = this.modificarForm.controls['especialidad'];
+    this.especialistaControl = this.modificarForm.controls['especialista'];
+    this.fechaControl = this.modificarForm.controls['fecha'];
 
     this.activatedRoute.params.subscribe((param: any) => {
-      let rutdueno = param['rutdueno'];
-      let rutmascota = param['rutmascota'];
-      if(rutdueno != undefined || rutdueno == "undefined" || rutmascota != undefined || rutmascota == "undefined"){
-        this.obtenerDatos(rutdueno,rutmascota);
+      let idcita = param['idcita'];
+      if(idcita != undefined || idcita == "undefined"){
+        this.obtenerCitaConID(idcita);
       } else {
-        this.MzToastService.show("No hay id de dueno.",5000,"red");
+        this.MzToastService.show("No hay id de cita.",5000,"red");
       }
-    });
-    this.cargarEspecialidades();
-  }
-
-  private obtenerDatos(rutdueno:string,rutmascota:string): void {
-    this.DuenoMascotaLocalDBService.obtenerDuenoConMascota(rutdueno,rutmascota).then((data:any)=>{
-      console.info(data);
-      if(data.result){
-        let dueno:DuenoMascotaModel = data.dueno;
-        let mascota:MascotaModel = data.dueno.mascotas[0] as MascotaModel;
-        this.citaModel.duenoMascotaModel = dueno;
-        this.citaModel.mascotaModel = mascota;
-        this.citaModel.rutmascota = mascota.rutmascota;
-      } else {
-        this.MzToastService.show(data.errores,5000,"red");
-      }
-    },(dataError:any)=>{
-      this.MzToastService.show(dataError.errores,5000,"red");
     });
   }
 
   private cargarEspecialidades():void {
+    console.log("cargarEspecialidades");
     this.EspecialidadLocalDBService.obtener().then((data:any)=> {
       console.info(data);
       if(data.result){
@@ -140,6 +122,35 @@ export class HorasAgendarComponent implements OnInit {
       }
     },(dataError)=> {
       console.warn(dataError);
+    });
+  }
+
+
+  private obtenerCitaConID(idcita:number): void {
+    //console.log("obtenerCitaConID",idcita);
+    this.CitaLocalDBService.obtenerConID(idcita).then((data:any)=>{
+      console.info(data);
+      if(data.result){
+        this.citaModel = data.cita;
+
+        this.especialidadModel = this.citaModel.especialidadModel;
+        this.especialistaModel = this.citaModel.especialistaModel;
+
+        this.horaAntiguaModel = this.citaModel.horaModel;
+
+        this.fecha = this.citaModel.horaModel.fecha;
+
+        this.cargarEspecialidades();
+        this.cargarEspecialistas();
+        this.cargarHoras();
+         
+        this.MzToastService.show(data.mensajes,4000,"green");
+
+      } else {
+        this.MzToastService.show(data.errores,4000,"red");
+      }
+    },(dataError:any)=>{
+      this.MzToastService.show(dataError.errores,4000,"red");
     });
   }
 
@@ -181,7 +192,7 @@ export class HorasAgendarComponent implements OnInit {
     },(dataError:any)=>{
       console.warn(dataError);  
       this.horas = new Array<HoraModel>();
-      this.MzToastService.show(dataError.errores, 5000, 'red');
+      this.MzToastService.show(dataError.errores, 4000, 'red');
     });
   }
 
@@ -189,19 +200,20 @@ export class HorasAgendarComponent implements OnInit {
     //Dependiendo del tipo de usuario
     var ruta ="/recepcionista/horas/consultar";
     if(this.usuario.idrol!=2){
-       ruta ="/dueno/horas/consultar";
+      ruta ="/dueno/horas/consultar";
     }
     this.router.navigate([ruta]);      
   }
 
   private reservar(hora:HoraModel): void {
-    if (this.agendarForm.valid) {
-      this.citaModel.especialistaModel = hora.especialistaModel;
+    console.log(hora);
+    if (this.modificarForm.valid) {
       this.citaModel.idhora = hora.idhora;
       this.citaModel.horaModel = hora;
+      console.log(this.horaAntiguaModel,this.citaModel.horaModel);
       this.agendarSheetModal.open();
     } else {
-      this.MzToastService.show("Revisa los datos de tu agendamiento",5000);
+      this.MzToastService.show("Revisa los datos de tu agendamiento",4000);
     }
   }
   
@@ -221,7 +233,7 @@ export class HorasAgendarComponent implements OnInit {
       enviar = false;
       this.errores+="<br>Mascota";
     }
-    if(!this.citaModel.especialistaModel.idespecialidad){
+    if(!this.citaModel.especialidadModel.idespecialidad){
       enviar = false;
       this.errores+="<br>Especialidad";
     }
@@ -246,7 +258,7 @@ export class HorasAgendarComponent implements OnInit {
 
   private enviar(): void {
     console.info("enviar");
-    this.CitaLocalDBService.guardar(this.citaModel).then((data:any)=>{
+    this.CitaLocalDBService.modificar(this.horaAntiguaModel,this.citaModel).then((data:any)=>{
       console.info(data);
       if(data.result){          
         this.agendarSheetModal.close();
@@ -258,11 +270,11 @@ export class HorasAgendarComponent implements OnInit {
         }
         this.router.navigate([ruta+data.cita.idcita]);
       } else {
-        this.MzToastService.show(data.errores, 5000, 'red');    
+        this.MzToastService.show(data.errores, 4000, 'red');    
       }
     },(dataError:any)=>{
       console.warn(dataError);
-      this.MzToastService.show(dataError.errores, 5000, 'red');    
+      this.MzToastService.show(dataError.errores, 4000, 'red');    
     });
   }
 
