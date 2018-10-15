@@ -113,7 +113,8 @@ export class DuenosAgregarComponent implements OnInit {
 	public onSeleccionarComuna(event): void { 
 		console.log("onSeleccionarComuna");
 		console.log(this.comunaModel);
-		this.duenoModel.comuna = this.comunaModel.idcomuna.toString();
+		this.duenoModel.idcomuna = this.comunaModel.idcomuna;
+		this.duenoModel.comunaModel = this.comunaModel;
 	}
 	
 	public onSubmit(values:Object):void {

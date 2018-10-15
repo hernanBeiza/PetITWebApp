@@ -1,5 +1,21 @@
 	<div class="row">
 	    <div class="col s12 m12">
+			<div class="card-panel">
+				<h5>Inicio</h5>
+				<p>Bienvenido al sistema Pet-IT. Desde aquí podrá gestionar su veterinaria</p>
+			</div>
+			<!--
+			<mz-card [hoverable]="true">
+				<mz-card-title>{{titulo}}</mz-card-title>
+				<mz-card-content>
+					{{bajada}}
+				</mz-card-content>
+			</mz-card>
+			-->
+		</div>
+	</div>
+	<div class="row">
+	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
 				<mz-card-title>
 					Últimas mascotas atendidas
@@ -11,13 +27,15 @@
 								<th>Nombre</th>
 								<th>Dueño</th>
 								<th>Fecha Atención</th>
+								<th>Hora Atención</th>
 							</tr>
 				        </thead>
 						<tbody>
 							<tr *ngFor="let item of citas">
 						        <td>{{item?.mascotaModel?.nombre}}</td>
 						        <td>{{item?.duenoMascotaModel?.nombres}} {{item?.duenoMascotaModel?.apellidopaterno}}</td>
-						        <td>{{item?.horaModel?.fecha}} {{item?.horaModel?.hora}}</td>
+						        <td>{{item?.horaModel?.fecha}} </td>
+						        <td>{{item?.horaModel?.hora}} </td>
 							</tr>
 					    </tbody>
 					</table>

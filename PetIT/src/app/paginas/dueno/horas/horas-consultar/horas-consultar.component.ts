@@ -42,13 +42,11 @@ export class HorasConsultarComponent implements OnInit {
 	
 	public usuarioModel:UsuarioModel;
 
-	constructor(private router:Router, 
-	    private fb:FormBuilder,
+	constructor(private router:Router, private fb:FormBuilder,
 	    private MascotaLocalDBService:MascotaLocalDBService,
 	    private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService,
 	    private MzToastService:MzToastService,
-	    private UsuarioLocalDBService:UsuarioLocalDBService) { 
-		console.log("ConsultarComponent");
+	    private UsuarioLocalDBService:UsuarioLocalDBService) {
 
 		this.buscarForm = this.fb.group({
         	'filtroString': [this.filtroString, Validators.compose([Validators.required])],
@@ -62,19 +60,22 @@ export class HorasConsultarComponent implements OnInit {
 
 	ngOnInit() { 
 		this.usuarioModel = this.UsuarioLocalDBService.obtenerLocal();
-		console.log(this.usuarioModel);
-		this.DuenoMascotaLocalDBService.obtenerConIDUsuario(this.usuarioModel.idusuario).then((data:any)=>{
-			if(data.result){
-				this.duenoEncontrado = data.dueno;
-				this.obtenerMascotasConDueno(data.dueno);
-				this.MzToastService.show(data.mensajes,3000,'green');
-			} else {
-				this.MzToastService.show(data.errores,5000,'red');
-			}
-		},(dataError:any)=>{
-			console.warn(dataError);
-			this.MzToastService.show(dataError.errores,5000,'red');
-		});
+		if(this.usuarioModel){
+			this.DuenoMascotaLocalDBService.obtenerConIDUsuario(this.usuarioModel.idusuario).then((data:any)=>{
+				if(data.result){
+					this.duenoEncontrado = data.dueno;
+					this.obtenerMascotasConDueno(data.dueno);
+					this.MzToastService.show(data.mensajes,3000,'green');
+				} else {
+					this.MzToastService.show(data.errores,5000,'red');
+				}
+			},(dataError:any)=>{
+				this.MzToastService.show(dataError.errores,5000,'red');
+			});			
+		} else {
+			console.warn("No existe usuario, ir al login");
+		}
+
 	}
 	  
 	public onPageChange(pagina:number): void {
@@ -86,19 +87,14 @@ export class HorasConsultarComponent implements OnInit {
 	}
 
 	public onMascotaEditarHoras(mascota:MascotaModel): void {
-		console.log("onMascotaEditarHoras");
-		console.log(mascota);
 		this.router.navigate(['/dueno/horas/listar/'+mascota.rutmascota]);        
 	}
 
 	public onMascotaSeleccionada(mascota:MascotaModel): void {
-		console.log("onMascotaSeleccionada");
 		this.mascotaSeleccionada = mascota;
-		console.log(this.mascotaSeleccionada);
 	}
 
 	public irAgendar():void {
-	    console.warn("irAgendar();");
 	    var enviar = true;
 	    var errores:string = "Le faltó:";
 	    if(this.duenoEncontrado==null){

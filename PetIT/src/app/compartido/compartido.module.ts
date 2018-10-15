@@ -14,20 +14,9 @@ import { FiltroPipe } from './../pipes/filtro.pipe';
 import { FiltroCitasPipe } from './../pipes/filtroCitas.pipe';
 
 
-// Componentes Compartidos
-import { CabeceraComponent } from './cabecera/cabecera.component';
-import { HiperMenuComponent } from './hipermenu/hipermenu.component';
-import { BotonVolverComponent } from './boton-volver/boton-volver.component';
-
-// Servicios
-import { HiperMenuService } from './hipermenu/HiperMenu.service';
-
 @NgModule({
   declarations: [
     FiltroPipe,FiltroCitasPipe,
-    CabeceraComponent,
-    HiperMenuComponent,
-    BotonVolverComponent
   ],
   imports: [
     CommonModule,
@@ -35,13 +24,11 @@ import { HiperMenuService } from './hipermenu/HiperMenu.service';
     LibreriasModule, HorasModule, MascotasModule
   ],
   exports: [
-    CabeceraComponent,HiperMenuComponent,BotonVolverComponent,
     FormsModule, ReactiveFormsModule, RouterModule, 
     FiltroPipe, FiltroCitasPipe,
     LibreriasModule, HorasModule, MascotasModule
   ],
   providers: [
-    HiperMenuService
   ]
 })
 export class CompartidoModule { }

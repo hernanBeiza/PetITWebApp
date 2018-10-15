@@ -14,14 +14,14 @@ export class ComunaLocalDBService {
   constructor(private LocalDBService:LocalDBService) { }
 
   public obtener(): Promise<Object> {
-    console.log("ComunaLocalDBService: obtener();");    
+    //console.log("ComunaLocalDBService: obtener();");    
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
         var sql = "SELECT * FROM comuna";
-        console.info(sql);
+        //console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
-          console.log(tx,results,results.rows.length);
+          //console.log(tx,results,results.rows.length);
           var comunas:Array<ComunaModel>= new Array<ComunaModel>();
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
@@ -48,18 +48,18 @@ export class ComunaLocalDBService {
   }  
 
   public obtenerConID(idcomuna:number): Promise<Object> {
-    console.log("ComunaLocalDBService: obtenerConID();");
+    //console.log("ComunaLocalDBService: obtenerConID();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
         var sql = "SELECT * FROM comuna WHERE idcomua ="+idcomuna.toString();
-        console.info(sql);
+        //console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
-          console.log(tx,results,results.rows.length);
+          //console.log(tx,results,results.rows.length);
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var item:any = rows.item(0) as any;
-            console.log(item);
+            //console.log(item);
             let comuna:ComunaModel = new ComunaModel(item.idcomuna,item.idprovincia,item.nombre,item.valid);
 
             var result = {result:true,mensajes:"Comuna encontrada",comuna:comuna};

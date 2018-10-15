@@ -110,7 +110,7 @@ export class NotificacionLocalDBService {
   }
 
   public obtenerConDueno(dueno:DuenoMascotaModel): Promise<Object> {
-    console.log("NotificacionLocalDBService: obtenerConRut();");
+    console.log("NotificacionLocalDBService: obtenerConDueno();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -128,7 +128,7 @@ export class NotificacionLocalDBService {
             var result = {result:true,mensajes:"Notificaciones encontradas",notificaciones:notificaciones};
             resolve(result);
           } else {
-            var resultNoEncontrado = {result:false,errores:"No se han encontrados dueños"};
+            var resultNoEncontrado = {result:false,errores:"No tiene notificaciones para leer"};
             reject(resultNoEncontrado);                        
           }
         },function(tx,results){
@@ -144,26 +144,18 @@ export class NotificacionLocalDBService {
 
   public marcarLeida(notificacion:NotificacionModel): Promise<Object> {
     console.log("NotificacionLocalDBService: marcarLeida();");
-    console.warn("Falta terminar el marcado o cambiado a valid 2 en la notificación");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
-      /*
       db.transaction(function (tx){
-        var sql = "SELECT * FROM notificacion WHERE idusuario = '"+dueno.idusuario.toString()+"'";
+        var sql = "UPDATE notificacion SET valid = 2 WHERE idnotificacion = "+notificacion.idnotificacion.toString();
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
-          if(results.rows.length>0){
-            var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
-            var notificaciones:Array<NotificacionModel> = new Array<NotificacionModel>();
-            for (var i = 0; i < results.rows.length; i++){
-              var item:any = results.rows[i] as any;
-              notificaciones.push(item);
-            }
-            var result = {result:true,mensajes:"Notificaciones encontradas",notificaciones:notificaciones};
+          if(results.rowsAffected>0){
+            var result = {result:true,mensajes:"Notificación marcada como leída"};
             resolve(result);
           } else {
-            var resultNoEncontrado = {result:false,errores:"No se han encontrados dueños"};
+            var resultNoEncontrado = {result:false,errores:"No se ha marcado como leída la notificación"};
             reject(resultNoEncontrado);                        
           }
         },function(tx,results){
@@ -173,7 +165,6 @@ export class NotificacionLocalDBService {
           return false;
         });
       });
-      */
     });
     return promesa;    
   }

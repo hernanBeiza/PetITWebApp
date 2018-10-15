@@ -185,15 +185,6 @@ export class HorasAgendarComponent implements OnInit {
     });
   }
 
-  public volver():void {
-    //Dependiendo del tipo de usuario
-    var ruta ="/recepcionista/horas/consultar";
-    if(this.usuario.idrol!=2){
-       ruta ="/dueno/horas/consultar";
-    }
-    this.router.navigate([ruta]);      
-  }
-
   private reservar(hora:HoraModel): void {
     if (this.agendarForm.valid) {
       this.citaModel.especialistaModel = hora.especialistaModel;

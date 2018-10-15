@@ -19,7 +19,7 @@ export class InicioComponent implements OnInit {
 	    private MzToastService: MzToastService) { }
 
 	ngOnInit() {
-		console.log("InicioComponent: ngOnInit();");
+		console.log("ngOnInit();");
 		this.CitaLocalDBService.obtenerUltimas().then((data:any) => {
 			console.log(data);
 			if(data.result){
@@ -35,7 +35,7 @@ export class InicioComponent implements OnInit {
 	}
 
 	ngOnDestroy() {
-    	console.info("InicioComponent: ngOnDestroy();");
+    	console.info("ngOnDestroy();");
 	}
 
 }

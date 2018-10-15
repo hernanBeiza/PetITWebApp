@@ -60,13 +60,10 @@ export class InformeGenerarComponent implements OnInit {
 	public pieChartData:number[] = [300, 500, 100];
 	public pieChartType:string = 'pie';
  
-	constructor(private fb:FormBuilder,
-		private MzToastService: MzToastService) { 
-		console.log("InformeGenerarComponent");
-	}
+	constructor(private fb:FormBuilder, private MzToastService: MzToastService) { }
 
 	ngOnInit() {
-		console.log("InformeGenerarComponent: ngOnInit();");
+		console.log("ngOnInit();");
 
 	    this.generarForm = this.fb.group({
 	      'inicio': [this.informeModel.fechaInicio, Validators.compose([Validators.required])],
@@ -134,7 +131,7 @@ export class InformeGenerarComponent implements OnInit {
 	}
 
 	ngOnDestroy() {
-    	console.info("GenerarFormComponent: ngOnDestroy();");
+    	console.info("ngOnDestroy();");
 	}
 
 }

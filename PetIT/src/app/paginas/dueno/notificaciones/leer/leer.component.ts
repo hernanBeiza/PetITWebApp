@@ -18,6 +18,7 @@ export class LeerComponent implements OnInit {
 
 	@ViewChild('detalleSheetModal') detalleSheetModal: MzModalComponent;
 
+	private dueno:DuenoMascotaModel;
 	public modalOptions: Materialize.ModalOptions = {
 		dismissible: false, // Modal can be dismissed by clicking outside of the modal
 		opacity: .5, // Opacity of modal background
@@ -45,27 +46,30 @@ export class LeerComponent implements OnInit {
 	    private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService) { }
 
 	ngOnInit(): void { 
-	    console.log("LeerComponent: ngOnInit();");
+	    //console.log("LeerComponent: ngOnInit();");
 		// Obtener el id del dueño desde la ruta del navegador
 		this.obtenerDuenoConUsuario();
 	}
 
 	public obtenerDuenoConUsuario(): void {
-		if(this.UsuarioLocalDBService.obtenerLocal){
-			let model:UsuarioModel = this.UsuarioLocalDBService.obtenerLocal();
-			console.log(model);
-			if(model.idusuario){
-				this.DuenoMascotaLocalDBService.obtenerConIDUsuario(model.idusuario).then((data:any)=>{
+		let usuario:UsuarioModel = this.UsuarioLocalDBService.obtenerLocal();
+		if(usuario){
+			//console.log(model);
+			if(usuario.idusuario){
+				this.DuenoMascotaLocalDBService.obtenerConIDUsuario(usuario.idusuario).then((data:any)=>{
 					if(data.result){
-						let dueno:DuenoMascotaModel = data.dueno as DuenoMascotaModel;
+						this.dueno = data.dueno as DuenoMascotaModel;
 						this.cargarNotificaciones(data.dueno);
 					} else {
-						this.MzToastService.show(data.errores,3000,"red");
+						this.MzToastService.show(data.errores,4000,"red");
 					}
 				},(dataError:any)=>{
-					this.MzToastService.show(dataError.errores,3000,"red");
+					console.error(dataError);
+					this.MzToastService.show(dataError.errores,4000,"red");
 				});
 			}			
+		} else {
+			console.warn("No existe usuario, ir al login");
 		}
 	}
 
@@ -74,10 +78,11 @@ export class LeerComponent implements OnInit {
 			if(data.result){
 				this.notificaciones = data.notificaciones;
 			} else {
-				this.MzToastService.show("¡Error! No hay dueños registrados",3000,"red");
+				this.MzToastService.show(data.errores,4000,"red");
 			}
 		},(dataError:any)=>{
 			console.error(dataError);
+			this.MzToastService.show(dataError.errores,4000,"red");
 		});
 	}
 
@@ -89,13 +94,10 @@ export class LeerComponent implements OnInit {
 	public cerrarNotificacion(): void {
 		this.detalleSheetModal.close();
 		this.NotificacionLocalDBService.marcarLeida(this.notificacionDetalleModel).then((data:any)=>{
-			if(data.result){
-
-			} else {
-				this.MzToastService.show("¡Error! No hay dueños registrados",3000,"red");
-			}
+			this.cargarNotificaciones(this.dueno);
 		},(dataError:any)=>{
 			console.error(dataError);
+			this.MzToastService.show(dataError.errores,4000,"red");
 		});
 	}
 
@@ -104,7 +106,7 @@ export class LeerComponent implements OnInit {
 	}
 
 	ngOnDestroy() {
-		console.log("LeerComponent: ngOnDestroy();");
+		//console.log("LeerComponent: ngOnDestroy();");
 	}
 
 }

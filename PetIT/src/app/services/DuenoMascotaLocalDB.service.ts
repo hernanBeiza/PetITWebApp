@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 
 import { LocalDBService } from './LocalDB.service';
 
+import { ComunaModel } from './../models/ComunaModel';
 import { MascotaModel } from './../models/MascotaModel';
 import { DuenoMascotaModel } from './../models/DuenoMascotaModel';
 
@@ -21,7 +22,7 @@ export class DuenoMascotaLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "INSERT INTO duenomascota (rutdueno,nombres,apellidopaterno,apellidomaterno,idcomuna,direccion,telefono,correo) VALUES('"+dueno.rutdueno+"','"+dueno.nombres+"','"+dueno.apellidopaterno+"','"+dueno.apellidomaterno+"','"+dueno.comuna+"','"+dueno.direccion+"','"+dueno.telefono+"','"+dueno.correo+"')";
+        var sql = "INSERT INTO duenomascota (rutdueno,nombres,apellidopaterno,apellidomaterno,idcomuna,direccion,telefono,correo) VALUES('"+dueno.rutdueno+"','"+dueno.nombres+"','"+dueno.apellidopaterno+"','"+dueno.apellidomaterno+"','"+dueno.idcomuna+"','"+dueno.direccion+"','"+dueno.telefono+"','"+dueno.correo+"')";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -47,7 +48,7 @@ export class DuenoMascotaLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "UPDATE duenomascota SET rutdueno='"+dueno.rutdueno+"', nombres='"+dueno.nombres+"', apellidopaterno='"+dueno.apellidopaterno+"', apellidomaterno='"+dueno.apellidomaterno+"', comuna='"+dueno.comuna+"', direccion='"+dueno.direccion+"', telefono='"+dueno.telefono+"', correo='"+dueno.correo+"' WHERE rutdueno = '"+dueno.rutdueno+"'";
+        var sql = "UPDATE duenomascota SET rutdueno='"+dueno.rutdueno+"', nombres='"+dueno.nombres+"', apellidopaterno='"+dueno.apellidopaterno+"', apellidomaterno='"+dueno.apellidomaterno+"', idcomuna='"+dueno.idcomuna+"', direccion='"+dueno.direccion+"', telefono='"+dueno.telefono+"', correo='"+dueno.correo+"' WHERE rutdueno = '"+dueno.rutdueno+"'";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -69,15 +70,41 @@ export class DuenoMascotaLocalDBService {
     return promesa;    
   }
 
+  public eliminar(dueno:DuenoMascotaModel): Promise<Object> {
+    var db = this.LocalDBService.obtenerDB();
+    var promesa = new Promise((resolve, reject) => {
+      db.transaction(function (tx){
+        var sql = "DELETE FROM duenomascota WHERE rutdueno = '" + dueno.rutdueno+"'";
+        console.info(sql);
+        tx.executeSql(sql,[],function(tx,results){
+          //console.log(tx,results);
+          if(results.rowsAffected>0){
+            var result = {result:true,mensajes:"Dueño eliminados"};
+            resolve(result);
+          } else {
+            var resultNoEncontrado = {result:false,errores:"No se ha eliminado el dueño"};
+            reject(resultNoEncontrado);                        
+          }
+        },function(tx,results){
+          console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          reject(result);            
+          return false;
+        });
+      });
+    });
+    return promesa;   
+  }
+
   public obtener(): Promise<Object> {
-    console.log("DuenoMascotaLocalDB: obtener();");
+    //console.log("DuenoMascotaLocalDB: obtener();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
         var sql = "SELECT * FROM duenomascota";
-        console.info(sql);
+        //console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
-          console.log(tx,results);
+          //console.log(tx,results);
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
@@ -104,15 +131,15 @@ export class DuenoMascotaLocalDBService {
   }
 
   public obtenerConMascota(): Promise<Object> {
-    console.log("DuenoMascotaLocalDB: obtenerConMascota();");
+    //console.log("DuenoMascotaLocalDB: obtenerConMascota();");
 
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
         var sql = "SELECT du.rutdueno AS rutDueno,du.*, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota, ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du INNER JOIN mascota AS ma ON du.rutdueno = ma.rutdueno";
-        console.info(sql);
+        //console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
-          console.log(tx,results,results.rows.length);
+          //console.log(tx,results,results.rows.length);
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
@@ -145,7 +172,7 @@ export class DuenoMascotaLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT du.rutdueno AS rutDueno, du.*, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza,ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du LEFT JOIN mascota AS ma ON du.rutdueno = ma.rutdueno WHERE du.rutdueno = '"+rutdueno.toString()+"' LIMIT 1";
+        var sql = "SELECT du.rutdueno AS rutDueno, du.*, co.nombre AS nombreComuna,ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza,ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du LEFT JOIN mascota AS ma ON du.rutdueno = ma.rutdueno INNER JOIN comuna AS co ON du.idcomuna = co.idcomuna WHERE du.rutdueno = '"+rutdueno.toString()+"' LIMIT 1";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -154,7 +181,11 @@ export class DuenoMascotaLocalDBService {
             var duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
             for (var i = 0; i < results.rows.length; i++){
               var item:any = rows.item(i) as any;
-              var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
+              var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.idcomuna,item.direccion,item.telefono,item.correo,item.valid);
+              var comunaModel = new ComunaModel();
+              comunaModel.idcomuna = item.idcomuna;
+              comunaModel.nombre = item.nombreComuna;
+              dueno.comunaModel = comunaModel;
               duenos.push(dueno);
             }
             var result = {result:true,mensajes:"Dueño encontrado",dueno:duenos[0]};
@@ -180,7 +211,7 @@ export class DuenoMascotaLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT du.rutdueno AS rutDueno, du.*, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza,ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du LEFT JOIN mascota AS ma ON du.rutdueno = ma.rutdueno WHERE du.nombres LIKE '"+dato.toString()+ "%' OR du.apellidopaterno LIKE '"+dato.toString()+"%' OR du.apellidomaterno LIKE '"+dato.toString()+"%' LIMIT 1";
+        var sql = "SELECT du.rutdueno AS rutDueno, du.*,  co.nombre AS nombreComuna, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza,ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du LEFT JOIN mascota AS ma ON du.rutdueno = ma.rutdueno INNER JOIN comuna AS co ON du.idcomuna = co.idcomuna WHERE du.nombres LIKE '"+dato.toString()+ "%' OR du.apellidopaterno LIKE '"+dato.toString()+"%' OR du.apellidomaterno LIKE '"+dato.toString()+"%' LIMIT 1";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -190,6 +221,10 @@ export class DuenoMascotaLocalDBService {
             for (var i = 0; i < results.rows.length; i++){
               var item:any = rows.item(i) as any;
               var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutDueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);               
+              var comunaModel = new ComunaModel();
+              comunaModel.idcomuna = item.idcomuna;
+              comunaModel.nombre = item.nombreComuna;
+              dueno.comunaModel = comunaModel;
               duenos.push(dueno);
             }
             var result = {result:true,mensajes:"Dueño encontrado",dueno:duenos[0]};
@@ -249,7 +284,7 @@ export class DuenoMascotaLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT du.rutdueno AS rutDueno, du.*, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza, ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du INNER JOIN mascota AS ma ON du.rutdueno = ma.rutdueno WHERE du.idusuario = "+idusuario.toString();
+        var sql = "SELECT du.rutdueno AS rutDueno, du.*, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza, ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du LEFT JOIN mascota AS ma ON du.rutdueno = ma.rutdueno WHERE du.idusuario = "+idusuario.toString();
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);

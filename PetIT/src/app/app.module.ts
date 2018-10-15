@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
 
 import { PaginasModule } from './paginas/paginas.module';
+import { LibreriasModule } from './librerias.module';
 
 import { LocalDBService } from './services/LocalDB.service';
 
@@ -24,7 +25,8 @@ import { LocalDBService } from './services/LocalDB.service';
     RouterModule,
     HttpModule,
     AppRoutingModule,
-    PaginasModule
+    PaginasModule,
+    LibreriasModule
   ],
   providers: [LocalDBService],
   bootstrap: [AppComponent]

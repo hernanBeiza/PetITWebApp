@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.iniciarSesion();
     } else {
-      this.MzToastService.show("¡Error! Revisa tus datos de acceso",3000);
+      this.MzToastService.show("¡Error! Revisa tus datos de acceso",4000);
     }
   }
 
@@ -66,21 +66,21 @@ export class LoginComponent implements OnInit {
         //Guardar en la DB Local
         let usuario:UsuarioModel = data.usuario;
         this.UsuarioLocalDBService.guardarLocal(usuario);        
-        this.MzToastService.show(data.mensajes,3000,'green');
+        this.MzToastService.show(data.mensajes,4000,'green');
         var ruta = "";
         switch (usuario.idrol) {
           case 1:
-            console.log("admin");
+            //console.log("admin");
             ruta = 'admin/inicio';
             this.router.navigate([ruta]);                      
             break;
           case 2:
-            console.log("recepcionista")
+            //console.log("recepcionista")
             ruta = 'recepcionista/inicio';
             this.router.navigate([ruta]);                      
             break;
           case 3:
-            console.log("dueno")
+            //console.log("dueno")
             ruta = 'dueno/inicio';
             this.router.navigate([ruta]);                      
             break;                  
@@ -90,11 +90,11 @@ export class LoginComponent implements OnInit {
         }
       } else {
         console.error(data.errores);
-        this.MzToastService.show(data.errores,3000,'red');
+        this.MzToastService.show(data.errores,4000,'red');
       }
     },(dataError)=>{
       console.error(dataError);
-      this.MzToastService.show(dataError.errores,3000,'red');
+      this.MzToastService.show(dataError.errores,4000,'red');
     });
   }
 
@@ -103,7 +103,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    console.info("LoginComponent: ngOnDestroy();");
+    console.info("ngOnDestroy();");
   }
 
 

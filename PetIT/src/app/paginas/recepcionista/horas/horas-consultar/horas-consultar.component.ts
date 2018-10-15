@@ -62,21 +62,24 @@ export class HorasConsultarComponent implements OnInit {
 
 	ngOnInit() { 
 		this.usuarioModel = this.UsuarioLocalDBService.obtenerLocal();
-		console.log(this.usuarioModel);
-		//Si es dueño de mascota, obtener SUS mascotas
-		if(this.usuarioModel.idrol==3){
-			this.DuenoMascotaLocalDBService.obtenerConIDUsuario(this.usuarioModel.idusuario).then((data:any)=>{
-				if(data.result){
-					this.duenoEncontrado = data.dueno;
-					this.obtenerMascotasConDueno(data.dueno);
-					this.MzToastService.show(data.mensajes,3000,'green');
-				} else {
-					this.MzToastService.show(data.errores,5000,'red');
-				}
-			},(dataError:any)=>{
-				console.warn(dataError);
-				this.MzToastService.show(dataError.errores,5000,'red');
-			});
+		if(this.usuarioModel){
+			//Si es dueño de mascota, obtener SUS mascotas
+			if(this.usuarioModel.idrol==3){
+				this.DuenoMascotaLocalDBService.obtenerConIDUsuario(this.usuarioModel.idusuario).then((data:any)=>{
+					if(data.result){
+						this.duenoEncontrado = data.dueno;
+						this.obtenerMascotasConDueno(data.dueno);
+						this.MzToastService.show(data.mensajes,3000,'green');
+					} else {
+						this.MzToastService.show(data.errores,5000,'red');
+					}
+				},(dataError:any)=>{
+					console.warn(dataError);
+					this.MzToastService.show(dataError.errores,5000,'red');
+				});
+			}			
+		} else {
+			console.warn("No existe usuario, ir al login");
 		}
 	}
 

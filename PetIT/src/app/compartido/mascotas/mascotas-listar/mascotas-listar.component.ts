@@ -29,16 +29,16 @@ export class MascotasListarComponent implements OnInit {
 
 	public buscarMascotasConDueno(dueno:DuenoMascotaModel):void {
 	    this.MascotaLocalDBService.obtenerConDueno(dueno).then((data:any)=>{
-			console.info(data);
+			//console.info(data);
 			if(data.result){
 				this.mascotas = data.mascotas;
 		        this.MzToastService.show(data.mensajes,3000,'green');
 			} else {
-				this.MzToastService.show(data.errores,5000,'red');
+				this.MzToastService.show(data.errores,4000,'red');
 			}
 	    },(dataError:any)=>{
 			console.warn(dataError);
-			this.MzToastService.show(dataError.errores,5000,'red');
+			this.MzToastService.show(dataError.errores,4000,'red');
 	    });
 	}
 
@@ -55,7 +55,7 @@ export class MascotasListarComponent implements OnInit {
 	}
 
 	public irEditar(mascota:MascotaModel):void {
-	    console.info("irEditar:", mascota);
+	    //console.info("irEditar:", mascota);
 	    this.mascotaEditarEmitter.emit(mascota);
 	}
 

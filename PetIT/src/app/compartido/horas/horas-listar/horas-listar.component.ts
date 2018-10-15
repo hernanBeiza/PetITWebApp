@@ -36,6 +36,22 @@ export class HorasListarComponent implements OnInit {
   @ViewChild('anularSheetModal') anularSheetModal: MzModalComponent;
   @ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
 
+  public modalOptions: Materialize.ModalOptions = {
+    dismissible: false, // Modal can be dismissed by clicking outside of the modal
+    opacity: .5, // Opacity of modal background
+    inDuration: 300, // Transition in duration
+    outDuration: 200, // Transition out duration
+    startingTop: '100%', // Starting top style attribute
+    endingTop: '10%', // Ending top style attribute
+    ready: (modal, trigger) => { // Callback for Modal open. Modal and trigger parameters available.
+      //console.log('Ready');
+      //console.log(modal, trigger);
+    },
+    complete: () => { 
+      //console.log('Closed'); 
+    } // Callback for Modal close
+  };
+
   private mascota:MascotaModel = new MascotaModel();
   public errores:string = ""
   //Arreglo de especialidades
@@ -44,17 +60,6 @@ export class HorasListarComponent implements OnInit {
   public fecha:string = "";
 
   public citaModel:CitaModel = new CitaModel();
-
-  public opcionesReloj: Pickadate.TimeOptions = {
-    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
-    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
-    twelvehour: false, // Use AM/PM or 24-hour format
-    donetext: 'OK', // text for done-button
-    cleartext: 'Limpiar', // text for clear-button
-    canceltext: 'Cancelar', // Text for cancel-button
-    autoclose: false, // automatic close timepicker
-    ampmclickable: true, // make AM PM clickable
-  };
 
   constructor(private router:Router, private fb:FormBuilder, private activatedRoute: ActivatedRoute, 
     private UsuarioLocalDBService:UsuarioLocalDBService,

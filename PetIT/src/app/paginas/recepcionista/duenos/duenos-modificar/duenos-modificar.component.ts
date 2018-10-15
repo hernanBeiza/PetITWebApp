@@ -7,6 +7,7 @@ import { MzModalComponent,MzToastService } from 'ng2-materialize';
 import { Mensajes } from './../../../../libs/Mensajes';
 import { Validaciones } from './../../../../libs/Validaciones';
 
+import { ComunaLocalDBService } from './../../../../services/ComunaLocalDB.service';
 import { DuenoMascotaLocalDBService } from './../../../../services/DuenoMascotaLocalDB.service';
 
 import { RutValidator } from 'ng2-rut';
@@ -66,6 +67,7 @@ export class DuenosModificarComponent implements OnInit {
 	constructor(private router:Router, private fb:FormBuilder, private ActivatedRoute: ActivatedRoute, 
 	    private MzToastService:MzToastService,
         private RutValidator: RutValidator,
+        private ComunaLocalDBService: ComunaLocalDBService,
 	    private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService) { }
 
 	ngOnInit(): void { 
@@ -75,7 +77,7 @@ export class DuenosModificarComponent implements OnInit {
 	      'nombres': [this.duenoModel.nombres, Validators.compose([Validators.required])],
 	      'paterno': [this.duenoModel.apellidopaterno, Validators.compose([Validators.required])],
 	      'materno': [this.duenoModel.apellidomaterno, Validators.compose([Validators.required])],
-	      'comuna': [this.duenoModel.comuna, Validators.compose([Validators.required])],
+	      'comuna': [this.duenoModel.idcomuna, Validators.compose([Validators.required])],
 	      'direccion': [this.duenoModel.direccion, Validators.compose([Validators.required])],
 	      'email': [this.duenoModel.correo, Validators.compose([Validators.required,Validators.email])],
 	      'telefono': [this.duenoModel.telefono, Validators.compose([Validators.required])],
@@ -94,6 +96,8 @@ export class DuenosModificarComponent implements OnInit {
 		this.contrasena = this.registrarForm.controls['contrasena'];
 		this.contrasenaConfirmar = this.registrarForm.controls['contrasenaConfirmar'];
 
+		this.obtenerComunas();
+
 		// Obtener el id del dueño desde la ruta del navegador
 	    this.ActivatedRoute.params.subscribe((param: any) => {
 			let rutdueno = param['rutdueno'];
@@ -102,6 +106,18 @@ export class DuenosModificarComponent implements OnInit {
 			} else {
 				this.MzToastService.show("No hay id de dueno.",5000,"red");
 			}
+		});
+	}
+
+	public obtenerComunas(){
+		this.ComunaLocalDBService.obtener().then((data:any)=>{
+			if(data.result){
+				this.comunas = data.comunas;
+			} else {
+
+			}
+		},(dataError:any)=>{
+			this.MzToastService.show(dataError.errores,5000,'red');
 		});
 	}
 

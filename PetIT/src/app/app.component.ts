@@ -1,30 +1,48 @@
-import { Component, OnInit } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Router, ActivatedRoute, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
-import { LocalDBService } from './services/LocalDB.service';
+import { UsuarioLocalDBService } from './services/UsuarioLocalDB.service';
+import { MzToastService } from 'ng2-materialize';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   
-	constructor(public location: Location, 
-		public router: Router,
-		private LocalDBService:LocalDBService) {
+  public subscription: Subscription;
+
+	constructor(public router: Router,
+    private UsuarioLocalDBService:UsuarioLocalDBService,
+    private MzToastService:MzToastService) {
 		//console.log("AppComponent");
 	}
 
-	ngOnInit() {
-		//console.log("AppComponent: ngOnInit();");
-		//console.log(this.location.path());
-	  	/*
-	    if (this.location.path() =='' || this.location.path() == '/home') {
-	      this.router.navigate(['/home/dashboard']);
-	    }
-	    */
-    }
+  ngOnInit() {
+		console.log("ngOnInit();");
+    this.subscription = this.router.events.subscribe((event:Event) => {      
+  		if(event instanceof NavigationEnd){
+
+        if(this.UsuarioLocalDBService.obtenerLocal()==null && this.router.url!="/login"){
+          console.warn("No existe usuario, ir al login");
+
+          let segundos = 1;
+          setTimeout(()=> { 
+            console.info("Enviando al login...");
+            this.router.navigate(["/login"]);
+            //this.myFunc();
+          }, segundos * 1000);
+        }          
+
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 
 }

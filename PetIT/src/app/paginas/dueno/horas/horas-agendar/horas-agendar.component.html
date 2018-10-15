@@ -75,54 +75,6 @@
 								</tr>
 						    </tbody>
 						</table>
-						<!--
-						<mz-timepicker-container class="col s12">
-						  <i mz-icon-mdi mz-input-prefix
-						    [icon]="'clock'">
-						  </i>
-						  <input mz-timepicker mz-validation required
-  							id="hora"
-							formControlName="hora"
-							[label]="'Hora'"
-							[placeholder]="'4. Hora de preferencia'"
-	    					[(ngModel)]="hora"
-						    [options]="opcionesReloj"
-							[errorMessageResource]="formErrors.hora"
-						    type="text">
-						</mz-timepicker-container>
-						-->
-						<!--
-						<mz-select-container>
-							<select mz-select
-							id="fecha"
-							formControlName="fecha"
-							[label]="'Fecha'"
-							[placeholder]="'4. Fecha Preferencia'"
-	    					[(ngModel)]="fechaModel"
-							mz-validation required
-					        [errorMessageResource]="formErrors.fecha">
-							<option class="left circle"	*ngFor="let item of especialistaModel?.fechas"
-							[ngValue]="item">
-								{{item?.fecha}}
-							</option>
-							</select>
-						</mz-select-container>
-						<mz-select-container>
-							<select mz-select
-							id="hora"
-							formControlName="hora"
-							[label]="'Hora'"
-							[placeholder]="'5. Horas Disponibles'"
-	    					[(ngModel)]="horaModel"
-							mz-validation required
-					        [errorMessageResource]="formErrors.hora">
-							<option class="left circle"	*ngFor="let item of fechaModel?.horas"
-							[ngValue]="item">
-								{{item?.hora}}
-							</option>
-							</select>
-						</mz-select-container>
-						-->
 						<boton-volver></boton-volver>
 						<!--
 	                    <button mz-button type="submit" 

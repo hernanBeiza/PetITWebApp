@@ -22,45 +22,51 @@ export class HiperMenuComponent implements OnInit {
 	@ViewChild('menu') menuComponent: MzSidenavCollapsibleComponent;
 
 	constructor(private router:Router,
-		private LocalDBService:LocalDBService, private UsuarioLocalDBService:UsuarioLocalDBService,
+		private LocalDBService:LocalDBService, 
+		private UsuarioLocalDBService:UsuarioLocalDBService,
 		private HiperMenuService:HiperMenuService) { }
 
 	ngOnInit() { 
-		console.log(this.router.url);
+		//console.log(this.router.url);
 		let encontrada = this.buscarSeccionPorUrl(this.router.url);
 		this.irSeccion(encontrada);
 		this.usuario = this.UsuarioLocalDBService.obtenerLocal();
-		switch (this.usuario.idrol) {
-			case 1:
-				this.rol = "Dueño de Veterinaria";
-			break;
-			case 2:
-				this.rol = "Recepcionista";	
-			break;
-			case 3:
-				this.rol = "Dueño de Mascota";	
-			break;
-			default:
-				// code...
+		if(this.usuario!=null){
+			switch (this.usuario.idrol) {
+				case 1:
+					this.rol = "Dueño de Veterinaria";
 				break;
+				case 2:
+					this.rol = "Recepcionista";	
+				break;
+				case 3:
+					this.rol = "Dueño de Mascota";	
+				break;
+				default:
+					// code...
+					break;
+			}
+		} else {
+			console.warn("No existe usuario, ir al login");
+			this.router.navigate["/login"];
 		}
 	}
 
 	buscarSeccionPorUrl(url:string){
 		for (var i = 0;i<this.secciones.length;i++) {
 			let seccion = this.secciones[i];
-			console.log(seccion.link,url);
+			//console.log(seccion.link,url);
 			if(seccion.link==url){
-				console.log("encontrada!");
+				//console.log("encontrada!");
 				return seccion;
 			}
 		}
 	}
 
 	irSeccion(seccion:any){
-		console.log("irSeccion");
+		//console.log("irSeccion");
 		if(seccion){		
-			console.log(seccion);
+			//console.log(seccion);
 			if(seccion.link){
 				this.deseleccionarTodas();
 				seccion.seleccionada = true;

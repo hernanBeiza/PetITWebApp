@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import "rxjs/add/observable/of";
-
-import { UsuarioModel } from './../models/UsuarioModel';
 
 @Injectable()
 export class LocalDBService {
@@ -14,7 +12,7 @@ export class LocalDBService {
 
     const db: Database = this.obtenerDB();
     if(!db){
-        console.log('Error al conectar a la base de datos.');
+        console.error('Error al conectar a la base de datos.');
     } else {
       this.crearTablas();
     }
@@ -24,16 +22,16 @@ export class LocalDBService {
     //console.log("obtenerDB");
     const db: Database = window.openDatabase('petiddb', '1.0', 'petiddb', 2 * 1024 * 1024);
     if(!db){
-        console.log('Error al conectar a la base de datos.');
+       // console.error('Error al conectar a la base de datos.');
         return null;
     } else {
-      console.log('Conexión OK a la DB.');
+      //console.log('Conexión OK a la DB.');
       return db;
     }
   }
 
   private crearTablas():void {
-    console.log("crearTablas");
+    //console.log("crearTablas");
     var me = this as LocalDBService;
     var db = this.obtenerDB();
     db.transaction(function (tx){
@@ -48,7 +46,7 @@ export class LocalDBService {
         "CREATE TABLE IF NOT EXISTS `hora` ( `idhora` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `idespecialista` INTEGER NOT NULL, `hora` TEXT NOT NULL, `fecha` TEXT, `valid` INTEGER NOT NULL )",
         "CREATE TABLE IF NOT EXISTS `especialista` ( `idespecialista` INTEGER PRIMARY KEY AUTOINCREMENT, `idespecialidad` INTEGER NOT NULL, `rut` TEXT, `nombres` TEXT NOT NULL, `apellidopaterno` TEXT, `apellidomaterno` TEXT, `correo` TEXT, `direccion` TEXT, `idcomuna` INTEGER, `telefono` TEXT, `valid` INTEGER )",
         "CREATE TABLE IF NOT EXISTS `especialidad` ( `idespecialidad` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `nombre` TEXT NOT NULL, `valid` INTEGER );",
-        "CREATE TABLE IF NOT EXISTS `duenomascota` ( `rutdueno` TEXT NOT NULL UNIQUE, `idusuario` INTEGER, `nombres` TEXT NOT NULL, `apellidopaterno` TEXT NOT NULL, `apellidomaterno` TEXT NOT NULL, `idcomuna` TEXT NOT NULL, `direccion` TEXT NOT NULL, `telefono` TEXT NOT NULL, `correo` TEXT NOT NULL, `valid` INTEGER, PRIMARY KEY(`rutdueno`) )", 
+        "CREATE TABLE IF NOT EXISTS `duenomascota` ( `rutdueno` TEXT NOT NULL UNIQUE, `idusuario` INTEGER, `nombres` TEXT NOT NULL, `apellidopaterno` TEXT NOT NULL, `apellidomaterno` TEXT NOT NULL, `idcomuna` INTEGER NOT NULL, `direccion` TEXT NOT NULL, `telefono` TEXT NOT NULL, `correo` TEXT NOT NULL, `valid` INTEGER, PRIMARY KEY(`rutdueno`) )", 
         "CREATE TABLE IF NOT EXISTS `comuna` ( `idcomuna` INTEGER NOT NULL, `idprovincia` INTEGER NOT NULL, `nombre` INTEGER NOT NULL, `valid` INTEGER NOT NULL, PRIMARY KEY(`idcomuna`) )",
         "CREATE TABLE IF NOT EXISTS `cita` ( `idcita` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `rutmascota` TEXT, `idespecialista` INTEGER NOT NULL, `idhora` TEXT NOT NULL, `idorigen` INTEGER NOT NULL, `valid` INTEGER DEFAULT 1 )"
       ];
@@ -68,7 +66,7 @@ export class LocalDBService {
   }
 
   private poblarTablas(): void {
-    console.log("popularTablas");
+    //console.log("popularTablas");
     var db = this.obtenerDB();
     db.transaction(function (tx) {
       var queries = [
@@ -82,7 +80,7 @@ export class LocalDBService {
         "INSERT INTO `hora` VALUES (1,1,'10:00','2018-11-15',1), (2,1,'10:30','2018-11-20',1), (3,2,'16:00','2018-11-20',1), (4,2,'16:30','2018-11-08',1), (5,3,'20:00','2018-11-09',1), (6,3,'20:30','2018-11-09',1),(7,3,'21:00','2018-11-09',1)",
         "INSERT INTO `especialidad` VALUES (1,'General',1), (2,'Peluquería',1)",
         "INSERT INTO `especialista` VALUES (1,1,'59530534 ','Joseph','Jimenez',NULL,'joseph@vet.cl',NULL,NULL,NULL,1), (2,1,'212385255','Claudio','Igor',NULL,'claudio@vet.cl','',NULL,NULL,1), (3,2,'51428250','Daniel','Águila',NULL,'daniel@vet.cl','',NULL,NULL,1), (4,2,'10275736k','Hans','Poffald',NULL,'hans@vet.cl',NULL,NULL,NULL,1)",
-        "INSERT INTO `duenomascota` VALUES ('13269946',3,'Andrés Osorio','Osorio','Osorio','La Granja','3 Poniente #10082','+56123413','andres.osorio@ugm.cl',1),('10773614K',5,'María José','Durán','Napolitano','La Florida','Vicuña Mackenna #10082 ','+56123413','cote@ugm.cl',1), ('139184718',6,'Cristian','Contreras','','Pocuro','Pocuro 8413','+56123413','cristian@ugm.cl',1), ('173158246',4,'Graciela','Baldrich','Guerrero','La Florida','Pasaje Palqui #874','+56123413','graciela@ugm.cl',1)",
+        "INSERT INTO `duenomascota` VALUES ('13269946',3,'Andrés Osorio','Osorio','Osorio',1,'3 Poniente #10082','+56123413','andres.osorio@ugm.cl',1),('10773614K',5,'María José','Durán','Napolitano',2,'Vicuña Mackenna #10082 ','+56123413','cote@ugm.cl',1), ('139184718',6,'Cristian','Contreras','',2,'Pocuro 8413','+56123413','cristian@ugm.cl',1), ('173158246',4,'Graciela','Baldrich','Guerrero',2,'Pasaje Palqui #874','+56123413','graciela@ugm.cl',1)",
         "INSERT INTO `cita` VALUES (1,'111111111',1,'1',1,1), (2,'222222222',2,'2',1,1), (3,'333333333',2,'3',2,1)",
         "INSERT INTO `comuna` VALUES (1,1,'Puente Alto',1), (2,1,'La Florida',1), (3,1,'Providencia',1)"
       ];

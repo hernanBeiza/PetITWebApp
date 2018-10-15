@@ -11,7 +11,7 @@
 					<mz-input-container class="input-field col s12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
                         <input mz-input id="rut" type="text"
-                        placeholder="Rut" 
+                        label="Rut" 
 						[formControl]="rutControl" 
 						[(ngModel)]="duenoModel.rutdueno"
 						mz-validation
@@ -23,7 +23,7 @@
 					<mz-input-container class="input-field col s12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
                         <input mz-input id="nombres" type="text"
-                        placeholder="Nombres"
+                        label="Nombres"
 						[formControl]="nombresControl" 
 						[(ngModel)]="duenoModel.nombres"
 						mz-validation
@@ -33,7 +33,7 @@
 					<mz-input-container class="input-field col s12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
                         <input mz-input id="paterno" type="text"
-                        placeholder="Apellido Paterno"
+                        label="Apellido Paterno"
 						[formControl]="paternoControl" 
 						[(ngModel)]="duenoModel.apellidopaterno"
 						mz-validation
@@ -43,7 +43,7 @@
 					<mz-input-container class="input-field col s12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
                         <input mz-input id="materno" type="text"
-                        placeholder="Apellido Materno"
+                        label="Apellido Materno"
 						[formControl]="maternoControl" 
 						[(ngModel)]="duenoModel.apellidomaterno"
 						mz-validation
@@ -58,11 +58,11 @@
 						formControlName="comuna"
 						[label]="'Comuna'"
 						[placeholder]="'Seleccionar comuna'"
-    					[(ngModel)]="duenoModel.comuna"
+    					[(ngModel)]="duenoModel.idcomuna"
 						mz-validation required
 				        [errorMessageResource]="formErrors.comuna">
 						<option class="left circle"	*ngFor="let item of comunas"
-						[ngValue]="item">
+						[ngValue]="item.idcomuna">
 							{{item?.nombre}}
 						</option>
 						</select>
@@ -70,7 +70,7 @@
 					<mz-input-container class="input-field col s12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
                         <input mz-input id="direccion" type="text"
-                        placeholder="Dirección" 
+                        label="Dirección" 
 						[formControl]="direccionControl" 
 						[(ngModel)]="duenoModel.direccion"
 						mz-validation
@@ -80,7 +80,7 @@
 					<mz-input-container class="input-field col s12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
                         <input mz-input id="telefono" type="text"
-                        placeholder="Teléfono" 
+                        label="Teléfono" 
 						[formControl]="telefonoControl" 
 						[(ngModel)]="duenoModel.telefono"
 						mz-validation
@@ -90,7 +90,7 @@
 					<mz-input-container class="input-field col s12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
                         <input mz-input id="email" type="text"
-                        placeholder="Correo" 
+                        label="Correo" 
 						[formControl]="emailControl" 
 						[(ngModel)]="duenoModel.correo"
 						mz-validation
@@ -100,7 +100,7 @@
 					<mz-input-container class="input-field col s12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
                         <input mz-input id="contrasena" type="password"
-                        placeholder="Contraseña" 
+                        label="Contraseña" 
 						[formControl]="contrasena" 
 						[(ngModel)]="usuarioModel.password"
 						mz-validation
@@ -110,7 +110,7 @@
 					<mz-input-container class="input-field col s12">
 						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
                         <input mz-input id="contrasenaConfirmar" type="password"
-                        placeholder="Confirmar Contraseña" 
+                        label="Confirmar Contraseña" 
 						[formControl]="contrasenaConfirmar" 
 						[(ngModel)]="usuarioModel.passwordConfirmar"
 						mz-validation

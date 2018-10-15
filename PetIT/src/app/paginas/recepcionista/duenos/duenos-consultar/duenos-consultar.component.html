@@ -1,5 +1,21 @@
 	<div class="row">
 	    <div class="col s12 m12">
+			<div class="card-panel">
+				<h5>Consultar dueños</h5>
+				<p>Busca dueños de mascotas</p>
+			</div>
+			<!--
+			<mz-card [hoverable]="true">
+				<mz-card-title>{{titulo}}</mz-card-title>
+				<mz-card-content>
+					{{bajada}}
+				</mz-card-content>
+			</mz-card>
+			-->
+		</div>
+	</div>
+	<div class="row">
+	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
 				<mz-card-title>
 					Buscar dueño por:
@@ -80,7 +96,7 @@
 								<a (click)="irModificar(item);" style="cursor: pointer;" mz-tooltip [tooltip]="'Modificar datos'" [position]="'top'">
 									<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>
 								</a>
-								<a (click)="eliminar(item);" style="cursor: pointer;" mz-tooltip [tooltip]="'Eliminar datos'" [position]="'top'">
+								<a (click)="confirmarEliminar(item);" style="cursor: pointer;" mz-tooltip [tooltip]="'Eliminar datos'" [position]="'top'">
 									<i mz-icon-mdi mz-input-prefix [icon]="'delete'"></i>
 								</a>
 						    </td>
@@ -91,14 +107,12 @@
 			</mz-card>
 		</div>
 	</div>
-    <a [routerLink]="['/recepcionista/duenos/agregar']">Agregar Dueño de Mascota</a>
 
 	<div class="row">
-	    <div class="col s7 m7"></div>
-	    <div class="col s5 m5">
+	    <div class="col s4 offset-s8">
+    	    <a [routerLink]="['/recepcionista/duenos/agregar']">Agregar Dueño de Mascota</a>
 		</div>
 	</div>	
-
 
 	<!-- Ventana modal detalle Dueño Mascota-->
 	<mz-modal #detalleSheetModal [options]="modalOptions">
@@ -107,13 +121,13 @@
 		</mz-modal-header>
 		<mz-modal-content>
 		    <div class="col s6 m6">
-				<p>Rut: {{duenoSeleccionado?.rutdueno}}</p>
+				<p>Rut: {{duenoSeleccionado?.rutdueno | rut}}</p>
 				<p>Nombres: {{duenoSeleccionado?.nombres}}</p>
 				<p>Apellidos: {{duenoSeleccionado?.apellidopaterno}} {{duenoSeleccionado?.apellidomaterno}}</p>		    	
 				<p>Dirección: {{duenoSeleccionado?.direccion}}</p>
 		    </div>
 		    <div class="col s6 m6">
-				<p>Comuna: {{duenoSeleccionado?.comuna}}</p>
+				<p>Comuna: {{duenoSeleccionado?.comunaModel?.nombre}}</p>
 				<p>Teléfono: {{duenoSeleccionado?.telefono}}</p>
 				<p>Correo: {{duenoSeleccionado?.correo}}</p>
 			</div>
@@ -131,7 +145,7 @@
 			¿Desea eliminar este dueño?
 		</mz-modal-content>
 		<mz-modal-footer>
-			<button mz-button [flat]="true" class="green" mz-modal-close>Eliminar</button>
-			<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
+			<button mz-button [flat]="true" class="red" (click)="eliminar();">Eliminar</button>
+			<button mz-button [flat]="true" mz-modal-close>Cancelar</button>
 		</mz-modal-footer>
 	</mz-modal>

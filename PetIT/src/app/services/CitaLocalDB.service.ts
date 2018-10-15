@@ -19,7 +19,7 @@ export class CitaLocalDBService {
   constructor(private LocalDBService:LocalDBService) { }
  
   public guardar(cita:CitaModel): Promise<Object> {
-    console.log("CitaLocalDBService: guardar();");
+    //console.log("CitaLocalDBService: guardar();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -30,9 +30,9 @@ export class CitaLocalDBService {
           if(results.rowsAffected>0){
             //Actualizar el estado de la hora para que no puedan volver a tomar la misma
             var sql2 = "UPDATE hora SET valid=2 WHERE idhora = "+cita.idhora;
-            console.info(sql2);
+            //console.info(sql2);
             tx.executeSql(sql2,[],function(tx,results){
-              console.log(tx,results,results.rows.length);
+              //console.log(tx,results,results.rows.length);
             });
  
             let model:CitaModel = new CitaModel(results.insertId);
@@ -55,28 +55,27 @@ export class CitaLocalDBService {
 
 
   public modificar(horaAntigua:HoraModel,citaNueva:CitaModel): Promise<Object> {
-    console.log("CitaLocalDBService: modificar();");
-    console.log(horaAntigua.idhora,citaNueva.idhora,citaNueva.horaModel.idhora);
+    //console.log("CitaLocalDBService: modificar();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
         var sql = "UPDATE cita SET rutmascota="+citaNueva.rutmascota+", idespecialista ="+citaNueva.idespecialista+", idhora="+citaNueva.idhora+ " WHERE idcita="+citaNueva.idcita;
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
-          console.log(tx,results,results.rows.length);
+          //console.log(tx,results,results.rows.length);
           if(results.rowsAffected>0){
 
             var sql3 = "UPDATE hora SET valid=1 WHERE idhora = "+horaAntigua.idhora;
-            console.info(sql3);
+            //console.info(sql3);
             tx.executeSql(sql3,[],function(tx,results){
-              console.log(tx,results,results.rows.length);
+              //console.log(tx,results,results.rows.length);
             });
 
             //Actualizar el estado de la hora para que no puedan volver a tomar la misma
             var sql2 = "UPDATE hora SET valid=2 WHERE idhora = "+citaNueva.horaModel.idhora;
-            console.info(sql2);
+            //console.info(sql2);
             tx.executeSql(sql2,[],function(tx,results){
-              console.log(tx,results,results.rows.length);
+              //console.log(tx,results,results.rows.length);
             });
  
             let model:CitaModel = new CitaModel(citaNueva.idcita);
@@ -98,7 +97,7 @@ export class CitaLocalDBService {
   }
 
   public anular(cita:CitaModel): Promise<Object> {
-    console.log("CitaLocalDBService: anular();");
+    //console.log("CitaLocalDBService: anular();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -129,7 +128,7 @@ export class CitaLocalDBService {
   };
   
   public obtener(): Promise<Object> {
-    console.log("CitaLocalDBService: obtener();");
+    //console.log("CitaLocalDBService: obtener();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -141,7 +140,7 @@ export class CitaLocalDBService {
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var item:any = rows.item(0) as any;
-            console.log(item);
+            //console.log(item);
             var dueno:DuenoMascotaModel = new DuenoMascotaModel();
             dueno.rutdueno = item.rutdueno;
             dueno.nombres = item.nombreDueno;
@@ -188,19 +187,19 @@ export class CitaLocalDBService {
   }  
 
   public obtenerUltimas(): Promise<Object> {
-    console.log("CitaLocalDBService: obtenerUltimas();");
+    //console.log("CitaLocalDBService: obtenerUltimas();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
         var sql = "SELECT ci.*, strftime('%d-%m-%Y', ho.fecha) AS fecha, ho.hora,ma.rutdueno, ma.nombre AS nombreMascota, du.nombres AS nombreDueno, du.apellidopaterno AS paternoDueno, du.apellidomaterno AS maternoDueno, es.nombres AS nombreEspecialista, es.apellidopaterno AS paternoEspecialista, es.apellidomaterno AS maternoEspecialista, esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.rutmascota = ma.rutmascota INNER JOIN duenomascota AS du ON ma.rutdueno = du.rutdueno INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad INNER JOIN hora AS ho ON ci.idhora = ho.idhora ORDER by idcita DESC LIMIT 5";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
-          console.log(tx,results,results.rows.length);
+          //console.log(tx,results,results.rows.length);
           var citas:Array<CitaModel>= new Array<CitaModel>();
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var item:any = rows.item(0) as any;
-            console.log(item);
+            //console.log(item);
 
             var dueno:DuenoMascotaModel = new DuenoMascotaModel();
             dueno.rutdueno = item.rutdueno;
@@ -249,7 +248,7 @@ export class CitaLocalDBService {
   }
 
   public obtenerConID(idcita:number): Promise<Object> {
-    console.log("CitaLocalDBService: obtenerConID();");
+    //console.log("CitaLocalDBService: obtenerConID();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -260,7 +259,7 @@ export class CitaLocalDBService {
           if(results.rows.length>0){
             var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
             var item:any = rows.item(0) as any;
-            console.log(item);
+            //console.log(item);
             var dueno:DuenoMascotaModel = new DuenoMascotaModel();
             dueno.rutdueno = item.rutdueno;
             dueno.nombres = item.nombreDueno;
@@ -312,7 +311,7 @@ export class CitaLocalDBService {
   }
 
   public obtenerConRut(rutmascota:string): Promise<Object> {
-    console.log("CitaLocalDBService: obtenerConRut();");
+    //console.log("CitaLocalDBService: obtenerConRut();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){

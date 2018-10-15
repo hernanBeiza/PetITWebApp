@@ -10,9 +10,6 @@ import { DuenoModule } from './dueno/dueno.module';
 import { LocalDBService } from './../services/LocalDB.service';
 import { UsuarioLocalDBService } from './../services/UsuarioLocalDB.service';
 
-import { LibreriasModule } from './../librerias.module';
-
-
 @NgModule({
   imports: [
     CommonModule,

@@ -8,13 +8,15 @@
   <mz-sidenav-subheader>
   	Bienvenido {{rol}}
   </mz-sidenav-subheader>
-	<mz-sidenav-link  [active]="seccion.seleccionada" *ngFor="let seccion of secciones" >
-	    <a title="{{seccion.titulo}}" class="enlace" (click)="irSeccion(seccion)">
-	      <i mz-icon-mdi mz-input-prefix [icon]="seccion.icono"></i>
-	      {{seccion.nombre}}
-	    </a>
-		<mz-sidenav-divider></mz-sidenav-divider>
-	</mz-sidenav-link>
+  	<span *ngFor="let seccion of secciones">
+		<mz-sidenav-link  [active]="seccion.seleccionada">
+		    <a title="{{seccion.titulo}}" class="enlace" (click)="irSeccion(seccion)">
+		      <i mz-icon-mdi mz-input-prefix [icon]="seccion.icono"></i>
+		      {{seccion.nombre}}
+		    </a>
+			<mz-sidenav-divider></mz-sidenav-divider>
+		</mz-sidenav-link>
+	</span>
 </mz-sidenav>
 
 <!-- Botón para abrir menú en móvil -->

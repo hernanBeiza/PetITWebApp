@@ -6,8 +6,8 @@ import "rxjs/add/observable/of";
 @Injectable()
 export class HiperMenuService {
 
-	public menuEventEmmiter: EventEmitter<any> = new EventEmitter<any>();
-
+	public menuEventEmmiter: EventEmitter<any>;
+	
 	constructor() {
 		this.menuEventEmmiter = new EventEmitter<any>();
 		//console.log("HiperMenuService");

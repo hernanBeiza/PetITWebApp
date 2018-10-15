@@ -1,4 +1,21 @@
-<div class="row">
+	<div class="row">
+	    <div class="col s12 m12">
+			<div class="card-panel">
+				<h5>Lista de horas</h5>
+				<p>Horas agendadas para la mascota</p>
+			</div>
+			<!--
+			<mz-card [hoverable]="true">
+				<mz-card-title>{{titulo}}</mz-card-title>
+				<mz-card-content>
+					{{bajada}}
+				</mz-card-content>
+			</mz-card>
+			-->
+		</div>
+	</div>
+
+	<div class="row">
 	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
 				<mz-card-title>
@@ -8,6 +25,7 @@
 					<table class="striped">
 					    <thead>
 					      <tr>
+					          <th>Mascota</th>
 					          <th>Especialista</th>
 					          <th>Especialidad</th>
 					          <th>Fecha</th>
@@ -18,6 +36,7 @@
 					    <tbody>
 				    	    <tr *ngFor="let item of citas"
 							[class.seleccionada]="item.idhora == horaSeleccionada?.idhora">
+						        <td>{{item?.mascotaModel?.nombre}}</td>
 						        <td>{{item?.especialistaModel?.nombres}} {{item?.especialistaModel?.apellidoPaterno}}</td>
 						        <td>{{item?.especialidadModel?.nombre}}</td>
 						        <td>{{item?.horaModel?.fecha}}</td>
@@ -33,6 +52,7 @@
 							</tr>
 					    </tbody>
 					</table>
+					<boton-volver></boton-volver>
 				</mz-card-content>
 			</mz-card>
 		</div>

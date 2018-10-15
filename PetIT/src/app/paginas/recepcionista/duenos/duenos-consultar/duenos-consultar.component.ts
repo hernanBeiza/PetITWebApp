@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -20,7 +20,7 @@ import { DuenoMascotaModel } from './../../../../models/DuenoMascotaModel';
   templateUrl: './duenos-consultar.component.html',
   styleUrls: ['./duenos-consultar.component.css']
 })
-export class DuenosConsultarComponent implements OnInit {
+export class DuenosConsultarComponent implements OnInit, OnDestroy {
 
 	public buscarForm:FormGroup;
 	public stringControl:AbstractControl;
@@ -66,7 +66,9 @@ export class DuenosConsultarComponent implements OnInit {
 		this.stringControl = this.buscarForm.controls['filtroString'];
 	}
 
-	ngOnInit() { }
+	ngOnInit() { 
+
+	}
 
 	public onCambiarCriterio(criterio:string): void {
 		console.log(criterio);
@@ -127,9 +129,32 @@ export class DuenosConsultarComponent implements OnInit {
 		this.router.navigate(["/recepcionista/mascotas/registrar/"+dueno.rutdueno]);
 	}
 
-	public eliminar(dueno:DuenoMascotaModel): void {
-		console.warn("eliminar",dueno);		
+	public confirmarEliminar(dueno:DuenoMascotaModel): void {
+		console.warn("confirmarEliminar",dueno);		
+		this.duenoSeleccionado = dueno;
 		this.eliminarSheetModal.open();
+	}
+
+	public eliminar(): void {
+		console.warn("eliminar",this.duenoSeleccionado);
+		this.DuenoMascotaLocalDBService.eliminar(this.duenoSeleccionado).then((data:any)=>{
+			this.eliminarSheetModal.close();
+			this.duenos = new Array<DuenoMascotaModel>();
+			console.log(data);
+			if(data.result){
+		        this.MzToastService.show(data.mensajes,3000,'green');
+			} else {
+		        this.MzToastService.show(data.errores,3000,'red');
+			}
+		},(dataError:any)=>{
+			this.eliminarSheetModal.close();
+			console.error(dataError);
+	        this.MzToastService.show(dataError.errores,4000,'red');
+		});
+	}
+
+	ngOnDestroy(){
+		console.log("ngOnDestroy");
 	}
 
 }

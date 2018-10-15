@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { LibreriasModule } from './../../librerias.module';
 
-//import { HorasRoutingComponent } from './horas.routing';
+import { SharedUIModule } from './../../sharedui/sharedui.module';
 
 //Horas
 import { HorasAgendarComponent } from './horas-agendar/horas-agendar.component';
@@ -17,9 +17,10 @@ import { HorasListarComponent } from './horas-listar/horas-listar.component';
 		CommonModule,
 	    RouterModule,
 		LibreriasModule,
-		//HorasRoutingComponent
+		SharedUIModule
 	],
 	exports: [
+		SharedUIModule,
 		LibreriasModule,
 		RouterModule,
 		HorasAgendarComponent,

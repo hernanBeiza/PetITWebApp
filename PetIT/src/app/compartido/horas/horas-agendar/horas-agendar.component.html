@@ -1,92 +1,109 @@
 <div class="row">
-	    <div class="col s12 m12">
-			<mz-card [hoverable]="true">
-				<mz-card-title>
-
-				</mz-card-title>
-
-				<mz-card-content>
-	                <form
-	                [formGroup]="agendarForm" 
-	                (ngSubmit)="onSubmit(agendarForm.value)">		
-						<mz-select-container class="col s12 m12">
-							<i mz-icon-mdi mz-input-prefix [icon]="'pill'"></i>
-							<select mz-select
-							(change)="seleccionarEspecialidad($event);"
-							id="especialidad"
-							formControlName="especialidad"
-							[label]="'Especialidad'"
-							[placeholder]="'2. Seleccionar especialidad'"
-	    					[(ngModel)]="especialidadModel"
-							mz-validation required
-					        [errorMessageResource]="formErrors.especialidad">
-							<option class="left circle"	*ngFor="let item of especialidades"
-							[ngValue]="item">
-								{{item?.nombre}}
-							</option>
-							</select>
-						</mz-select-container>
-						<mz-select-container class="col s12 m12">
-							<i mz-icon-mdi mz-input-prefix [icon]="'medical-bag'"></i>
-							<select mz-select
-							(change)="seleccionarEspecialista($event);"
-							id="especialista"
-							formControlName="especialista"
-							[label]="'Especialista'"
-							[placeholder]="'3. Seleccionar Especialista'"
-	    					[(ngModel)]="especialistaModel"
-							mz-validation required
-					        [errorMessageResource]="formErrors.especialista">
-							<option class="left circle"	*ngFor="let item of especialistas"
-							[ngValue]="item">
-								{{item?.nombres}} {{item?.apellidopaterno}}
-							</option>
-							</select>
-						</mz-select-container>
-						<mz-datepicker-container class="col s12 m12">
-							<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
-					        <input mz-datepicker mz-validation required 
-							id="fecha"
-							formControlName="fecha"
-							[label]="'Fecha'"
-							[placeholder]="'3. Fecha Preferencia'"
-	    					[(ngModel)]="fecha"
-							mz-validation required
-							[errorMessageResource]="formErrors.fecha"
-							[options]="opcionesCalendario">
-						</mz-datepicker-container>
-						<table class="striped">
-						    <thead>
-						      <tr>
-						          <th>Nombre Especialista</th>
-						          <th>Fecha</th>
-						          <th>Hora</th>
-						          <th>Acciones</th>
-						      </tr>
-						    </thead>
-						    <tbody>
-					    	    <tr *ngFor="let item of horas">
-						        <td>{{item.especialistaModel.nombres}} {{item.especialistaModel.apellidopaterno}}</td>
-						        <td>{{item.fecha}}</td>
-						        <td>{{item.hora}}</td>
-							    <td>
-							    	<button mz-button type="button" (click)="reservar(item)">Reservar</button>
-							    </td>					      
-								</tr>
-						    </tbody>
-						</table>
-						<button mz-button (click)="volver();">Volver</button>
-						<!--
-	                    <button mz-button type="submit" 
-	                    [disabled]="!agendarForm.valid || enviandoFlag"
-	                    name="action">Reservar</button>
-		                -->
-					</form>
-
-				</mz-card-content>
-			</mz-card>
+    <div class="col s12 m12">
+		<div class="card-panel">
+			<h5>Agendar Horas</h5>
+			<p>Agenda una hora para la mascota</p>
 		</div>
+		<!--
+		<mz-card [hoverable]="true">
+			<mz-card-title>{{titulo}}</mz-card-title>
+			<mz-card-content>
+				{{bajada}}
+			</mz-card-content>
+		</mz-card>
+		-->
 	</div>
+</div>
+<div class="row">
+    <div class="col s12 m12">
+		<mz-card [hoverable]="true">
+			<mz-card-title>
+
+			</mz-card-title>
+
+			<mz-card-content>
+                <form
+                [formGroup]="agendarForm" 
+                (ngSubmit)="onSubmit(agendarForm.value)">		
+					<mz-select-container class="col s12 m12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'pill'"></i>
+						<select mz-select
+						(change)="seleccionarEspecialidad($event);"
+						id="especialidad"
+						formControlName="especialidad"
+						[label]="'Especialidad'"
+						[placeholder]="'2. Seleccionar especialidad'"
+    					[(ngModel)]="especialidadModel"
+						mz-validation required
+				        [errorMessageResource]="formErrors.especialidad">
+						<option class="left circle"	*ngFor="let item of especialidades"
+						[ngValue]="item">
+							{{item?.nombre}}
+						</option>
+						</select>
+					</mz-select-container>
+					<mz-select-container class="col s12 m12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'medical-bag'"></i>
+						<select mz-select
+						(change)="seleccionarEspecialista($event);"
+						id="especialista"
+						formControlName="especialista"
+						[label]="'Especialista'"
+						[placeholder]="'3. Seleccionar Especialista'"
+    					[(ngModel)]="especialistaModel"
+						mz-validation required
+				        [errorMessageResource]="formErrors.especialista">
+						<option class="left circle"	*ngFor="let item of especialistas"
+						[ngValue]="item">
+							{{item?.nombres}} {{item?.apellidopaterno}}
+						</option>
+						</select>
+					</mz-select-container>
+					<mz-datepicker-container class="col s12 m12">
+						<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
+				        <input mz-datepicker mz-validation required 
+						id="fecha"
+						formControlName="fecha"
+						[label]="'Fecha'"
+						[placeholder]="'3. Fecha Preferencia'"
+    					[(ngModel)]="fecha"
+						mz-validation required
+						[errorMessageResource]="formErrors.fecha"
+						[options]="opcionesCalendario">
+					</mz-datepicker-container>
+					<h5>Horas Disponibles</h5>
+					<table class="striped">
+					    <thead>
+					      <tr>
+					          <th>Nombre Especialista</th>
+					          <th>Fecha</th>
+					          <th>Hora</th>
+					          <th>Acciones</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+				    	    <tr *ngFor="let item of horas">
+					        <td>{{item.especialistaModel.nombres}} {{item.especialistaModel.apellidopaterno}}</td>
+					        <td>{{item.fecha}}</td>
+					        <td>{{item.hora}}</td>
+						    <td>
+						    	<button mz-button type="button" (click)="reservar(item)">Reservar</button>
+						    </td>					      
+							</tr>
+					    </tbody>
+					</table>
+					<boton-volver></boton-volver>
+					<!--
+                    <button mz-button type="submit" 
+                    [disabled]="!agendarForm.valid || enviandoFlag"
+                    name="action">Reservar</button>
+	                -->
+				</form>
+
+			</mz-card-content>
+		</mz-card>
+	</div>
+</div>
 
 <!-- Ventana modal -->
 <mz-modal #agendarSheetModal [options]="modalOptions">

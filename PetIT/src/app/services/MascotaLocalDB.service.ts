@@ -125,7 +125,7 @@ export class MascotaLocalDBService {
 	    	            var result = {result:true,mensajes:"Mascotas encontradas",mascota:mascotas[0]};
 			            resolve(result);
 					} else {
-						var resultNoEncontrado = {result:false,errores:"No se ha encontrado mascota con esos datos"};
+						var resultNoEncontrado = {result:false,errores:"No se ha encontrado mascota asociada al dueño"};
 		        		reject(resultNoEncontrado);                        
 					}
 		        },function(tx,results){
@@ -191,7 +191,7 @@ export class MascotaLocalDBService {
 				        var mascotas:Array<MascotaModel> = new Array<MascotaModel>();
 				        for (var i = 0; i < results.rows.length; i++){
 							var item:any = results.rows.item(i) as any;
-							console.log(item);
+							//console.log(item);
 							var raza:RazaModel = new RazaModel();
 							raza.nombre = item.nombreRaza;
 							var tipoMascota:TipoMascotaModel = new TipoMascotaModel();
@@ -204,7 +204,7 @@ export class MascotaLocalDBService {
 	    	            var result = {result:true,mensajes:"Mascotas encontradas",mascotas:mascotas};
 			            resolve(result);
 					} else {
-		            	var resultNoEncontrado = {result:false,errores:"No se ha encontrado mascota con esos datos"};
+		            	var resultNoEncontrado = {result:false,errores:"No se ha encontrado mascota asociada al dueño"};
 		            	reject(resultNoEncontrado);                        
 					}
 		        },function(tx,results){
