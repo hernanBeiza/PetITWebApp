@@ -9,6 +9,9 @@ import { UsuarioLocalDBService } from './../../services/UsuarioLocalDB.service';
 import { HiperMenuService } from './HiperMenu.service';
 
 import { UsuarioModel } from './../../models/UsuarioModel';
+
+import { secciones } from './../../app.secciones';
+
 @Component({
 	selector: 'app-hiper-menu',
 	templateUrl: './hipermenu.component.html',
@@ -18,7 +21,7 @@ export class HiperMenuComponent implements OnInit {
 
 	public usuario:UsuarioModel;
 	public rol:string = "";
-	@Input() secciones:Array<any>;
+	public secciones:Array<any> = new Array<any>();
 	@ViewChild('menu') menuComponent: MzSidenavCollapsibleComponent;
 
 	constructor(private router:Router,
@@ -27,7 +30,6 @@ export class HiperMenuComponent implements OnInit {
 		private HiperMenuService:HiperMenuService) { }
 
 	ngOnInit() { 
-		//console.log(this.router.url);
 		let encontrada = this.buscarSeccionPorUrl(this.router.url);
 		this.irSeccion(encontrada);
 		this.usuario = this.UsuarioLocalDBService.obtenerLocal();
@@ -35,12 +37,15 @@ export class HiperMenuComponent implements OnInit {
 			switch (this.usuario.idrol) {
 				case 1:
 					this.rol = "Dueño de Veterinaria";
+					this.secciones = secciones.admin;
 				break;
 				case 2:
 					this.rol = "Recepcionista";	
+					this.secciones = secciones.recepcionista;
 				break;
 				case 3:
 					this.rol = "Dueño de Mascota";	
+					this.secciones = secciones.dueno;
 				break;
 				default:
 					// code...
@@ -70,13 +75,13 @@ export class HiperMenuComponent implements OnInit {
 			if(seccion.link){
 				this.deseleccionarTodas();
 				seccion.seleccionada = true;
-				// console.log(seccion.link);
+				//console.log(seccion.link);
 			    // Enviar datos de la sección a quienes la quieran recibir
 			    this.HiperMenuService.enviar(seccion);
 				if(seccion.link=="/login"){
 					this.UsuarioLocalDBService.borrarLocal();
 				}
-				this.router.navigate([seccion.link]);		
+				this.router.navigate([seccion.link]);
 			}
 		}
 	}

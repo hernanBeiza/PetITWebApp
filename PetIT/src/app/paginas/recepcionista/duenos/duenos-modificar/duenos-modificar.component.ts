@@ -81,8 +81,8 @@ export class DuenosModificarComponent implements OnInit {
 	      'direccion': [this.duenoModel.direccion, Validators.compose([Validators.required])],
 	      'email': [this.duenoModel.correo, Validators.compose([Validators.required,Validators.email])],
 	      'telefono': [this.duenoModel.telefono, Validators.compose([Validators.required])],
-	      'contrasena': [this.usuarioModel.password, Validators.compose([Validators.required])],
-	      'contrasenaConfirmar': [this.usuarioModel.passwordConfirmar, Validators.compose([Validators.required,Validaciones.MatchPassword])],
+	      'contrasena': [this.usuarioModel.password, Validators.compose([Validators.required,Validators.minLength(7)])],
+	      'contrasenaConfirmar': [this.usuarioModel.passwordConfirmar, Validators.compose([Validators.required,Validaciones.MatchPassword,Validators.minLength(7)])],
 	    });
         
         this.rutControl = this.registrarForm.controls['rut'];

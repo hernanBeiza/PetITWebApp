@@ -1,170 +1,155 @@
-<div class="row">
-    <div class="col s12 m12">
-		<div class="card-panel">
-			<h5>Agregar un dueño</h5>
-			<p>Agrega un nuevo dueño de mascota</p>
+
+	<div class="row">
+	    <div class="col s12 m12">
+			<mz-card [hoverable]="true">
+				<mz-card-title>
+					Registrar un dueño
+				</mz-card-title>
+				<mz-card-content>
+	                <form
+	                [formGroup]="registrarForm" 
+	                (ngSubmit)="onSubmit(registrarForm.value)">				
+						<mz-input-container class="input-field col s12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+	                        <input mz-input id="rut" type="text"
+	                        label="Rut" 
+							[formControl]="rutControl" 
+							[(ngModel)]="duenoModel.rutdueno"
+							mz-validation
+					        [errorMessageResource]="formErrors.rut"
+							validateRut
+							formatRut
+							required>
+						</mz-input-container>	
+						<mz-input-container class="input-field col s12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+	                        <input mz-input id="nombres" type="text"
+	                        label="Nombres" 
+							[formControl]="nombresControl" 
+							[(ngModel)]="duenoModel.nombres"
+							mz-validation
+					        [errorMessageResource]="formErrors.nombres"
+							required>
+						</mz-input-container>					
+						<mz-input-container class="input-field col s12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+	                        <input mz-input id="paterno" type="text"
+	                        label="Apellido Paterno"
+							[formControl]="paternoControl" 
+							[(ngModel)]="duenoModel.apellidopaterno"
+							mz-validation
+					        [errorMessageResource]="formErrors.paterno"
+							required>
+						</mz-input-container>						
+						<mz-input-container class="input-field col s12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+	                        <input mz-input id="materno" type="text"
+	                        label="Apellido Materno"
+							[formControl]="maternoControl" 
+							[(ngModel)]="duenoModel.apellidomaterno"
+							mz-validation
+					        [errorMessageResource]="formErrors.materno"
+							required>
+						</mz-input-container>	
+						<mz-select-container class="col s12 m12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+							<select mz-select
+							(change)="onSeleccionarComuna($event);"
+							id="comuna"
+							formControlName="comuna"
+							[label]="'Comuna'"
+							[placeholder]="'Seleccionar comuna'"
+	    					[(ngModel)]="comunaModel"
+							mz-validation required
+					        [errorMessageResource]="formErrors.comuna">
+							<option class="left circle"	*ngFor="let item of comunas"
+							[ngValue]="item">
+								{{item?.nombre}}
+							</option>
+							</select>
+						</mz-select-container>					
+						<mz-input-container class="input-field col s12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+	                        <input mz-input id="direccion" type="text"
+	                        label="Dirección" 
+							[formControl]="direccionControl" 
+							[(ngModel)]="duenoModel.direccion"
+							mz-validation
+					        [errorMessageResource]="formErrors.direccion"
+							required>
+						</mz-input-container>	
+						<mz-input-container class="input-field col s12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+	                        <input mz-input id="telefono" type="text"
+	                        label="Teléfono" 
+							[formControl]="telefonoControl" 
+							[(ngModel)]="duenoModel.telefono"
+							mz-validation
+					        [errorMessageResource]="formErrors.telefono"
+							required>
+						</mz-input-container>
+						<mz-input-container class="input-field col s12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+	                        <input mz-input id="email" type="text"
+	                        label="Correo" 
+							[formControl]="emailControl" 
+							[(ngModel)]="duenoModel.correo"
+							mz-validation
+					        [errorMessageResource]="formErrors.email"
+							required>
+						</mz-input-container>
+						<mz-input-container class="input-field col s12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+	                        <input mz-input id="contrasena" type="password"
+	                        label="Contraseña" 
+							[formControl]="contrasena" 
+							[(ngModel)]="usuarioModel.password"
+							mz-validation
+					        [errorMessageResource]="formErrors.contrasena"
+							required>
+						</mz-input-container>
+						<mz-input-container class="input-field col s12">
+							<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
+	                        <input mz-input id="contrasenaConfirmar" type="password"
+	                        label="Confirmar Contraseña" 
+							[formControl]="contrasenaConfirmar" 
+							[(ngModel)]="usuarioModel.passwordConfirmar"
+							mz-validation
+					        [errorMessageResource]="formErrors.contrasenaConfirmar"
+							required>
+						</mz-input-container>
+						<boton-volver></boton-volver>
+	                    <button mz-button type="submit" 
+	                    [disabled]="!registrarForm.valid || enviandoFlag"
+	                    name="action">Registrar Dueño</button>
+					</form>
+				</mz-card-content>
+			</mz-card>
 		</div>
-		<!--
-		<mz-card [hoverable]="true">
-			<mz-card-title>{{titulo}}</mz-card-title>
-			<mz-card-content>
-				{{bajada}}
-			</mz-card-content>
-		</mz-card>
-		-->
 	</div>
-</div>
-<div class="row">
-    <div class="col s12 m12">
-		<mz-card [hoverable]="true">
-			<mz-card-title>
-				Registrar un dueño
-			</mz-card-title>
-			<mz-card-content>
-                <form
-                [formGroup]="registrarForm" 
-                (ngSubmit)="onSubmit(registrarForm.value)">				
-					<mz-input-container class="input-field col s12">
-						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
-                        <input mz-input id="rut" type="text"
-                        label="Rut" 
-						[formControl]="rutControl" 
-						[(ngModel)]="duenoModel.rutdueno"
-						mz-validation
-				        [errorMessageResource]="formErrors.rut"
-						validateRut
-						formatRut
-						required>
-					</mz-input-container>	
-					<mz-input-container class="input-field col s12">
-						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
-                        <input mz-input id="nombres" type="text"
-                        label="Nombres" 
-						[formControl]="nombresControl" 
-						[(ngModel)]="duenoModel.nombres"
-						mz-validation
-				        [errorMessageResource]="formErrors.nombres"
-						required>
-					</mz-input-container>					
-					<mz-input-container class="input-field col s12">
-						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
-                        <input mz-input id="paterno" type="text"
-                        label="Apellido Paterno"
-						[formControl]="paternoControl" 
-						[(ngModel)]="duenoModel.apellidopaterno"
-						mz-validation
-				        [errorMessageResource]="formErrors.paterno"
-						required>
-					</mz-input-container>						
-					<mz-input-container class="input-field col s12">
-						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
-                        <input mz-input id="materno" type="text"
-                        label="Apellido Materno"
-						[formControl]="maternoControl" 
-						[(ngModel)]="duenoModel.apellidomaterno"
-						mz-validation
-				        [errorMessageResource]="formErrors.materno"
-						required>
-					</mz-input-container>	
-					<mz-select-container class="col s12 m12">
-						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
-						<select mz-select
-						(change)="onSeleccionarComuna($event);"
-						id="comuna"
-						formControlName="comuna"
-						[label]="'Comuna'"
-						[placeholder]="'Seleccionar comuna'"
-    					[(ngModel)]="comunaModel"
-						mz-validation required
-				        [errorMessageResource]="formErrors.comuna">
-						<option class="left circle"	*ngFor="let item of comunas"
-						[ngValue]="item">
-							{{item?.nombre}}
-						</option>
-						</select>
-					</mz-select-container>					
-					<mz-input-container class="input-field col s12">
-						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
-                        <input mz-input id="direccion" type="text"
-                        label="Dirección" 
-						[formControl]="direccionControl" 
-						[(ngModel)]="duenoModel.direccion"
-						mz-validation
-				        [errorMessageResource]="formErrors.direccion"
-						required>
-					</mz-input-container>	
-					<mz-input-container class="input-field col s12">
-						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
-                        <input mz-input id="telefono" type="text"
-                        label="Teléfono" 
-						[formControl]="telefonoControl" 
-						[(ngModel)]="duenoModel.telefono"
-						mz-validation
-				        [errorMessageResource]="formErrors.telefono"
-						required>
-					</mz-input-container>
-					<mz-input-container class="input-field col s12">
-						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
-                        <input mz-input id="email" type="text"
-                        label="Correo" 
-						[formControl]="emailControl" 
-						[(ngModel)]="duenoModel.correo"
-						mz-validation
-				        [errorMessageResource]="formErrors.email"
-						required>
-					</mz-input-container>
-					<mz-input-container class="input-field col s12">
-						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
-                        <input mz-input id="contrasena" type="password"
-                        label="Contraseña" 
-						[formControl]="contrasena" 
-						[(ngModel)]="usuarioModel.password"
-						mz-validation
-				        [errorMessageResource]="formErrors.contrasena"
-						required>
-					</mz-input-container>
-					<mz-input-container class="input-field col s12">
-						<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
-                        <input mz-input id="contrasenaConfirmar" type="password"
-                        label="Confirmar Contraseña" 
-						[formControl]="contrasenaConfirmar" 
-						[(ngModel)]="usuarioModel.passwordConfirmar"
-						mz-validation
-				        [errorMessageResource]="formErrors.contrasenaConfirmar"
-						required>
-					</mz-input-container>
-					<boton-volver></boton-volver>
-                    <button mz-button type="submit" 
-                    [disabled]="!registrarForm.valid || enviandoFlag"
-                    name="action">Registrar Dueño</button>
-				</form>
-			</mz-card-content>
-		</mz-card>
-	</div>
-</div>
 
-	<!-- Ventana modal -->
-<mz-modal #registrarSheetModal [options]="modalOptions">
-	<mz-modal-header>
-		<h4>¿Desea registrar este dueño?</h4>
-	</mz-modal-header>
-	<mz-modal-content>
+		<!-- Ventana modal -->
+	<mz-modal #registrarSheetModal [fixedFooter]="true" [options]="modalOptions">
+		<mz-modal-header>
+			<h4>¿Desea registrar este dueño?</h4>
+		</mz-modal-header>
+		<mz-modal-content>
 
-	</mz-modal-content>
-	<mz-modal-footer>
-		<button mz-button [flat]="true" class="green" (click)="registrar();">Registrar Dueño</button>
-		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
-	</mz-modal-footer>
-</mz-modal>
-<!-- Ventana modal error -->
-<mz-modal #errorSheetModal [options]="modalOptions">
-	<mz-modal-header>
-		<h4>Atención</h4>
-	</mz-modal-header>
-	<mz-modal-content>
-		<div [innerHTML]="errores"></div>
-	</mz-modal-content>
-	<mz-modal-footer>
-		<button mz-button [flat]="true" mz-modal-close>Ok</button>
-	</mz-modal-footer>
-</mz-modal>
+		</mz-modal-content>
+		<mz-modal-footer>
+			<button mz-button [flat]="true" class="green" (click)="registrar();">Registrar Dueño</button>
+			<button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+		</mz-modal-footer>
+	</mz-modal>
+	<!-- Ventana modal error -->
+	<mz-modal #errorSheetModal [fixedFooter]="true" [options]="modalOptions">
+		<mz-modal-header>
+			<h4>Atención</h4>
+		</mz-modal-header>
+		<mz-modal-content>
+			<div [innerHTML]="errores"></div>
+		</mz-modal-content>
+		<mz-modal-footer>
+			<button mz-button [flat]="true" mz-modal-close>Ok</button>
+		</mz-modal-footer>
+	</mz-modal>

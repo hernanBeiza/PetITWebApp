@@ -9,7 +9,7 @@ import { CompartidoModule } from './../../../compartido/compartido.module';
 
 
 import { MascotasConsultarComponent } from './mascotas-consultar/mascotas-consultar.component';
-import { MascotasRegistrarComponent } from './mascotas-registrar/mascotas-registrar.component';
+import { MascotasAgregarComponent } from './mascotas-agregar/mascotas-agregar.component';
 import { MascotasModificarComponent } from './mascotas-modificar/mascotas-modificar.component';
 
 import { DuenoMascotaLocalDBService } from './../../../services/DuenoMascotaLocalDB.service';
@@ -23,7 +23,7 @@ import { MascotaLocalDBService } from './../../../services/MascotaLocalDB.servic
 	],
 	declarations: [
   		MascotasConsultarComponent, 
-  		MascotasRegistrarComponent, 
+  		MascotasAgregarComponent, 
   		MascotasModificarComponent
 	],
 	providers: [

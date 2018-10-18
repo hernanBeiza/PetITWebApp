@@ -36,7 +36,7 @@ import { DuenosConsultarComponent } from './duenos/duenos-consultar/duenos-consu
 		HorasModule, DuenosModule, MascotasModule, NotificacionesModule,
 	],
 	exports: [
-		RouterModule
+		RouterModule,CompartidoModule
 	],
 	providers: [
 		RazaLocalDBService,TipoMascotaLocalDBService,DuenoMascotaLocalDBService,EspecialidadLocalDBService,CitaLocalDBService,

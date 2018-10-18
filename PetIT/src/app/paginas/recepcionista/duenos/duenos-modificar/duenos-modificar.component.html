@@ -128,7 +128,7 @@
 </div>
 
 <!-- Ventana modal -->
-<mz-modal #modificarSheetModal [options]="modalOptions">
+<mz-modal #modificarSheetModal [fixedFooter]="true" [options]="modalOptions">
 	<mz-modal-header>
 		<h4>¿Desea modificar este dueño?</h4>
 	</mz-modal-header>
@@ -137,11 +137,11 @@
 	</mz-modal-content>
 	<mz-modal-footer>
 		<button mz-button [flat]="true" class="green" (click)="modificar();">Modificar Dueño</button>
-		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
+		<button mz-button [flat]="true" mz-modal-close>Cancelar</button>
 	</mz-modal-footer>
 </mz-modal>
 <!-- Ventana modal error -->
-<mz-modal #errorSheetModal [options]="modalOptions">
+<mz-modal #errorSheetModal [fixedFooter]="true" [options]="modalOptions">
 	<mz-modal-header>
 		<h4>Atención</h4>
 	</mz-modal-header>

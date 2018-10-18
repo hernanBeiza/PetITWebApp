@@ -16,7 +16,7 @@ export class MascotaLocalDBService {
 	    var db = this.LocalDBService.obtenerDB();
 	    var promesa = new Promise((resolve, reject) => {
 	      db.transaction(function (tx){
-	        var sql = "INSERT INTO mascota (rutmascota,idtipomascota,idraza,rutdueno,nombre,peso,edad) VALUES('"+mascota.rutmascota+"','"+mascota.idtipomascota+"','"+mascota.idraza+"','"+mascota.rutdueno+"','"+mascota.nombre+"','"+mascota.peso+"','"+mascota.edad+"')";
+	        var sql = "INSERT INTO mascota (rutmascota,idtipomascota,idraza,rutdueno,nombre,peso,edad,valid) VALUES('"+mascota.rutmascota+"','"+mascota.idtipomascota+"','"+mascota.idraza+"','"+mascota.rutdueno+"','"+mascota.nombre+"','"+mascota.peso+"','"+mascota.edad+"',1)";
 	        console.info(sql);
 	        tx.executeSql(sql,[],function(tx,results){
 	          console.log(tx,results,results.rows.length);
@@ -45,7 +45,7 @@ export class MascotaLocalDBService {
 		var db = this.LocalDBService.obtenerDB();
 		var promesa = new Promise((resolve, reject) => {
 		  db.transaction(function (tx){
-		    var sql = "UPDATE mascota SET idtipomascota="+mascota.idtipomascota+", idraza="+mascota.idraza+", rutdueno='"+mascota.rutdueno+"', nombre='"+mascota.nombre+"', peso="+mascota.peso+", edad="+mascota.edad+" WHERE rutmascota = '"+mascota.rutmascota+"'";
+		    var sql = "UPDATE mascota SET idtipomascota="+mascota.idtipomascota+", idraza="+mascota.idraza+", rutdueno='"+mascota.rutdueno+"', nombre='"+mascota.nombre+"', peso="+mascota.peso+", edad="+mascota.edad+", valid="+mascota.valid+" WHERE rutmascota = '"+mascota.rutmascota+"'";
 		    console.info(sql);
 		    tx.executeSql(sql,[],function(tx,results){
 		      console.log(tx,results,results.rows.length);

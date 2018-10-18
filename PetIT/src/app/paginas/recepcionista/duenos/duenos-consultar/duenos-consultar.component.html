@@ -1,19 +1,4 @@
-	<div class="row">
-	    <div class="col s12 m12">
-			<div class="card-panel">
-				<h5>Consultar dueños</h5>
-				<p>Busca dueños de mascotas</p>
-			</div>
-			<!--
-			<mz-card [hoverable]="true">
-				<mz-card-title>{{titulo}}</mz-card-title>
-				<mz-card-content>
-					{{bajada}}
-				</mz-card-content>
-			</mz-card>
-			-->
-		</div>
-	</div>
+	
 	<div class="row">
 	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
@@ -102,6 +87,15 @@
 						    </td>
 					      </tr>
 					    </tbody>
+					<mz-pagination
+						(pageChange)="onPageChange($event)"
+						[currentPage]="1"
+						[enableFirstAndLastPageButtons]="false"
+						[itemsPerPage]="10"
+						[totalItems]="30"
+					>
+					</mz-pagination>
+
 					</table>
 				</mz-card-content>
 			</mz-card>
@@ -115,7 +109,7 @@
 	</div>	
 
 	<!-- Ventana modal detalle Dueño Mascota-->
-	<mz-modal #detalleSheetModal [options]="modalOptions">
+	<mz-modal #detalleSheetModal [fixedFooter]="true" [options]="modalOptions">
 		<mz-modal-header>
 			<h5>Datos dueño mascota</h5>
 		</mz-modal-header>
@@ -137,7 +131,7 @@
 		</mz-modal-footer>
 	</mz-modal>
 	<!-- Ventana modal eliminar Dueño Mascota-->
-	<mz-modal #eliminarSheetModal [options]="modalOptions">
+	<mz-modal #eliminarSheetModal [fixedFooter]="true" [options]="modalOptions">
 		<mz-modal-header>
 			<h6>Eliminar dueño mascota</h6>
 		</mz-modal-header>

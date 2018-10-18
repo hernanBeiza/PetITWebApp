@@ -48,7 +48,9 @@ export class LocalDBService {
         "CREATE TABLE IF NOT EXISTS `especialidad` ( `idespecialidad` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `nombre` TEXT NOT NULL, `valid` INTEGER );",
         "CREATE TABLE IF NOT EXISTS `duenomascota` ( `rutdueno` TEXT NOT NULL UNIQUE, `idusuario` INTEGER, `nombres` TEXT NOT NULL, `apellidopaterno` TEXT NOT NULL, `apellidomaterno` TEXT NOT NULL, `idcomuna` INTEGER NOT NULL, `direccion` TEXT NOT NULL, `telefono` TEXT NOT NULL, `correo` TEXT NOT NULL, `valid` INTEGER, PRIMARY KEY(`rutdueno`) )", 
         "CREATE TABLE IF NOT EXISTS `comuna` ( `idcomuna` INTEGER NOT NULL, `idprovincia` INTEGER NOT NULL, `nombre` INTEGER NOT NULL, `valid` INTEGER NOT NULL, PRIMARY KEY(`idcomuna`) )",
-        "CREATE TABLE IF NOT EXISTS `cita` ( `idcita` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `rutmascota` TEXT, `idespecialista` INTEGER NOT NULL, `idhora` TEXT NOT NULL, `idorigen` INTEGER NOT NULL, `valid` INTEGER DEFAULT 1 )"
+        "CREATE TABLE IF NOT EXISTS `cita` ( `idcita` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `rutmascota` TEXT, `idespecialista` INTEGER NOT NULL, `idhora` TEXT NOT NULL, `idorigen` INTEGER NOT NULL, `valid` INTEGER DEFAULT 1 )",
+        "CREATE TABLE IF NOT EXISTS `bloquehorario` (`idbloquehorario`  INTEGER PRIMARY KEY AUTOINCREMENT,  `horainicio`  TEXT, `horatermino`  TEXT, `valid`  INTEGER NOT NULL DEFAULT 1)",
+        "CREATE TABLE IF NOT EXISTS `especialistadisponibilidad` ( `idespecialistadisponibilidad`  INTEGER PRIMARY KEY AUTOINCREMENT,  `idespecialista`  INTEGER NOT NULL,  `idbloquehorario`  INTEGER NOT NULL,  `fecha`  TEXT,  `valid`  INTEGER NOT NULL DEFAULT 1);"
       ];
 
       queries.forEach(function(query,index){
@@ -82,7 +84,8 @@ export class LocalDBService {
         "INSERT INTO `especialista` VALUES (1,1,'59530534 ','Joseph','Jimenez',NULL,'joseph@vet.cl',NULL,NULL,NULL,1), (2,1,'212385255','Claudio','Igor',NULL,'claudio@vet.cl','',NULL,NULL,1), (3,2,'51428250','Daniel','Águila',NULL,'daniel@vet.cl','',NULL,NULL,1), (4,2,'10275736k','Hans','Poffald',NULL,'hans@vet.cl',NULL,NULL,NULL,1)",
         "INSERT INTO `duenomascota` VALUES ('13269946',3,'Andrés Osorio','Osorio','Osorio',1,'3 Poniente #10082','+56123413','andres.osorio@ugm.cl',1),('10773614K',5,'María José','Durán','Napolitano',2,'Vicuña Mackenna #10082 ','+56123413','cote@ugm.cl',1), ('139184718',6,'Cristian','Contreras','',2,'Pocuro 8413','+56123413','cristian@ugm.cl',1), ('173158246',4,'Graciela','Baldrich','Guerrero',2,'Pasaje Palqui #874','+56123413','graciela@ugm.cl',1)",
         "INSERT INTO `cita` VALUES (1,'111111111',1,'1',1,1), (2,'222222222',2,'2',1,1), (3,'333333333',2,'3',2,1)",
-        "INSERT INTO `comuna` VALUES (1,1,'Puente Alto',1), (2,1,'La Florida',1), (3,1,'Providencia',1)"
+        "INSERT INTO `comuna` VALUES (1,1,'Puente Alto',1), (2,1,'La Florida',1), (3,1,'Providencia',1)",
+        "INSERT INTO `bloquehorario` VALUES (1,'10:00','10:30',1), (2,'10:30','11:00',1), (3,'11:30','12:00',1)"
       ];
       queries.forEach(function(sql,index){
         tx.executeSql(sql,[],function(tx,results){

@@ -21,11 +21,11 @@ import { TipoMascotaModel } from './../../../../models/TipoMascotaModel';
 import { RazaModel } from './../../../../models/RazaModel';
 
 @Component({
-  selector: 'app-mascotas-registrar',
-  templateUrl: './mascotas-registrar.component.html',
-  styleUrls: ['./mascotas-registrar.component.css']
+  selector: 'app-mascotas-agregar',
+  templateUrl: './mascotas-agregar.component.html',
+  styleUrls: ['./mascotas-agregar.component.css']
 })
-export class MascotasRegistrarComponent implements OnInit {
+export class MascotasAgregarComponent implements OnInit {
 	public registrarForm:FormGroup;
 
 	public rutDuenoControl:AbstractControl;

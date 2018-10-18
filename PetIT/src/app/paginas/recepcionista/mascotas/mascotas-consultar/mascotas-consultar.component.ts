@@ -99,7 +99,7 @@ export class MascotasConsultarComponent implements OnInit {
 	    this.MascotaLocalDBService.obtenerConRut(this.filtroString).then((data:any)=>{
 	      console.log(data);
 	      if(data.result){
-	        this.mascotas = data.mascotas;
+	        this.mascotas = [data.mascota];
 	        this.MzToastService.show(data.mensajes,3000,'green');
 	      } else {
 	      	this.mascotas = new Array<MascotaModel>();

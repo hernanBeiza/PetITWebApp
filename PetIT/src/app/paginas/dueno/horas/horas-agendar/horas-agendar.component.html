@@ -89,7 +89,7 @@
 	</div>
 
 <!-- Ventana modal -->
-<mz-modal #agendarSheetModal [options]="modalOptions">
+<mz-modal #agendarSheetModal [fixedFooter]="true" [options]="modalOptions">
 	<mz-modal-header>
 		<h4>¿Desea tomar esta hora?</h4>
 	</mz-modal-header>
@@ -111,7 +111,7 @@
 	</mz-modal-footer>
 </mz-modal>
 <!-- Ventana modal error -->
-<mz-modal #errorSheetModal [options]="modalOptions">
+<mz-modal #errorSheetModal [fixedFooter]="true" [options]="modalOptions">
 	<mz-modal-header>
 		<h4>Atención</h4>
 	</mz-modal-header>

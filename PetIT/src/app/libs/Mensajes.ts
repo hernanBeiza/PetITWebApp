@@ -68,10 +68,12 @@ export class Mensajes {
 		},
 		'contrasena': {
 			'required':			'La contraseña es obligatoria.',
+			'minlength':		'La contraseña debe ser de al menos de 7 carácter de largo.'
 		},
 		'contrasenaConfirmar': {
 			'required':			'La confirmación de contraseña es obligatoria.',
 			'MatchPassword':	'Las contraseñas no son iguales.',
+			'minlength':		'La contraseña debe ser de al menos de 7 carácter de largo.'
 		},
 	}	
 
@@ -100,7 +102,7 @@ export class Mensajes {
 			'invalidRut':		'El rut es inválido.'
 		},		
 		'rutMascota': {
-			'required':			'El rut del dueño es obligatorio.',
+			'required':			'El rut de la mascota es obligatorio.',
 			'minlength':		'El rut debe ser de al menos de 9 carácter de largo.',
 		},
 		'tipo': {

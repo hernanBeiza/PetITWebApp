@@ -75,6 +75,10 @@ export class DuenosConsultarComponent implements OnInit, OnDestroy {
 		this.stringControl.reset();
 	}
 
+	public onPageChange(page:number): void {
+		console.log(page);
+	}
+	
 	public onSubmit(values:Object):void {
 		this.duenos = new Array<DuenoMascotaModel>();
 	    if (this.buscarForm.valid) {
@@ -105,7 +109,7 @@ export class DuenosConsultarComponent implements OnInit, OnDestroy {
 	    this.DuenoMascotaLocalDBService.obtenerConRut(this.filtroString).then((data:any)=>{
 	      console.log(data);
 	      if(data.result){
-	        this.duenos.push(data.dueno);
+	        this.duenos =[data.dueno];
 	        this.MzToastService.show(data.mensajes,3000,'green');
 	      } else {
 	        this.MzToastService.show(data.errores,5000,'red');
@@ -126,7 +130,7 @@ export class DuenosConsultarComponent implements OnInit, OnDestroy {
 	}
 
 	public irRegistrarMascota(dueno:DuenoMascotaModel): void {
-		this.router.navigate(["/recepcionista/mascotas/registrar/"+dueno.rutdueno]);
+		this.router.navigate(["/recepcionista/mascotas/agregar/"+dueno.rutdueno]);
 	}
 
 	public confirmarEliminar(dueno:DuenoMascotaModel): void {

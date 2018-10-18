@@ -7,6 +7,10 @@ import { LibreriasModule } from './../../../librerias.module';
 import { CompartidoModule } from './../../../compartido/compartido.module';
 
 import { EspecialistasAsignarComponent } from './especialistas-asignar/especialistas-asignar.component';
+import { EspecialistasBloqueComponent } from './especialistas-bloque/especialistas-bloque.component';
+
+import { EspecialistaDisponibilidadLocalDBService } from './../../../services/EspecialistaDisponibilidadLocalDB.service';
+import { BloqueHorarioLocalDBService } from './../../../services/BloqueHorarioLocalDB.service';
 
 @NgModule({
 	imports: [
@@ -18,8 +22,12 @@ import { EspecialistasAsignarComponent } from './especialistas-asignar/especiali
 		LibreriasModule, CompartidoModule,
 		RouterModule
 	],
+	providers: [
+		EspecialistaDisponibilidadLocalDBService,
+		BloqueHorarioLocalDBService
+	],
 	declarations: [
-		EspecialistasAsignarComponent
+		EspecialistasAsignarComponent,EspecialistasBloqueComponent
 	]
 })
 export class EspecialistasModule { }

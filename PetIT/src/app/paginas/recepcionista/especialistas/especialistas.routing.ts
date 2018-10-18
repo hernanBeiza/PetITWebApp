@@ -3,10 +3,12 @@ import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/c
 import { Routes, RouterModule } from '@angular/router';
 
 import { EspecialistasAsignarComponent } from './especialistas-asignar/especialistas-asignar.component';
+import { EspecialistasBloqueComponent } from './especialistas-bloque/especialistas-bloque.component';
 
 
 const routes: Routes = [
   { path: 'asignar',               component: EspecialistasAsignarComponent },
+  { path: 'bloque',               component: EspecialistasBloqueComponent },
 ];
 
 /*

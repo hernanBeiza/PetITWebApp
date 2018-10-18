@@ -2,14 +2,14 @@
 	[id]="'sidenav-demo'"
 	[collapseButtonId]="'btn-sidenav-demo'"
 	[fixed]="true">
-  <mz-sidenav-header>
-    <img id="logo" src="assets/img/petitlogo.png">
-  </mz-sidenav-header>
-  <mz-sidenav-subheader>
-  	Bienvenido {{rol}}
-  </mz-sidenav-subheader>
+	<mz-sidenav-header>
+		<img id="logo" src="assets/img/petitlogo.png">
+	</mz-sidenav-header>
+	<mz-sidenav-subheader>
+		Bienvenido {{rol}}
+	</mz-sidenav-subheader>
   	<span *ngFor="let seccion of secciones">
-		<mz-sidenav-link  [active]="seccion.seleccionada">
+ 		<mz-sidenav-link [active]="seccion.seleccionada" *ngIf="seccion.menu">
 		    <a title="{{seccion.titulo}}" class="enlace" (click)="irSeccion(seccion)">
 		      <i mz-icon-mdi mz-input-prefix [icon]="seccion.icono"></i>
 		      {{seccion.nombre}}
