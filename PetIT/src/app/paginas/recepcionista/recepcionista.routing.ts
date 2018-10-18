@@ -34,18 +34,18 @@ const routes: Routes =
     path: 'recepcionista',  component: RecepcionistaComponent,
     children: [
       { path: 'inicio',             component: InicioComponent },
+      /*
       { path: 'horas',              loadChildren: loadHorasModule },
       { path: 'duenos',             loadChildren: loadDuenosModule },
       { path: 'mascotas',           loadChildren: loadMascotasModule },
       { path: 'especialistas',           loadChildren: loadEspecialistasModule },
       { path: 'notificaciones',     loadChildren: loadNotificacionesModule },
-      /*
+      */
       { path: 'horas',                loadChildren: './horas/horas.module#HorasModule' },
       { path: 'duenos',          loadChildren: './duenos/duenos.module#DuenosModule' },
       { path: 'mascotas',          loadChildren: './mascotas/mascotas.module#MascotasModule' },
       { path: 'especialistas',           loadChildren: './especialistas/especialistas.module#EspecialistasModule'  },
       { path: 'notificaciones',          loadChildren: './notificaciones/notificaciones.module#NotificacionesModule' },
-      */
       /*  
       { path: 'horas',                loadChildren: () => HorasModule },
       { path: 'duenos',          loadChildren: () => DuenosModule },

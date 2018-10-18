@@ -167,6 +167,10 @@ export class EspecialistasAsignarComponent implements OnInit {
 		*/
 	}
 
+	public registrar():void {
+		console.log("registrar");
+	}
+	
 	public asignar(bloque:BloqueHorarioModel):void {
 		console.log(this.especialidadModel);
 		console.log(this.especialistaModel);
