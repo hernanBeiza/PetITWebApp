@@ -143,7 +143,7 @@ export class MascotaLocalDBService {
 	    var db = this.LocalDBService.obtenerDB();
 	    var promesa = new Promise((resolve, reject) => {
 			db.transaction(function (tx){
-		        var sql = "SELECT ma.*,tp.nombre as nombreTipoMascota,ra.nombre AS nombreRaza FROM mascota AS ma INNER JOIN tipomascota AS tp ON ma.idtipomascota = tp.idtipomascota INNER JOIN raza AS ra ON ma.idraza = ra.idraza WHERE ma.nombre LIKE '"+nombre+"'";
+		        var sql = "SELECT ma.*,tp.nombre as nombreTipoMascota,ra.nombre AS nombreRaza FROM mascota AS ma INNER JOIN tipomascota AS tp ON ma.idtipomascota = tp.idtipomascota INNER JOIN raza AS ra ON ma.idraza = ra.idraza WHERE ma.nombre LIKE '%"+nombre+"%'";
 		        console.info(sql);
 		        tx.executeSql(sql,[],function(tx,results){
 					console.log(tx,results,results.rows.length);

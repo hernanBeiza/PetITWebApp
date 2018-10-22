@@ -1,38 +1,39 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import { Router } from '@angular/router';
 
-import { Mensajes } from './../../../../libs/Mensajes';
+import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import * as moment from 'moment'; 
+
+import { Mensajes } from './../../../../../libs/Mensajes';
 
 // Services
-import {EspecialidadLocalDBService} from './../../../../services/EspecialidadLocalDB.service';
-import {EspecialistaLocalDBService} from './../../../../services/EspecialistaLocalDB.service';
-import {CitaLocalDBService} from './../../../../services/CitaLocalDB.service';
-import {BloqueHorarioLocalDBService} from './../../../../services/BloqueHorarioLocalDB.service';
-import {EspecialistaDisponibilidadLocalDBService} from './../../../../services/EspecialistaDisponibilidadLocalDB.service';
+import {EspecialistaLocalDBService} from './../../../../../services/EspecialistaLocalDB.service';
+import {CitaLocalDBService} from './../../../../../services/CitaLocalDB.service';
+import {BloqueHorarioLocalDBService} from './../../../../../services/BloqueHorarioLocalDB.service';
+import {EspecialistaDisponibilidadLocalDBService} from './../../../../../services/EspecialistaDisponibilidadLocalDB.service';
 // Models
-import {EspecialidadModel} from './../../../../models/EspecialidadModel';
-import {EspecialistaModel} from './../../../../models/EspecialistaModel';
-import {EspecialistaDisponibilidadModel} from './../../../../models/EspecialistaDisponibilidadModel';
-
-import {BloqueHorarioModel} from './../../../../models/BloqueHorarioModel';
+import {FechaModel} from './../../../../../models/FechaModel';
+import {EspecialistaModel} from './../../../../../models/EspecialistaModel';
+import {EspecialistaDisponibilidadModel} from './../../../../../models/EspecialistaDisponibilidadModel';
+import {BloqueHorarioModel} from './../../../../../models/BloqueHorarioModel';
 
 @Component({
-  selector: 'app-especialistas-asignar',
-  templateUrl: './especialistas-asignar.component.html',
-  styleUrls: ['./especialistas-asignar.component.css']
+  selector: 'app-bloques-consultar',
+  templateUrl: './bloques-consultar.component.html',
+  styleUrls: ['./bloques-consultar.component.css']
 })
-export class EspecialistasAsignarComponent implements OnInit {
+export class BloquesConsultarComponent implements OnInit {
 
 	public asignarForm:FormGroup;
-	public especialidadControl:AbstractControl;
 	public especialistaControl:AbstractControl;
 	public fechaDesdeControl:AbstractControl;
 	public fechaHastaControl:AbstractControl;
+	public bloqueHorarioControl:AbstractControl;
 
 	public enviandoFlag:boolean = false;
 
-	@ViewChild('registrarSheetModal') registrarSheetModal: MzModalComponent;
+	@ViewChild('anularSheetModal') anularSheetModal: MzModalComponent;
 	@ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
 
 	public formErrors = Mensajes.validacionesAsignar;
@@ -54,17 +55,17 @@ export class EspecialistasAsignarComponent implements OnInit {
 	};
 
 	public errores:string = ""
-	//Arreglo de especialidades
+
 	public bloques:Array<BloqueHorarioModel> = new Array<BloqueHorarioModel>();
-	public especialidades:Array<EspecialidadModel> = new Array<EspecialidadModel>();
+
 	public especialistas:Array<EspecialistaModel> = new Array<EspecialistaModel>();
-
-
-	public especialidadModel:EspecialidadModel;// = new EspecialidadModel();
 	public especialistaModel:EspecialistaModel;// = new EspecialistaModel();
+	public fechaModel:FechaModel;// = new EspecialistaModel();
 
 	public fechaDesde:string;// = "";
 	public fechaHasta:string;// = "";
+
+	public fechas:Array<FechaModel>;
 
 	public opcionesCalendarioDesde: Pickadate.DateOptions = {
 	format: 'dd-mm-yyyy',
@@ -86,69 +87,34 @@ export class EspecialistasAsignarComponent implements OnInit {
 	onClose: () => this.cargarBloques()
 	};
 
-	constructor(private fb:FormBuilder, 
+	public seleccionado:boolean = false;
+
+	constructor(private router:Router, private fb:FormBuilder, 
 	private MzToastService:MzToastService,
-	private EspecialidadLocalDBService:EspecialidadLocalDBService,
 	private EspecialistaLocalDBService:EspecialistaLocalDBService,
 	private EspecialistaDisponibilidadLocalDBService:EspecialistaDisponibilidadLocalDBService,
 	private CitaLocalDBService:CitaLocalDBService,
 	private BloqueHorarioLocalDBService:BloqueHorarioLocalDBService) { }
 
 	ngOnInit(): void { 
-	    console.log("EspecialistasAsignarComponent");
 		this.asignarForm = this.fb.group({
-			'especialidad': [this.especialidadModel, Validators.compose([Validators.required])],
 			'especialista': [this.especialistaModel, Validators.compose([Validators.required])],
 			'fechaDesde': [this.fechaDesde, Validators.compose([Validators.required])],
 			'fechaHasta': [this.fechaHasta, Validators.compose([Validators.required])],
+			'bloqueHorario': [this.seleccionado, Validators.compose([Validators.required])],
 		});
 
-	    this.especialidadControl = this.asignarForm.controls['especialidad'];
 	    this.especialistaControl = this.asignarForm.controls['especialista'];
 	    this.fechaDesdeControl = this.asignarForm.controls['fechaDesde'];
 	    this.fechaHastaControl = this.asignarForm.controls['fechaHasta'];
+	    this.bloqueHorarioControl = this.asignarForm.controls['bloqueHorario'];
 
-		this.cargarEspecialidades();
-		this.cargarBloques();
-	}
-
-	private cargarBloques(): void {
-	    this.BloqueHorarioLocalDBService.obtener().then((data:any)=> {
-	    	if(data.result){
-		    	this.bloques = data.bloques;
-	    	}
-	    },(dataError:any)=>{
-
-	    });
-	}
-
-	private cargarEspecialidades():void {
-	    this.EspecialidadLocalDBService.obtener().then((data:any)=> {
-	      console.log(data);
-	      if(data.result){
-	        this.especialidades = data.especialidades;
-	      }
-	    },(dataError:any)=> {
-	      console.warn(dataError);
-	    });
-	}
-
-	public seleccionarEspecialidad(event):void {
-		this.especialistaControl.reset();
-		this.fechaDesdeControl.reset();
-		this.fechaHastaControl.reset();
-		this.bloques = new Array<BloqueHorarioModel>();    
 		this.cargarEspecialistas();
-	}
 
-	public seleccionarEspecialista(event):void {    
-		this.fechaDesdeControl.reset();
-		this.fechaHastaControl.reset();
-		this.bloques = new Array<BloqueHorarioModel>();    
 	}
 
 	private cargarEspecialistas():void {
-		this.EspecialistaLocalDBService.obtenerConEspecialidad(this.especialidadModel).then((data:any)=>{
+		this.EspecialistaLocalDBService.obtener().then((data:any)=>{
 		  if(data.result){
 		    this.especialistas = data.especialistas;
 		  }
@@ -157,22 +123,101 @@ export class EspecialistasAsignarComponent implements OnInit {
 		});
 	}
 
+	public seleccionarEspecialista(event):void {    
+		this.fechaDesdeControl.reset();
+		this.fechaHastaControl.reset();
+		this.bloques = new Array<BloqueHorarioModel>();    
+	}
+
+	private cargarBloques(): void {
+		this.bloques = new Array<BloqueHorarioModel>();
+	    this.BloqueHorarioLocalDBService.obtener().then((data:any)=> {
+	    	if(data.result){
+		    	this.bloques = data.bloques;
+		    	//Una fecha por cada rango
+		    	this.crearFechas();
+	    	}
+	    },(dataError:any)=>{
+
+	    });
+	}
+
+	//Pasar a un servicio
+	private crearFechas(){
+		let inicio = new Date(this.fechaDesde);
+		let fin = new Date(this.fechaHasta);
+		let rango = this.obtenerFechasSinFinde(inicio,fin);
+		var idFecha:number = 1;
+		this.fechas = new Array<FechaModel>();
+		for (var i = 0; i < rango.length; ++i) {
+			let item:Date = rango[i];
+			for (var j = 0; j < this.bloques.length; ++j) {
+				let bloque:BloqueHorarioModel = this.bloques[j];
+				let fecha:FechaModel = new FechaModel(idFecha,item,bloque);
+				this.fechas.push(fecha);
+				idFecha++;
+			}
+		}
+	}
+	
+	//Pasar a un servicio
+	public obtenerFechasSinFinde(inicio:Date,fin:Date): Array<Date> {
+		//console.log(inicio,fin);
+    	var todas:Array<Date> = new Array<Date>();
+
+    	var start = moment(inicio, 'YYYY-MM-DD');
+    	let end = moment(fin, 'YYYY-MM-DD');
+
+    	//console.log(start,end);
+    	while (start <= end) {
+			if (start.format('ddd') !== 'Sat' && start.format('ddd') !== 'Sun'){ 
+	    		//console.log(start.format("YYYY-MM-DD"));
+	    		todas.push(new Date(start.format("YYYY-MM-DD")));
+			}
+			start = moment(start, 'YYYY-MM-DD').add(1, 'days');
+		}
+		return todas;
+	}
+	  
+
 	public onSubmit(values:Object):void {
-		/*
-		if (this.registrarForm.valid) {
-			this.registrarSheetModal.open();
+		if (this.asignarForm.valid) {
+			console.log(this.especialistaModel);
+			console.log(this.fechaDesde);
+			console.log(this.fechaHasta);
+			console.log(this.bloques);
+			//this.registrarSheetModal.open();
 		} else {
 			this.MzToastService.show("Revisa los datos faltantes",5000);
 		}
-		*/
 	}
 
 	public registrar():void {
-		console.log("registrar");
+		console.warn("registrar");
 	}
 	
+	public anular(fecha:FechaModel): void {
+		console.warn("anular");
+		this.fechaModel = fecha;
+		this.anularSheetModal.open();
+	}
+	public confirmarAnulacion(): void {
+		this.anularSheetModal.close();
+		console.warn("llamar a servicio para anular el bloque horario");
+		this.MzToastService.show("Hora anulada correctamente ¡Esto es una simulación!",4000,'green');
+	}
+
+	public irAgregar():void {
+		if(this.especialistaModel){
+			console.log(this.especialistaModel.rut);
+			this.router.navigate(['/recepcionista/especialistas/bloques/asignar/'+this.especialistaModel.rut]);			
+		} else {
+			this.MzToastService.show("Debes seleccionar un especialista",4000,'red');
+		}
+	}
+
+	/*
 	public asignar(bloque:BloqueHorarioModel):void {
-		console.log(this.especialidadModel);
 		console.log(this.especialistaModel);
 		console.log(this.fechaDesde);
 		console.log(this.fechaHasta);
@@ -180,10 +225,6 @@ export class EspecialistasAsignarComponent implements OnInit {
 
 		var enviar = true;
 		var errores="Le faltó seleccionar:<br>";
-		if(this.especialidadModel==null){
-			enviar = false;
-			errores+="Seleccionar una especialidad<br>";			
-		}
 		if(this.especialistaModel==null){
 			enviar = false;
 			errores+="Seleccionar un especialista<br>";
@@ -222,5 +263,6 @@ export class EspecialistasAsignarComponent implements OnInit {
 			this.errorSheetModal.open();
 		}
 	}
+	*/
 
 }

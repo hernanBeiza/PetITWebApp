@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ISubscription } from "rxjs/Subscription";
 
-import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
 import { MzModalComponent,MzToastService } from 'ng2-materialize';
 
@@ -17,16 +18,19 @@ import { DuenoMascotaLocalDBService} from './../../../../services/DuenoMascotaLo
   templateUrl: './enviar.component.html',
   styleUrls: ['./enviar.component.css']
 })
-export class EnviarComponent implements OnInit {
+export class EnviarComponent implements OnInit, OnDestroy {
 
 	private imagen:File;
 
 	public enviarForm:FormGroup;
 
-	public destinatarioControl:AbstractControl;
+	public ocultoControl:AbstractControl;
+	public destinatariosControl:AbstractControl;
 	public imagenControl:AbstractControl;
 	public tituloControl:AbstractControl;
 	public mensajeControl:AbstractControl;
+
+	public subscription:ISubscription;
 
 	@ViewChild('confirmarSheetModal') confirmarSheetModal: MzModalComponent;
 
@@ -60,17 +64,35 @@ export class EnviarComponent implements OnInit {
 		private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService) { }
 
 	ngOnInit(): void { 
-	    //console.log("EnviarComponent: ngOnInit();");
+
 	    this.enviarForm = this.fb.group({
-	      'destinatarios': [this.seleccionado, Validators.compose([Validators.required])],
+	      'destinatarios': ['',null],
 	      'imagen': [this.notificacionModel.imagen, Validators.compose([Validators.required])],
 	      'titulo': [this.notificacionModel.titulo, Validators.compose([Validators.required,Validators.minLength(9),Validators.maxLength(100)])],
 	      'mensaje': [this.notificacionModel.mensaje, Validators.compose([Validators.required])],
 	    });        
-        this.destinatarioControl = this.enviarForm.controls['destinatarios'];
+
+        this.destinatariosControl = this.enviarForm.controls['destinatarios'];
         this.imagenControl = this.enviarForm.controls['imagen'];
         this.tituloControl = this.enviarForm.controls['titulo'];
         this.mensajeControl = this.enviarForm.controls['mensaje'];
+
+        this.subscription = this.destinatariosControl.valueChanges.subscribe((v)=>{
+        	//console.log(v);
+        	this.ocultoControl.markAsTouched();
+        	if(this.haySeleccionados()){
+	        	this.ocultoControl.setValue(true);
+        	} else {
+        		this.ocultoControl.setValue(null);
+        	}
+        	//console.log(this.ocultoControl.invalid);
+        	//console.log(this.ocultoControl.errors);
+        });
+
+		this.ocultoControl = new FormControl(this.seleccionado, Validators.compose([Validators.required]));
+		this.enviarForm.addControl("oculto",this.ocultoControl);
+
+
 		this.cargarDuenos();
 	}
 
@@ -87,7 +109,6 @@ export class EnviarComponent implements OnInit {
 	}
 
 	public seleccionarTodos(): void {
-		console.log("seleccionarTodos");
 		for (var i = 0; i < this.duenos.length; ++i) {
 			var dueno:DuenoMascotaModel = this.duenos[i];
 			if(dueno.seleccionado){
@@ -103,7 +124,7 @@ export class EnviarComponent implements OnInit {
 	}
 
 	public obtenerArchivos(files:FileList) {
-		console.log("obtenerArchivos");
+		//console.log("obtenerArchivos");
 		//console.log(files);
 		this.imagen = files[0];
 		console.log(this.imagen);
@@ -143,12 +164,9 @@ export class EnviarComponent implements OnInit {
 		return hay;
 	}
 
-	private onValueChanged(data?: any) {
-    	this.formErrors = Validaciones.onValueChanged(data,this.enviarForm,this.formErrors,Mensajes.validacionesEnviarNotificacion);    
-	}
-
 	ngOnDestroy() {
 		//console.log("EnviarComponent: ngOnDestroy();");
+		this.subscription.unsubscribe();
 	}
 
 }

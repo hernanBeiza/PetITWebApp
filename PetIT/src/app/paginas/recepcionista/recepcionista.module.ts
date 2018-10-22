@@ -11,6 +11,7 @@ import { HorasModule } from './horas/horas.module';
 import { DuenosModule } from './duenos/duenos.module';
 import { MascotasModule } from './mascotas/mascotas.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
+import { EspecialistasModule } from './especialistas/especialistas.module';
 
 // Componentes del recepcionista
 import { RecepcionistaComponent } from './recepcionista.component';
@@ -33,7 +34,7 @@ import { DuenosConsultarComponent } from './duenos/duenos-consultar/duenos-consu
 	    CommonModule,
 	    CompartidoModule,
 	    RecepcionistaRoutingModule,
-		HorasModule, DuenosModule, MascotasModule, NotificacionesModule,
+		HorasModule, DuenosModule, MascotasModule, NotificacionesModule, EspecialistasModule
 	],
 	exports: [
 		RouterModule,CompartidoModule

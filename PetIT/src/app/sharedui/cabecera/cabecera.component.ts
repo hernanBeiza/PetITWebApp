@@ -47,7 +47,6 @@ export class CabeceraComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() { 
-		console.log("ngOnInit();");
     	this.Router.events.subscribe((event:Event) => {
     		if(event instanceof NavigationEnd){
 	    		//console.log(event);
@@ -62,14 +61,6 @@ export class CabeceraComponent implements OnInit, OnDestroy {
 		var actual = this.LocationStrategy.path();
         var elementos = actual.split("/");
         elementos.shift();
-        //Para secciones más largas. Eliminar el último parámetro variable
-        //Problema si la ruta es más larga
-        for (var i = 0; i < elementos.length; i++) {
-        	if(elementos.length>3){
-		        elementos.pop();        		
-        	}
-        }
-        
         var seccionActual:string = "/";
         for (var i = 0; i < elementos.length; i++) {
 	    	seccionActual = seccionActual.concat(elementos[i]);
@@ -85,8 +76,7 @@ export class CabeceraComponent implements OnInit, OnDestroy {
 
         for (var i = 0; i < this.secciones.length; ++i) {
         	let seccion:any = this.secciones[i];
-        	//console.log(actual,seccion.link);
-        	if(seccion.link == actual){
+        	if(actual.search(seccion.link)>-1){
         		this.titulo = seccion.titulo;
         		this.bajada = seccion.bajada;
         		break;
@@ -96,7 +86,7 @@ export class CabeceraComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		console.log("ngOnDestroy();");
+		//console.log("ngOnDestroy();");
 	}
 
 }

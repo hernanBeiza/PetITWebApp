@@ -110,6 +110,7 @@ export class HorasConsultarComponent implements OnInit {
 			}
 	    },(dataError:any)=>{
 			console.warn(dataError);
+			this.duenoEncontrado = new DuenoMascotaModel();
 			this.MzToastService.show(dataError.errores,5000,'red');
 	    });
 	}
@@ -127,6 +128,7 @@ export class HorasConsultarComponent implements OnInit {
 			}
 	    },(dataError:any)=>{
 			console.warn(dataError);
+			this.duenoEncontrado = new DuenoMascotaModel();
 			this.MzToastService.show(dataError.errores,5000,'red');
 	    });
 	}

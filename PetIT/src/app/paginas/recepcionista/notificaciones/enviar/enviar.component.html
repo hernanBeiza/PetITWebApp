@@ -24,26 +24,28 @@
 							</tr>
 					    </thead>
 					    <tbody>
+
 				    	    <tr *ngFor="let item of duenos">
-						        <td>{{item.rutdueno}}</td>
+						        <td>{{item.rutdueno | rut}}</td>
 						        <td>{{item.nombres}} {{item.apellidopaterno}}</td>
 						        <td>{{item.direccion}}</td>
 						        <td>
 									<mz-checkbox-container>
 										<input mz-checkbox
-										[formControl]="destinatarioControl" 
+										[formControl]="destinatariosControl" 
 									    [label]="''"
 									    id="{{item.rutdueno}}"
 										[(ngModel)]="item.seleccionado"
-										mz-validation
-								        [errorMessageResource]="formErrors.destinatarios"
-										required
+										mz-validation	
 									    type="checkbox">
 									</mz-checkbox-container>
 							    </td>
-					      </tr>
+							</tr>
 					    </tbody>
 					</table>
+
+			        <mz-error-message [control]="ocultoControl" [errorMessageResource]="formErrors.destinatarios"></mz-error-message>
+
 					<mz-pagination
 						(pageChange)="onPageChange($event)"
 						[currentPage]="1"
@@ -116,7 +118,6 @@
 			</mz-card>
 		</div>
 	</div>
-
 	<!-- Ventana modal detalle Dueño Mascota-->
 	<mz-modal #confirmarSheetModal [fixedFooter]="true" [options]="modalOptions">
 		<mz-modal-header>

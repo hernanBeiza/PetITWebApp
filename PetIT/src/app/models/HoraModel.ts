@@ -1,5 +1,6 @@
 import { EspecialistaModel } from './EspecialistaModel';
 
+
 export class HoraModel {
 	
 	public idhora?: number;
@@ -17,5 +18,6 @@ export class HoraModel {
 		this.hora = hora;
 		this.valid = valid;
 	}
+
 	
 }

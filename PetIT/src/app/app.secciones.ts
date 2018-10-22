@@ -28,6 +28,21 @@ export const secciones: any = {
       menu: true
     },
     { 
+      nombre: "Listar horas", link: "/dueno/horas/listar", icono: "calendar-range", 
+      titulo: "Listar Horas", bajada: "Horas agendadas de tu mascota",
+      menu: false
+    },
+    { 
+      nombre: "Agendar horas", link: "/dueno/horas/agendar", icono: "calendar-range", 
+      titulo: "Agendar Horas", bajada: "Agendar una hora para tu mascota",
+      menu: false
+    },
+    { 
+      nombre: "Modificar horas", link: "/dueno/horas/modificar", icono: "calendar-range", 
+      titulo: "Modificar Horas", bajada: "Modificar la hora de tu mascota",
+      menu: false
+    },
+    { 
       nombre: "Notificaciones",link: "/dueno/notificaciones/leer",icono: "send", 
       titulo: "Notificaciones", bajada: "Lee tus notificaciones",
       menu: true
@@ -61,8 +76,13 @@ export const secciones: any = {
       menu: false
     },
     { 
-      nombre: "Cupos de atención", link: "/recepcionista/especialistas/asignar", icono: "clock", 
-      titulo: "Cupos de Atención", bajada: "Gestiona los horarios de los veterinarios",
+      nombre: "Cupos de atención", link: "/recepcionista/especialistas/bloques/consultar", icono: "clock", 
+      titulo: "Cupos de Atención", bajada: "Desde aquí podrás realizar consultas de los horarios de los profesionales",
+      menu: true
+    },
+    { 
+      nombre: "Cupos de atención", link: "/recepcionista/especialistas/bloques/asignar", icono: "clock", 
+      titulo: "Cupos de Atención", bajada: "Desde aqui podrás realizar la asignación de los horarios a los profesionales",
       menu: true
     },
     { 

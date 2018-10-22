@@ -2,30 +2,13 @@
     <div class="col s12 m12">
 		<mz-card [hoverable]="true">
 			<mz-card-title>
-				Asignar un bloque horario a un especialista
+				Gestión de bloques horarios
 			</mz-card-title>
 			<mz-card-content>
 				<mz-card-content>
 	                <form
 	                [formGroup]="asignarForm" 
-	                (ngSubmit)="onSubmit(asignarForm.value)">		
-						<mz-select-container class="col s12 m12">
-							<i mz-icon-mdi mz-input-prefix [icon]="'pill'"></i>
-							<select mz-select
-							(change)="seleccionarEspecialidad($event);"
-							id="especialidad"
-							formControlName="especialidad"
-							[label]="'Especialidad'"
-							[placeholder]="'1. Seleccionar especialidad'"
-	    					[(ngModel)]="especialidadModel"
-							mz-validation required
-					        [errorMessageResource]="formErrors.idespecialidad">
-							<option class="left circle"	*ngFor="let item of especialidades"
-							[ngValue]="item">
-								{{item?.nombre}}
-							</option>
-							</select>
-						</mz-select-container>
+	                (ngSubmit)="onSubmit(asignarForm.value)">
 						<mz-select-container class="col s12 m12">
 							<i mz-icon-mdi mz-input-prefix [icon]="'medical-bag'"></i>
 							<select mz-select
@@ -33,7 +16,7 @@
 							id="especialista"
 							formControlName="especialista"
 							[label]="'Especialista'"
-							[placeholder]="'2. Seleccionar Especialista'"
+							[placeholder]="'1. Seleccionar Especialista'"
 	    					[(ngModel)]="especialistaModel"
 							mz-validation required
 					        [errorMessageResource]="formErrors.idespecialista">
@@ -49,7 +32,7 @@
 							id="fechaDesde"
 							formControlName="fechaDesde"
 							[label]="'Fecha Desde'"
-							[placeholder]="'3. Fecha Desde'"
+							[placeholder]="'2. Fecha Desde'"
 	    					[(ngModel)]="fechaDesde"
 							mz-validation required
 							[errorMessageResource]="formErrors.fechaDesde"
@@ -61,7 +44,7 @@
 							id="fechaHasta"
 							formControlName="fechaHasta"
 							[label]="'Fecha Hasta'"
-							[placeholder]="'4. Fecha Hasta'"
+							[placeholder]="'3. Fecha Hasta'"
 	    					[(ngModel)]="fechaHasta"
 							mz-validation required
 							[errorMessageResource]="formErrors.fechaHasta"
@@ -70,39 +53,32 @@
 						<table class="striped">
 						    <thead>
 						      <tr>
-						          <th>Desde</th>
-						          <th>Hasta</th>
-						          <th>Acciones</th>
+						          <th>Fecha</th>
+						          <th>Hora</th>
+						          <th>Anular</th>
 						      </tr>
 						    </thead>
 						    <tbody>
-					    	    <tr *ngFor="let item of bloques">
-						        <td>{{item.horainicio}}</td>
-						        <td>{{item.horatermino}}</td>
+					    	    <tr *ngFor="let item of fechas">
+						        <td>{{item.obtenerFechaEnString()}}</td>
+						        <td>De {{item.bloqueHorarioModel.horainicio}} a {{item.bloqueHorarioModel.horatermino}}</td>
 							    <td>
-									<mz-checkbox-container>
-										<input mz-checkbox
-										[formControl]="destinatarioControl" 
-									    [label]="''"
-									    id="{{item.rutdueno}}"
-										[(ngModel)]="item.seleccionado"
-										mz-validation
-								        [errorMessageResource]="formErrors.destinatarios"
-										required
-									    type="checkbox">
-									</mz-checkbox-container>
-							    	<button mz-button type="button" (click)="asignar(item)">Asignar</button>
+									<a (click)="anular(item);" style="cursor: pointer;" mz-tooltip [tooltip]="'Anular este bloque horario'" [position]="'top'">
+										<i mz-icon-mdi mz-input-prefix [icon]="'delete'"></i>
+									</a>
 							    </td>					      
 								</tr>
 						    </tbody>
-						</table>	
+						</table>
 						<!--
 	                    <button mz-button type="submit" 
 	                    [disabled]="!asignarForm.valid || enviandoFlag"
-	                    name="action">Reservar</button>
+	                    name="action">Agregar horario</button>
 		                -->
 					</form>
-
+						<br/>
+						<boton-volver></boton-volver>
+		                <button mz-button (click)="irAgregar();">Agregar horario</button>		               
 				</mz-card-content>
 			</mz-card-content>
 		</mz-card>
@@ -110,16 +86,18 @@
 </div>
 
 <!-- Ventana modal -->
-<mz-modal #registrarSheetModal [fixedFooter]="true" [options]="modalOptions">
+<mz-modal #anularSheetModal [fixedFooter]="true" [options]="modalOptions">
 	<mz-modal-header>
-		<h4>¿Desea registrar este bloque horario?</h4>
+		<h4>¿Desea anular este bloque horario?</h4>
+		<p>Nombre Especialista: {{especialistaModel?.nombres}} {{especialistaModel?.apellidopaterno}} {{especialistaModel?.apellidomaterno}}</p>
+		<p>Fecha: {{fechaModel?.obtenerFechaEnString()}} a las {{fechaModel?.bloqueHorarioModel?.horainicio}}</p>
 	</mz-modal-header>
 	<mz-modal-content>
 
 	</mz-modal-content>
 	<mz-modal-footer>
-		<button mz-button [flat]="true" class="green" (click)="registrar();">Registrar</button>
-		<button mz-button [flat]="true" class="red" mz-modal-close>Cancelar</button>
+		<button mz-button [flat]="true" class="red" (click)="confirmarAnulacion();">Anular</button>
+		<button mz-button [flat]="true" mz-modal-close>Cancelar</button>
 	</mz-modal-footer>
 </mz-modal>
 <!-- Ventana modal error -->

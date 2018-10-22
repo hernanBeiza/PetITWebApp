@@ -247,6 +247,67 @@ export class CitaLocalDBService {
     return promesa;    
   }
 
+  public obtenerUltimasDeDueno(dueno:DuenoMascotaModel): Promise<Object> {
+    //console.log("CitaLocalDBService: obtenerUltimasDeDueno();");
+    var db = this.LocalDBService.obtenerDB();
+    var promesa = new Promise((resolve, reject) => {
+      db.transaction(function (tx){
+        var sql = "SELECT ci.*, strftime('%d-%m-%Y', ho.fecha) AS fecha, ho.hora,ma.rutdueno, ma.nombre AS nombreMascota, du.nombres AS nombreDueno, du.apellidopaterno AS paternoDueno, du.apellidomaterno AS maternoDueno, es.nombres AS nombreEspecialista, es.apellidopaterno AS paternoEspecialista, es.apellidomaterno AS maternoEspecialista, esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.rutmascota = ma.rutmascota  INNER JOIN duenomascota AS du ON ma.rutdueno = du.rutdueno  INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad INNER JOIN hora AS ho ON ci.idhora = ho.idhora WHERE ma.rutdueno = '"+dueno.rutdueno+"' ORDER BY ci.idcita DESC LIMIT 5";
+        console.info(sql);
+        tx.executeSql(sql,[],function(tx,results){
+          //console.log(tx,results,results.rows.length);
+          var citas:Array<CitaModel>= new Array<CitaModel>();
+          if(results.rows.length>0){
+            var rows:SQLResultSetRowList = results.rows as SQLResultSetRowList;
+            var item:any = rows.item(0) as any;
+            //console.log(item);
+
+            var dueno:DuenoMascotaModel = new DuenoMascotaModel();
+            dueno.rutdueno = item.rutdueno;
+            dueno.nombres = item.nombreDueno;
+            dueno.apellidopaterno = item.paternoDueno;
+            dueno.apellidomaterno = item.maternoDueno;
+
+            var mascota:MascotaModel = new MascotaModel();
+            mascota.rutmascota = item.rutmascota;
+            mascota.nombre = item.nombreMascota;
+
+            var especialidad:EspecialidadModel = new EspecialidadModel();
+            especialidad.nombre = item.nombreEspecialidad;
+
+            var especialista:EspecialistaModel = new EspecialistaModel();
+            especialista.nombres = item.nombreEspecialista;
+            especialista.apellidopaterno = item.paternoEspecialista;
+            especialista.apellidomaterno = item.maternoEspecialista;
+
+            var hora:HoraModel = new HoraModel();
+            hora.fecha = item.fecha;
+            hora.hora = item.hora;
+
+            let cita:CitaModel = new CitaModel(item.idcita,item.rutmascota,item.idespecialista,item.idhora,item.origen,item.valid);
+            cita.duenoMascotaModel = dueno;
+            cita.mascotaModel = mascota;
+            cita.especialistaModel = especialista;
+            cita.horaModel = hora;
+
+            citas.push(cita);
+            var result = {result:true,mensajes:"Citas encontradas",citas:citas};
+            resolve(result);
+          } else {
+            var resultError = {result:false,errores:"No se han encontrado cita"};
+            reject(resultError);                        
+          }
+        },function(tx,results){
+          console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          reject(result);            
+          return false;
+        });
+      });
+    });
+    return promesa;    
+  }
+
   public obtenerConID(idcita:number): Promise<Object> {
     //console.log("CitaLocalDBService: obtenerConID();");
     var db = this.LocalDBService.obtenerDB();

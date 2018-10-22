@@ -1,6 +1,6 @@
 # PetITWebApp
 
-Aplicación web de toma de hora. Este proyecto fue creado usando Angular CLI, Angular 5
+Aplicación web de toma de hora. Este proyecto fue creado usando Angular CLI, Angular 5 y Angular CLI 1.6.6
 
 ## Empezar
 Instalar las dependencias usando `npm install` en la carpeta del proyecto

@@ -140,9 +140,6 @@ export class Mensajes {
 	}
 
 	public static validacionesAsignar = {
-		'idespecialidad': {
-			'required': 	'La especialidad es obligatoria.'
-		},
 		'idespecialista': {
 			'required':  	'El especialista es obligatorio.',
 		},
@@ -151,6 +148,9 @@ export class Mensajes {
 		},
 		'fechaHasta': {
 			'required':     'La fecha es obligatorio.',
+		},
+		'bloqueHorario': {
+			'required':     'Al menos debe seleccionar un bloque horario.',
 		},
 	}
 

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
 import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { MzModalComponent,MzToastService } from 'ng2-materialize';

@@ -130,6 +130,7 @@ export class DuenosAgregarComponent implements OnInit {
 			this.registrarSheetModal.close();
 			if(data.result){
 				this.MzToastService.show(data.mensajes,3000,'green');
+				console.warn("Crear usuario");
 				this.registrarForm.reset();
 			} else {
 				this.MzToastService.show(data.errores,5000,'red');

@@ -1,0 +1,121 @@
+<div class="row">
+    <div class="col s12 m12">
+		<mz-card [hoverable]="false">
+			<mz-card-title>
+				Especialista: {{especialistaModel.nombres}} {{especialistaModel.apellidopaterno}} {{especialistaModel.apellidomaterno}}
+			</mz-card-title>
+			<!--
+			<mz-card-content>
+			</mz-card-content>
+			-->
+		</mz-card>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col s12 m12">
+		<mz-card [hoverable]="true">
+			<mz-card-title>
+				Gestión de bloques horarios
+			</mz-card-title>
+			<mz-card-content>
+                <form
+                [formGroup]="asignarForm" 
+                (ngSubmit)="onSubmit(asignarForm.value)">
+					<mz-datepicker-container class="col s12 m6">
+						<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
+				        <input mz-datepicker
+						id="fechaDesde"
+						formControlName="fechaDesde"
+						[label]="'Fecha Desde'"
+						[placeholder]="'1. Fecha Desde'"
+    					[(ngModel)]="fechaDesde"
+						mz-validation required
+						[errorMessageResource]="formErrors.fechaDesde"
+						[options]="opcionesCalendarioDesde">
+					</mz-datepicker-container>
+					<mz-datepicker-container class="col s12 m6">
+						<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
+				        <input mz-datepicker
+						id="fechaHasta"
+						formControlName="fechaHasta"
+						[label]="'Fecha Hasta'"
+						[placeholder]="'2. Fecha Hasta'"
+    					[(ngModel)]="fechaHasta"
+						mz-validation required
+						[errorMessageResource]="formErrors.fechaHasta"
+						[options]="opcionesCalendarioHasta">
+					</mz-datepicker-container>
+					<table class="striped">
+					    <thead>
+					      <tr>
+					          <th>Fecha</th>
+					          <th>Hora</th>
+					          <th>Reservar
+									<mz-checkbox-container>
+									<input mz-checkbox
+									(change)="seleccionarTodos();"
+									[label]="'Marcar todos'"
+									id="seleccionar"
+									type="checkbox">
+									</mz-checkbox-container>
+					          </th>
+					      </tr>
+					    </thead>
+					    <tbody>
+				    	    <tr *ngFor="let item of fechas">
+						        <td>{{item.obtenerFechaEnString()}}</td>
+						        <td>De {{item.bloqueHorarioModel.horainicio}} a {{item.bloqueHorarioModel.horatermino}}</td>
+							    <td>
+									<mz-checkbox-container>
+										<input mz-checkbox
+										[formControl]="bloquesControl" 
+									    [label]="''"
+									    id="{{item.idFecha}}"
+										[(ngModel)]="item.seleccionado"
+										mz-validation	
+									    type="checkbox">
+									</mz-checkbox-container>
+							    </td>
+							</tr>
+					    </tbody>
+					</table>
+			        <mz-error-message [control]="ocultoControl" [errorMessageResource]="formErrors.bloqueHorario"></mz-error-message>
+					<br/>
+					<boton-volver></boton-volver>
+                    <button mz-button type="submit" 
+                    [disabled]="!asignarForm.valid || enviandoFlag"
+                    name="action">Asignar bloque horario</button>
+				</form>
+			</mz-card-content>
+		</mz-card>
+	</div>
+</div>
+
+<!-- Ventana modal -->
+<mz-modal #anularSheetModal [fixedFooter]="true" [options]="modalOptions">
+	<mz-modal-header>
+		<h4>¿Desea anular este bloque horario?</h4>
+		<p>Nombre Especialista: {{especialistaModel?.nombres}} {{especialistaModel?.apellidopaterno}} {{especialistaModel?.apellidomaterno}}</p>
+		<p>Fecha: {{fechaModel?.obtenerFechaEnString()}} a las {{fechaModel?.bloqueHorarioModel?.horainicio}}</p>
+	</mz-modal-header>
+	<mz-modal-content>
+
+	</mz-modal-content>
+	<mz-modal-footer>
+		<button mz-button [flat]="true" class="red" (click)="confirmarAnulacion();">Anular</button>
+		<button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+	</mz-modal-footer>
+</mz-modal>
+<!-- Ventana modal error -->
+<mz-modal #errorSheetModal [fixedFooter]="true" [options]="modalOptions">
+	<mz-modal-header>
+		<h4>Atención</h4>
+	</mz-modal-header>
+	<mz-modal-content>
+		<div [innerHTML]="errores"></div>
+	</mz-modal-content>
+	<mz-modal-footer>
+		<button mz-button [flat]="true" mz-modal-close>Ok</button>
+	</mz-modal-footer>
+</mz-modal>

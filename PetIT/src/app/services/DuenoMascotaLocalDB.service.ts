@@ -19,6 +19,27 @@ export class DuenoMascotaLocalDBService {
   constructor(private LocalDBService:LocalDBService) { }
 
   public guardar(dueno:DuenoMascotaModel): Promise<Object> {
+    //ver si existe antes un dueño con ese rut
+    var promesa = new Promise((resolve, reject) => {
+      this.obtenerConRut(dueno.rutdueno).then((data:any)=>{
+        console.log(data);
+        if(data.result){
+          var result = {result:false,errores:"Ya existe dueño con rut"+dueno.rutdueno};
+          reject(result);
+        } else {
+          //No existe, guardar
+          return this.guardarDueno(dueno);
+        }
+      },(dataError:any)=>{
+        console.error(dataError);
+        //No existe, guardar
+        return this.guardarDueno(dueno);
+      });
+    });
+    return promesa;
+  } 
+
+  private guardarDueno(dueno:DuenoMascotaModel): Promise<Object>{
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -41,8 +62,8 @@ export class DuenoMascotaLocalDBService {
         });
       });
     });
-    return promesa;    
-  }  
+    return promesa;
+  }
 
   public modificar(dueno:DuenoMascotaModel): Promise<Object> {
     var db = this.LocalDBService.obtenerDB();
@@ -168,7 +189,6 @@ export class DuenoMascotaLocalDBService {
   }
 
   public obtenerConRut(rutdueno:string): Promise<Object> {
-    console.log("DuenoMascotaLocalDB: obtenerConRut();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -207,11 +227,10 @@ export class DuenoMascotaLocalDBService {
 
 
   public obtenerConNombreApellido(dato:string): Promise<Object> {
-    console.log("DuenoMascotaLocalDB: obtenerConNombreApellido();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT du.rutdueno AS rutDueno, du.*,  co.nombre AS nombreComuna, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza,ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du LEFT JOIN mascota AS ma ON du.rutdueno = ma.rutdueno INNER JOIN comuna AS co ON du.idcomuna = co.idcomuna WHERE du.nombres LIKE '"+dato.toString()+ "%' OR du.apellidopaterno LIKE '"+dato.toString()+"%' OR du.apellidomaterno LIKE '"+dato.toString()+"%' LIMIT 1";
+        var sql = "SELECT du.rutdueno AS rutDueno, du.*,  co.nombre AS nombreComuna, ma.rutmascota,ma.rutdueno,ma.nombre as nombreMascota,ma.idtipomascota,ma.idraza,ma.peso,ma.edad,ma.valid AS validMascota FROM duenomascota AS du LEFT JOIN mascota AS ma ON du.rutdueno = ma.rutdueno INNER JOIN comuna AS co ON du.idcomuna = co.idcomuna WHERE du.nombres LIKE '%"+dato.toString()+ "%' OR du.apellidopaterno LIKE '%"+dato.toString()+"%' OR du.apellidomaterno LIKE '%"+dato.toString()+"%' LIMIT 1";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -246,8 +265,6 @@ export class DuenoMascotaLocalDBService {
 
 
   public obtenerDuenoConMascota(rutdueno:string,rutmascota:string): Promise<Object> {
-    console.log("DuenoMascotaLocalDB: obtenerDuenoConMascota();");
-
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
@@ -279,8 +296,6 @@ export class DuenoMascotaLocalDBService {
   }
 
   public obtenerConIDUsuario(idusuario:number): Promise<Object> {
-    console.log("DuenoMascotaLocalDB: obtenerConIDUsuario();");
-
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){

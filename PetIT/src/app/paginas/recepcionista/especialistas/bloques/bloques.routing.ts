@@ -2,20 +2,12 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
-import { EspecialistasComponent } from './especialistas.component';
+import { BloquesConsultarComponent } from './bloques-consultar/bloques-consultar.component';
+import { BloquesAsignarComponent } from './bloques-asignar/bloques-asignar.component';
 
-import { BloquesModule } from './bloques/bloques.module';
-
-export function loadBloquesModule() {
-  return BloquesModule;
-}
 const routes: Routes = [
-  {
-    path: '',  component: EspecialistasComponent,
-    children: [
-      { path: 'bloques',             loadChildren: loadBloquesModule },
-    ]
-  }
+  { path: 'consultar',               component: BloquesConsultarComponent },
+  { path: 'asignar/:rut',               component: BloquesAsignarComponent },
 ];
 
 /*
@@ -34,4 +26,4 @@ const routes: Routes = [
 export class RecepcionistaRoutingModule { }
 */
 
-export const EspecialistasRoutingModule: ModuleWithProviders = RouterModule.forChild(routes);
+export const BloquesRoutingModule: ModuleWithProviders = RouterModule.forChild(routes);
