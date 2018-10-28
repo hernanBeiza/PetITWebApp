@@ -4,9 +4,12 @@ import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/c
 import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './paginas/login/login.component';
+import { RecuperarComponent } from './paginas/recuperar/recuperar.component';
 
 const routes: Routes = [
   { path: 'login',              component: LoginComponent },
+  { path: '',              component: LoginComponent },
+  { path: 'recuperar',              component: RecuperarComponent },
   { path: '',                   redirectTo: 'login', pathMatch: 'full' }
   // { path: '**',        component: NotFoundComponent },
 ];

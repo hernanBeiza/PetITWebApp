@@ -74,7 +74,7 @@ export class BloquesConsultarComponent implements OnInit {
 	today: 'Hoy',
 	clear: 'Limpiar',
 	close: 'OK',
-	onClose: () => { }
+	onClose: () => { this.cargarBloques()}
 	};
 
 	public opcionesCalendarioHasta: Pickadate.DateOptions = {
@@ -110,7 +110,6 @@ export class BloquesConsultarComponent implements OnInit {
 	    this.bloqueHorarioControl = this.asignarForm.controls['bloqueHorario'];
 
 		this.cargarEspecialistas();
-
 	}
 
 	private cargarEspecialistas():void {
@@ -126,29 +125,38 @@ export class BloquesConsultarComponent implements OnInit {
 	public seleccionarEspecialista(event):void {    
 		this.fechaDesdeControl.reset();
 		this.fechaHastaControl.reset();
-		this.bloques = new Array<BloqueHorarioModel>();    
 	}
 
 	private cargarBloques(): void {
-		this.bloques = new Array<BloqueHorarioModel>();
-	    this.BloqueHorarioLocalDBService.obtener().then((data:any)=> {
-	    	if(data.result){
-		    	this.bloques = data.bloques;
-		    	//Una fecha por cada rango
-		    	this.crearFechas();
-	    	}
-	    },(dataError:any)=>{
+		if(this.fechaDesde!=null && this.fechaHasta!=null){
+			console.log("cargarBloques");
+			console.log(this.fechaDesde,this.fechaHasta);
 
-	    });
+			this.bloques = new Array<BloqueHorarioModel>();
+		    this.BloqueHorarioLocalDBService.obtener().then((data:any)=> {
+		    	if(data.result){
+			    	this.bloques = data.bloques;
+			    	//Una fecha por cada rango
+			    	this.crearFechas();
+		    	}
+		    },(dataError:any)=>{
+
+		    });			
+		}
 	}
 
 	//Pasar a un servicio
 	private crearFechas(){
+		console.log("crearFechas();");
 		let inicio = new Date(this.fechaDesde);
 		let fin = new Date(this.fechaHasta);
+		//console.log(inicio.toUTCString(),fin.toUTCString());
+
 		let rango = this.obtenerFechasSinFinde(inicio,fin);
+		
 		var idFecha:number = 1;
 		this.fechas = new Array<FechaModel>();
+
 		for (var i = 0; i < rango.length; ++i) {
 			let item:Date = rango[i];
 			for (var j = 0; j < this.bloques.length; ++j) {
@@ -158,27 +166,29 @@ export class BloquesConsultarComponent implements OnInit {
 				idFecha++;
 			}
 		}
+
 	}
 	
 	//Pasar a un servicio
 	public obtenerFechasSinFinde(inicio:Date,fin:Date): Array<Date> {
-		//console.log(inicio,fin);
+		console.log("obtenerFechasSinFinde();");
+
     	var todas:Array<Date> = new Array<Date>();
 
-    	var start = moment(inicio, 'YYYY-MM-DD');
-    	let end = moment(fin, 'YYYY-MM-DD');
+    	var start = moment(inicio, 'YYYY-MM-DD').utc(false);
+    	let end = moment(fin, 'YYYY-MM-DD').utc(false);
 
-    	//console.log(start,end);
+    	//Ojo con la zona horario. Se usa UTC
     	while (start <= end) {
-			if (start.format('ddd') !== 'Sat' && start.format('ddd') !== 'Sun'){ 
-	    		//console.log(start.format("YYYY-MM-DD"));
-	    		todas.push(new Date(start.format("YYYY-MM-DD")));
+			if (start.format('ddd') !== 'Sat' && start.format('ddd') !== 'Sun'){
+				//console.log(start.format("ddd"));
+	    		//console.log(start.utc(false).format("YYYY-MM-DD"));
+	    		todas.push(new Date(start.utc(false).format("YYYY-MM-DD")));
 			}
-			start = moment(start, 'YYYY-MM-DD').add(1, 'days');
+			start = moment(start, 'YYYY-MM-DD').utc(false).add(1, 'days');
 		}
 		return todas;
 	}
-	  
 
 	public onSubmit(values:Object):void {
 		if (this.asignarForm.valid) {
@@ -201,6 +211,7 @@ export class BloquesConsultarComponent implements OnInit {
 		this.fechaModel = fecha;
 		this.anularSheetModal.open();
 	}
+
 	public confirmarAnulacion(): void {
 		this.anularSheetModal.close();
 		console.warn("llamar a servicio para anular el bloque horario");

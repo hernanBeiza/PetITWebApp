@@ -16,6 +16,7 @@ import { MzToastService } from 'ng2-materialize';
 export class InformeGenerarComponent implements OnInit {
 
 	public generarForm:FormGroup;
+	public tipo:AbstractControl;
 	public inicio:AbstractControl;
 	public termino:AbstractControl;
 
@@ -60,16 +61,25 @@ export class InformeGenerarComponent implements OnInit {
 	public pieChartData:number[] = [300, 500, 100];
 	public pieChartType:string = 'pie';
  
+ 	public tipos:Array<any> = new Array<any>(
+ 		{id:1,texto:"Primero"},
+ 		{id:2,texto:"Segundo"},
+ 		{id:3,texto:"Tercero"}
+	);
+ 	public tipoInforme:string = "primero";
+
 	constructor(private fb:FormBuilder, private MzToastService: MzToastService) { }
 
 	ngOnInit() {
 		console.log("ngOnInit();");
 
 	    this.generarForm = this.fb.group({
+	      'tipo': [this.tipoInforme, Validators.compose([Validators.required])],
 	      'inicio': [this.informeModel.fechaInicio, Validators.compose([Validators.required])],
 	      'termino': [this.informeModel.fechaTermino, Validators.compose([Validators.required])]
 	    });
 
+	    this.tipo = this.generarForm.controls['tipo'];
 	    this.inicio = this.generarForm.controls['inicio'];
 	    this.termino = this.generarForm.controls['termino'];
 
@@ -85,6 +95,7 @@ export class InformeGenerarComponent implements OnInit {
 
 	public generarInforme():void {
 		console.log("generarInforme");
+		console.log(this.tipoInforme);
 		console.log(this.informeModel);
 		this.enviandoFlag = true;
 	    this.MzToastService.show("Estadísticas Generadas",3000);

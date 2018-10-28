@@ -17,7 +17,7 @@ export class FechaModel {
 	}
 	
 	public obtenerFechaEnString():string {
-		let fecha =  moment(this.fecha).format('DD-MM-YYYY');						
+		let fecha =  moment(this.fecha).utc(false).format('DD-MM-YYYY');						
 		return fecha;
 	}
 

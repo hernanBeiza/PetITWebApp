@@ -9,6 +9,8 @@ export class EspecialistasComponent implements OnInit {
 	
 	constructor() { }
 
-	ngOnInit() { }
+	ngOnInit() { 
+		console.log("ngOnInit();");
+	}
 
 }

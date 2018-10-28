@@ -20,6 +20,7 @@ export class InicioComponent implements OnInit {
 
 	ngOnInit() {
 		console.log("ngOnInit();");
+		/*
 		this.CitaLocalDBService.obtenerUltimas().then((data:any) => {
 			console.log(data);
 			if(data.result){
@@ -32,6 +33,7 @@ export class InicioComponent implements OnInit {
 			console.error(dataError);
 			this.MzToastService.show(dataError.errores,5000,'red');
 		});
+		*/
 	}
 
 	ngOnDestroy() {

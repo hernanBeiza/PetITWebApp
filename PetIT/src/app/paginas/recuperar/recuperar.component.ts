@@ -17,15 +17,14 @@ import { MzToastService } from 'ng2-materialize';
 import { RutValidator } from 'ng2-rut';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-recuperar',
+  templateUrl: './recuperar.component.html',
+  styleUrls: ['./recuperar.component.css']
 })
-export class LoginComponent implements OnInit {
+export class RecuperarComponent implements OnInit {
 
-  public loginForm:FormGroup;
+  public recuperarForm:FormGroup;
   public rut:AbstractControl;
-  public contrasena:AbstractControl;
 
   public enviandoFlag:boolean = false;
 
@@ -40,26 +39,23 @@ export class LoginComponent implements OnInit {
     private MzToastService: MzToastService) { }
 
   ngOnInit(): void { 
-    this.loginForm = this.fb.group({
-      'rut': [this.usuarioModel.rut, Validators.compose([Validators.required,Validators.maxLength(12)])],
-      'contrasena': [this.usuarioModel.password, Validators.compose([Validators.required, Validators.minLength(7)])],
+    this.recuperarForm = this.fb.group({
+      'rut': [this.usuarioModel.rut, Validators.compose([Validators.required,Validators.maxLength(12)])]
     });
 
-    this.rut = this.loginForm.controls['rut'];
-    this.contrasena = this.loginForm.controls['contrasena'];
-    //this.loginForm.valueChanges.subscribe(data => this.onValueChanged(data));
-    //this.onValueChanged(); // (re)set validation messages now
+    this.rut = this.recuperarForm.controls['rut'];
   }
 
   public onSubmit(values:Object):void {
-    if (this.loginForm.valid) {
-      this.iniciarSesion();
+    if (this.recuperarForm.valid) {
+      this.recuperar();
     } else {
       this.MzToastService.show("¡Error! Revisa tus datos de acceso",4000);
     }
   }
 
-  private iniciarSesion(): void {
+  private recuperar(): void {
+    /*
     this.UsuarioLocalDBService.iniciarSesion(this.usuarioModel.rut,this.usuarioModel.password).then((data:any) => {
       console.log(data);
       if(data.result){
@@ -96,14 +92,8 @@ export class LoginComponent implements OnInit {
       console.error(dataError);
       this.MzToastService.show(dataError.errores,4000,'red');
     });
-  }
-
-  public irRecuperar():void {
-    this.router.navigate(["recuperar"]);
-  }
-  
-  private onValueChanged(data?: any) {
-    this.formErrors = Validaciones.onValueChanged(data,this.loginForm,this.formErrors,Mensajes.validacionesLogin);    
+    */
+    this.MzToastService.show("Se han enviado a tu email las instrucciones de recuperación",4000,'green');
   }
 
   ngOnDestroy() {

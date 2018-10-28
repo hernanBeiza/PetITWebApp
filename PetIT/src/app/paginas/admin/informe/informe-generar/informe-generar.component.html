@@ -8,9 +8,21 @@
 				<form 
 		        [formGroup]="generarForm" 
 		        (ngSubmit)="onSubmit(generarForm.value)">
-					<div class="row"></div>
-					<div class="row">
-						<mz-datepicker-container class="col s12 m12">
+		        	<div class="col s12 m6">
+						<mz-radio-button-container *ngFor="let item of tipos">
+						  <input mz-radio-button
+						    [label]="item.texto"
+						    [withGap]="true"
+						    [value]="item.id"
+						    [(ngModel)]="tipoInforme"
+						    formControlName="tipo"
+						    id="{{item.texto}}"
+						    name="tipo"
+						    type="radio">
+						</mz-radio-button-container>
+					</div>
+		        	<div class="col s12 m6">
+						<mz-datepicker-container>
 							<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
 					        <input mz-datepicker mz-validation required 
 							id="inicio"
@@ -21,7 +33,7 @@
 							[options]="opcionesCalendario"
 							[label]="'Fecha Inicio'" />
 						</mz-datepicker-container>
-						<mz-datepicker-container class="col s12 m12">
+						<mz-datepicker-container>
 							<i mz-icon-mdi mz-input-prefix [icon]="'calendar'"></i>
 					        <input mz-datepicker mz-validation required 
 							id="termino"

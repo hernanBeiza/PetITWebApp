@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LoginComponent } from './login/login.component';
+import { RecuperarComponent } from './recuperar/recuperar.component';
 
 import { AdminModule } from './admin/admin.module';
 import { RecepcionistaModule } from './recepcionista/recepcionista.module';
@@ -16,7 +17,7 @@ import { UsuarioLocalDBService } from './../services/UsuarioLocalDB.service';
     AdminModule,RecepcionistaModule,DuenoModule
   ],
   declarations: [
-    LoginComponent,
+    LoginComponent,RecuperarComponent
   ],
   exports: [ 
   ],

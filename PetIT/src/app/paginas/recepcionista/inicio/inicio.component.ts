@@ -19,7 +19,7 @@ export class InicioComponent implements OnInit {
   	private MzToastService:MzToastService) { }
 
   ngOnInit() {
-    this.obtenerCitas();
+    //this.obtenerCitas();
   }
 
   private obtenerCitas():void {

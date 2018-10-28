@@ -12,8 +12,8 @@
 				</mz-card-title>
 				<mz-card-content>
 	                <form
-	                [formGroup]="loginForm" 
-	                (ngSubmit)="onSubmit(loginForm.value)">				
+	                [formGroup]="recuperarForm" 
+	                (ngSubmit)="onSubmit(recuperarForm.value)">				
 						<mz-input-container class="input-field col s12">
 							<i mz-icon-mdi mz-input-prefix [icon]="'account-box'"></i>
 	                        <input mz-input id="rut" type="text"
@@ -26,23 +26,10 @@
 							formatRut
 							required>
 						</mz-input-container>	
-						<mz-input-container class="input-field col s12">
-							<i mz-icon-mdi mz-input-prefix [icon]="'key'"></i>
-	                        <input mz-input id="contrasena" type="password"
-	                        placeholder="Contraseña"
-							[formControl]="contrasena" 
-							[(ngModel)]="usuarioModel.password"
-							mz-validation
-					        [errorMessageResource]="formErrors.contrasena"
-							required>
-						</mz-input-container>
-
+						<boton-volver></boton-volver>
 	                    <button mz-button type="submit" 
-	                    [disabled]="!loginForm.valid || enviandoFlag"
-	                    name="action">Iniciar Sesión</button>
-
-	                    <a style="cursor: pointer;" (click)="irRecuperar();">Recuperar Contraseña</a>
-	                    
+	                    [disabled]="!recuperarForm.valid || enviandoFlag"
+	                    name="action">Recuperar Contraseña</button>
 					</form>
 				</mz-card-content>
 			</mz-card>

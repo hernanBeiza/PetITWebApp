@@ -25,6 +25,7 @@ export class InicioComponent implements OnInit {
 		private CitaLocalDBService:CitaLocalDBService) { }
 
 	ngOnInit() {
+		/*
 		this.usuario = this.UsuarioLocalDBService.obtenerLocal();
 			if(this.usuario){
 			this.DuenoMascotaLocalDBService.obtenerConIDUsuario(this.usuario.idusuario).then((data:any)=>{
@@ -38,6 +39,7 @@ export class InicioComponent implements OnInit {
 				console.error(dataError);
 			});
 		}
+		*/
 	}
 
 	public cargarUltimas(){

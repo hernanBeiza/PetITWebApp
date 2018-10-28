@@ -35,7 +35,7 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 
 	public enviandoFlag:boolean = false;
 
-	@ViewChild('anularSheetModal') anularSheetModal: MzModalComponent;
+	@ViewChild('asignarSheetModal') asignarSheetModal: MzModalComponent;
 	@ViewChild('errorSheetModal') errorSheetModal: MzModalComponent;
 
 	public formErrors = Mensajes.validacionesAsignar;
@@ -148,6 +148,16 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 		return hay;
 	}
 
+	public obtenerSeleccionadas():Array<FechaModel>{
+		var seleccionadas:Array<FechaModel> = new Array<FechaModel>();
+		for (var i = 0;i<this.fechas.length; i ++) {
+			let fecha:FechaModel = this.fechas[i];
+			if(fecha.seleccionado==true){
+				seleccionadas.push(fecha);
+			}
+		}
+		return seleccionadas;
+	}
 
 	public obtenerEspecialistaConRut(rut:string):void {
 		this.EspecialistaLocalDBService.obtenerConRut(rut).then((data:any)=> {
@@ -175,11 +185,13 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 
 	//Pasar a un servicio
 	private crearFechas(){
+		console.log("crearFechas();");
 		let inicio = new Date(this.fechaDesde);
 		let fin = new Date(this.fechaHasta);
-		let rango = this.obtenerFechasSinFinde(inicio,fin);
-		this.fechas = new Array<FechaModel>();
+		//console.log(inicio.toUTCString(),fin.toUTCString());
+		let rango = this.obtenerFechasSinFinde(inicio,fin);		
 		var idFecha:number = 1;
+		this.fechas = new Array<FechaModel>();
 		for (var i = 0; i < rango.length; ++i) {
 			let item:Date = rango[i];
 			for (var j = 0; j < this.bloques.length; ++j) {
@@ -189,23 +201,26 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 				idFecha++;
 			}
 		}
-	}
 
+	}
+	
 	//Pasar a un servicio
 	public obtenerFechasSinFinde(inicio:Date,fin:Date): Array<Date> {
-		//console.log(inicio,fin);
+		console.log("obtenerFechasSinFinde();");
+
     	var todas:Array<Date> = new Array<Date>();
 
-    	var start = moment(inicio, 'YYYY-MM-DD');
-    	let end = moment(fin, 'YYYY-MM-DD');
+    	var start = moment(inicio, 'YYYY-MM-DD').utc(false);
+    	let end = moment(fin, 'YYYY-MM-DD').utc(false);
 
-    	//console.log(start,end);
+    	//Ojo con la zona horario. Se usa UTC
     	while (start <= end) {
-			if (start.format('ddd') !== 'Sat' && start.format('ddd') !== 'Sun'){ 
-	    		//console.log(start.format("YYYY-MM-DD"));
-	    		todas.push(new Date(start.format("YYYY-MM-DD")));
+			if (start.format('ddd') !== 'Sat' && start.format('ddd') !== 'Sun'){
+				//console.log(start.format("ddd"));
+	    		//console.log(start.utc(false).format("YYYY-MM-DD"));
+	    		todas.push(new Date(start.utc(false).format("YYYY-MM-DD")));
 			}
-			start = moment(start, 'YYYY-MM-DD').add(1, 'days');
+			start = moment(start, 'YYYY-MM-DD').utc(false).add(1, 'days');
 		}
 		return todas;
 	}
@@ -227,23 +242,20 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 			console.log(this.especialistaModel);
 			console.log(this.fechaDesde);
 			console.log(this.fechaHasta);
-			console.log(this.bloques);
-			//this.registrarSheetModal.open();
+			console.log(this.obtenerSeleccionadas());
+			//console.log(this.bloques);
+			this.asignarSheetModal.open();
 		} else {
 			this.MzToastService.show("Revisa los datos faltantes",5000);
 		}
 	}
 
-	public registrar():void {
-		console.warn("registrar");
-	}
-	
-	/*
-	public asignar(bloque:BloqueHorarioModel):void {
+	public confirmarAsignacion():void {
+		console.warn("confirmarAsignacion");
 		console.log(this.especialistaModel);
 		console.log(this.fechaDesde);
 		console.log(this.fechaHasta);
-		console.log(bloque);
+		console.log(this.obtenerSeleccionadas());
 
 		var enviar = true;
 		var errores="Le faltó seleccionar:<br>";
@@ -261,31 +273,42 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 		}
 
 		if(enviar){
-			var especialistaDisponibilidad:EspecialistaDisponibilidadModel = new EspecialistaDisponibilidadModel();
-			especialistaDisponibilidad.idespecialista = this.especialistaModel.idespecialista;
-			especialistaDisponibilidad.idbloquehorario = bloque.idbloquehorario;
-			especialistaDisponibilidad.fecha = this.fechaDesde;
+			//Guardar cada uno
+			for (var i = 0; i < this.obtenerSeleccionadas().length; i++) {
+				let fecha = this.obtenerSeleccionadas()[i];
+				var especialistaDisponibilidad:EspecialistaDisponibilidadModel = new EspecialistaDisponibilidadModel();
+				especialistaDisponibilidad.idespecialista = this.especialistaModel.idespecialista;
+				especialistaDisponibilidad.idbloquehorario = fecha.bloqueHorarioModel.idbloquehorario;
+				especialistaDisponibilidad.fecha = moment(fecha.fecha).format("YYYY-MM-DD");
+				console.log(especialistaDisponibilidad);
 
-			this.EspecialistaDisponibilidadLocalDBService.guardar(especialistaDisponibilidad).then((data:any)=>{
-				this.registrarSheetModal.close();
-				if(data.result){
-					this.MzToastService.show(data.mensajes,3000,'green');
-					//this.registrarForm.reset();
-				} else {
-					this.MzToastService.show(data.errores,5000,'red');
-				}
-			},(dataError:any)=>{
-				this.registrarSheetModal.close();
-				this.MzToastService.show(dataError.errores,5000,'red');
-			});
+				this.EspecialistaDisponibilidadLocalDBService.guardar(especialistaDisponibilidad).then((data:any)=>{
+					this.asignarSheetModal.close();
+					if(data.result){
+						this.MzToastService.show(data.mensajes,3000,'green');
+						//this.registrarForm.reset();
+					} else {
+						this.MzToastService.show(data.errores,5000,'red');
+					}
+				},(dataError:any)=>{
+					this.asignarSheetModal.close();
+					this.MzToastService.show(dataError.errores,5000,'red');
+				});
+
+			}
 
 		} else {
 			console.warn(errores);
 			this.errores = errores;
 			this.errorSheetModal.open();
 		}
+
 	}
-	*/
+
+	public confirmarAnulacion():void {
+		console.log("confirmarAnulacion");
+	}
+	
 
 	ngOnDestroy():void {
 		this.subscription.unsubscribe();

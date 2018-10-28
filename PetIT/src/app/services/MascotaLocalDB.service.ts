@@ -125,7 +125,7 @@ export class MascotaLocalDBService {
 	    	            var result = {result:true,mensajes:"Mascotas encontradas",mascota:mascotas[0]};
 			            resolve(result);
 					} else {
-						var resultNoEncontrado = {result:false,errores:"No se ha encontrado mascota asociada al dueño"};
+						var resultNoEncontrado = {result:false,errores:"No se ha encontrado mascota con ese rut"};
 		        		reject(resultNoEncontrado);                        
 					}
 		        },function(tx,results){

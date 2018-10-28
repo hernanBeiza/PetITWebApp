@@ -6,8 +6,8 @@ export const secciones: any = {
       menu: true
     },
     { 
-      nombre: "Generar Informe", link: "/admin/informe/generar", icono: "chart-bar", 
-      titulo: "Reportes", bajada: "Genera tu reporte desde aquí",
+      nombre: "Generar Informes", link: "/admin/informe/generar", icono: "chart-bar", 
+      titulo: "Generar Informes", bajada: "Genera tu informe desde aquí",
       menu: true
     },
     { 
@@ -82,8 +82,8 @@ export const secciones: any = {
     },
     { 
       nombre: "Cupos de atención", link: "/recepcionista/especialistas/bloques/asignar", icono: "clock", 
-      titulo: "Cupos de Atención", bajada: "Desde aqui podrás realizar la asignación de los horarios a los profesionales",
-      menu: true
+      titulo: "Asignar bloque horario", bajada: "Desde aqui podrás realizar la asignación de los horarios a los profesionales",
+      menu: false
     },
     { 
       nombre: "Gestionar mascotas", link: "/recepcionista/mascotas/consultar", icono: "paw", 

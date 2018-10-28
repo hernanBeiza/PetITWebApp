@@ -9,15 +9,23 @@ import { BloquesModule } from './bloques/bloques.module';
 export function loadBloquesModule() {
   return BloquesModule;
 }
+//Choca con el / del index
+/*
 const routes: Routes = [
   {
     path: '',  component: EspecialistasComponent,
     children: [
       { path: 'bloques',             loadChildren: loadBloquesModule },
+      //{ path: 'bloques',           loadChildren: './bloques/bloques.module#BloquesModule'  },
     ]
   }
 ];
-
+*/
+const routes: Routes = [
+  {
+    path: 'bloques',  loadChildren: loadBloquesModule
+  }
+];
 /*
 @NgModule({
   imports: [

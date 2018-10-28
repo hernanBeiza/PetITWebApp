@@ -24,7 +24,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription = this.router.events.subscribe((event:Event) => {      
   		if(event instanceof NavigationEnd){
 
-        if(this.UsuarioLocalDBService.obtenerLocal()==null && this.router.url!="/login"){
+        if(this.UsuarioLocalDBService.obtenerLocal()==null 
+          && this.router.url!="/login" 
+          && this.router.url!="/recuperar"){
           console.warn("No existe usuario, ir al login");
 
           let segundos = 1;

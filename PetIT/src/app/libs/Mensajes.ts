@@ -14,6 +14,9 @@ export class Mensajes {
 	};
 
 	public static validacionesGenerarInforme = {
+		'tipo': {
+			'required':      'El tipo de informe es obligatorio.'
+		},
 		'inicio': {
 			'required':      'La fecha de inicio es obligatoria.'
 		},

@@ -16,7 +16,7 @@
     <div class="col s12 m12">
 		<mz-card [hoverable]="true">
 			<mz-card-title>
-				Gestión de bloques horarios
+				Asignar bloque horario
 			</mz-card-title>
 			<mz-card-content>
                 <form
@@ -93,17 +93,16 @@
 </div>
 
 <!-- Ventana modal -->
-<mz-modal #anularSheetModal [fixedFooter]="true" [options]="modalOptions">
+<mz-modal #asignarSheetModal [fixedFooter]="true" [options]="modalOptions">
 	<mz-modal-header>
-		<h4>¿Desea anular este bloque horario?</h4>
-		<p>Nombre Especialista: {{especialistaModel?.nombres}} {{especialistaModel?.apellidopaterno}} {{especialistaModel?.apellidomaterno}}</p>
-		<p>Fecha: {{fechaModel?.obtenerFechaEnString()}} a las {{fechaModel?.bloqueHorarioModel?.horainicio}}</p>
+		<h4>¿Desea asignar estos bloques horarios?</h4>
+		(Completar acá con el detalle del os bloques horarios)
 	</mz-modal-header>
 	<mz-modal-content>
 
 	</mz-modal-content>
 	<mz-modal-footer>
-		<button mz-button [flat]="true" class="red" (click)="confirmarAnulacion();">Anular</button>
+		<button mz-button [flat]="true" class="green" (click)="confirmarAsignacion();">Asignar</button>
 		<button mz-button [flat]="true" mz-modal-close>Cancelar</button>
 	</mz-modal-footer>
 </mz-modal>
