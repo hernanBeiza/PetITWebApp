@@ -3,10 +3,16 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map'
 import { Observable } from 'rxjs/Rx';
 
+import * as moment from 'moment'; 
+
 //Services
 import { LocalDBService } from './LocalDB.service';
+
 //Models
+import { FechaModel } from './../models/FechaModel';
+import { EspecialistaModel } from './../models/EspecialistaModel';
 import { BloqueHorarioModel } from './../models/BloqueHorarioModel';
+
 
 @Injectable()
 export class BloqueHorarioLocalDBService {
@@ -133,6 +139,51 @@ export class BloqueHorarioLocalDBService {
       });
     });
     return promesa;    
+  }
+
+  //Pasar a un servicio
+  public crearFechas(bloques:Array<BloqueHorarioModel>,fechaDesde:string,fechaHasta:string):Array<any>{
+    console.log("crearFechas();");
+    let inicio = new Date(fechaDesde);
+    let fin = new Date(fechaHasta);
+    //console.log(inicio.toUTCString(),fin.toUTCString());
+
+    let rango = this.obtenerFechasSinFinde(inicio,fin);
+    
+    var idFecha:number = 1;
+    var fechas = new Array<FechaModel>();
+
+    for (var i = 0; i < rango.length; ++i) {
+      let item:Date = rango[i];
+      for (var j = 0; j < bloques.length; ++j) {
+        let bloque:BloqueHorarioModel = bloques[j];
+        let fecha:FechaModel = new FechaModel(idFecha,item,bloque);
+        fechas.push(fecha);
+        idFecha++;
+      }
+    }
+    return fechas;
+  }
+  
+  //Pasar a un servicio
+  public obtenerFechasSinFinde(inicio:Date,fin:Date): Array<Date> {
+    console.log("obtenerFechasSinFinde();");
+
+      var todas:Array<Date> = new Array<Date>();
+
+      var start = moment(inicio, 'YYYY-MM-DD').utc(false);
+      let end = moment(fin, 'YYYY-MM-DD').utc(false);
+
+      //Ojo con la zona horario. Se usa UTC
+      while (start <= end) {
+      if (start.format('ddd') !== 'Sat' && start.format('ddd') !== 'Sun'){
+        //console.log(start.format("ddd"));
+          //console.log(start.utc(false).format("YYYY-MM-DD"));
+          todas.push(new Date(start.utc(false).format("YYYY-MM-DD")));
+      }
+      start = moment(start, 'YYYY-MM-DD').utc(false).add(1, 'days');
+    }
+    return todas;
   }
 
 }

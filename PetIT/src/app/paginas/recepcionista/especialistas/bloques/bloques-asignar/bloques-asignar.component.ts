@@ -14,7 +14,6 @@ import {CitaLocalDBService} from './../../../../../services/CitaLocalDB.service'
 import {BloqueHorarioLocalDBService} from './../../../../../services/BloqueHorarioLocalDB.service';
 import {EspecialistaDisponibilidadLocalDBService} from './../../../../../services/EspecialistaDisponibilidadLocalDB.service';
 // Models
-import {FechaModel} from './../../../../../models/FechaModel';
 import {EspecialistaModel} from './../../../../../models/EspecialistaModel';
 import {EspecialistaDisponibilidadModel} from './../../../../../models/EspecialistaDisponibilidadModel';
 import {BloqueHorarioModel} from './../../../../../models/BloqueHorarioModel';
@@ -58,16 +57,13 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 
 	public errores:string = ""
 
-	public bloques:Array<BloqueHorarioModel> = new Array<BloqueHorarioModel>();
+	public disponibilidades:Array<EspecialistaDisponibilidadModel> = new Array<EspecialistaDisponibilidadModel>();
 
 	public especialistas:Array<EspecialistaModel> = new Array<EspecialistaModel>();
 	public especialistaModel:EspecialistaModel = new EspecialistaModel();
-	public fechaModel:FechaModel;// = new EspecialistaModel();
 
 	public fechaDesde:string;// = "";
 	public fechaHasta:string;// = "";
-
-	public fechas:Array<FechaModel>;
 
 	public opcionesCalendarioDesde: Pickadate.DateOptions = {
 	format: 'dd-mm-yyyy',
@@ -76,7 +72,7 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 	today: 'Hoy',
 	clear: 'Limpiar',
 	close: 'OK',
-	onClose: () => { }
+	onClose: () => { this.cargarDisponibilidades() }
 	};
 
 	public opcionesCalendarioHasta: Pickadate.DateOptions = {
@@ -86,7 +82,7 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 	today: 'Hoy',
 	clear: 'Limpiar',
 	close: 'OK',
-	onClose: () => this.cargarBloques()
+	onClose: () => this.cargarDisponibilidades()
 	};
 
 	public seleccionado:boolean = false;
@@ -101,12 +97,12 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void { 
 		this.asignarForm = this.fb.group({
-			'bloques': ['',null],
+			'disponibilidades': ['',null],
 			'fechaDesde': [this.fechaDesde, Validators.compose([Validators.required])],
 			'fechaHasta': [this.fechaHasta, Validators.compose([Validators.required])],
 		});
 
-	    this.bloquesControl = this.asignarForm.controls['bloques'];
+	    this.bloquesControl = this.asignarForm.controls['disponibilidades'];
 	    this.fechaDesdeControl = this.asignarForm.controls['fechaDesde'];
 	    this.fechaHastaControl = this.asignarForm.controls['fechaHasta'];
 
@@ -123,6 +119,7 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
         });
 
         this.cargarEspecialista();
+
 	}
 
 	private cargarEspecialista(){
@@ -138,8 +135,8 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 
 	public haySeleccionados(): boolean {
 		var hay:boolean = false;
-		for (var i = 0;i<this.fechas.length; i ++) {
-			let fecha:FechaModel = this.fechas[i];
+		for (var i = 0;i<this.disponibilidades.length; i ++) {
+			let fecha:EspecialistaDisponibilidadModel = this.disponibilidades[i];
 			if(fecha.seleccionado){
 				hay = true;
 				break;
@@ -148,10 +145,10 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 		return hay;
 	}
 
-	public obtenerSeleccionadas():Array<FechaModel>{
-		var seleccionadas:Array<FechaModel> = new Array<FechaModel>();
-		for (var i = 0;i<this.fechas.length; i ++) {
-			let fecha:FechaModel = this.fechas[i];
+	public obtenerSeleccionadas():Array<EspecialistaDisponibilidadModel>{
+		var seleccionadas:Array<EspecialistaDisponibilidadModel> = new Array<EspecialistaDisponibilidadModel>();
+		for (var i = 0;i<this.disponibilidades.length; i ++) {
+			let fecha:EspecialistaDisponibilidadModel = this.disponibilidades[i];
 			if(fecha.seleccionado==true){
 				seleccionadas.push(fecha);
 			}
@@ -163,76 +160,40 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 		this.EspecialistaLocalDBService.obtenerConRut(rut).then((data:any)=> {
 	    	if(data.result){
 		    	this.especialistaModel = data.especialista;
-    			this.bloques = new Array<BloqueHorarioModel>();    
+    			this.disponibilidades = new Array<EspecialistaDisponibilidadModel>();    
+	    	} else {
+    			this.disponibilidades = new Array<EspecialistaDisponibilidadModel>();    
 	    	}
 	    },(dataError:any)=>{
-
 	    });
 	}
 
-	private cargarBloques(): void {
-		this.bloques = new Array<BloqueHorarioModel>();
-	    this.BloqueHorarioLocalDBService.obtener().then((data:any)=> {
-	    	if(data.result){
-		    	this.bloques = data.bloques;
-		    	//Una fecha por cada rango
-		    	this.crearFechas();
-	    	}
-	    },(dataError:any)=>{
-
-	    });
-	}
-
-	//Pasar a un servicio
-	private crearFechas(){
-		console.log("crearFechas();");
-		let inicio = new Date(this.fechaDesde);
-		let fin = new Date(this.fechaHasta);
-		//console.log(inicio.toUTCString(),fin.toUTCString());
-		let rango = this.obtenerFechasSinFinde(inicio,fin);		
-		var idFecha:number = 1;
-		this.fechas = new Array<FechaModel>();
-		for (var i = 0; i < rango.length; ++i) {
-			let item:Date = rango[i];
-			for (var j = 0; j < this.bloques.length; ++j) {
-				let bloque:BloqueHorarioModel = this.bloques[j];
-				let fecha:FechaModel = new FechaModel(idFecha,item,bloque);
-				this.fechas.push(fecha);
-				idFecha++;
-			}
+	private cargarDisponibilidades(): void {
+		console.log("cargarDisponibilidades");
+		if(this.especialistaModel!=null && this.fechaDesde!=null && this.fechaHasta!=null){
+			console.log(this.fechaDesde,this.fechaHasta);
+			this.disponibilidades = new Array<EspecialistaDisponibilidadModel>();
+		    this.EspecialistaDisponibilidadLocalDBService.obtenerDisponiblesEntreFechas(this.fechaDesde,this.fechaHasta).then((data:any)=> {
+		    	if(data.result){
+			    	this.disponibilidades = data.disponibilidades;
+		    	} else {
+					this.disponibilidades = new Array<EspecialistaDisponibilidadModel>();
+		    	}
+		    },(dataError:any)=>{
+				this.disponibilidades = new Array<EspecialistaDisponibilidadModel>();
+		    });
 		}
-
 	}
-	
-	//Pasar a un servicio
-	public obtenerFechasSinFinde(inicio:Date,fin:Date): Array<Date> {
-		console.log("obtenerFechasSinFinde();");
 
-    	var todas:Array<Date> = new Array<Date>();
-
-    	var start = moment(inicio, 'YYYY-MM-DD').utc(false);
-    	let end = moment(fin, 'YYYY-MM-DD').utc(false);
-
-    	//Ojo con la zona horario. Se usa UTC
-    	while (start <= end) {
-			if (start.format('ddd') !== 'Sat' && start.format('ddd') !== 'Sun'){
-				//console.log(start.format("ddd"));
-	    		//console.log(start.utc(false).format("YYYY-MM-DD"));
-	    		todas.push(new Date(start.utc(false).format("YYYY-MM-DD")));
-			}
-			start = moment(start, 'YYYY-MM-DD').utc(false).add(1, 'days');
-		}
-		return todas;
-	}
 
 	public seleccionarTodos(): void {
 		console.log("seleccionarTodos");
-		for (var i = 0; i < this.fechas.length; ++i) {
-			var fecha:FechaModel = this.fechas[i];
-			if(fecha.seleccionado){
-				fecha.seleccionado = false;
+		for (var i = 0; i < this.disponibilidades.length; ++i) {
+			var disponibilidad:EspecialistaDisponibilidadModel = this.disponibilidades[i];
+			if(disponibilidad.seleccionado){
+				disponibilidad.seleccionado = false;
 			} else {
-				fecha.seleccionado = true;
+				disponibilidad.seleccionado = true;
 			}
 		}
 	}
@@ -243,7 +204,6 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 			console.log(this.fechaDesde);
 			console.log(this.fechaHasta);
 			console.log(this.obtenerSeleccionadas());
-			//console.log(this.bloques);
 			this.asignarSheetModal.open();
 		} else {
 			this.MzToastService.show("Revisa los datos faltantes",5000);
@@ -271,31 +231,36 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 			enviar = false;
 			errores+="Seleccionar la fecha de término<br>";			
 		}
+		if(!this.haySeleccionados()){
+			enviar = false;
+			errores+="No hay bloques horarios seleccionados<br>";			
+		}
 
 		if(enviar){
-			//Guardar cada uno
+
+			var items:Array<EspecialistaDisponibilidadModel> = new Array<EspecialistaDisponibilidadModel>();
 			for (var i = 0; i < this.obtenerSeleccionadas().length; i++) {
-				let fecha = this.obtenerSeleccionadas()[i];
+				let disponibilidad = this.obtenerSeleccionadas()[i];
 				var especialistaDisponibilidad:EspecialistaDisponibilidadModel = new EspecialistaDisponibilidadModel();
 				especialistaDisponibilidad.idespecialista = this.especialistaModel.idespecialista;
-				especialistaDisponibilidad.idbloquehorario = fecha.bloqueHorarioModel.idbloquehorario;
-				especialistaDisponibilidad.fecha = moment(fecha.fecha).format("YYYY-MM-DD");
-				console.log(especialistaDisponibilidad);
-
-				this.EspecialistaDisponibilidadLocalDBService.guardar(especialistaDisponibilidad).then((data:any)=>{
-					this.asignarSheetModal.close();
-					if(data.result){
-						this.MzToastService.show(data.mensajes,3000,'green');
-						//this.registrarForm.reset();
-					} else {
-						this.MzToastService.show(data.errores,5000,'red');
-					}
-				},(dataError:any)=>{
-					this.asignarSheetModal.close();
-					this.MzToastService.show(dataError.errores,5000,'red');
-				});
-
+				especialistaDisponibilidad.idbloquehorario = disponibilidad.bloqueHorarioModel.idbloquehorario;
+				especialistaDisponibilidad.fecha = moment(disponibilidad.fecha).utc(false).format("YYYY-MM-DD");
+				items.push(especialistaDisponibilidad);
 			}
+
+			this.EspecialistaDisponibilidadLocalDBService.guardar(items).then((data:any)=>{
+				this.asignarSheetModal.close();
+				if(data.result){
+					this.MzToastService.show(data.mensajes,3000,'green');
+					this.disponibilidades = new Array<EspecialistaDisponibilidadModel>();
+					this.asignarForm.reset();
+				} else {
+					this.MzToastService.show(data.errores,5000,'red');
+				}
+			},(dataError:any)=>{
+				this.asignarSheetModal.close();
+				this.MzToastService.show(dataError.errores,5000,'red');
+			});
 
 		} else {
 			console.warn(errores);
@@ -304,11 +269,6 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 		}
 
 	}
-
-	public confirmarAnulacion():void {
-		console.log("confirmarAnulacion");
-	}
-	
 
 	ngOnDestroy():void {
 		this.subscription.unsubscribe();

@@ -6,9 +6,7 @@
 			</mz-card-title>
 			<mz-card-content>
 				<mz-card-content>
-	                <form
-	                [formGroup]="asignarForm" 
-	                (ngSubmit)="onSubmit(asignarForm.value)">
+	                <form [formGroup]="asignarForm">
 						<mz-select-container class="col s12 m12">
 							<i mz-icon-mdi mz-input-prefix [icon]="'medical-bag'"></i>
 							<select mz-select
@@ -59,8 +57,8 @@
 						      </tr>
 						    </thead>
 						    <tbody>
-					    	    <tr *ngFor="let item of fechas">
-						        <td>{{item.obtenerFechaEnString()}}</td>
+					    	    <tr *ngFor="let item of disponibilidades">
+						        <td>{{item.obtenerFechaEnHumano()}}</td>
 						        <td>De {{item.bloqueHorarioModel.horainicio}} a {{item.bloqueHorarioModel.horatermino}}</td>
 							    <td>
 									<a (click)="anular(item);" style="cursor: pointer;" mz-tooltip [tooltip]="'Anular este bloque horario'" [position]="'top'">
@@ -70,11 +68,6 @@
 								</tr>
 						    </tbody>
 						</table>
-						<!--
-	                    <button mz-button type="submit" 
-	                    [disabled]="!asignarForm.valid || enviandoFlag"
-	                    name="action">Agregar horario</button>
-		                -->
 					</form>
 						<br/>
 						<boton-volver></boton-volver>
@@ -90,7 +83,7 @@
 	<mz-modal-header>
 		<h4>¿Desea anular este bloque horario?</h4>
 		<p>Nombre Especialista: {{especialistaModel?.nombres}} {{especialistaModel?.apellidopaterno}} {{especialistaModel?.apellidomaterno}}</p>
-		<p>Fecha: {{fechaModel?.obtenerFechaEnString()}} a las {{fechaModel?.bloqueHorarioModel?.horainicio}}</p>
+		<p>Fecha: {{especialistaDisponibilidadModel?.obtenerFechaEnHumano()}} a las {{especialistaDisponibilidadModel?.bloqueHorarioModel?.horainicio}}</p>
 	</mz-modal-header>
 	<mz-modal-content>
 

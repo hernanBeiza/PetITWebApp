@@ -8,9 +8,7 @@ import { LibreriasModule } from './../../../librerias.module';
 import { HorasRoutingComponent } from './horas.routing';
 
 //Horas
-import { HorasAgendarComponent } from './horas-agendar/horas-agendar.component';
 import { HorasConsultarComponent } from './horas-consultar/horas-consultar.component';
-import { HorasFinalizarComponent } from './horas-finalizar/horas-finalizar.component';
 
 @NgModule({
 	imports: [
@@ -24,7 +22,6 @@ import { HorasFinalizarComponent } from './horas-finalizar/horas-finalizar.compo
 		RouterModule
 	],
 	declarations: [
-		HorasAgendarComponent,HorasFinalizarComponent,
 		HorasConsultarComponent
 	]
 })

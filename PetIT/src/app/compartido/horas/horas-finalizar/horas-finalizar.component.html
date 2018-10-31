@@ -9,7 +9,7 @@
 					    <div class="col s12 m6">
 							<i mz-icon-mdi mz-input-prefix
 						    	[icon]="'calendar'">
-						    	Fecha: {{citaModel.horaModel?.fecha}} {{citaModel.horaModel?.hora}}
+						    	Fecha: {{citaModel.especialistaDisponibilidadModel?.obtenerFechaEnHumano()}} a las {{citaModel.especialistaDisponibilidadModel?.bloqueHorarioModel?.horainicio}}
 							</i>
 					    </div>
 					    <div class="col s12 m6">

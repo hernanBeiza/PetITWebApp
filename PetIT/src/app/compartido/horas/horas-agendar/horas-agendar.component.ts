@@ -9,17 +9,17 @@ import {Validaciones} from './../../../libs/Validaciones';
 // Services
 import {UsuarioLocalDBService} from './../../../services/UsuarioLocalDB.service';
 import {DuenoMascotaLocalDBService} from './../../../services/DuenoMascotaLocalDB.service';
+import {EspecialistaDisponibilidadLocalDBService} from './../../../services/EspecialistaDisponibilidadLocalDB.service';
 import {EspecialidadLocalDBService} from './../../../services/EspecialidadLocalDB.service';
 import {EspecialistaLocalDBService} from './../../../services/EspecialistaLocalDB.service';
-import {HoraLocalDBService} from './../../../services/HoraLocalDB.service';
 import {CitaLocalDBService} from './../../../services/CitaLocalDB.service';
 // Models
 import {UsuarioModel} from './../../../models/UsuarioModel';
 import {DuenoMascotaModel} from './../../../models/DuenoMascotaModel';
 import {MascotaModel} from './../../../models/MascotaModel';
 import {EspecialidadModel} from './../../../models/EspecialidadModel';
+import {EspecialistaDisponibilidadModel} from './../../../models/EspecialistaDisponibilidadModel';
 import {EspecialistaModel} from './../../../models/EspecialistaModel';
-import {HoraModel} from './../../../models/HoraModel';
 import {CitaModel} from './../../../models/CitaModel';
 
 @Component({
@@ -62,13 +62,14 @@ export class HorasAgendarComponent implements OnInit {
   //Arreglo de especialidades
   public especialidades:Array<EspecialidadModel> = new Array<EspecialidadModel>();
   public especialistas:Array<EspecialistaModel> = new Array<EspecialistaModel>();
-  public horas:Array<HoraModel> = new Array<HoraModel>();
+  public disponibilidades:Array<EspecialistaDisponibilidadModel> = new Array<EspecialistaDisponibilidadModel>();
   
   public fecha:string = "";
 
   public especialidadModel:EspecialidadModel = new EspecialidadModel();
   public especialistaModel:EspecialistaModel = new EspecialistaModel();
   public citaModel:CitaModel = new CitaModel();
+  public especialistaDisponibilidad:EspecialistaDisponibilidadModel = new EspecialistaDisponibilidadModel();
 
   public opcionesCalendario: Pickadate.DateOptions = {
     format: 'dd-mm-yyyy',
@@ -77,7 +78,7 @@ export class HorasAgendarComponent implements OnInit {
     today: 'Hoy',
     clear: 'Limpiar',
     close: 'OK',
-    onClose: () => this.cargarHoras()
+    onClose: () => this.cargarDisponibilidades()
   };
 
   constructor(private router:Router, private fb:FormBuilder, private activatedRoute: ActivatedRoute, 
@@ -86,7 +87,7 @@ export class HorasAgendarComponent implements OnInit {
     private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService,
     private EspecialidadLocalDBService:EspecialidadLocalDBService,
     private EspecialistaLocalDBService:EspecialistaLocalDBService,
-    private HoraLocalDBService:HoraLocalDBService,
+    private EspecialistaDisponibilidadLocalDBService:EspecialistaDisponibilidadLocalDBService,
     private CitaLocalDBService:CitaLocalDBService) { }
 
   ngOnInit(): void { 
@@ -148,7 +149,7 @@ export class HorasAgendarComponent implements OnInit {
     console.info(this.especialidadModel);
     this.especialistaControl.reset();
     this.fechaControl.reset();
-    this.horas = new Array<HoraModel>();    
+    this.disponibilidades = new Array<EspecialistaDisponibilidadModel>();    
     this.cargarEspecialistas();
   }
 
@@ -157,7 +158,7 @@ export class HorasAgendarComponent implements OnInit {
     this.citaModel.idespecialista = this.especialistaModel.idespecialista;
     this.citaModel.especialistaModel = this.especialistaModel;
     this.fechaControl.reset();
-    this.horas = new Array<HoraModel>();    
+    this.disponibilidades = new Array<EspecialistaDisponibilidadModel>();    
   }
 
   private cargarEspecialistas():void {
@@ -170,36 +171,33 @@ export class HorasAgendarComponent implements OnInit {
     });
   }
 
-  private cargarHoras():void {
-    console.info("cargarHoras();");
-    this.HoraLocalDBService.obtenerConEspecialistayFecha(this.especialistaModel,this.fecha).then((data:any)=>{
+  private cargarDisponibilidades():void {
+    this.EspecialistaDisponibilidadLocalDBService.obtenerConEspecialistaYFecha(this.especialistaModel,this.fecha).then((data:any)=>{
       console.info(data);
       if(data.result){
-        this.horas = data.horas;
+        this.disponibilidades = data.disponibilidades;
         this.MzToastService.show(data.mensajes, 4000, 'green');
       }
     },(dataError:any)=>{
       console.warn(dataError);  
-      this.horas = new Array<HoraModel>();
+    this.disponibilidades = new Array<EspecialistaDisponibilidadModel>();    
       this.MzToastService.show(dataError.errores, 5000, 'red');
     });
   }
 
-  private reservar(hora:HoraModel): void {
+  private reservar(especialistaDisponibilidad:EspecialistaDisponibilidadModel): void {
     if (this.agendarForm.valid) {
-      this.citaModel.especialistaModel = hora.especialistaModel;
-      this.citaModel.idhora = hora.idhora;
-      this.citaModel.horaModel = hora;
+      this.especialistaDisponibilidad = especialistaDisponibilidad;
+      this.citaModel.especialistaModel = this.especialistaModel;
+      this.citaModel.idespecialista = this.especialistaModel.idespecialista;
+      this.citaModel.especialistaDisponibilidadModel = especialistaDisponibilidad;
+      this.citaModel.origen = 1;
       this.agendarSheetModal.open();
     } else {
       this.MzToastService.show("Revisa los datos de tu agendamiento",5000);
     }
   }
   
-  public onSubmit(values:Object):void {
-    console.warn("Ya no debería usarse");
-  }
-
   public agendar():void {
   	console.info("agendar();");
     var enviar:boolean = true;
@@ -223,10 +221,6 @@ export class HorasAgendarComponent implements OnInit {
     if(!this.fecha){
       enviar = false;
       this.errores+="<br>Fecha";
-    }
-    if(!this.citaModel.horaModel){
-      enviar = false;
-      this.errores+="<br>Hora";
     }
     if(enviar){
       this.enviar();

@@ -63,15 +63,15 @@
 					      </tr>
 					    </thead>
 					    <tbody>
-				    	    <tr *ngFor="let item of fechas">
-						        <td>{{item.obtenerFechaEnString()}}</td>
+				    	    <tr *ngFor="let item of disponibilidades;let i = index">
+						        <td>{{item.obtenerFechaEnHumano()}}</td>
 						        <td>De {{item.bloqueHorarioModel.horainicio}} a {{item.bloqueHorarioModel.horatermino}}</td>
 							    <td>
 									<mz-checkbox-container>
 										<input mz-checkbox
 										[formControl]="bloquesControl" 
 									    [label]="''"
-									    id="{{item.idFecha}}"
+									    id="{{i}}"
 										[(ngModel)]="item.seleccionado"
 										mz-validation	
 									    type="checkbox">
@@ -96,10 +96,22 @@
 <mz-modal #asignarSheetModal [fixedFooter]="true" [options]="modalOptions">
 	<mz-modal-header>
 		<h4>¿Desea asignar estos bloques horarios?</h4>
-		(Completar acá con el detalle del os bloques horarios)
 	</mz-modal-header>
 	<mz-modal-content>
-
+		<table class="striped">
+		    <thead>
+				<tr>
+					<th>Fecha</th>
+					<th>Hora</th>
+				</tr>
+		    </thead>
+		    <tbody>
+	    	    <tr *ngFor="let item of obtenerSeleccionadas();let i = index">
+			        <td>{{item?.obtenerFechaEnHumano()}}</td>
+			        <td>De {{item?.bloqueHorarioModel?.horainicio}} a {{item?.bloqueHorarioModel?.horatermino}}</td>
+				</tr>
+		    </tbody>
+		</table>
 	</mz-modal-content>
 	<mz-modal-footer>
 		<button mz-button [flat]="true" class="green" (click)="confirmarAsignacion();">Asignar</button>

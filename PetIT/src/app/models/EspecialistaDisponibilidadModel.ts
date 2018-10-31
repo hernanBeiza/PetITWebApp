@@ -1,6 +1,8 @@
 import { EspecialistaModel } from './EspecialistaModel';
 import { BloqueHorarioModel } from './BloqueHorarioModel';
 
+import * as moment from 'moment'; 
+
 export class EspecialistaDisponibilidadModel { 
 	
 	public idespecialistadisponibilidad?: number;
@@ -12,6 +14,8 @@ export class EspecialistaDisponibilidadModel {
 	public especialistaModel:EspecialistaModel;
 	public bloqueHorarioModel:BloqueHorarioModel;
 	
+	public seleccionado:boolean;
+	
 	constructor(idespecialistadisponibilidad?:number, 
 		idespecialista?:number, 
 		idbloquehorario?:number, fecha?:string, valid?:number){
@@ -22,4 +26,8 @@ export class EspecialistaDisponibilidadModel {
 		this.valid = valid;
 	}
 	
+	public obtenerFechaEnHumano():string {
+		let fecha = moment(new Date(this.fecha)).utc(false).format("DD-MM-YYYY");
+		return fecha;
+	}
 }

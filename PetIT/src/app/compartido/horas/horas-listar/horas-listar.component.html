@@ -20,10 +20,10 @@
 				    	    <tr *ngFor="let item of citas"
 							[class.seleccionada]="item.idhora == horaSeleccionada?.idhora">
 						        <td>{{item?.mascotaModel?.nombre}}</td>
-						        <td>{{item?.especialistaModel?.nombres}} {{item?.especialistaModel?.apellidoPaterno}}</td>
+						        <td>{{item?.especialistaModel?.nombres}} {{item?.especialistaModel?.apellidopaterno}}</td>
 						        <td>{{item?.especialidadModel?.nombre}}</td>
-						        <td>{{item?.horaModel?.fecha}}</td>
-						        <td>{{item?.horaModel?.hora}}</td>
+						        <td>{{item?.especialistaDisponibilidadModel?.obtenerFechaEnHumano()}}</td>
+						        <td>{{item?.especialistaDisponibilidadModel?.bloqueHorarioModel?.horainicio}}</td>
 						        <td>
 									<a (click)="irModificar(item);" style="cursor: pointer;"mz-tooltip [tooltip]="'Modificar datos de esta hora'" [position]="'top'">
 										<i mz-icon-mdi mz-input-prefix [icon]="'pen'"></i>

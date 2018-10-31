@@ -66,10 +66,10 @@
 					      </tr>
 					    </thead>
 					    <tbody>
-				    	    <tr *ngFor="let item of horas">
-					        <td>{{item.especialistaModel.nombres}} {{item.especialistaModel.apellidopaterno}}</td>
+				    	    <tr *ngFor="let item of disponibilidades">
+					        <td>{{especialistaModel.nombres}} {{especialistaModel.apellidopaterno}}</td>
 					        <td>{{item.fecha}}</td>
-					        <td>{{item.hora}}</td>
+					        <td>{{item.bloqueHorarioModel.horainicio}}</td>
 						    <td>
 						    	<button mz-button type="button" (click)="reservar(item)">Reservar</button>
 						    </td>					      
@@ -98,7 +98,7 @@
 		<div class="row">
 		    <div class="col s12 m6">
 				<p>Nombre Doctor: {{citaModel.especialistaModel?.nombres}} {{citaModel.especialistaModel?.apellidopaterno}}</p>
-				<p>Fecha: {{citaModel.horaModel?.fecha}} a las {{citaModel.horaModel?.hora}} hrs</p>
+				<p>Fecha: {{especialistaDisponibilidad?.fecha}} a las {{especialistaDisponibilidad.bloqueHorarioModel?.horainicio}} hrs</p>
 			</div>
 		    <div class="col s12 m6">
 				<p>Dueño: {{citaModel.duenoMascotaModel?.nombres}} {{citaModel.duenoMascotaModel?.apellidopaterno}} {{citaModel.duenoMascotaModel?.apellidomaterno}}</p>

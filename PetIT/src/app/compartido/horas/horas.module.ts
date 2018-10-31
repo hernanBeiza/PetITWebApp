@@ -17,7 +17,7 @@ import { HorasListarComponent } from './horas-listar/horas-listar.component';
 		CommonModule,
 	    RouterModule,
 		LibreriasModule,
-		SharedUIModule
+		SharedUIModule,
 	],
 	exports: [
 		SharedUIModule,

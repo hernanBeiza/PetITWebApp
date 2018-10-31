@@ -11,7 +11,8 @@ import { MascotaModel } from './../models/MascotaModel';
 import { DuenoMascotaModel } from './../models/DuenoMascotaModel';
 import { EspecialidadModel } from './../models/EspecialidadModel';
 import { EspecialistaModel } from './../models/EspecialistaModel';
-import { HoraModel } from './../models/HoraModel';
+import { EspecialistaDisponibilidadModel } from './../models/EspecialistaDisponibilidadModel';
+import { BloqueHorarioModel } from './../models/BloqueHorarioModel';
 
 @Injectable()
 export class CitaLocalDBService {
@@ -19,17 +20,17 @@ export class CitaLocalDBService {
   constructor(private LocalDBService:LocalDBService) { }
  
   public guardar(cita:CitaModel): Promise<Object> {
-    //console.log("CitaLocalDBService: guardar();");
+    console.log("CitaLocalDBService: guardar();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "INSERT INTO cita (rutmascota,idespecialista,idhora,idorigen) VALUES ('"+cita.rutmascota+"',"+cita.idespecialista+","+cita.idhora+",1)";
+        var sql = "INSERT INTO cita (rutmascota,idespecialista,idorigen) VALUES ('"+cita.rutmascota+"',"+cita.idespecialista+","+cita.origen+")";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
           if(results.rowsAffected>0){
-            //Actualizar el estado de la hora para que no puedan volver a tomar la misma
-            var sql2 = "UPDATE hora SET valid=2 WHERE idhora = "+cita.idhora;
+            //Actualizar el estado de la disponibilidad para que no puedan volver a tomar la misma
+            var sql2 = "UPDATE especialistadisponibilidad SET valid=2 WHERE idespecialistadisponibilidad = "+cita.especialistaDisponibilidadModel.idespecialistadisponibilidad;
             //console.info(sql2);
             tx.executeSql(sql2,[],function(tx,results){
               //console.log(tx,results,results.rows.length);
@@ -54,17 +55,18 @@ export class CitaLocalDBService {
   }
 
 
-  public modificar(horaAntigua:HoraModel,citaNueva:CitaModel): Promise<Object> {
+  public modificar(citaAntigua:CitaModel,citaNueva:CitaModel): Promise<Object> {
     //console.log("CitaLocalDBService: modificar();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "UPDATE cita SET rutmascota="+citaNueva.rutmascota+", idespecialista ="+citaNueva.idespecialista+", idhora="+citaNueva.idhora+ " WHERE idcita="+citaNueva.idcita;
+        var sql = "UPDATE cita SET rutmascota='"+citaNueva.rutmascota+"', idespecialista ="+citaNueva.idespecialista+", WHERE idcita="+citaNueva.idcita;
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           //console.log(tx,results,results.rows.length);
           if(results.rowsAffected>0){
-
+            console.warn("Actualizar VALIDS");
+            /*
             var sql3 = "UPDATE hora SET valid=1 WHERE idhora = "+horaAntigua.idhora;
             //console.info(sql3);
             tx.executeSql(sql3,[],function(tx,results){
@@ -77,6 +79,7 @@ export class CitaLocalDBService {
             tx.executeSql(sql2,[],function(tx,results){
               //console.log(tx,results,results.rows.length);
             });
+            */
  
             let model:CitaModel = new CitaModel(citaNueva.idcita);
             var result = {result:true,mensajes:"¡Cita modificada correctamente!",cita:model};
@@ -101,6 +104,7 @@ export class CitaLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
+        console.warn("Actualizar VALIDS");
         var queries = [
           "DELETE FROM cita WHERE idcita ="+ cita.idcita,
           "UPDATE hora SET valid = 1 WHERE idhora ="+cita.idhora
@@ -128,11 +132,11 @@ export class CitaLocalDBService {
   };
   
   public obtener(): Promise<Object> {
-    //console.log("CitaLocalDBService: obtener();");
+    console.log("CitaLocalDBService: obtener();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT ci.*, strftime('%d-%m-%Y', ho.fecha) AS fecha, ho.hora,ma.rutdueno, ma.nombre AS nombreMascota, du.nombres AS nombreDueno, du.apellidopaterno AS paternoDueno, du.apellidomaterno AS maternoDueno, es.nombres AS nombreEspecialista, es.apellidopaterno AS paternoEspecialista, es.apellidomaterno AS maternoEspecialista, esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.rutmascota = ma.rutmascota INNER JOIN duenomascota AS du ON ma.rutdueno = du.rutdueno INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad INNER JOIN hora AS ho ON ci.idhora = ho.idhora";
+        var sql = "SELECT ci.*, ho.fecha AS fecha, ho.hora,ma.rutdueno, ma.nombre AS nombreMascota, du.nombres AS nombreDueno, du.apellidopaterno AS paternoDueno, du.apellidomaterno AS maternoDueno, es.nombres AS nombreEspecialista, es.apellidopaterno AS paternoEspecialista, es.apellidomaterno AS maternoEspecialista, esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.rutmascota = ma.rutmascota INNER JOIN duenomascota AS du ON ma.rutdueno = du.rutdueno INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad INNER JOIN hora AS ho ON ci.idhora = ho.idhora";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -159,20 +163,17 @@ export class CitaLocalDBService {
             especialista.apellidopaterno = item.paternoEspecialista;
             especialista.apellidomaterno = item.maternoEspecialista;
 
-            var hora:HoraModel = new HoraModel();
-            hora.fecha = item.fecha;
-            hora.hora = item.hora;
+            //Unir con EspecialistaDisponibilidad
 
-            let cita:CitaModel = new CitaModel(item.idcita,item.rutmascota,item.idespecialista,item.idhora,item.origen,item.valid);
+            let cita:CitaModel = new CitaModel(item.idcita,item.rutmascota,item.idespecialista,item.origen,item.valid);
             cita.duenoMascotaModel = dueno;
             cita.especialistaModel = especialista;
             cita.mascotaModel = mascota;
-            cita.horaModel = hora;
             citas.push(cita);
             var result = {result:true,mensajes:"Citas encontradas",citas:citas};
             resolve(result);
           } else {
-            var resultError = {result:false,errores:"No se han encontrado cita"};
+            var resultError = {result:false,errores:"No se han encontrado citas"};
             reject(resultError);                        
           }
         },function(tx,results){
@@ -187,11 +188,14 @@ export class CitaLocalDBService {
   }  
 
   public obtenerUltimas(): Promise<Object> {
-    //console.log("CitaLocalDBService: obtenerUltimas();");
+    console.log("CitaLocalDBService: obtenerUltimas();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
+        /*
         var sql = "SELECT ci.*, strftime('%d-%m-%Y', ho.fecha) AS fecha, ho.hora,ma.rutdueno, ma.nombre AS nombreMascota, du.nombres AS nombreDueno, du.apellidopaterno AS paternoDueno, du.apellidomaterno AS maternoDueno, es.nombres AS nombreEspecialista, es.apellidopaterno AS paternoEspecialista, es.apellidomaterno AS maternoEspecialista, esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.rutmascota = ma.rutmascota INNER JOIN duenomascota AS du ON ma.rutdueno = du.rutdueno INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad INNER JOIN hora AS ho ON ci.idhora = ho.idhora ORDER by idcita DESC LIMIT 5";
+        */
+        var sql = "";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           //console.log(tx,results,results.rows.length);
@@ -219,21 +223,19 @@ export class CitaLocalDBService {
             especialista.apellidopaterno = item.paternoEspecialista;
             especialista.apellidomaterno = item.maternoEspecialista;
 
-            var hora:HoraModel = new HoraModel();
-            hora.fecha = item.fecha;
-            hora.hora = item.hora;
+            //Unir con EspecialistaDisponibilidad
 
-            let cita:CitaModel = new CitaModel(item.idcita,item.rutmascota,item.idespecialista,item.idhora,item.origen,item.valid);
+            let cita:CitaModel = new CitaModel(item.idcita,item.rutmascota,item.idespecialista,item.origen,item.valid);
             cita.duenoMascotaModel = dueno;
             cita.mascotaModel = mascota;
             cita.especialistaModel = especialista;
-            cita.horaModel = hora;
+
 
             citas.push(cita);
             var result = {result:true,mensajes:"Citas encontradas",citas:citas};
             resolve(result);
           } else {
-            var resultError = {result:false,errores:"No se han encontrado cita"};
+            var resultError = {result:false,errores:"No se han encontrado citas"};
             reject(resultError);                        
           }
         },function(tx,results){
@@ -252,7 +254,10 @@ export class CitaLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
+        /*
         var sql = "SELECT ci.*, strftime('%d-%m-%Y', ho.fecha) AS fecha, ho.hora,ma.rutdueno, ma.nombre AS nombreMascota, du.nombres AS nombreDueno, du.apellidopaterno AS paternoDueno, du.apellidomaterno AS maternoDueno, es.nombres AS nombreEspecialista, es.apellidopaterno AS paternoEspecialista, es.apellidomaterno AS maternoEspecialista, esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.rutmascota = ma.rutmascota  INNER JOIN duenomascota AS du ON ma.rutdueno = du.rutdueno  INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad INNER JOIN hora AS ho ON ci.idhora = ho.idhora WHERE ma.rutdueno = '"+dueno.rutdueno+"' ORDER BY ci.idcita DESC LIMIT 5";
+        */
+        var sql = "";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           //console.log(tx,results,results.rows.length);
@@ -280,21 +285,18 @@ export class CitaLocalDBService {
             especialista.apellidopaterno = item.paternoEspecialista;
             especialista.apellidomaterno = item.maternoEspecialista;
 
-            var hora:HoraModel = new HoraModel();
-            hora.fecha = item.fecha;
-            hora.hora = item.hora;
+            //Unir con EspecialistaDisponibilidad
 
-            let cita:CitaModel = new CitaModel(item.idcita,item.rutmascota,item.idespecialista,item.idhora,item.origen,item.valid);
+            let cita:CitaModel = new CitaModel(item.idcita,item.rutmascota,item.idespecialista,item.origen,item.valid);
             cita.duenoMascotaModel = dueno;
             cita.mascotaModel = mascota;
             cita.especialistaModel = especialista;
-            cita.horaModel = hora;
 
             citas.push(cita);
             var result = {result:true,mensajes:"Citas encontradas",citas:citas};
             resolve(result);
           } else {
-            var resultError = {result:false,errores:"No se han encontrado cita"};
+            var resultError = {result:false,errores:"No se han encontrado citas"};
             reject(resultError);                        
           }
         },function(tx,results){
@@ -309,11 +311,11 @@ export class CitaLocalDBService {
   }
 
   public obtenerConID(idcita:number): Promise<Object> {
-    //console.log("CitaLocalDBService: obtenerConID();");
+    console.log("CitaLocalDBService: obtenerConID();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT ci.*, ho.fecha AS fecha, ho.hora,ma.rutdueno, ma.nombre AS nombreMascota, du.nombres AS nombreDueno, du.apellidopaterno AS paternoDueno, du.apellidomaterno AS maternoDueno, es.nombres AS nombreEspecialista, es.apellidopaterno AS paternoEspecialista, es.apellidomaterno AS maternoEspecialista, esp.idespecialidad,esp.nombre AS nombreEspecialidad FROM cita AS ci INNER JOIN mascota AS ma ON ci.rutmascota = ma.rutmascota INNER JOIN duenomascota AS du ON ma.rutdueno = du.rutdueno INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad INNER JOIN hora AS ho ON ci.idhora = ho.idhora WHERE ci.idcita ="+idcita.toString();
+        var sql = "SELECT ci.*, ma.rutdueno, ma.nombre AS nombreMascota, du.nombres AS nombreDueno, du.apellidopaterno AS paternoDueno, du.apellidomaterno AS maternoDueno, es.nombres AS nombreEspecialista, es.apellidopaterno AS paternoEspecialista, es.apellidomaterno AS maternoEspecialista, esp.idespecialidad,esp.nombre AS nombreEspecialidad, bh.horainicio,bh.horatermino, ed.fecha AS fecha FROM cita AS ci INNER JOIN mascota AS ma ON ci.rutmascota = ma.rutmascota INNER JOIN duenomascota AS du ON ma.rutdueno = du.rutdueno INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad INNER JOIN especialistadisponibilidad AS ed ON es.idespecialista = ed.idespecialista INNER JOIN bloquehorario AS bh ON bh.idbloquehorario = ed.idbloquehorario WHERE ci.idcita = "+idcita.toString();
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -341,23 +343,27 @@ export class CitaLocalDBService {
             especialista.apellidopaterno = item.paternoEspecialista;
             especialista.apellidomaterno = item.maternoEspecialista;
 
-            var hora:HoraModel = new HoraModel();
-            hora.idhora = item.idhora;
-            hora.idespecialista = item.idespecialista;
-            hora.fecha = item.fecha;
-            hora.hora = item.hora;
+            //Unir con EspecialistaDisponibilidad
+            var especialistaDisponibilidad:EspecialistaDisponibilidadModel = new EspecialistaDisponibilidadModel();
+            especialistaDisponibilidad.fecha = item.fecha;
 
-            let cita:CitaModel = new CitaModel(item.idcita,item.rutmascota,item.idespecialista,item.idhora,item.origen,item.valid);
+            var bloqueHorario:BloqueHorarioModel = new BloqueHorarioModel();
+            bloqueHorario.horainicio = item.horainicio;
+            bloqueHorario.horatermino = item.horatermino;
+
+            especialistaDisponibilidad.bloqueHorarioModel = bloqueHorario;
+
+            let cita:CitaModel = new CitaModel(item.idcita,item.rutmascota,item.idespecialista,item.origen,item.valid);
             cita.duenoMascotaModel = dueno;
             cita.especialistaModel = especialista;
             cita.mascotaModel = mascota;
-            cita.horaModel = hora;
             cita.especialidadModel = especialidad;
+            cita.especialistaDisponibilidadModel = especialistaDisponibilidad;
 
             var result = {result:true,mensajes:"Cita encontrada",cita:cita};
             resolve(result);
           } else {
-            var resultError = {result:false,errores:"No se han encontrado cita"};
+            var resultError = {result:false,errores:"No se ha encontrado cita"};
             reject(resultError);                        
           }
         },function(tx,results){
@@ -372,11 +378,11 @@ export class CitaLocalDBService {
   }
 
   public obtenerConRut(rutmascota:string): Promise<Object> {
-    //console.log("CitaLocalDBService: obtenerConRut();");
+    console.log("CitaLocalDBService: obtenerConRut();");
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT ci.idcita,ci.idhora,ci.idespecialista,ci.idhora,ci.valid,strftime('%d-%m-%Y', ho.fecha) AS fecha,ho.hora, du.rutdueno AS rutDueno, du.nombres AS nombresDueno, du.apellidopaterno AS paternoDueno, du.apellidomaterno AS maternoDueno, du.direccion,du.telefono,du.correo,du.valid, es.nombres AS nombreEspecialista, es.apellidoPaterno AS paternoEspecialista, es.apellidoMaterno AS maternoEspecialista, esp.nombre AS especialidadNombre, ma.nombre AS nombreMascota FROM cita AS ci INNER JOIN duenomascota AS du ON du.rutdueno = ma.rutdueno INNER JOIN mascota AS ma ON ci.rutmascota = ma.rutmascota  INNER JOIN hora AS ho ON ci.idhora = ho.idhora INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad WHERE ci.rutmascota = '"+rutmascota.toString()+"'";
+        var sql = "SELECT ci.idcita,ci.idespecialista,ci.valid, ed.fecha AS fecha,bh.horainicio,bh.horatermino, du.rutdueno AS rutDueno, du.nombres AS nombresDueno, du.apellidopaterno AS paternoDueno, du.apellidomaterno AS maternoDueno, du.direccion,du.telefono,du.correo,du.valid, es.nombres AS nombreEspecialista, es.apellidoPaterno AS paternoEspecialista, es.apellidoMaterno AS maternoEspecialista, esp.nombre AS especialidadNombre, ma.nombre AS nombreMascota FROM cita AS ci INNER JOIN duenomascota AS du ON du.rutdueno = ma.rutdueno INNER JOIN mascota AS ma ON ci.rutmascota = ma.rutmascota INNER JOIN especialistadisponibilidad AS ed ON ci.idespecialista = ed.idespecialista INNER JOIN bloquehorario AS bh ON ed.idbloquehorario = bh.idbloquehorario INNER JOIN especialista AS es ON ci.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad WHERE ci.rutmascota = '"+rutmascota.toString()+"'";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -386,11 +392,18 @@ export class CitaLocalDBService {
             for (var i = 0; i < results.rows.length; i++){
               var item:any = results.rows.item(i) as any;
 
-              var hora:HoraModel = new HoraModel();
-              hora.fecha = item.fecha;
-              hora.hora = item.hora;
+              //Unir con EspecialistaDisponibilidad 
+              var especialistaDisponibilidad:EspecialistaDisponibilidadModel = new EspecialistaDisponibilidadModel();
+              especialistaDisponibilidad.fecha = item.fecha;
+              especialistaDisponibilidad.idespecialista = item.idespecialista;
 
-              var cita:CitaModel = new CitaModel(item.idcita,item.rutmascota,item.idespecialista,item.idhora,item.origen,item.valid);
+              var bloqueHorario:BloqueHorarioModel = new BloqueHorarioModel();
+              bloqueHorario.horainicio = item.horainicio;
+              bloqueHorario.horatermino = item.horatermino;
+
+              especialistaDisponibilidad.bloqueHorarioModel = bloqueHorario;
+
+              var cita:CitaModel = new CitaModel(item.idcita,item.rutmascota,item.idespecialista,item.origen,item.valid);
               
               var mascota:MascotaModel = new MascotaModel(item.rutmascota,item.idtipomascota,item.idraza,item.rutDueno,item.nombreMascota,item.peso,item.edad,item.validMascota);
               
@@ -403,11 +416,11 @@ export class CitaLocalDBService {
               especialista.nombres = item.nombreEspecialista;
               especialista.apellidopaterno = item.paternoEspecialista;
 
-              cita.horaModel = hora;
               cita.mascotaModel = mascota;
               cita.duenoMascotaModel = dueno;
               cita.especialistaModel = especialista;
               cita.especialidadModel = especialidad;
+              cita.especialistaDisponibilidadModel = especialistaDisponibilidad;
               citas.push(cita);
             }
             var result = {result:true,mensajes:"Citas encontradas",citas:citas};

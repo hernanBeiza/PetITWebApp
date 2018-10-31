@@ -9,7 +9,6 @@ import { CitaLocalDBService } from './../../../services/CitaLocalDB.service';
 import {DuenoMascotaModel} from './../../../models/DuenoMascotaModel';
 import {EspecialidadModel} from './../../../models/EspecialidadModel';
 import {EspecialistaModel} from './../../../models/EspecialistaModel';
-import {HoraModel} from './../../../models/HoraModel';
 import {CitaModel} from './../../../models/CitaModel';
 
 @Component({

@@ -6,12 +6,14 @@ import { MzModalComponent,MzToastService } from 'ng2-materialize';
 import {Mensajes} from './../../../libs/Mensajes';
 import {Validaciones} from './../../../libs/Validaciones';
 
+import * as moment from 'moment'; 
+
 // Services
 import {UsuarioLocalDBService} from './../../../services/UsuarioLocalDB.service';
 import {DuenoMascotaLocalDBService} from './../../../services/DuenoMascotaLocalDB.service';
 import {EspecialidadLocalDBService} from './../../../services/EspecialidadLocalDB.service';
 import {EspecialistaLocalDBService} from './../../../services/EspecialistaLocalDB.service';
-import {HoraLocalDBService} from './../../../services/HoraLocalDB.service';
+import {EspecialistaDisponibilidadLocalDBService} from './../../../services/EspecialistaDisponibilidadLocalDB.service';
 import {CitaLocalDBService} from './../../../services/CitaLocalDB.service';
 // Models
 import {UsuarioModel} from './../../../models/UsuarioModel';
@@ -19,7 +21,7 @@ import {DuenoMascotaModel} from './../../../models/DuenoMascotaModel';
 import {MascotaModel} from './../../../models/MascotaModel';
 import {EspecialidadModel} from './../../../models/EspecialidadModel';
 import {EspecialistaModel} from './../../../models/EspecialistaModel';
-import {HoraModel} from './../../../models/HoraModel';
+import {EspecialistaDisponibilidadModel} from './../../../models/EspecialistaDisponibilidadModel';
 import {CitaModel} from './../../../models/CitaModel';
 
 @Component({
@@ -62,13 +64,12 @@ export class HorasModificarComponent implements OnInit {
   //Arreglo de especialidades
   public especialidades:Array<EspecialidadModel> = new Array<EspecialidadModel>();
   public especialistas:Array<EspecialistaModel> = new Array<EspecialistaModel>();
-  public horas:Array<HoraModel> = new Array<HoraModel>();
+  public disponibilidades:Array<EspecialistaDisponibilidadModel> = new Array<EspecialistaDisponibilidadModel>();
   
   public fecha:string = "";
 
   public especialidadModel:EspecialidadModel = new EspecialidadModel();
   public especialistaModel:EspecialistaModel = new EspecialistaModel();
-  public horaAntiguaModel:HoraModel = new HoraModel();
   public citaModel:CitaModel = new CitaModel();
 
   public opcionesCalendario: Pickadate.DateOptions = {
@@ -87,7 +88,7 @@ export class HorasModificarComponent implements OnInit {
     private DuenoMascotaLocalDBService:DuenoMascotaLocalDBService,
     private EspecialidadLocalDBService:EspecialidadLocalDBService,
     private EspecialistaLocalDBService:EspecialistaLocalDBService,
-    private HoraLocalDBService:HoraLocalDBService,
+    private EspecialistaDisponibilidadLocalDBService:EspecialistaDisponibilidadLocalDBService,
     private CitaLocalDBService:CitaLocalDBService) { }
 
   ngOnInit(): void { 
@@ -136,13 +137,14 @@ export class HorasModificarComponent implements OnInit {
         this.especialidadModel = this.citaModel.especialidadModel;
         this.especialistaModel = this.citaModel.especialistaModel;
 
-        this.horaAntiguaModel = this.citaModel.horaModel;
+        //Obtener cita antigua
+        //this.horaAntiguaModel = this.citaModel.horaModel;
 
-        this.fecha = this.citaModel.horaModel.fecha;
+        //Fecha
+        this.fecha = this.citaModel.especialistaDisponibilidadModel.fecha;
 
         this.cargarEspecialidades();
         this.cargarEspecialistas();
-        this.cargarHoras();
          
         this.MzToastService.show(data.mensajes,4000,"green");
 
@@ -159,7 +161,6 @@ export class HorasModificarComponent implements OnInit {
     console.info(this.especialidadModel);
     this.especialistaControl.reset();
     this.fechaControl.reset();
-    this.horas = new Array<HoraModel>();    
     this.cargarEspecialistas();
   }
 
@@ -168,7 +169,6 @@ export class HorasModificarComponent implements OnInit {
     this.citaModel.idespecialista = this.especialistaModel.idespecialista;
     this.citaModel.especialistaModel = this.especialistaModel;
     this.fechaControl.reset();
-    this.horas = new Array<HoraModel>();    
   }
 
   private cargarEspecialistas():void {
@@ -183,15 +183,15 @@ export class HorasModificarComponent implements OnInit {
 
   private cargarHoras():void {
     console.info("cargarHoras();");
-    this.HoraLocalDBService.obtenerConEspecialistayFecha(this.especialistaModel,this.fecha).then((data:any)=>{
+    this.EspecialistaDisponibilidadLocalDBService.obtenerConEspecialistaYFecha(this.especialistaModel,this.fecha).then((data:any)=>{
       console.info(data);
       if(data.result){
-        this.horas = data.horas;
+        this.disponibilidades = data.disponibilidades;
         this.MzToastService.show(data.mensajes, 4000, 'green');
       }
     },(dataError:any)=>{
       console.warn(dataError);  
-      this.horas = new Array<HoraModel>();
+      this.disponibilidades = new Array<EspecialistaDisponibilidadModel>();
       this.MzToastService.show(dataError.errores, 4000, 'red');
     });
   }
@@ -205,13 +205,15 @@ export class HorasModificarComponent implements OnInit {
     this.router.navigate([ruta]);      
   }
 
-  private reservar(hora:HoraModel): void {
-    console.log(hora);
+
+  private reservar(especialistaDisponibilidad:EspecialistaDisponibilidadModel): void {
     if (this.modificarForm.valid) {
+      /*
       this.citaModel.idhora = hora.idhora;
       this.citaModel.horaModel = hora;
       console.log(this.horaAntiguaModel,this.citaModel.horaModel);
       this.agendarSheetModal.open();
+      */
     } else {
       this.MzToastService.show("Revisa los datos de tu agendamiento",4000);
     }
@@ -245,10 +247,6 @@ export class HorasModificarComponent implements OnInit {
       enviar = false;
       this.errores+="<br>Fecha";
     }
-    if(!this.citaModel.horaModel){
-      enviar = false;
-      this.errores+="<br>Hora";
-    }
     if(enviar){
       this.enviar();
     } else {
@@ -258,6 +256,8 @@ export class HorasModificarComponent implements OnInit {
 
   private enviar(): void {
     console.info("enviar");
+    console.warn("Actualizar");
+    /*
     this.CitaLocalDBService.modificar(this.horaAntiguaModel,this.citaModel).then((data:any)=>{
       console.info(data);
       if(data.result){          
@@ -276,6 +276,7 @@ export class HorasModificarComponent implements OnInit {
       console.warn(dataError);
       this.MzToastService.show(dataError.errores, 4000, 'red');    
     });
+    */
   }
 
 }

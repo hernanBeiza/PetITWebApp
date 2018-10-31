@@ -11,7 +11,6 @@ import {UsuarioLocalDBService} from './../../../services/UsuarioLocalDB.service'
 import {DuenoMascotaLocalDBService} from './../../../services/DuenoMascotaLocalDB.service';
 import {EspecialidadLocalDBService} from './../../../services/EspecialidadLocalDB.service';
 import {EspecialistaLocalDBService} from './../../../services/EspecialistaLocalDB.service';
-import {HoraLocalDBService} from './../../../services/HoraLocalDB.service';
 import {CitaLocalDBService} from './../../../services/CitaLocalDB.service';
 // Models
 import {UsuarioModel} from './../../../models/UsuarioModel';
@@ -19,7 +18,6 @@ import {DuenoMascotaModel} from './../../../models/DuenoMascotaModel';
 import {MascotaModel} from './../../../models/MascotaModel';
 import {EspecialidadModel} from './../../../models/EspecialidadModel';
 import {EspecialistaModel} from './../../../models/EspecialistaModel';
-import {HoraModel} from './../../../models/HoraModel';
 import {CitaModel} from './../../../models/CitaModel';
 
 @Component({
@@ -91,7 +89,7 @@ export class HorasListarComponent implements OnInit {
       }
     },(dataError:any)=>{
       console.warn(dataError);  
-      this.citas = new Array<HoraModel>();
+      this.citas = new Array<CitaModel>();
       this.MzToastService.show(dataError.errores, 5000, 'red');
     });
   }
@@ -142,9 +140,10 @@ export class HorasListarComponent implements OnInit {
     this.router.navigate([ruta]);      
   }
 
-  private irEditar(hora:HoraModel): void {
+  private irEditar(cita:CitaModel): void {
     console.log("irEditar");
-    console.log(hora);
+    console.log(cita);
+    console.warn("Aún sin terminar");
   }
 
 }
