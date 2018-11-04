@@ -2,7 +2,7 @@
 	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
 				<mz-card-title>
-					1. Buscar dueño
+					Buscar dueño
 				</mz-card-title>
 				<mz-card-content>
 					Buscar dueño por: 
@@ -46,6 +46,47 @@
 			</mz-card>
 		</div>
 	</div>
+
+	<div class="row">
+	    <div class="col s12 m12">
+			<mz-card [hoverable]="true">
+				<mz-card-title>
+					Dueños Encontrados
+				</mz-card-title>
+				<mz-card-content>
+					<table class="striped">
+					    <thead>
+					      <tr>
+					          <th>Rut</th>
+					          <th>Nombre</th>
+					          <th>Dirección</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+				    	    <tr *ngFor="let item of duenos" style="cursor: pointer;" 
+				    	    (click)="seleccionarDueno(item);"
+							[class.seleccionada]="item.rutdueno == duenoSeleccionado?.rutdueno"
+				    	    >
+					        <td>{{item.rutdueno | rut }}</td>
+					        <td>{{item.nombres}} {{item.apellidopaterno}} {{item.apellidomaterno}}</td>
+					        <td>{{item.direccion}}</td>
+					      </tr>
+					    </tbody>
+					</table>
+					<mz-pagination
+						(pageChange)="onPageChange($event)"
+						[currentPage]="1"
+						[enableFirstAndLastPageButtons]="false"
+						[itemsPerPage]="10"
+						[totalItems]="30"
+					>
+					</mz-pagination>
+				</mz-card-content>
+			</mz-card>
+		</div>
+	</div>
+
+	<!--
 	<div class="row">
 	    <div class="col s12 m12">
 			<mz-card [hoverable]="true">
@@ -65,6 +106,7 @@
 			</mz-card>
 		</div>
 	</div>
+	-->
 
 	<app-mascotas-listar
 	#mascotasListarComponent

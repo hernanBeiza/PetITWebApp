@@ -24,7 +24,6 @@ import { DuenoMascotaLocalDBService } from './../../services/DuenoMascotaLocalDB
 import { CitaLocalDBService } from './../../services/CitaLocalDB.service';
 import { EspecialidadLocalDBService } from './../../services/EspecialidadLocalDB.service';
 import { EspecialistaLocalDBService } from './../../services/EspecialistaLocalDB.service';
-import { HoraLocalDBService } from './../../services/HoraLocalDB.service';
 import { ComunaLocalDBService } from './../../services/ComunaLocalDB.service';
 
 import { DuenosConsultarComponent } from './duenos/duenos-consultar/duenos-consultar.component';
@@ -42,7 +41,7 @@ import { DuenosConsultarComponent } from './duenos/duenos-consultar/duenos-consu
 	providers: [
 		RazaLocalDBService,TipoMascotaLocalDBService,DuenoMascotaLocalDBService,EspecialidadLocalDBService,CitaLocalDBService,
 		EspecialistaLocalDBService,
-		HoraLocalDBService,ComunaLocalDBService
+		ComunaLocalDBService
 	],
 	declarations: [
 		RecepcionistaComponent,

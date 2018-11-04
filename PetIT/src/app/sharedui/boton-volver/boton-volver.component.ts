@@ -25,7 +25,7 @@ export class BotonVolverComponent implements OnInit {
 	ngOnInit() { }
 
 	onVolver(){
-		console.log("onVolver");
+		//console.log("onVolver");
 	    this.location.back();
 	}
 

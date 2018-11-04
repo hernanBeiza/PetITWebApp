@@ -90,7 +90,7 @@ export class HorasListarComponent implements OnInit {
     },(dataError:any)=>{
       console.warn(dataError);  
       this.citas = new Array<CitaModel>();
-      this.MzToastService.show(dataError.errores, 5000, 'red');
+      this.MzToastService.show(dataError.errores, 4000, 'red');
     });
   }
 
@@ -106,17 +106,16 @@ export class HorasListarComponent implements OnInit {
   }
 
   public irAnular(cita:CitaModel): void {
-    console.log("irAnular");
-    console.log(cita);
+    //console.log("irAnular");
+    //console.log(cita);
     this.citaModel = cita;
-    console.log(this.citaModel);
     this.anularSheetModal.open();
   }
 
   public anular(): void {
-    console.log("anular");
+    //console.log("anular");
     this.CitaLocalDBService.anular(this.citaModel).then((data:any)=>{
-      console.log(data);
+      //console.log(data);
       this.anularSheetModal.close();
       if(data.result){
         this.cargarHorasConMascota(this.mascota.rutmascota);
@@ -130,20 +129,6 @@ export class HorasListarComponent implements OnInit {
       this.MzToastService.show(dataError.errores, 4000, 'red');
     });
 
-  }
-  public volver():void {
-    //Dependiendo del tipo de usuario
-    var ruta ="/recepcionista/horas/consultar";
-    if(this.usuario.idrol!=2){
-      ruta ="/dueno/horas/consultar";
-    }
-    this.router.navigate([ruta]);      
-  }
-
-  private irEditar(cita:CitaModel): void {
-    console.log("irEditar");
-    console.log(cita);
-    console.warn("Aún sin terminar");
   }
 
 }

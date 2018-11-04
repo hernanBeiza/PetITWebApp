@@ -23,7 +23,8 @@ const routes: Routes = [
 */
 const routes: Routes = [
   {
-    path: 'bloques',  loadChildren: loadBloquesModule
+    //path: 'bloques',  loadChildren: loadBloquesModule
+    path: 'bloques',           loadChildren: './bloques/bloques.module#BloquesModule'
   }
 ];
 /*

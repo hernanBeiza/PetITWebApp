@@ -37,7 +37,7 @@ export class HorasConsultarComponent implements OnInit {
 	public filtroString: string = ""
 	public filtroField: string = "rut";
 
-	public duenoEncontrado:DuenoMascotaModel;
+	public duenoSeleccionado:DuenoMascotaModel;
 	public mascotaSeleccionada:MascotaModel;
 	
 	public usuarioModel:UsuarioModel;
@@ -63,21 +63,6 @@ export class HorasConsultarComponent implements OnInit {
 	ngOnInit() { 
 		this.usuarioModel = this.UsuarioLocalDBService.obtenerLocal();
 		if(this.usuarioModel){
-			//Si es dueño de mascota, obtener SUS mascotas
-			if(this.usuarioModel.idrol==3){
-				this.DuenoMascotaLocalDBService.obtenerConIDUsuario(this.usuarioModel.idusuario).then((data:any)=>{
-					if(data.result){
-						this.duenoEncontrado = data.dueno;
-						this.obtenerMascotasConDueno(data.dueno);
-						this.MzToastService.show(data.mensajes,3000,'green');
-					} else {
-						this.MzToastService.show(data.errores,5000,'red');
-					}
-				},(dataError:any)=>{
-					console.warn(dataError);
-					this.MzToastService.show(dataError.errores,5000,'red');
-				});
-			}			
 		} else {
 			console.warn("No existe usuario, ir al login");
 		}
@@ -97,46 +82,68 @@ export class HorasConsultarComponent implements OnInit {
 	    console.log(pagina);
 	}
 
+	private limpiar():void {
+		this.duenos = new Array<DuenoMascotaModel>();
+		this.duenoSeleccionado = null;
+		this.mascotasListarComponent.limpiar();
+	}
+
 	private buscarConNombre(): void {
+		this.limpiar();
+
 	    this.DuenoMascotaLocalDBService.obtenerConNombreApellido(this.filtroString).then((data:any)=>{
 			console.log(data);
 			if(data.result){
+				this.duenos.push(data.dueno);
+				/*
 				this.duenoEncontrado = data.dueno;
 				this.obtenerMascotasConDueno(data.dueno);
+				*/
 				this.MzToastService.show(data.mensajes,3000,'green');
 			} else {
-				this.duenoEncontrado = new DuenoMascotaModel();
+				//this.duenoEncontrado = new DuenoMascotaModel();
 				this.MzToastService.show(data.errores,5000,'red');
 			}
 	    },(dataError:any)=>{
 			console.warn(dataError);
-			this.duenoEncontrado = new DuenoMascotaModel();
+			//this.duenoEncontrado = new DuenoMascotaModel();
 			this.MzToastService.show(dataError.errores,5000,'red');
 	    });
 	}
 
 	private buscarConRut(): void {
+		this.limpiar();
+
 	    this.DuenoMascotaLocalDBService.obtenerConRut(this.filtroString).then((data:any)=>{
 			console.log(data);
 			if(data.result){
+				this.duenos.push(data.dueno);	
+				/*
 	        	this.duenoEncontrado = data.dueno;
 				this.obtenerMascotasConDueno(data.dueno);
+				*/
 		        this.MzToastService.show(data.mensajes,3000,'green');
 			} else {
-				this.duenoEncontrado = new DuenoMascotaModel();
+				//this.duenoEncontrado = new DuenoMascotaModel();
 	        	this.MzToastService.show(data.errores,5000,'red');
 			}
 	    },(dataError:any)=>{
 			console.warn(dataError);
-			this.duenoEncontrado = new DuenoMascotaModel();
+			//this.duenoEncontrado = new DuenoMascotaModel();
 			this.MzToastService.show(dataError.errores,5000,'red');
 	    });
+	}
+
+	public seleccionarDueno(model:DuenoMascotaModel): void {
+		this.duenoSeleccionado = model;
+		this.obtenerMascotasConDueno(model);
 	}
 
 	private obtenerMascotasConDueno(model:DuenoMascotaModel): void {
 		this.mascotasListarComponent.buscarMascotasConDueno(model);
 	}
 
+	//Métodos del listado de mascotas
 	public onMascotaSeleccionada(mascota:MascotaModel): void {
 		console.log("onMascotaSeleccionada");
 		this.mascotaSeleccionada = mascota;
@@ -151,7 +158,7 @@ export class HorasConsultarComponent implements OnInit {
 	    console.warn("irAgendar();");
 	    var enviar = true;
 	    var errores:string = "Le faltó:";
-	    if(this.duenoEncontrado==null){
+	    if(this.duenoSeleccionado==null){
 	      enviar = false;
 	      errores+="<br/>Buscar un dueño";
 	    }
@@ -160,7 +167,7 @@ export class HorasConsultarComponent implements OnInit {
 	      errores+="<br/>Seleccionar una mascota";
 	    }
 	    if(enviar){
-	      this.router.navigate(['/recepcionista/horas/agendar/'+this.duenoEncontrado.rutdueno+'/'+this.mascotaSeleccionada.rutmascota]);        
+	      this.router.navigate(['/recepcionista/horas/agendar/'+this.duenoSeleccionado.rutdueno+'/'+this.mascotaSeleccionada.rutmascota]);        
 	    } else {
 	      this.MzToastService.show(errores,5000,'red');
 	    }

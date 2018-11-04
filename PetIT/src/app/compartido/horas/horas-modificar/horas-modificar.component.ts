@@ -70,6 +70,8 @@ export class HorasModificarComponent implements OnInit {
 
   public especialidadModel:EspecialidadModel = new EspecialidadModel();
   public especialistaModel:EspecialistaModel = new EspecialistaModel();
+
+  public citaAntiguaModel:CitaModel;
   public citaModel:CitaModel = new CitaModel();
 
   public opcionesCalendario: Pickadate.DateOptions = {
@@ -79,7 +81,7 @@ export class HorasModificarComponent implements OnInit {
     today: 'Hoy',
     clear: 'Limpiar',
     close: 'OK',
-    onClose: () => this.cargarHoras()
+    onClose: () => this.cargarDisponibilidades()
   };
 
   constructor(private router:Router, private fb:FormBuilder, private activatedRoute: ActivatedRoute, 
@@ -132,13 +134,17 @@ export class HorasModificarComponent implements OnInit {
     this.CitaLocalDBService.obtenerConID(idcita).then((data:any)=>{
       console.info(data);
       if(data.result){
+        this.citaAntiguaModel = new CitaModel();
+        this.citaAntiguaModel.idcita = data.cita.idcita;
+        this.citaAntiguaModel.idespecialistadisponibilidad = data.cita.idespecialistadisponibilidad
+        this.citaAntiguaModel.rutmascota = data.cita.rutmascota
+        this.citaAntiguaModel.origen = data.cita.origen;
+        this.citaAntiguaModel.valid = data.cita.valid;
+
         this.citaModel = data.cita;
 
         this.especialidadModel = this.citaModel.especialidadModel;
         this.especialistaModel = this.citaModel.especialistaModel;
-
-        //Obtener cita antigua
-        //this.horaAntiguaModel = this.citaModel.horaModel;
 
         //Fecha
         this.fecha = this.citaModel.especialistaDisponibilidadModel.fecha;
@@ -146,7 +152,7 @@ export class HorasModificarComponent implements OnInit {
         this.cargarEspecialidades();
         this.cargarEspecialistas();
          
-        this.MzToastService.show(data.mensajes,4000,"green");
+        //this.MzToastService.show(data.mensajes,4000,"green");
 
       } else {
         this.MzToastService.show(data.errores,4000,"red");
@@ -166,7 +172,6 @@ export class HorasModificarComponent implements OnInit {
 
   public seleccionarEspecialista(event):void {    
     console.info("seleccionarEspecialista");
-    this.citaModel.idespecialista = this.especialistaModel.idespecialista;
     this.citaModel.especialistaModel = this.especialistaModel;
     this.fechaControl.reset();
   }
@@ -175,14 +180,15 @@ export class HorasModificarComponent implements OnInit {
     this.EspecialistaLocalDBService.obtenerConEspecialidad(this.especialidadModel).then((data:any)=>{
       if(data.result){
         this.especialistas = data.especialistas;
+        this.cargarDisponibilidades();
       }
     },(dataError:any)=>{
       console.warn(dataError);
     });
   }
 
-  private cargarHoras():void {
-    console.info("cargarHoras();");
+  private cargarDisponibilidades():void {
+    console.info("cargarDisponibilidades();");
     this.EspecialistaDisponibilidadLocalDBService.obtenerConEspecialistaYFecha(this.especialistaModel,this.fecha).then((data:any)=>{
       console.info(data);
       if(data.result){
@@ -196,33 +202,19 @@ export class HorasModificarComponent implements OnInit {
     });
   }
 
-  public volver():void {
-    //Dependiendo del tipo de usuario
-    var ruta ="/recepcionista/horas/consultar";
-    if(this.usuario.idrol!=2){
-      ruta ="/dueno/horas/consultar";
-    }
-    this.router.navigate([ruta]);      
-  }
-
-
   private reservar(especialistaDisponibilidad:EspecialistaDisponibilidadModel): void {
     if (this.modificarForm.valid) {
-      /*
-      this.citaModel.idhora = hora.idhora;
-      this.citaModel.horaModel = hora;
-      console.log(this.horaAntiguaModel,this.citaModel.horaModel);
+      this.citaModel.especialistaDisponibilidadModel = especialistaDisponibilidad;
+      this.citaModel.idespecialistadisponibilidad = especialistaDisponibilidad.idespecialistadisponibilidad;
+
+      console.log(this.citaAntiguaModel,this.citaModel);
+
       this.agendarSheetModal.open();
-      */
     } else {
       this.MzToastService.show("Revisa los datos de tu agendamiento",4000);
     }
   }
   
-  public onSubmit(values:Object):void {
-    console.warn("Ya no debería usarse");
-  }
-
   public agendar():void {
   	console.info("agendar();");
     var enviar:boolean = true;
@@ -239,9 +231,9 @@ export class HorasModificarComponent implements OnInit {
       enviar = false;
       this.errores+="<br>Especialidad";
     }
-    if(!this.citaModel.idespecialista){
+    if(!this.citaModel.idespecialistadisponibilidad){
       enviar = false;
-      this.errores+="<br>Especialista";
+      this.errores+="<br>Disponibilidad";
     }
     if(!this.fecha){
       enviar = false;
@@ -255,10 +247,8 @@ export class HorasModificarComponent implements OnInit {
   }
 
   private enviar(): void {
-    console.info("enviar");
-    console.warn("Actualizar");
-    /*
-    this.CitaLocalDBService.modificar(this.horaAntiguaModel,this.citaModel).then((data:any)=>{
+    console.log("enviar");
+    this.CitaLocalDBService.modificar(this.citaAntiguaModel,this.citaModel).then((data:any)=>{
       console.info(data);
       if(data.result){          
         this.agendarSheetModal.close();
@@ -276,7 +266,11 @@ export class HorasModificarComponent implements OnInit {
       console.warn(dataError);
       this.MzToastService.show(dataError.errores, 4000, 'red');    
     });
-    */
+
   }
 
+  public onSubmit(values:any):void{
+
+  }
+  
 }

@@ -9,7 +9,7 @@ export class CitaModel {
 	
 	public idcita?: number;
 	public rutmascota?: string;
-	public idespecialista?: number;
+	public idespecialistadisponibilidad?: number;
 	public idhora?: number;
 	public origen?: number;
 	public valid?: number;
@@ -21,10 +21,10 @@ export class CitaModel {
 	public especialidadModel?:EspecialidadModel;
 	public origenModel?:OrigenModel;
 
-	constructor(idcita?:number,rutmascota?:string,idespecialista?:number,origen?:number,valid?:number){
+	constructor(idcita?:number,rutmascota?:string,idespecialistadisponibilidad?:number,origen?:number,valid?:number){
 		this.idcita = idcita;
 		this.rutmascota = rutmascota;
-		this.idespecialista = idespecialista;
+		this.idespecialistadisponibilidad = idespecialistadisponibilidad;
 		this.origen = origen;
 		this.valid = valid;
 	}

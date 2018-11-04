@@ -18,11 +18,11 @@ export class UsuarioLocalDBService  {
 
   constructor(private http: Http, private LocalDBService:LocalDBService) { }
 
-  public iniciarSesion(rut:string,contrasena:string): Promise<Object> {
+  public iniciarSesion(model:UsuarioModel): Promise<Object> {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT u.*, r.idrol, r.nombre AS nombreRol, r.valid AS validRol FROM usuario AS u INNER JOIN rol AS r ON r.idrol = u.idrol WHERE u.rut='"+rut+ "' AND u.password='"+contrasena+"'";
+        var sql = "SELECT u.*, r.idrol, r.nombre AS nombreRol, r.valid AS validRol FROM usuario AS u INNER JOIN rol AS r ON r.idrol = u.idrol WHERE u.rut='"+model.rut+ "' AND u.password='"+model.password+"'";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           //console.log(tx,results,results.rows.length);
@@ -207,6 +207,37 @@ export class UsuarioLocalDBService  {
     });
     return promesa;    
 
+  }
+
+  public recuperarContrasena(usuario:UsuarioModel): Promise<Object> {
+    console.log("UsuarioLocalService: recuperarContrasena();");
+    var db = this.LocalDBService.obtenerDB();
+    var promesa = new Promise((resolve, reject) => {
+      db.transaction(function (tx){
+        var sql = "SELECT * FROM usuario WHERE rut = "+usuario.rut;
+        //console.info(sql);
+        tx.executeSql(sql,[],function(tx,results){
+          //console.log(tx,results,results.rows.length);
+          var result = {result:true,mensajes:"Si existe un usuario con estos datos, te enviaremos la contraseña a tu correo"};
+          resolve(result);
+          /*
+          if(results.rows.length>0){
+            var result = {result:true,mensajes:"Si existe un usuario con estos datos, te enviaremos la contraseña a tu correo"};
+            resolve(result);
+          } else {
+            var resultNoEncontrado = {result:false,errores:"No se ha encontrado usuario con esos datos"};
+            reject(resultNoEncontrado);                        
+          }
+          */
+        },function(tx,results){
+          //console.log(tx,results);
+          var result = {result:false,errores:"Intenta de nuevo más tarde"};
+          reject(result);            
+          return false;
+        });
+      });
+    });
+    return promesa;
   }
 
   public guardarLocal(usuario:UsuarioModel): boolean {

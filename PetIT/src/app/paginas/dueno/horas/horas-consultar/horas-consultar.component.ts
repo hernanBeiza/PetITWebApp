@@ -65,7 +65,7 @@ export class HorasConsultarComponent implements OnInit {
 				if(data.result){
 					this.duenoEncontrado = data.dueno;
 					this.obtenerMascotasConDueno(data.dueno);
-					this.MzToastService.show(data.mensajes,3000,'green');
+					//this.MzToastService.show(data.mensajes,3000,'green');
 				} else {
 					this.MzToastService.show(data.errores,5000,'red');
 				}

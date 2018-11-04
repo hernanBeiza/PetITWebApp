@@ -47,7 +47,7 @@ export class LocalDBService {
         "CREATE TABLE IF NOT EXISTS `especialidad` ( `idespecialidad` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `nombre` TEXT NOT NULL, `valid` INTEGER );",
         "CREATE TABLE IF NOT EXISTS `duenomascota` ( `rutdueno` TEXT NOT NULL UNIQUE, `idusuario` INTEGER, `nombres` TEXT NOT NULL, `apellidopaterno` TEXT NOT NULL, `apellidomaterno` TEXT NOT NULL, `idcomuna` INTEGER NOT NULL, `direccion` TEXT NOT NULL, `telefono` TEXT NOT NULL, `correo` TEXT NOT NULL, `valid` INTEGER, PRIMARY KEY(`rutdueno`) )", 
         "CREATE TABLE IF NOT EXISTS `comuna` ( `idcomuna` INTEGER NOT NULL, `idprovincia` INTEGER NOT NULL, `nombre` INTEGER NOT NULL, `valid` INTEGER NOT NULL, PRIMARY KEY(`idcomuna`) )",
-        "CREATE TABLE IF NOT EXISTS `cita` ( `idcita` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `rutmascota` TEXT, `idespecialista` INTEGER NOT NULL, `idorigen` INTEGER NOT NULL, `valid` INTEGER DEFAULT 1 )",
+        "CREATE TABLE IF NOT EXISTS `cita` ( `idcita` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `rutmascota` TEXT, `idespecialistadisponibilidad` INTEGER NOT NULL, `idorigen` INTEGER NOT NULL, `valid` INTEGER DEFAULT 1 )",
         "CREATE TABLE IF NOT EXISTS `bloquehorario` (`idbloquehorario`  INTEGER PRIMARY KEY AUTOINCREMENT,  `horainicio`  TEXT, `horatermino`  TEXT, `valid`  INTEGER NOT NULL DEFAULT 1)",
         "CREATE TABLE IF NOT EXISTS `especialistadisponibilidad` ( `idespecialistadisponibilidad`  INTEGER PRIMARY KEY AUTOINCREMENT,  `idespecialista`  INTEGER NOT NULL,  `idbloquehorario`  INTEGER NOT NULL,  `fecha`  TEXT,  `valid`  INTEGER NOT NULL DEFAULT 1);"
       ];

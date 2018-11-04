@@ -47,8 +47,6 @@ export class LoginComponent implements OnInit {
 
     this.rut = this.loginForm.controls['rut'];
     this.contrasena = this.loginForm.controls['contrasena'];
-    //this.loginForm.valueChanges.subscribe(data => this.onValueChanged(data));
-    //this.onValueChanged(); // (re)set validation messages now
   }
 
   public onSubmit(values:Object):void {
@@ -60,7 +58,7 @@ export class LoginComponent implements OnInit {
   }
 
   private iniciarSesion(): void {
-    this.UsuarioLocalDBService.iniciarSesion(this.usuarioModel.rut,this.usuarioModel.password).then((data:any) => {
+    this.UsuarioLocalDBService.iniciarSesion(this.usuarioModel).then((data:any) => {
       console.log(data);
       if(data.result){
         //Guardar en la DB Local
@@ -102,10 +100,6 @@ export class LoginComponent implements OnInit {
     this.router.navigate(["recuperar"]);
   }
   
-  private onValueChanged(data?: any) {
-    this.formErrors = Validaciones.onValueChanged(data,this.loginForm,this.formErrors,Mensajes.validacionesLogin);    
-  }
-
   ngOnDestroy() {
     console.info("ngOnDestroy();");
   }

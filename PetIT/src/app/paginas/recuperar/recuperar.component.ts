@@ -55,35 +55,10 @@ export class RecuperarComponent implements OnInit {
   }
 
   private recuperar(): void {
-    /*
-    this.UsuarioLocalDBService.iniciarSesion(this.usuarioModel.rut,this.usuarioModel.password).then((data:any) => {
+    this.UsuarioLocalDBService.recuperarContrasena(this.usuarioModel).then((data:any) => {
       console.log(data);
       if(data.result){
-        //Guardar en la DB Local
-        let usuario:UsuarioModel = data.usuario;
-        this.UsuarioLocalDBService.guardarLocal(usuario);        
         this.MzToastService.show(data.mensajes,4000,'green');
-        var ruta = "";
-        switch (usuario.idrol) {
-          case 1:
-            //console.log("admin");
-            ruta = 'admin/inicio';
-            this.router.navigate([ruta]);                      
-            break;
-          case 2:
-            //console.log("recepcionista")
-            ruta = 'recepcionista/inicio';
-            this.router.navigate([ruta]);                      
-            break;
-          case 3:
-            //console.log("dueno")
-            ruta = 'dueno/inicio';
-            this.router.navigate([ruta]);                      
-            break;                  
-          default:
-            this.MzToastService.show("Hubo un error al intentar de identificar el usuario. Intenta más tarde",5000,'red');
-            break;
-        }
       } else {
         console.error(data.errores);
         this.MzToastService.show(data.errores,4000,'red');
@@ -92,12 +67,10 @@ export class RecuperarComponent implements OnInit {
       console.error(dataError);
       this.MzToastService.show(dataError.errores,4000,'red');
     });
-    */
-    this.MzToastService.show("Se han enviado a tu email las instrucciones de recuperación",4000,'green');
   }
 
   ngOnDestroy() {
-    console.info("ngOnDestroy();");
+    //console.info("ngOnDestroy();");
   }
 
 

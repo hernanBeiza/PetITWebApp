@@ -42,6 +42,10 @@ export class MascotasListarComponent implements OnInit {
 	    });
 	}
 
+	public limpiar():void {
+		this.mascotas = new Array<MascotaModel>();
+	}
+	
 	public onPageChange(page:number): void {
 		console.info("onPageChange");
 		console.log(page);

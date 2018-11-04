@@ -69,7 +69,7 @@ export class HorasAgendarComponent implements OnInit {
   public especialidadModel:EspecialidadModel = new EspecialidadModel();
   public especialistaModel:EspecialistaModel = new EspecialistaModel();
   public citaModel:CitaModel = new CitaModel();
-  public especialistaDisponibilidad:EspecialistaDisponibilidadModel = new EspecialistaDisponibilidadModel();
+  public especialistaDisponibilidadModel:EspecialistaDisponibilidadModel = new EspecialistaDisponibilidadModel();
 
   public opcionesCalendario: Pickadate.DateOptions = {
     format: 'dd-mm-yyyy',
@@ -155,7 +155,6 @@ export class HorasAgendarComponent implements OnInit {
 
   public seleccionarEspecialista(event):void {    
     console.info("seleccionarEspecialista");
-    this.citaModel.idespecialista = this.especialistaModel.idespecialista;
     this.citaModel.especialistaModel = this.especialistaModel;
     this.fechaControl.reset();
     this.disponibilidades = new Array<EspecialistaDisponibilidadModel>();    
@@ -187,9 +186,9 @@ export class HorasAgendarComponent implements OnInit {
 
   private reservar(especialistaDisponibilidad:EspecialistaDisponibilidadModel): void {
     if (this.agendarForm.valid) {
-      this.especialistaDisponibilidad = especialistaDisponibilidad;
+      this.especialistaDisponibilidadModel = especialistaDisponibilidad;
       this.citaModel.especialistaModel = this.especialistaModel;
-      this.citaModel.idespecialista = this.especialistaModel.idespecialista;
+      this.citaModel.idespecialistadisponibilidad = especialistaDisponibilidad.idespecialistadisponibilidad;
       this.citaModel.especialistaDisponibilidadModel = especialistaDisponibilidad;
       this.citaModel.origen = 1;
       this.agendarSheetModal.open();
@@ -214,9 +213,9 @@ export class HorasAgendarComponent implements OnInit {
       enviar = false;
       this.errores+="<br>Especialidad";
     }
-    if(!this.citaModel.idespecialista){
+    if(!this.citaModel.idespecialistadisponibilidad){
       enviar = false;
-      this.errores+="<br>Especialista";
+      this.errores+="<br>Disponibilidad de horario";
     }
     if(!this.fecha){
       enviar = false;
@@ -251,4 +250,8 @@ export class HorasAgendarComponent implements OnInit {
     });
   }
 
+  public onSubmit(values:any):void{
+
+  }
+  
 }
