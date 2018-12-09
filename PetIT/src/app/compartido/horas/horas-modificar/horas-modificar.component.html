@@ -67,16 +67,16 @@
 					    </thead>
 					    <tbody>
 				    	    <tr *ngFor="let item of disponibilidades">
-					        <td>{{especialistaModel.nombres}} {{especialistaModel.apellidopaterno}}</td>
-					        <td>{{item.fecha}}</td>
-					        <td>{{item.bloqueHorarioModel.horainicio}}</td>
-						    <td>
-						    	<button mz-button type="button" (click)="reservar(item)">Reservar</button>
-						    </td>					      
+						        <td>{{especialistaModel.nombres}} {{especialistaModel.apellidopaterno}}</td>
+						        <td>{{item.fecha}}</td>
+						        <td>{{item.bloqueHorarioModel.horainicio}}</td>
+							    <td>
+							    	<button mz-button type="button" (click)="reservar(item)">Reservar</button>
+							    </td>					      
 							</tr>
 					    </tbody>
-					</table>						
-					<boton-volver></boton-volver>
+					</table>
+					<boton-volver></boton-volver>      
 					<!--
                     <button mz-button type="submit" 
                     [disabled]="!agendarForm.valid || enviandoFlag"

@@ -26,6 +26,7 @@ const routes: Routes = [
       */
       { path: 'notificaciones',       loadChildren: 'app/paginas/dueno/notificaciones/notificaciones.module#NotificacionesModule' },
       { path: 'horas',                loadChildren: 'app/paginas/dueno/horas/horas.module#HorasModule' },
+
     ]
   }
 ];

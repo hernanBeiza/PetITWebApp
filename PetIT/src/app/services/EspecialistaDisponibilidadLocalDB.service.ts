@@ -168,7 +168,7 @@ export class EspecialistaDisponibilidadLocalDBService {
               especialistaDisponibilidad.bloqueHorarioModel = bloque;
               disponibilidades.push(especialistaDisponibilidad);
             }
-            var result = {result:true,mensajes:"Disponibilidad encontrada para la fecha "+fecha,disponibilidades:disponibilidades};
+            var result = {result:true,mensajes:"Disponibilidad encontrada para la fecha "+ moment(fecha).format("DD-MM-YYYY"),disponibilidades:disponibilidades};
             resolve(result);
           } else {
             var resultNoEncontrado = {result:false,errores:"No se ha encontrado disponibilidad para la fecha " +moment(fecha).format("DD-MM-YYYY")};
