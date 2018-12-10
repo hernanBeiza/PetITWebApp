@@ -10,8 +10,6 @@ export function loadInformeModule() {
   return InformeModule;
 }
 
-
-
 const routes: Routes = [
   { path: 'admin',  component: AdminComponent,
     children: [

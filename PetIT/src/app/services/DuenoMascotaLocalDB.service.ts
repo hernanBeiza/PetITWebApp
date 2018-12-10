@@ -131,7 +131,7 @@ export class DuenoMascotaLocalDBService {
             var duenos:Array<DuenoMascotaModel> = new Array<DuenoMascotaModel>();
             for (var i = 0; i < rows.length; i++){
               var item:any = rows.item(i) as any;
-              var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutdueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);              
+              var dueno:DuenoMascotaModel = new DuenoMascotaModel(item.rutdueno,item.idusuario,item.nombres,item.apellidopaterno,item.apellidomaterno,item.comuna,item.direccion,item.telefono,item.correo,item.valid);
               duenos.push(dueno);
             }
             var result = {result:true,mensajes:"Dueños encontrados",duenos:duenos};

@@ -6,7 +6,11 @@ import { Validaciones } from './../../../../libs/Validaciones';
 
 import { InformeModel } from './../../../../models/InformeModel';
 
+import { InformeLocalDBService } from './../../../../services/InformeLocalDB.service';
+
 import { MzToastService } from 'ng2-materialize';
+
+import * as moment from 'moment'; 
 
 @Component({
   selector: 'app-informe-generar',
@@ -23,24 +27,19 @@ export class InformeGenerarComponent implements OnInit {
 	public informeModel:InformeModel = new InformeModel();
 
 	public enviandoFlag:boolean = false;
-	public mostrar:boolean = false;
+	public mostrarBarra:boolean = false;
+	public mostrarPie:boolean = false;
 
 	public opcionesCalendario: Pickadate.DateOptions = {
 		format: 'dd-mm-yyyy',
 		formatSubmit: 'dd-mm-yyyy',
-	    max: new Date(),
+	    //max: new Date(),
 	    today: 'Hoy',
 	    clear: 'Limpiar',
 	    close: 'OK'
 	};
 
 	// Errores
-	/*
-	public formErrors = {
-		'inicio': '',
-		'termino': ''
-	};
-	*/
 	public formErrors = Mensajes.validacionesGenerarInforme;
 
 	//Gráfico de Barra
@@ -62,13 +61,16 @@ export class InformeGenerarComponent implements OnInit {
 	public pieChartType:string = 'pie';
  
  	public tipos:Array<any> = new Array<any>(
- 		{id:1,texto:"Primero"},
- 		{id:2,texto:"Segundo"},
- 		{id:3,texto:"Tercero"}
+ 		{id:1,texto:"Total de citas"},
+ 		//{id:2,texto:"Total de mascotas por tipo"},
+ 		//{id:3,texto:"Total de mascotas por raza"},
+ 		{id:4,texto:"Total de citas por especialidad"},
+ 		{id:5,texto:"Total de notificaciones leídas"},
 	);
- 	public tipoInforme:string = "primero";
+ 	public tipoInforme:number = 1;
 
-	constructor(private fb:FormBuilder, private MzToastService: MzToastService) { }
+	constructor(private fb:FormBuilder, private MzToastService: MzToastService,
+		private InformeLocalDBService:InformeLocalDBService) { }
 
 	ngOnInit() {
 		console.log("ngOnInit();");
@@ -96,17 +98,36 @@ export class InformeGenerarComponent implements OnInit {
 	public generarInforme():void {
 		console.log("generarInforme");
 		console.log(this.tipoInforme);
+		this.informeModel.idinforme = this.tipoInforme;
 		console.log(this.informeModel);
 		this.enviandoFlag = true;
-	    this.MzToastService.show("Estadísticas Generadas",3000);
+		this.mostrarBarra = false;
+		this.mostrarPie = false;
+
+		let inicio = moment(this.informeModel.fechaInicio,"DD-MM-YYYY").format("YYYY-MM-DD");
+		let termino = moment(this.informeModel.fechaTermino,"DD-MM-YYYY").format("YYYY-MM-DD");
+		//console.log(inicio,termino);
+		switch (this.tipoInforme) {
+			case 1:
+				this.generarTotalDeCitasPorMes(inicio,termino);
+				break;
+			case 2:
+				//this.generarTotalDeMascotasPorTipo(inicio,termino);
+				break;
+			case 3:
+				//this.generarTotalDeMascotasPorRaza(inicio,termino);
+				break;
+			case 4:
+				this.generarTotalDeCitasPorEspecialidad(inicio,termino);
+				break;
+			case 5:
+				this.generarTotalDeNotificacionesLeidas(inicio,termino);
+				break;			
+		}
+		/*
 		this.randomize();
+		*/
 	}
-
-	private onValueChanged(data?: any) {
-		console.log(this.formErrors);
-    	this.formErrors = Validaciones.onValueChanged(data,this.generarForm,this.formErrors,Mensajes.validacionesGenerarInforme);  
-	}
-
 	
 	// Eventos del Gráfico
 	public chartClicked(e:any):void {
@@ -120,7 +141,7 @@ export class InformeGenerarComponent implements OnInit {
  	//https://valor-software.com/ng2-charts/
 	public randomize():void {
 		this.enviandoFlag = false;
-		this.mostrar = true;
+		this.mostrarBarra = true;
 	    // Only Change 3 values
 	    let data = [
 	      Math.round(Math.random() * 100),
@@ -139,6 +160,144 @@ export class InformeGenerarComponent implements OnInit {
 	     * so one way around it, is to clone the data, change it and then
 	     * assign it;
 	     */
+	}
+
+	private generarTotalDeCitasPorMes(inicio:string,termino:string):void {
+		this.InformeLocalDBService.generarTotalCitasPorMes(inicio,termino).then((data:any) => {
+			console.log(data);
+			this.enviandoFlag = false;
+
+			if(data.result){
+				this.mostrarBarra = true;
+
+			    this.barChartLabels = [];
+			    this.barChartData = [];
+
+			    this.MzToastService.show(data.mensajes,3000);			
+			    for (var i = 0; i < data.estadisticas.length; i++) {
+			    	let estadistica = data.estadisticas[i] as any;
+				    this.barChartData.push({data:[estadistica.total],label: estadistica.nombre});
+			    }
+			} else {
+			    this.MzToastService.show(data.errores,3000,'red');
+			}
+
+	    },(dataError)=>{
+			console.error(dataError);
+			this.enviandoFlag = false;
+			this.MzToastService.show(dataError.errores,4000,'red');
+	    });
+	}
+
+	private generarTotalDeMascotasPorTipo(inicio:string,termino:string):void {
+		this.InformeLocalDBService.generarTotalDeMascotasPorTipo(inicio,termino).then((data:any) => {
+			console.log(data);
+			this.enviandoFlag = false;
+
+			if(data.result){
+				this.mostrarPie = true;
+
+				this.pieChartLabels = [];
+				this.pieChartData = [];
+
+			    this.MzToastService.show(data.mensajes,3000);			
+			    for (var i = 0; i < data.estadisticas.length; i++) {
+			    	let estadistica = data.estadisticas[i] as any;
+					this.pieChartLabels.push(estadistica.nombre);
+				    this.pieChartData.push(estadistica.total);
+			    }
+			} else {
+			    this.MzToastService.show(data.errores,3000,'red');
+			}
+
+	    },(dataError)=>{
+			console.error(dataError);
+			this.enviandoFlag = false;
+			this.MzToastService.show(dataError.errores,4000,'red');
+	    });
+	}
+
+	private generarTotalDeMascotasPorRaza(inicio:string,termino:string):void {
+		this.InformeLocalDBService.generarTotalDeMascotasPorRaza(inicio,termino).then((data:any) => {
+			console.log(data);
+			this.enviandoFlag = false;
+
+			if(data.result){
+				this.mostrarPie = true;
+
+				this.pieChartLabels = [];
+				this.pieChartData = [];
+
+			    this.MzToastService.show(data.mensajes,3000);			
+			    for (var i = 0; i < data.estadisticas.length; i++) {
+			    	let estadistica = data.estadisticas[i] as any;
+					this.pieChartLabels.push(estadistica.nombre);
+				    this.pieChartData.push(estadistica.total);
+			    }
+			} else {
+			    this.MzToastService.show(data.errores,3000,'red');
+			}
+
+	    },(dataError)=>{
+			console.error(dataError);
+			this.enviandoFlag = false;
+			this.MzToastService.show(dataError.errores,4000,'red');
+	    });
+	}
+
+	private generarTotalDeCitasPorEspecialidad(inicio:string,termino:string):void {
+		this.InformeLocalDBService.generarTotalDeCitasPorEspecialidad(inicio,termino).then((data:any) => {
+			console.log(data);
+			this.enviandoFlag = false;
+
+			if(data.result){
+				this.mostrarPie = true;
+
+				this.pieChartLabels = [];
+				this.pieChartData = [];
+
+			    this.MzToastService.show(data.mensajes,3000);			
+			    for (var i = 0; i < data.estadisticas.length; i++) {
+			    	let estadistica = data.estadisticas[i] as any;
+					this.pieChartLabels.push(estadistica.nombre);
+				    this.pieChartData.push(estadistica.total);
+			    }
+			} else {
+			    this.MzToastService.show(data.errores,3000,'red');
+			}
+
+	    },(dataError)=>{
+			console.error(dataError);
+			this.enviandoFlag = false;
+			this.MzToastService.show(dataError.errores,4000,'red');
+	    });
+	}
+	
+	private generarTotalDeNotificacionesLeidas(inicio:string,termino:string):void {
+		this.InformeLocalDBService.generarTotalDeNotificacionesLeidas(inicio,termino).then((data:any) => {
+			console.log(data);
+			this.enviandoFlag = false;
+
+			if(data.result){
+				this.mostrarBarra = true;
+
+			    this.barChartLabels = [];
+			    this.barChartData = [];
+
+			    this.MzToastService.show(data.mensajes,3000);			
+			    for (var i = 0; i < data.estadisticas.length; i++) {
+			    	let estadistica = data.estadisticas[i] as any;
+				    this.barChartData.push({data:[estadistica.total],label: estadistica.nombre});
+			    }
+			} else {
+			    this.MzToastService.show(data.errores,3000,'red');
+			}
+
+	    },(dataError)=>{
+			console.error(dataError);
+			this.enviandoFlag = false;
+			this.MzToastService.show(dataError.errores,4000,'red');
+	    });
 	}
 
 	ngOnDestroy() {
