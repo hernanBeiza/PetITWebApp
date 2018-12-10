@@ -61,10 +61,10 @@ export class InformeGenerarComponent implements OnInit {
 	public pieChartType:string = 'pie';
  
  	public tipos:Array<any> = new Array<any>(
- 		{id:1,texto:"Total de citas"},
+ 		{id:1,texto:"Total de horas"},
  		//{id:2,texto:"Total de mascotas por tipo"},
  		//{id:3,texto:"Total de mascotas por raza"},
- 		{id:4,texto:"Total de citas por especialidad"},
+ 		{id:4,texto:"Total de horas por especialidad"},
  		{id:5,texto:"Total de notificaciones leídas"},
 	);
  	public tipoInforme:number = 1;
