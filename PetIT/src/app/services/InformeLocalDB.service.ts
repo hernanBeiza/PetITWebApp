@@ -19,7 +19,7 @@ export class InformeLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT strftime('%d-%m-%Y', ed.fecha) AS nombre, COUNT(*) AS total FROM cita AS ci INNER JOIN especialistadisponibilidad AS ed ON ci.idespecialistadisponibilidad = ed.idespecialistadisponibilidad AND ed.fecha>='"+inicio+"' AND ed.fecha<='"+termino+"' GROUP BY strftime('%d-%m-%Y', ed.fecha) ORDER BY ed.fecha DESC";
+        var sql = "SELECT strftime('%d-%m-%Y', ed.fecha) AS nombre, COUNT(*) AS total FROM cita AS ci INNER JOIN especialistadisponibilidad AS ed ON ci.idespecialistadisponibilidad = ed.idespecialistadisponibilidad AND ed.fecha>='"+inicio+"' AND ed.fecha<='"+termino+"' GROUP BY strftime('%d-%m-%Y', ed.fecha) ORDER BY ed.fecha ASC";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -53,7 +53,7 @@ export class InformeLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT tm.nombre, COUNT(*) total FROM mascota AS ma INNER JOIN tipomascota AS tm ON ma.idtipomascota = tm.idtipomascota GROUP BY tm.idtipomascota AND ma.fecha>='"+inicio+"' AND ma.fecha<='"+termino+"'";
+        var sql = "SELECT tm.nombre, COUNT(*) total FROM mascota AS ma INNER JOIN tipomascota AS tm ON ma.idtipomascota = tm.idtipomascota AND ma.fecha>='"+inicio+"' AND ma.fecha<='"+termino+"' GROUP BY tm.idtipomascota";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -86,7 +86,7 @@ export class InformeLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT r.nombre, COUNT(*) total FROM mascota AS ma INNER JOIN raza AS r ON ma.idraza = r.idraza GROUP BY r.idraza AND ma.fecha>='"+inicio+"' AND ma.fecha<='"+termino+"'";
+        var sql = "SELECT r.nombre, COUNT(*) total FROM mascota AS ma INNER JOIN raza AS r ON ma.idraza = r.idraza AND ma.fecha>='"+inicio+"' AND ma.fecha<='"+termino+"' GROUP BY r.idraza";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -120,7 +120,7 @@ export class InformeLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT esp.nombre, COUNT(*) AS total FROM cita AS ci INNER JOIN especialistadisponibilidad AS ed ON ci.idespecialistadisponibilidad = ed.idespecialistadisponibilidad INNER JOIn especialista AS es ON ed.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad GROUP BY esp.nombre AND ed.fecha>='"+inicio+"' AND ed.fecha<='"+termino+"' ORDER BY ed.fecha DESC";
+        var sql = "SELECT esp.nombre, COUNT(*) AS total FROM cita AS ci INNER JOIN especialistadisponibilidad AS ed ON ci.idespecialistadisponibilidad = ed.idespecialistadisponibilidad INNER JOIn especialista AS es ON ed.idespecialista = es.idespecialista INNER JOIN especialidad AS esp ON es.idespecialidad = esp.idespecialidad AND ed.fecha>='"+inicio+"' AND ed.fecha<='"+termino+"' GROUP BY esp.nombre ORDER BY ed.fecha DESC";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);
@@ -154,7 +154,7 @@ export class InformeLocalDBService {
     var db = this.LocalDBService.obtenerDB();
     var promesa = new Promise((resolve, reject) => {
       db.transaction(function (tx){
-        var sql = "SELECT titulo AS nombre, COUNT(*) AS total FROM notificacion WHERE valid = 2 GROUP BY titulo AND fecha>='"+inicio+"' AND fecha<='"+termino+"' ORDER BY fecha DESC";
+        var sql = "SELECT titulo AS nombre, COUNT(*) AS total FROM notificacion WHERE valid = 2 AND fecha>='"+inicio+"' AND fecha<='"+termino+"' GROUP BY titulo ORDER BY fecha DESC";
         console.info(sql);
         tx.executeSql(sql,[],function(tx,results){
           console.log(tx,results,results.rows.length);

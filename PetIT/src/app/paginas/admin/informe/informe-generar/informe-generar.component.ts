@@ -41,11 +41,53 @@ export class InformeGenerarComponent implements OnInit {
 
 	// Errores
 	public formErrors = Mensajes.validacionesGenerarInforme;
-
+	//https://stackblitz.com/edit/ng2-chart-example-22wq6w?file=app%2Fbar-chart.options.ts
+	//https://github.com/valor-software/ng2-charts/issues/1011
 	//Gráfico de Barra
 	public barChartOptions:any = {
-    	scaleShowVerticalLines: false,
-	    responsive: true
+    	scaleShowVerticalLines: true,
+	    responsive: true,
+	    /*
+	    title: {
+		    display: true,
+		    text: 'My Chart Title',
+		    fontColor: 'black',
+		},
+		*/
+		scales: {
+		xAxes: [{
+		stacked: false,
+		ticks: {
+		fontColor: 'black',
+		},
+		gridLines: {
+		color: '#dbd9d9'
+		}
+		}],
+		yAxes: [{
+			stacked: false,
+			ticks: {
+			fontColor: 'black',
+			min: 0,
+			beginAtZero: true,
+
+			},
+			gridLines: {
+				color: '#dbd9d9'
+			},
+			scaleLabel: {
+					//display: true,
+					//labelString: 'Scale Label',
+					//fontColor: 'black',
+				}
+		}]
+		},
+		legend: {
+		    display: true,
+		    labels: {
+		      fontColor: 'black'
+		    }
+		},
 	};
 	public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
 	public barChartType:string = 'bar';
@@ -139,6 +181,7 @@ export class InformeGenerarComponent implements OnInit {
 	}
  	
  	//https://valor-software.com/ng2-charts/
+ 	/*
 	public randomize():void {
 		this.enviandoFlag = false;
 		this.mostrarBarra = true;
@@ -154,13 +197,14 @@ export class InformeGenerarComponent implements OnInit {
 	    let clone = JSON.parse(JSON.stringify(this.barChartData));
 	    clone[0].data = data;
 	    this.barChartData = clone;
-	    /**
-	     * (My guess), for Angular to recognize the change in the dataset
-	     * it has to change the dataset variable directly,
-	     * so one way around it, is to clone the data, change it and then
-	     * assign it;
-	     */
 	}
+	*/
+    /**
+     * (My guess), for Angular to recognize the change in the dataset
+     * it has to change the dataset variable directly,
+     * so one way around it, is to clone the data, change it and then
+     * assign it;
+     */
 
 	private generarTotalDeCitasPorMes(inicio:string,termino:string):void {
 		this.InformeLocalDBService.generarTotalCitasPorMes(inicio,termino).then((data:any) => {
@@ -173,11 +217,17 @@ export class InformeGenerarComponent implements OnInit {
 			    this.barChartLabels = [];
 			    this.barChartData = [];
 
-			    this.MzToastService.show(data.mensajes,3000);			
+			    this.MzToastService.show(data.mensajes,3000);		
 			    for (var i = 0; i < data.estadisticas.length; i++) {
-			    	let estadistica = data.estadisticas[i] as any;
+			    	var estadistica = data.estadisticas[i] as any;
 				    this.barChartData.push({data:[estadistica.total],label: estadistica.nombre});
+				    //this.barChartLabels.push(estadistica.nombre);
 			    }
+
+			    //this.randomize();
+			    console.log(this.barChartData);
+			    console.log(this.barChartLabels);
+
 			} else {
 			    this.MzToastService.show(data.errores,3000,'red');
 			}
