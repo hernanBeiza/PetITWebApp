@@ -4,7 +4,7 @@ import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from
 
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { MzModalComponent,MzToastService} from 'ng2-materialize';
+import { MzModalComponent,MzToastService} from 'ngx-materialize';
 
 import { Mensajes } from './../../../../libs/Mensajes';
 
@@ -114,7 +114,7 @@ export class MascotasConsultarComponent implements OnInit {
 
 	public verDetalle(mascota:MascotaModel): void {
 		this.mascotaSeleccionada = mascota;
-		this.detalleSheetModal.open();
+		this.detalleSheetModal.openModal();
 	}
 
 	public irModificar(mascota:MascotaModel): void {
@@ -123,7 +123,7 @@ export class MascotasConsultarComponent implements OnInit {
 
 	public eliminar(mascota:MascotaModel): void {
 		this.mascotaSeleccionada = mascota;
-		this.eliminarSheetModal.open();		
+		this.eliminarSheetModal.openModal();		
 	}
 	
 }

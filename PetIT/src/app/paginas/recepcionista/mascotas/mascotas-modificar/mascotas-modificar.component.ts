@@ -3,7 +3,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import { MzModalComponent,MzToastService } from 'ngx-materialize';
 
 import { Mensajes } from './../../../../libs/Mensajes';
 
@@ -171,7 +171,7 @@ export class MascotasModificarComponent implements OnInit {
 
 	public onSubmit(values:Object):void {
 		if (this.modificarForm.valid) {
-  			this.modificarSheetModal.open();
+  			this.modificarSheetModal.openModal();
 		} else {
 		  this.MzToastService.show("Revisa los datos faltantes",5000);
 		}
@@ -179,14 +179,14 @@ export class MascotasModificarComponent implements OnInit {
 
 	public modificar():void {
 		this.MascotaLocalDBService.modificar(this.mascotaModel).then((data:any)=>{
-			this.modificarSheetModal.close();
+			this.modificarSheetModal.closeModal();
 			if(data.result){
 				this.MzToastService.show(data.mensajes,3000,'green');
 			} else {
 				this.MzToastService.show(data.errores,5000,'red');
 			}
 		},(dataError:any)=>{
-			this.modificarSheetModal.close();
+			this.modificarSheetModal.closeModal();
 			this.MzToastService.show(dataError.errores,5000,'red');
 		});
 	}

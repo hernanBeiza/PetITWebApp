@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, Input, AfterViewInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ISubscription } from "rxjs/Subscription";
+import { Subscription } from 'rxjs';
 
-import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import { MzModalComponent,MzToastService } from 'ngx-materialize';
 import * as moment from 'moment'; 
 
 import { Mensajes } from './../../../../../libs/Mensajes';
@@ -26,7 +26,7 @@ import {BloqueHorarioModel} from './../../../../../models/BloqueHorarioModel';
 export class BloquesAsignarComponent implements OnInit, OnDestroy {
 
 	public asignarForm:FormGroup;
-	public subscription:ISubscription;
+	public subscription:Subscription;
 	public ocultoControl:AbstractControl;
 	public bloquesControl:AbstractControl;
 	public fechaDesdeControl:AbstractControl;
@@ -204,7 +204,7 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 			console.log(this.fechaDesde);
 			console.log(this.fechaHasta);
 			console.log(this.obtenerSeleccionadas());
-			this.asignarSheetModal.open();
+			this.asignarSheetModal.openModal();
 		} else {
 			this.MzToastService.show("Revisa los datos faltantes",5000);
 		}
@@ -249,7 +249,7 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 			}
 
 			this.EspecialistaDisponibilidadLocalDBService.guardar(items).then((data:any)=>{
-				this.asignarSheetModal.close();
+				this.asignarSheetModal.closeModal();
 				if(data.result){
 					this.MzToastService.show(data.mensajes,3000,'green');
 					this.disponibilidades = new Array<EspecialistaDisponibilidadModel>();
@@ -258,14 +258,14 @@ export class BloquesAsignarComponent implements OnInit, OnDestroy {
 					this.MzToastService.show(data.errores,5000,'red');
 				}
 			},(dataError:any)=>{
-				this.asignarSheetModal.close();
+				this.asignarSheetModal.closeModal();
 				this.MzToastService.show(dataError.errores,5000,'red');
 			});
 
 		} else {
 			console.warn(errores);
 			this.errores = errores;
-			this.errorSheetModal.open();
+			this.errorSheetModal.openModal();
 		}
 
 	}

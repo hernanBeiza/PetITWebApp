@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MzToastService } from 'ng2-materialize';
+import { MzToastService } from 'ngx-materialize';
 
 import { CitaLocalDBService } from './../../../services/CitaLocalDB.service';
 

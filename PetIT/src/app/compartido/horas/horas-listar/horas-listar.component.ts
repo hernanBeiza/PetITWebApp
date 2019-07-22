@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import { MzModalComponent,MzToastService } from 'ngx-materialize';
 
 import {Mensajes} from './../../../libs/Mensajes';
 import {Validaciones} from './../../../libs/Validaciones';
@@ -109,14 +109,14 @@ export class HorasListarComponent implements OnInit {
     //console.log("irAnular");
     //console.log(cita);
     this.citaModel = cita;
-    this.anularSheetModal.open();
+    this.anularSheetModal.openModal();
   }
 
   public anular(): void {
     //console.log("anular");
     this.CitaLocalDBService.anular(this.citaModel).then((data:any)=>{
       //console.log(data);
-      this.anularSheetModal.close();
+      this.anularSheetModal.closeModal();
       if(data.result){
         this.cargarHorasConMascota(this.mascota.rutmascota);
         this.MzToastService.show(data.mensajes, 4000, 'green');
@@ -125,7 +125,7 @@ export class HorasListarComponent implements OnInit {
       }
     },(dataError:any)=>{
       console.error(dataError);
-      this.anularSheetModal.close();
+      this.anularSheetModal.closeModal();
       this.MzToastService.show(dataError.errores, 4000, 'red');
     });
 

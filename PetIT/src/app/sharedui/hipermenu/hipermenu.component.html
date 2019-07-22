@@ -1,6 +1,26 @@
+<mz-navbar [navbarClass]="'pet-it-menu'">
+  
+  <a class="brand-logo center">
+  	<!--
+    <img src="assets/img/petitlogo.png" width="50px" height="auto">
+	-->
+    <span>PetIT</span>
+  </a>
+  
+  <mz-navbar-item-container [align]="'right'">
+    <mz-navbar-item>
+      <a (click)="sidenav.opened = !sidenav.opened" class="hide-on-large-only">
+        <i mz-icon-mdi [icon]="'menu'"></i>
+      </a>
+    </mz-navbar-item>
+
+  </mz-navbar-item-container>
+
+</mz-navbar>
+
 <mz-sidenav
+	#sidenav
 	[id]="'sidenav-demo'"
-	[collapseButtonId]="'btn-sidenav-demo'"
 	[fixed]="true">
 	<mz-sidenav-header>
 		<img id="logo" src="assets/img/petitlogo.png">
@@ -20,7 +40,9 @@
 </mz-sidenav>
 
 <!-- Botón para abrir menú en móvil -->
+<!--
 <button class="sidenav-button hide-on-large-only btn btn-floating btn-large waves-effect waves-light" 
 id="btn-sidenav" mz-button id="btn-sidenav-demo">
 	<i class="mdi mdi-menu mdi-24px"></i>
 </button>
+-->

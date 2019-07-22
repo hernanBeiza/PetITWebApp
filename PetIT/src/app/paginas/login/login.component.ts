@@ -12,7 +12,7 @@ import { UsuarioModel } from './../../models/UsuarioModel';
 import { LocalDBService } from './../../services/LocalDB.service';
 import { UsuarioLocalDBService } from './../../services/UsuarioLocalDB.service';
 
-import { MzToastService } from 'ng2-materialize';
+import { MzToastService } from 'ngx-materialize';
 
 import { RutValidator } from 'ng2-rut';
 

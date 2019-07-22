@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import 'rxjs/add/operator/map'
-import { Observable } from 'rxjs/Rx';
-
 import * as moment from 'moment'; 
 
 //Services

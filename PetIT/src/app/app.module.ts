@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app.routing';
 
@@ -23,7 +22,6 @@ import { LocalDBService } from './services/LocalDB.service';
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
-    HttpModule,
     AppRoutingModule,
     PaginasModule,
     LibreriasModule

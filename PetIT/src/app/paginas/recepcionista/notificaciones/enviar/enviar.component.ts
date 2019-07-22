@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ISubscription } from "rxjs/Subscription";
+import { Subscription } from 'rxjs';
 
 import { FormGroup, FormArray, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
-import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import { MzModalComponent,MzToastService } from 'ngx-materialize';
 
 import { Mensajes } from './../../../../libs/Mensajes';
 import { Validaciones } from './../../../../libs/Validaciones';
@@ -30,7 +30,7 @@ export class EnviarComponent implements OnInit, OnDestroy {
 	public tituloControl:AbstractControl;
 	public mensajeControl:AbstractControl;
 
-	public subscription:ISubscription;
+	public subscription:Subscription;
 
 	@ViewChild('confirmarSheetModal') confirmarSheetModal: MzModalComponent;
 
@@ -133,14 +133,14 @@ export class EnviarComponent implements OnInit, OnDestroy {
 	public onSubmit(values:Object):void {
 		console.log(this.notificacionModel);
 	    if (this.enviarForm.valid) {	    	
-	    	this.confirmarSheetModal.open();
+	    	this.confirmarSheetModal.openModal();
 	    } else {
 			this.MzToastService.show("¡Error! Revisa tus datos de acceso",3000,"red");
 	    }
 	}
 
 	public enviarNotificacion(): void {
-		this.confirmarSheetModal.close();
+		this.confirmarSheetModal.closeModal();
 		console.log(this.duenos);
 		for (var i = 0; i < this.duenos.length; ++i) {
 			var dueno:DuenoMascotaModel = this.duenos[i];

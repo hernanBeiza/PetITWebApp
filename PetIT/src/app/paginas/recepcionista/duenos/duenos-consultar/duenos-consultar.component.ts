@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import { MzModalComponent,MzToastService } from 'ngx-materialize';
 
 import { Ng2Rut } from 'ng2-rut';
 
@@ -122,7 +122,7 @@ export class DuenosConsultarComponent implements OnInit, OnDestroy {
 
 	public verDetalle(dueno:DuenoMascotaModel): void {
 		this.duenoSeleccionado = dueno;
-		this.detalleSheetModal.open();
+		this.detalleSheetModal.openModal();
 	}
 
 	public irModificar(dueno:DuenoMascotaModel): void {
@@ -136,13 +136,13 @@ export class DuenosConsultarComponent implements OnInit, OnDestroy {
 	public confirmarEliminar(dueno:DuenoMascotaModel): void {
 		console.warn("confirmarEliminar",dueno);		
 		this.duenoSeleccionado = dueno;
-		this.eliminarSheetModal.open();
+		this.eliminarSheetModal.openModal();
 	}
 
 	public eliminar(): void {
 		console.warn("eliminar",this.duenoSeleccionado);
 		this.DuenoMascotaLocalDBService.eliminar(this.duenoSeleccionado).then((data:any)=>{
-			this.eliminarSheetModal.close();
+			this.eliminarSheetModal.closeModal();
 			this.duenos = new Array<DuenoMascotaModel>();
 			console.log(data);
 			if(data.result){
@@ -151,7 +151,7 @@ export class DuenosConsultarComponent implements OnInit, OnDestroy {
 		        this.MzToastService.show(data.errores,3000,'red');
 			}
 		},(dataError:any)=>{
-			this.eliminarSheetModal.close();
+			this.eliminarSheetModal.closeModal();
 			console.error(dataError);
 	        this.MzToastService.show(dataError.errores,4000,'red');
 		});

@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, AfterContentInit } from '@angular/core';
 import { Router, ActivatedRoute, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+
+import { Subscription } from 'rxjs';
 
 import { UsuarioLocalDBService } from './services/UsuarioLocalDB.service';
-import { MzToastService } from 'ng2-materialize';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public subscription: Subscription;
 
 	constructor(public router: Router,
-    private UsuarioLocalDBService:UsuarioLocalDBService,
-    private MzToastService:MzToastService) {
+    private UsuarioLocalDBService:UsuarioLocalDBService) {
 		//console.log("AppComponent");
 	}
 

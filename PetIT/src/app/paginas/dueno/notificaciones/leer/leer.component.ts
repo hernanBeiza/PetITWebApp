@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import { MzModalComponent,MzToastService } from 'ngx-materialize';
 
 import { UsuarioModel } from './../../../../models/UsuarioModel';
 import { DuenoMascotaModel } from './../../../../models/DuenoMascotaModel';
@@ -88,11 +88,11 @@ export class LeerComponent implements OnInit {
 
 	public verDetalle(model:NotificacionModel): void {
 		this.notificacionDetalleModel = model;
-		this.detalleSheetModal.open();
+		this.detalleSheetModal.openModal();
 	}
 
 	public cerrarNotificacion(): void {
-		this.detalleSheetModal.close();
+		this.detalleSheetModal.closeModal();
 		this.NotificacionLocalDBService.marcarLeida(this.notificacionDetalleModel).then((data:any)=>{
 			this.cargarNotificaciones(this.dueno);
 		},(dataError:any)=>{

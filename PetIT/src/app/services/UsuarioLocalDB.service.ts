@@ -1,8 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
-
-import 'rxjs/add/operator/map'
-import {Observable} from 'rxjs/Rx';
 
 import { environment } from './../../environments/environment';
 
@@ -16,7 +12,7 @@ export class UsuarioLocalDBService  {
 
   public constUsuario:string = "PetITLocalUsuario";
 
-  constructor(private http: Http, private LocalDBService:LocalDBService) { }
+  constructor(private LocalDBService:LocalDBService) { }
 
   public iniciarSesion(model:UsuarioModel): Promise<Object> {
     var db = this.LocalDBService.obtenerDB();
@@ -252,15 +248,6 @@ export class UsuarioLocalDBService  {
   public borrarLocal():boolean {
     localStorage.removeItem(this.constUsuario);
     return true;
-  }
-
-  private getOptions(): RequestOptions{
-    return new RequestOptions({headers:this.getHeader(),withCredentials: true });
-  }
-
-  private getHeader(): Headers {
-    let headers = new Headers({});
-    return headers;
   }
 
 }

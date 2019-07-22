@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import { MzModalComponent,MzToastService } from 'ngx-materialize';
 
 import { Mensajes } from './../../../../libs/Mensajes';
 import { Validaciones } from './../../../../libs/Validaciones';
@@ -119,7 +119,7 @@ export class DuenosAgregarComponent implements OnInit {
 	
 	public onSubmit(values:Object):void {
 		if (this.registrarForm.valid) {
-			this.registrarSheetModal.open();
+			this.registrarSheetModal.openModal();
 		} else {
 			this.MzToastService.show("Revisa los datos faltantes",5000);
 		}
@@ -127,7 +127,7 @@ export class DuenosAgregarComponent implements OnInit {
 
 	public registrar():void {
 		this.DuenoMascotaLocalDBService.guardar(this.duenoModel).then((data:any)=>{
-			this.registrarSheetModal.close();
+			this.registrarSheetModal.closeModal();
 			if(data.result){
 				this.MzToastService.show(data.mensajes,3000,'green');
 				console.warn("Crear usuario");
@@ -136,7 +136,7 @@ export class DuenosAgregarComponent implements OnInit {
 				this.MzToastService.show(data.errores,5000,'red');
 			}
 		},(dataError:any)=>{
-			this.registrarSheetModal.close();
+			this.registrarSheetModal.closeModal();
 			this.MzToastService.show(dataError.errores,5000,'red');
 		});
 	}

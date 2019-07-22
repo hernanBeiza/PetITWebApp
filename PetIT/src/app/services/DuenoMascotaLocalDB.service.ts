@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import 'rxjs/add/operator/map'
-import { Observable } from 'rxjs/Rx';
-
-import { Subject } from 'rxjs/Subject';
-
 import { LocalDBService } from './LocalDB.service';
 
 import { ComunaModel } from './../models/ComunaModel';

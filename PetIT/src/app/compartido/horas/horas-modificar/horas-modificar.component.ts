@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import { MzModalComponent,MzToastService } from 'ngx-materialize';
 
 import {Mensajes} from './../../../libs/Mensajes';
 import {Validaciones} from './../../../libs/Validaciones';
@@ -209,7 +209,7 @@ export class HorasModificarComponent implements OnInit {
 
       console.log(this.citaAntiguaModel,this.citaModel);
 
-      this.agendarSheetModal.open();
+      this.agendarSheetModal.openModal();
     } else {
       this.MzToastService.show("Revisa los datos de tu agendamiento",4000);
     }
@@ -242,7 +242,7 @@ export class HorasModificarComponent implements OnInit {
     if(enviar){
       this.enviar();
     } else {
-      this.errorSheetModal.open();
+      this.errorSheetModal.openModal();
     }
   }
 
@@ -251,7 +251,7 @@ export class HorasModificarComponent implements OnInit {
     this.CitaLocalDBService.modificar(this.citaAntiguaModel,this.citaModel).then((data:any)=>{
       console.info(data);
       if(data.result){          
-        this.agendarSheetModal.close();
+        this.agendarSheetModal.closeModal();
         this.MzToastService.show(data.mensajes, 4000, 'green'); 
         //Dependiendo del tipo de usuario
         var ruta ="/recepcionista/horas/finalizar/";

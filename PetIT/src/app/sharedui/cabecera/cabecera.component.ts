@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { LocationStrategy } from '@angular/common';

@@ -8,7 +8,7 @@ import { InformeModel } from './../../../../models/InformeModel';
 
 import { InformeLocalDBService } from './../../../../services/InformeLocalDB.service';
 
-import { MzToastService } from 'ng2-materialize';
+import { MzToastService } from 'ngx-materialize';
 
 import * as moment from 'moment'; 
 

@@ -4,7 +4,7 @@ import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from
 
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import { MzModalComponent,MzToastService } from 'ngx-materialize';
 
 import { Mensajes } from './../../../../libs/Mensajes';
 
@@ -143,7 +143,7 @@ export class MascotasAgregarComponent implements OnInit {
 
 	public onSubmit(values:Object):void {
 		if (this.registrarForm.valid) {
-			this.registrarSheetModal.open();
+			this.registrarSheetModal.openModal();
 		} else {
 		  this.MzToastService.show("Revisa los datos faltantes",5000);
 		}
@@ -154,7 +154,7 @@ export class MascotasAgregarComponent implements OnInit {
 		this.mascotaModel.rutdueno = this.duenoModel.rutdueno;
 		console.log(this.duenoModel);
 		this.MascotaLocalDBService.guardar(this.mascotaModel).then((data:any)=>{
-			this.registrarSheetModal.close();
+			this.registrarSheetModal.closeModal();
 			if(data.result){
 				this.MzToastService.show(data.mensajes,3000,'green');
 				this.registrarForm.reset();
@@ -162,7 +162,7 @@ export class MascotasAgregarComponent implements OnInit {
 				this.MzToastService.show(data.errores,5000,'red');
 			}
 		},(dataError:any)=>{
-			this.registrarSheetModal.close();
+			this.registrarSheetModal.closeModal();
 			this.MzToastService.show(dataError.errores,5000,'red');
 		});
 	}

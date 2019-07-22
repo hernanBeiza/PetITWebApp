@@ -5,8 +5,9 @@ import { CommonModule } from '@angular/common';
 
 import { MzNavbarModule, MzSidenavModule, MzModalModule, MzSpinnerModule, MzCardModule, 
   MzCollapsibleModule, MzIconMdiModule, MzRadioButtonModule, MzInputModule, MzButtonModule, 
-  MzSelectModule, MzValidationModule, MzDatepickerModule, MzTimepickerModule, MzPaginationModule, MzCheckboxModule, MzTextareaModule, MzTooltipModule } from 'ng2-materialize';
-import { MzModalService, MzToastService } from 'ng2-materialize';
+  MzSelectModule, MzValidationModule, MzDatepickerModule, MzTimepickerModule, MzPaginationModule, 
+  MzCheckboxModule, MzTextareaModule, MzTooltipModule } from 'ngx-materialize';
+import { MzModalService, MzToastService } from 'ngx-materialize';
 
 import { Ng2Rut, RutValidator } from 'ng2-rut';
 

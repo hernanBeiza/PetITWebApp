@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MzSidenavCollapsibleComponent } from 'ng2-materialize';
+import { MzSidenavCollapsibleComponent } from 'ngx-materialize';
 
 import { LocalDBService } from './../../services/LocalDB.service';
 import { UsuarioLocalDBService } from './../../services/UsuarioLocalDB.service';

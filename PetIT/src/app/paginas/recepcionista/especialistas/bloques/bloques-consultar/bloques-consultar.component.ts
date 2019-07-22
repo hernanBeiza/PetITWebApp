@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { MzModalComponent,MzToastService } from 'ng2-materialize';
+import { MzModalComponent,MzToastService } from 'ngx-materialize';
 import * as moment from 'moment'; 
 
 import { Mensajes } from './../../../../../libs/Mensajes';
@@ -139,11 +139,11 @@ export class BloquesConsultarComponent implements OnInit {
 
 	public anular(item:EspecialistaDisponibilidadModel): void {
 		this.especialistaDisponibilidadModel = item;
-		this.anularSheetModal.open();
+		this.anularSheetModal.openModal();
 	}
 
 	public confirmarAnulacion(): void {
-		this.anularSheetModal.close();
+		this.anularSheetModal.closeModal();
 		this.EspecialistaDisponibilidadLocalDBService.eliminar(this.especialistaDisponibilidadModel).then((data:any)=> {
 	    	if(data.result){
 				this.MzToastService.show(data.mensajes,4000,'green');

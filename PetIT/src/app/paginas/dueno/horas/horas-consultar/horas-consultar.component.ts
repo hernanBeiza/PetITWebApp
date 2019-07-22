@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
-import { MzToastService } from 'ng2-materialize';
+import { MzToastService } from 'ngx-materialize';
 
 import {UsuarioLocalDBService} from './../../../../services/UsuarioLocalDB.service';
 import {DuenoMascotaLocalDBService} from './../../../../services/DuenoMascotaLocalDB.service';
